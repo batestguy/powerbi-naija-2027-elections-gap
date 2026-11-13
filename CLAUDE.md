@@ -35,6 +35,7 @@ Registers live in `registers/`: `decision-log.md`, `open-questions.md`, `risks.m
 ## Layout
 `data/{raw,staging,presentation}` (gitignored except manifests) · `scripts/` · `pbip/` (Power BI project) · `docs/` · `registers/` · `reports/` (generated checks).
 Repo: GitHub `batestguy/powerbi-naija-2027-elections-gap` (public).
+Scope: state-level core (37 units); LGA layer optional (Mundx, needs permission). See `docs/PLAN.md`.
 Delivery: desktop file (PBIP in git, `.pbix` as a GitHub Release asset) + walkthrough video. No Power BI service publishing.
 
 ## Environment and remaining blanks
