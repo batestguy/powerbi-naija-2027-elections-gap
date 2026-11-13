@@ -7,7 +7,7 @@ Status key: `todo` · `doing` · `done` · `blocked`
 
 | # | Phase | Status | Exit check (must pass before the next phase) |
 |---|-------|--------|----------------------------------------------|
-| 0 | Environment audit | todo | `docs/environment.md` lists tools, versions, publish tier and its limits |
+| 0 | Environment audit | doing | `docs/environment.md` lists tools, versions, publish tier and its limits |
 | 1 | Source validation + licence | todo | Every source in `registers/sources.md` marked approved / conditional / rejected |
 | 2 | Acquisition + profiling | todo | Unmatched-keys report shows LGA join coverage across all three tables; every gap explained |
 | 3 | Model design (thin slice first) | todo | One state works end-to-end in Desktop; then full model diagram + rationale |

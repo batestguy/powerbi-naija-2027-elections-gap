@@ -35,8 +35,9 @@ Registers live in `registers/`: `decision-log.md`, `open-questions.md`, `risks.m
 ## Layout
 `data/{raw,staging,presentation}` (gitignored except manifests) · `scripts/` · `pbip/` (Power BI project) · `docs/` · `registers/` · `reports/` (generated checks).
 Repo: GitHub `batestguy/powerbi-naija-2027-elections-gap` (public).
+Delivery: desktop file (PBIP in git, `.pbix` as a GitHub Release asset) + walkthrough video. No Power BI service publishing.
 
-## To fill in once decided
-- Pinned environment (Python/R version, env path) — not chosen yet; don't install into an unchecked one.
+## Environment and remaining blanks
+- Pinned environment: CPython 3.12.13 in project `.venv`, managed by uv (`uv sync`, `uv run`). Never use the system 3.14 or conda. Details: `docs/environment.md`.
 - Commands: data pull, profiling, validation, PBIR validate.
 - Where large data lives (>5 MB goes to Hugging Face Datasets or LFS, not git).
