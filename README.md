@@ -1,4 +1,4 @@
-# powerbi-elections-gap
+# powerbi-naija-2027-elections-gap
 
 A Power BI scenario simulator for Nigeria's 2027 presidential election. It starts from a
 candidate's 2023 results across the 774 local government areas (LGAs), lets you move swing and
