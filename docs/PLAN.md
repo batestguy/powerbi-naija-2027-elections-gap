@@ -7,8 +7,8 @@ Status key: `todo` · `doing` · `done` · `blocked`
 
 | # | Phase | Status | Exit check (must pass before the next phase) |
 |---|-------|--------|----------------------------------------------|
-| 0 | Environment audit | doing | `docs/environment.md` lists tools, versions, publish tier and its limits |
-| 1 | Source validation + licence | todo | Every source in `registers/sources.md` marked approved / conditional / rejected |
+| 0 | Environment audit | done | `docs/environment.md` lists tools, versions, publish tier and its limits |
+| 1 | Source validation + licence | doing | Every source in `registers/sources.md` marked approved / conditional / rejected |
 | 2 | Acquisition + profiling | todo | Unmatched-keys report shows LGA join coverage across all three tables; every gap explained |
 | 3 | Model design (thin slice first) | todo | One state works end-to-end in Desktop; then full model diagram + rationale |
 | 4 | Scenario engine | todo | Methodology note reproduces results by hand; extreme-slider tests pass |
@@ -61,7 +61,7 @@ on the account, Phase 7 changes shape — find out now.
 
 ## Phase 3 — Model design
 **Goal:** a clean star model with geography as the spine.
-- **Thin slice first:** one state, baseline only, map + one card, in Desktop. Proves the pipeline end to end.
+- **Thin slice first:** one state, baseline only, map + one card. Generate the `.pbip` by script and confirm Desktop opens it: the real proof that PBIP + Shape Map work on this build.
 - Then full model: `dim_state`, `dim_lga`, `dim_party` (disconnected, drives slicers),
   `fact_result_2023` (grain: LGA × party, immutable), `fact_registered_voters` (grain: LGA).
 - Single-direction relationships only, unless justified in the decision log.

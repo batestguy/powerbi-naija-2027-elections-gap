@@ -35,14 +35,18 @@ must carry the story for everyone else.
   later will be about the target, not this machine.
 - raw.githubusercontent.com: HTTP 200.
 
-## Still to confirm by hand in Power BI Desktop (cannot be checked from the command line)
-1. **File > Options > Preview features**: "Power BI Project (.pbip) save option" and
-   "Store reports using enhanced metadata format (PBIR)" — on, if still listed (newer versions
-   may have made them default).
-2. **Map visual choice.** For a desktop-only, offline-checkable file the leading candidate is the
-   **Shape Map** visual with our own TopoJSON (preview feature — enable it in the same menu).
-   Azure Maps needs a sign-in and internet; the old Bing-based maps are being retired.
-   Decide in Phase 3 after the thin slice.
+## Power BI features (automated check, no manual steps)
+`scripts/check_env.ps1` reads Desktop's version and a read-only copy of its settings archive.
+- No preview toggles have ever been changed on this machine (all defaults).
+- Per Microsoft release notes, **Shape map is GA from the June 2026 update (2.155)** and
+  **PBIP is GA from the September 2026 update**; installed 2.159 is newer than both, so no toggles are needed.
+  These thresholds come from release-note summaries; the real proof is the Phase 3 thin slice
+  opening a script-generated `.pbip` in Desktop.
+- Map visual: Shape Map with our own TopoJSON (works offline, no sign-in). Azure Maps rejected for a
+  desktop-only file because it needs sign-in and internet.
+
+Re-run all Phase 0 checks: `pwsh -File scripts/check_env.ps1` writes `reports/env_check.json`
+(2026-11-13: 10 checks, 0 failures).
 
 ## Adaptations to later phases
 - Phase 6 "test the published version" becomes: open the release `.pbix` on a clean machine/profile

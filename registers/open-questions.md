@@ -6,5 +6,5 @@
 | 2 | Publish target | — | Decided: desktop file + video (see decision log 2026-11-13) | closed |
 | 3 | Mundx licence / redistribution terms | — | Find terms page or contact maintainer | open |
 | 4 | Registered voters per LGA: direct or aggregated from polling units? | — | Inspect CredibleVoteNG | open |
-| 5 | Map visual: Shape Map (TopoJSON, preview) vs Azure Maps | — | Try Shape Map in the Phase 3 thin slice | open |
-| 6 | Are PBIP/PBIR save options on in this Desktop build? | author | Check File > Options > Preview features | open |
+| 5 | Map visual | — | Decided: Shape Map + own TopoJSON (GA, offline); confirm in Phase 3 thin slice | closed |
+| 6 | PBIP/PBIR available in this build? | — | Closed by scripts/check_env.ps1 (2.159 newer than GA versions); real proof in Phase 3 | closed |

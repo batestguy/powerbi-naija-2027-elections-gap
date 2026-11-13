@@ -1,0 +1,65 @@
+{
+  "checked_at": "2026-11-13T06:45:31",
+  "checks": [
+    {
+      "name": "powerbi_desktop_installed",
+      "pass": true,
+      "required": true,
+      "detail": "Store 2.159.1231.0"
+    },
+    {
+      "name": "shape_map_ga_by_version",
+      "pass": true,
+      "required": true,
+      "detail": "Shape map GA from 2.155 (June 2026)"
+    },
+    {
+      "name": "pbip_ga_by_version",
+      "pass": true,
+      "required": true,
+      "detail": "PBIP GA from Sept 2026 update (assumed 2.158)"
+    },
+    {
+      "name": "desktop_settings_readable",
+      "pass": true,
+      "required": false,
+      "detail": "preview-related entries: none (all defaults)"
+    },
+    {
+      "name": "python_pinned_env",
+      "pass": true,
+      "required": true,
+      "detail": "venv=3.12.13 pinned=3.12.13"
+    },
+    {
+      "name": "network_real_host",
+      "pass": true,
+      "required": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "network_impossible_host_fails",
+      "pass": true,
+      "required": true,
+      "detail": "No such host is known. (no-such-host-zz9.invalid:443)"
+    },
+    {
+      "name": "screen_recorder_available",
+      "pass": true,
+      "required": true,
+      "detail": "Microsoft.ScreenSketch 11.2608.41.0; Microsoft.XboxGamingOverlay 7.326.10141.0"
+    },
+    {
+      "name": "disk_free_gb_over_10",
+      "pass": true,
+      "required": true,
+      "detail": "52.4 GB"
+    },
+    {
+      "name": "ram_gb_over_8",
+      "pass": true,
+      "required": true,
+      "detail": "15.9 GB"
+    }
+  ]
+}
