@@ -1,0 +1,222 @@
+Agent Brief: Nigeria 2027 Scenario Simulator — Power BI Portfolio Project
+1. Mission
+Build a shareable, free-tier Power BI report that lets a user explore a candidate's 2023 baseline performance across Nigeria's 774 LGAs, simulate 2027 scenarios via swing and turnout assumptions, and see live whether the candidate crosses the constitutional 25%-in-24-states threshold.
+
+The report is a scenario and communication tool, not an electoral authority. Its value is in demonstrating analytical craft: sourcing discipline, modelling clarity, transparent assumptions, and honest uncertainty.
+
+2. North Star Outcomes (what "done" looks like)
+A published Power BI report with four functional pages: Candidate Overview, LGA Vulnerability Map, Scenario Simulator, State-by-State Path.
+
+Every number traceable to a documented source with an access date.
+
+A user can move two sliders and watch the map recolour and the "States Secured" counter update without lag.
+
+A one-page "How to read this" explainer that states assumptions and limitations plainly.
+
+A decision log and source register that a reviewer can audit in under ten minutes.
+
+3. Guardrails (non-negotiable)
+Integrity
+
+Never fabricate, interpolate, or "fill in" missing results. If data is absent, mark it null and surface it visibly.
+
+Never present a Mundx four-party rollup as official INEC results. Label every baseline as "four-party rollup, not official."
+
+Every assumption in the scenario engine must be stated in the report, not buried in the model.
+
+Licensing and provenance
+
+Confirm the redistribution terms of each source before publishing. Where a licence is unclear (Mundx is a known example), treat it as "internal use / attribution required" and state this in the data sources page.
+
+Do not embed credentials, keys, or personal data. Prefer keyless/open endpoints.
+
+Record the snapshot date for every table.
+
+Model hygiene
+
+Baseline fact tables are immutable. All scenario logic lives in measures or clearly labelled calculated layers.
+
+One grain per table. No mixed-grain facts.
+
+Geography keys must match the shapefile's name property exactly — this is a known failure point; validate before building visuals.
+
+Performance
+
+Geometry must be simplified before import. A raw national LGA GeoJSON will degrade a free-tier workspace.
+
+Avoid bidirectional relationships unless justified in the decision log.
+
+Test refresh and interaction latency on the target publication tier, not just desktop.
+
+Honesty about method
+
+The state-level uniform swing is an approximation. Either state it, or upgrade to LGA-level distribution with explicit weights. Do not silently imply LGA-level precision from a state-level calculation.
+
+4. Operating Principles for the Agent
+Research before building. For every unknown (API shape, licence, file format, threshold rule), spend a bounded research pass first, log findings, then proceed.
+
+Verify at boundaries. Anything crossing a system boundary — API response, file download, published dataset — gets a sanity check against an independent source before it enters the model.
+
+Prefer reversible decisions early. Get the pipeline working end-to-end with the simplest defensible assumptions, then refine.
+
+Log every judgement call. Ambiguity is expected; undocumented ambiguity is not.
+
+Ask or flag, don't guess silently. If a source is unavailable or contradicts another, surface the conflict in the open-questions register rather than picking one quietly.
+
+5. Phased Workflow
+Each phase has: Goal → Suggested approach → Checkpoints / places to verify → Artifacts → Exit criteria.
+
+Phase 0 — Capability and environment audit
+Goal: Know what you can actually do before promising anything.
+
+Approach: Inventory available MCP connections and their limits (file system, web fetch, any Power BI or database connection). Identify where you can write files, where you can query live, and where you are read-only. Confirm target publication tier and its constraints (dataset size, refresh limits, feature availability such as the Shape Map preview).
+
+Checkpoints: Can you fetch a URL and persist the response? Can you read/write local files? Is there a Power BI service connection, or is this a desktop-only deliverable?
+
+Exit criteria: A short environment note listing capabilities, constraints, and any phase below that must be adapted.
+
+Phase 1 — Source validation and licence research
+Goal: Confirm each of the four planned sources is live, usable, and legally publishable.
+
+Approach: For each source — Mundx lgas.json, Nigeria2 API, CredibleVoteNG, and the LGA GeoJSON from World Bank / GitHub — determine: current availability, response/file structure, whether auth is required, licence or terms, and whether the granularity matches the plan (LGA, ward, polling unit).
+
+Places to check: The source's own documentation or data catalogue page; any terms-of-use page; the response headers or file metadata; a second independent source to confirm the same figures exist elsewhere (e.g., INEC or a reputable aggregator) for cross-validation.
+
+Anticipated research questions:
+
+Is the Mundx rollup still published, and does it cover all 774 LGAs?
+
+Does CredibleVoteNG expose registered voters per LGA directly, or must it be aggregated from polling units?
+
+Which GeoJSON has the cleanest LGA name convention, and does it include the FCT as a distinct unit?
+
+Are there any LGAs where sources disagree on names or boundaries?
+
+Artifacts: Source register (name, URL, access date, format, granularity, licence status, confidence rating).
+
+Exit criteria: Every source marked approved / conditional / rejected with a reason. Rejected sources have a documented substitute or a note that the feature will be descoped.
+
+Phase 2 — Acquisition and profiling
+Goal: Land the data in a raw, unmodified form and understand its shape.
+
+Approach: Capture raw responses/files exactly as received. Profile each: row counts, key coverage, null patterns, duplicate keys, value ranges, and encoding oddities. Compare row counts against the expected universe (774 LGAs, 37 states incl. FCT, ~176k polling units if used).
+
+Checkpoints / places to verify:
+
+Do LGA names join cleanly across baseline, registered-voter, and geometry tables? Count unmatched keys before proceeding — this is the single most likely silent failure.
+
+Do party totals per state reconcile with any independent published state-level figure within a stated tolerance?
+
+Are there LGAs with zero or null votes, and are those real or missing?
+
+Artifacts: Raw data snapshots, a profiling summary, and an unmatched-keys report.
+
+Exit criteria: Join coverage documented (target: near-complete; any gap explained). Data quality issues logged with a decision on how each will be handled.
+
+Phase 3 — Model design
+Goal: A clean, auditable star-style model with geography as the spine.
+
+Approach: Separate raw, staging, and presentation layers. Define grains explicitly. Keep baseline facts immutable. A disconnected candidate/party table drives slicers. Decide and document the key for LGA joins.
+
+Checkpoints: Every relationship's cardinality and filter direction justified. No many-to-many without a bridge. Calculated columns kept minimal and only where they belong to the data, not the scenario.
+
+Artifacts: Model diagram and a short modelling rationale.
+
+Exit criteria: A reviewer can explain the model from the diagram alone.
+
+Phase 4 — Scenario engine design
+Goal: A transparent, parameter-driven simulation layer.
+
+Approach: Define the scenario conceptually before implementing: how does a swing apply? Does turnout change scale the denominator, the candidate's votes, or both? How is the 25% threshold evaluated — per state, including FCT? What is the difference between "secured," "tipping point," and "out of reach"?
+
+Places to research: The exact constitutional threshold wording and whether the FCT is counted as a state for this purpose. Confirm before encoding it.
+
+Checkpoints: Stress-test the logic at extremes (sliders at min and max) to confirm outputs stay sane and no divide-by-zero or negative-share artefacts appear. Verify that slider changes propagate to every dependent visual without stale values.
+
+Artifacts: A one-page scenario methodology note stating assumptions and their limits.
+
+Exit criteria: An independent reviewer can reproduce the scenario logic from the methodology note without reading the model.
+
+Phase 5 — Report design
+Goal: Four pages that are legible, honest, and fast.
+
+Approach: Build in order of increasing complexity: Overview → Path → Map → Simulator. Each page should answer one question. Apply the 25% threshold as a semantic boundary — a fixed reference line and a red/green scale anchored at 0.25, not an arbitrary gradient.
+
+Checkpoints: Colour choices are accessible (colour-blind safe, not red/green alone — add labels or patterns). Tooltips add diagnostic value. Text is readable at default zoom. Interaction latency on the target tier is acceptable.
+
+Artifacts: Screen-recorded walkthrough or a written page guide.
+
+Exit criteria: A non-specialist can complete the core task (change candidate, move a slider, read the states-secured count) unaided.
+
+Phase 6 — Quality assurance
+Goal: Catch errors before a reviewer does.
+
+Approach: Run a formal validation pass:
+
+Reconcile national totals against an independent source within a stated tolerance.
+
+Re-verify all LGA-to-geometry name matches post-import.
+
+Confirm the baseline page shows the same figures as the simulator page at slider-neutral settings.
+
+Test refresh from a clean cache.
+
+Test the published version, not just desktop.
+
+Places to verify: A second independent dataset for headline totals; the source register for access dates; the published report opened in a fresh browser session.
+
+Exit criteria: A QA log with pass/fail per check and a resolution note for any failure.
+
+Phase 7 — Publication and documentation
+Goal: A shareable report plus the paperwork that makes it credible.
+
+Approach: Publish to the free tier. Include a "Data Sources" page (source, access date, licence status, limitation) and a "How to read this" page (threshold explanation, assumption statement, what the report does not claim).
+
+Exit criteria: A reviewer can open the link, reach the methodology from the report itself, and understand the limitations without asking.
+
+Phase 8 — Portfolio packaging
+Goal: Convert the build into a hireable artefact.
+
+Approach: Prepare a short case-study narrative: the question, the sources, the key modelling decisions, the trade-offs made (e.g., state-level swing vs LGA-level), and what you would do next with more time or better data. Include the decision log and open-questions register as evidence of process.
+
+Exit criteria: A one-page case study and a link to the live report.
+
+6. Cross-Cutting Registers (maintain throughout)
+Decision log: date, decision, alternatives considered, rationale.
+
+Open-questions register: unresolved ambiguities with owners and next research step.
+
+Risk register: e.g., source disappears; licence unclear; geometry mismatch; tier limits; threshold misinterpretation — each with a mitigation.
+
+Source register: as above.
+
+7. Escalation Rules
+Stop and flag rather than proceed when:
+
+A source's licence is unclear and the report would be public.
+
+Two sources disagree on a headline figure beyond tolerance.
+
+The constitutional threshold wording is ambiguous in a way that changes the headline metric.
+
+LGA key coverage falls below a reasonable completeness bar and the cause is unexplained.
+
+8. Anti-Patterns to Avoid
+Building visuals before the join keys are proven clean.
+
+Hard-coding slider values instead of binding to parameters.
+
+Mixing baseline and scenario logic in the same table or column.
+
+Importing unsimplified geometry.
+
+Treating the Mundx rollup as authoritative.
+
+Shipping without a limitations page.
+
+Hiding assumptions in DAX comments only.
+
+9. Expected Results
+A published, free-tier Power BI report demonstrating: API and JSON ingestion, disciplined source governance, a clean geographic star model, parameter-driven What-If simulation, threshold-anchored spatial visualisation, and explicit communication of uncertainty — supported by a decision log, source register, QA log, and a one-page case study.
+
+The agent should treat everything above as directional, not prescriptive: research the specifics, adapt where evidence points elsewhere, and record why.

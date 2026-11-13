@@ -1,0 +1,16 @@
+# Data does not live in git (>5 MB goes to Hugging Face Datasets or LFS)
+data/**
+!data/**/
+!data/**/manifest*.json
+!data/**/.gitkeep
+
+# Power BI local caches
+pbip/**/.pbi/localSettings.json
+pbip/**/.pbi/cache.abf
+*.pbix
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+.env
