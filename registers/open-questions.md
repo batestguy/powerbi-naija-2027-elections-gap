@@ -8,5 +8,5 @@
 | 4 | Registered voters per LGA: direct or aggregated from polling units? | — | Inspect CredibleVoteNG | open |
 | 5 | Map visual | — | Decided: Shape Map + own TopoJSON (GA, offline); confirm in Phase 3 thin slice | closed |
 | 6 | PBIP/PBIR available in this build? | — | Closed by scripts/check_env.ps1 (2.159 newer than GA versions); real proof in Phase 3 | closed |
-| 7 | No open, machine-readable LGA-level 2023 presidential results found | user | Choose: supply Mundx file / state-level core / compile LGA data | **blocking** |
+| 7 | No open, complete, machine-readable LGA-level 2023 presidential results exist (confirmed by second pass: IReV = images; best file = 266/774 LGAs, no licence) | user | Choose: supply Mundx file / state-level core / compile LGA data | **blocking** |
 | 8 | Registered voters: 2023 roll (93.47M) or 2026 roll (~103M, press) for 2027 scenarios? | — | Decide in Phase 4 | open |

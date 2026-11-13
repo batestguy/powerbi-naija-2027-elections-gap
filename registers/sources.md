@@ -15,3 +15,15 @@ Verdicts: approved / conditional / rejected. "Not verified" = we could not fetch
 
 ## Headline figures for cross-checks (INEC declaration, via the secondary copy above; matched by Wikipedia infobox)
 APC 8,794,726 · PDP 6,984,520 · LP 6,101,533 · NNPP 1,496,687 · registered 93,469,008 · accredited 25,286,616 · valid 24,025,940 · rejected 939,278 · total cast 24,965,218.
+
+## Second, deeper pass (2026-11-13) — direct checks, not summaries
+| Name | URL | Format | Grain | Licence | Verdict | What we measured |
+|------|-----|--------|-------|---------|---------|------------------|
+| INEC IReV (results viewing portal) | https://www.inecelectionresults.ng/ (API e.g. `lv001-g.inecelectionresults.ng/api/v1/elections/<id>/pus?ward=<id>`) | JSON metadata + **scanned PDF result sheets** | Polling unit | INEC publishes no terms | **conditional (images only)** | Live (HTTP 200). Records hold a link to a scanned EC8A sheet, no vote numbers. Turning ~176k sheets into numbers is an OCR project. Community mirror of the metadata: github.com/mykeels/inec-presidential-elections-2023 (no licence asserted). |
+| EvangelGeorge/Nigerian-Election-For-2023 `ElectionDataComplete_winner.xlsx` | https://github.com/EvangelGeorge/Nigerian-Election-For-2023 | XLSX | LGA × 18 candidates | **none** | **rejected** | 774 LGAs × 18 rows present, but only 266 LGAs fully filled, 367 empty, 141 partial. National sums are 52–77% of INEC totals (APC 4.60M vs 8.79M). Source undocumented. |
+| AGADA-BI/Nigeria-2023-election-data (state table "based on results declared by INEC") | https://github.com/AGADA-BI/Nigeria-2023-election-data | XLSX | State | **none** | **conditional (cross-check only)** | 37 rows, APC/PDP/LP/NNPP/others/valid votes. Usable as a second check on state totals, not as a publishable source. |
+| agbanzy/nigeria-election-dashboard | https://github.com/agbanzy/nigeria-election-dashboard | CSV | 2023 presidential: **state only** | code MIT; its 2023 state CSV is tagged `--license proprietary` (from Stears) | **rejected** | No LGA-level 2023 presidential data in repo. |
+| Kaggle "Nigeria Election Data" (aniekanumanah) | https://www.kaggle.com/datasets/aniekanumanah/nigeria-election-data | CSV + `nigeria_2023_lgas_data.json` | State / LGA / district | GNU FDL 1.3 | **conditional (registered voters)** | Voter statistics, not results. Candidate for registered voters per LGA. Download needs a Kaggle login. Contents not yet inspected. |
+| Stears Elections | https://www.stears.co/elections/2023/president/ | Web | State + LGA | proprietary / paywalled | **rejected** | Paid product; not scraped. |
+| Civic Hive live results | https://liveresults.civichive.org/ | Web app | LGA (claimed) | not found | **not verified** | Page loads; no public data endpoint found in the page. |
+| HDX search "nigeria election results" / "nigeria inec" | data.humdata.org | — | — | — | — | Only INEC LGA/ward *names* list (CC0); no results data. |

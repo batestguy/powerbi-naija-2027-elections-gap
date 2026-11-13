@@ -2,4 +2,6 @@
 name = "naija-2027-elections-gap"
 version = "0.1.0"
 requires-python = "==3.12.*"
-dependencies = []
+dependencies = [
+    "openpyxl>=3.1.5",
+]
