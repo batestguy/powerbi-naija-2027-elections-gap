@@ -1,0 +1,272 @@
+{
+  "probed_on": "2026-11-13",
+  "results": {
+    "hdx_cod_ab": {
+      "ok": true,
+      "source": "HDX COD-AB Nigeria (cod-ab-nga)",
+      "metadata_url": "https://data.humdata.org/api/3/action/package_show?id=cod-ab-nga",
+      "file_url": "https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/7e30ec96-7f29-4ee8-9f4c-77633b353cbb/download/nga_admin_boundaries.geojson.zip",
+      "http": 200,
+      "licence": "Creative Commons Attribution for Intergovernmental Organisations (CC BY-IGO)",
+      "dataset_date": "[2019-04-17T00:00:00 TO 2025-10-30T23:59:59]",
+      "resource_last_modified": "2026-04-16T09:05:30.712022",
+      "zip_bytes": 11395117,
+      "adm2_file": "nga_admin2.geojson",
+      "lga_features": 774,
+      "unique_pcodes": 774,
+      "states": 37,
+      "fields": [
+        "adm0_name",
+        "adm0_name1",
+        "adm0_name2",
+        "adm0_name3",
+        "adm0_pcode",
+        "adm1_name",
+        "adm1_name1",
+        "adm1_name2",
+        "adm1_name3",
+        "adm1_pcode",
+        "adm2_name",
+        "adm2_name1",
+        "adm2_name2",
+        "adm2_name3",
+        "adm2_pcode",
+        "adm2_ref_name",
+        "area_sqkm",
+        "center_lat",
+        "center_lon",
+        "lang",
+        "lang1",
+        "lang2",
+        "lang3",
+        "sendist_en",
+        "sendistpcode",
+        "valid_on",
+        "valid_to",
+        "version"
+      ],
+      "fct_units": [
+        "Abaji",
+        "Abuja Municipal",
+        "Bwari",
+        "Gwagwalada",
+        "Kuje",
+        "Kwali"
+      ],
+      "duplicate_lga_names": [
+        "Bassa",
+        "Ifelodun",
+        "Irepodun",
+        "Nasarawa",
+        "Obi",
+        "Surulere"
+      ],
+      "valid_on_values": [
+        "2019-04-17"
+      ]
+    },
+    "geoboundaries": {
+      "ok": true,
+      "source": "geoBoundaries gbOpen NGA ADM2",
+      "api_url": "https://www.geoboundaries.org/api/current/gbOpen/NGA/ADM2/",
+      "http": 200,
+      "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "source_org": "GRID3",
+      "boundary_year": "2022",
+      "feature_count_reported": "774",
+      "topojson_url": "https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/NGA/ADM2/geoBoundaries-NGA-ADM2.topojson"
+    },
+    "wikipedia_lga": {
+      "ok": true,
+      "source": "Wikipedia '2023 Nigerian presidential election in <State>' pages",
+      "licence": "CC BY-SA 4.0 (Wikipedia text)",
+      "pages_found": 37,
+      "lga_rows_total": 804,
+      "lga_rows_with_figures": 111,
+      "states_complete": [
+        "Edo State"
+      ],
+      "states_empty": [
+        "Abia State",
+        "Akwa Ibom State",
+        "Anambra State",
+        "Bauchi State",
+        "Benue State",
+        "Borno State",
+        "Cross River State",
+        "Delta State",
+        "Ebonyi State",
+        "Enugu State",
+        "Gombe State",
+        "Imo State",
+        "Jigawa State",
+        "Kaduna State",
+        "Katsina State",
+        "Kebbi State",
+        "Kogi State",
+        "Kwara State",
+        "Nasarawa State",
+        "Ogun State",
+        "Osun State",
+        "Oyo State",
+        "Plateau State",
+        "Rivers State",
+        "Sokoto State",
+        "Taraba State",
+        "Yobe State",
+        "Zamfara State"
+      ],
+      "per_state": {
+        "Abia State": {
+          "lga_rows": 18,
+          "rows_with_figures": 0
+        },
+        "Adamawa State": {
+          "lga_rows": 20,
+          "rows_with_figures": 9
+        },
+        "Akwa Ibom State": {
+          "lga_rows": 32,
+          "rows_with_figures": 0
+        },
+        "Anambra State": {
+          "lga_rows": 22,
+          "rows_with_figures": 0
+        },
+        "Bauchi State": {
+          "lga_rows": 22,
+          "rows_with_figures": 0
+        },
+        "Bayelsa State": {
+          "lga_rows": 9,
+          "rows_with_figures": 8
+        },
+        "Benue State": {
+          "lga_rows": 24,
+          "rows_with_figures": 0
+        },
+        "Borno State": {
+          "lga_rows": 27,
+          "rows_with_figures": 0
+        },
+        "Cross River State": {
+          "lga_rows": 18,
+          "rows_with_figures": 0
+        },
+        "Delta State": {
+          "lga_rows": 24,
+          "rows_with_figures": 0
+        },
+        "Ebonyi State": {
+          "lga_rows": 14,
+          "rows_with_figures": 0
+        },
+        "Edo State": {
+          "lga_rows": 19,
+          "rows_with_figures": 19
+        },
+        "Ekiti State": {
+          "lga_rows": 17,
+          "rows_with_figures": 16
+        },
+        "Enugu State": {
+          "lga_rows": 19,
+          "rows_with_figures": 0
+        },
+        "Gombe State": {
+          "lga_rows": 12,
+          "rows_with_figures": 0
+        },
+        "Imo State": {
+          "lga_rows": 28,
+          "rows_with_figures": 0
+        },
+        "Jigawa State": {
+          "lga_rows": 28,
+          "rows_with_figures": 0
+        },
+        "Kaduna State": {
+          "lga_rows": 23,
+          "rows_with_figures": 0
+        },
+        "Kano State": {
+          "lga_rows": 44,
+          "rows_with_figures": 26
+        },
+        "Katsina State": {
+          "lga_rows": 36,
+          "rows_with_figures": 0
+        },
+        "Kebbi State": {
+          "lga_rows": 22,
+          "rows_with_figures": 0
+        },
+        "Kogi State": {
+          "lga_rows": 21,
+          "rows_with_figures": 0
+        },
+        "Kwara State": {
+          "lga_rows": 17,
+          "rows_with_figures": 0
+        },
+        "Lagos State": {
+          "lga_rows": 21,
+          "rows_with_figures": 20
+        },
+        "Nasarawa State": {
+          "lga_rows": 14,
+          "rows_with_figures": 0
+        },
+        "Niger State": {
+          "lga_rows": 26,
+          "rows_with_figures": 1
+        },
+        "Ogun State": {
+          "lga_rows": 21,
+          "rows_with_figures": 0
+        },
+        "Ondo State": {
+          "lga_rows": 19,
+          "rows_with_figures": 6
+        },
+        "Osun State": {
+          "lga_rows": 30,
+          "rows_with_figures": 0
+        },
+        "Oyo State": {
+          "lga_rows": 34,
+          "rows_with_figures": 0
+        },
+        "Plateau State": {
+          "lga_rows": 18,
+          "rows_with_figures": 0
+        },
+        "Rivers State": {
+          "lga_rows": 24,
+          "rows_with_figures": 0
+        },
+        "Sokoto State": {
+          "lga_rows": 24,
+          "rows_with_figures": 0
+        },
+        "Taraba State": {
+          "lga_rows": 17,
+          "rows_with_figures": 0
+        },
+        "Yobe State": {
+          "lga_rows": 18,
+          "rows_with_figures": 0
+        },
+        "Zamfara State": {
+          "lga_rows": 15,
+          "rows_with_figures": 0
+        },
+        "the Federal Capital Territory": {
+          "lga_rows": 7,
+          "rows_with_figures": 6
+        }
+      },
+      "method_note": "A row counts as filled if it links an LGA, has >=3 numbers of 3+ digits and no 'TBD'. Heuristic, not a parse."
+    }
+  }
+}

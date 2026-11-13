@@ -1,9 +1,17 @@
 # Source register
 
-| Name | URL | Access date | Format | Grain | Auth | Licence status | Confidence | Verdict |
-|------|-----|-------------|--------|-------|------|----------------|------------|---------|
-| Mundx lgas.json | TBD | — | JSON | LGA | — | unclear | — | pending |
-| Nigeria2 API | TBD | — | JSON | — | — | — | — | pending |
-| CredibleVoteNG | TBD | — | — | — | — | — | — | pending |
-| LGA GeoJSON | TBD | — | GeoJSON | LGA | — | — | — | pending |
-| Independent check (INEC / aggregator) | TBD | — | — | State / national | — | — | — | pending |
+Access date for all rows: 2026-11-13. Machine checks: `uv run python -I scripts/probe_sources.py` → `reports/source_probe.json`.
+Verdicts: approved / conditional / rejected. "Not verified" = we could not fetch it ourselves.
+
+| Name | URL | Format | Grain | Auth | Licence | Confidence | Verdict | Reason |
+|------|-----|--------|-------|------|---------|------------|---------|--------|
+| Mundx `lgas.json` (four-party rollup) | Not found | — | LGA (claimed) | — | none found | low | **rejected (for now)** | Web + GitHub search found no such file; GitHub user `Mundx` has 0 public repos. Reopen if the exact URL or file is supplied. |
+| "Nigeria2 API" | Not found | — | — | — | — | low | **rejected (for now)** | Cannot identify. Lookalike `github.com/BigYusuf/election` (MIT in README) is unverified. |
+| CredibleVoteNG | Domain not found (press: guardian.ng, itedgenews.africa) | API (per press) | Polling unit | none (per press) | not stated | low | **conditional** | Real project, but press describes a polling-unit directory; no registered-voter counts confirmed. |
+| HDX COD-AB Nigeria `nga_admin2.geojson` | https://data.humdata.org/dataset/cod-ab-nga | GeoJSON in zip (11.4 MB) | LGA | none | CC BY-IGO | high | **approved (geometry)** | Probe: 774 features, 774 unique P-codes, 37 states, FCT as 6 councils. Stable `adm2_pcode` join key. Boundaries valid_on 2019-04-17. Needs TopoJSON conversion + simplification. |
+| geoBoundaries gbOpen NGA ADM2 | https://www.geoboundaries.org/api/current/gbOpen/NGA/ADM2/ | GeoJSON / TopoJSON | LGA | none | CC BY 4.0 (source GRID3) | high | **rejected (backup only)** | 774 units but no state field, no code, misspelt names ("Nassarawa", "Nasarawa Egon"). |
+| INEC 2023 declared presidential results (via secondary copy) | https://thenigerialawyer.com/inigeriaelections2023-final-results-of-2023-presidential-election-as-declared-by-ineci/ | HTML table | State + national | none | none stated (public declaration) | high (national), medium (state) | **approved (national) / conditional (state)** | National totals match Wikipedia infobox. State table must be parsed and summed to national before use. INEC's own PDF not found (inecnigeria.org results page 404). |
+| Wikipedia state pages "2023 Nigerian presidential election in X" | en.wikipedia.org (37 pages) | Wikitext tables | LGA | none | CC BY-SA 4.0 | low | **rejected (LGA)** | Probe: 804 LGA rows, only ~111 with figures; 28 of 37 pages have none. Figures cite tweets. |
+
+## Headline figures for cross-checks (INEC declaration, via the secondary copy above; matched by Wikipedia infobox)
+APC 8,794,726 · PDP 6,984,520 · LP 6,101,533 · NNPP 1,496,687 · registered 93,469,008 · accredited 25,286,616 · valid 24,025,940 · rejected 939,278 · total cast 24,965,218.
