@@ -392,7 +392,11 @@ def main():
                          "votes": chosen.get(k, s[party]), "votes_rule": rule,
                          "votes_wikipedia": s[party], "pct_reported_wikipedia": s[party + "_pct"],
                          "threshold_flag_reported_wikipedia": s.get(party + "_T"),
-                         "source": src_recon if party != "OTHERS" else src_main + " (= AGADA-BI)", "source_revid": revid})
+                         "source": (src_main + " (= AGADA-BI)" if party == "OTHERS" else
+                                    src_recon + ("; HAND DECISION chosen for consistency with INEC's national total, "
+                                                 "not confirmed as the as-announced state figure - see "
+                                                 "data/reference/result_cell_decisions.csv" if rule == "decision" else "")),
+                         "source_revid": revid})
     write_csv(STG / "fact_result_2023.csv", fact, ["state_pcode", "party", "candidate", "votes", "votes_rule",
                                                     "votes_wikipedia", "pct_reported_wikipedia",
                                                     "threshold_flag_reported_wikipedia", "source", "source_revid"])

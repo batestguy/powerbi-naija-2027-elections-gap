@@ -26,6 +26,11 @@ def check(name, ok, evidence, gate=True):
                    "gate": gate, "evidence": evidence})
 
 
+def info(name, evidence):
+    """A finding recorded for the reader; it cannot fail, so it is not counted as a pass."""
+    checks.append({"check": name, "status": "info", "gate": False, "evidence": evidence})
+
+
 def read(name):
     with open(STG / name, encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
@@ -101,9 +106,8 @@ def main():
           {"differences": wsum, "note": "why reconciliation exists"}, gate=False)
     tvw = {r["state_pcode"]: int(r["total_valid_wikipedia"]) for r in turn}
     tva = {r["state_pcode"]: int(r["total_valid_agada"]) for r in turn if r["total_valid_agada"]}
-    check("derived total valid per state vs Wikipedia and AGADA reported totals", True,
-          {"differs_from_wikipedia": {k: tv[k] - tvw[k] for k in tv if tv[k] != tvw[k]},
-           "differs_from_agada": {k: tv[k] - tva[k] for k in tva if tv[k] != tva[k]}}, gate=False)
+    info("derived total valid per state vs Wikipedia and AGADA reported totals", {"differs_from_wikipedia": {k: tv[k] - tvw[k] for k in tv if tv[k] != tvw[k]},
+           "differs_from_agada": {k: tv[k] - tva[k] for k in tva if tv[k] != tva[k]}})
 
     # 5. 25% rule count, recomputed from reconciled votes (not from the reported flag)
     t25 = {p: sum(votes[k][p] * 4 >= tv[k] for k in votes) for p in PARTIES}
@@ -114,9 +118,9 @@ def main():
     alt = 517_341 / (tv["NG020"] - kano["APC"] + 517_341)
     check("Kano APC decision does not change the 25% outcome", (kano["APC"] * 4 >= tv["NG020"]) == (alt >= 0.25),
           {"chosen_share": round(kano["APC"] / tv["NG020"], 4), "alternative_517341_share": round(alt, 4)})
-    near = sorted((round(100 * votes[k][p] / tv[k], 3), k, p) for k in votes for p in PARTIES
-                  if abs(votes[k][p] / tv[k] - 0.25) < 0.005)
-    check("states within 0.5 pp of 25% (rounding risk)", True, {"cases": near}, gate=False)
+    near = sorted((round(100 * votes[k][p] / tv[k], 3), k, p, round(votes[k][p] - tv[k] / 4, 1))
+                  for k in votes for p in PARTIES if abs(votes[k][p] / tv[k] - 0.25) < 0.005)
+    info("states within 0.5 pp of 25% (rounding risk)", {"cases [pct, state, party, votes above(+)/below(-) 25%]": near})
 
     # 6. Turnout table
     check("fact_turnout: 37 rows, keys match dim_state", len(turn) == 37 and {r["state_pcode"] for r in turn} == keys,
@@ -154,11 +158,9 @@ def main():
           {"violations": chosen_ok, "non_unanimous_cells": dict(by_rule)})
     fact_match = [r for r in rec if votes[r["state_pcode"]][r["party"]] != int(r["chosen"])]
     check("reconciliation: fact_result carries the reconciled values", not fact_match, {"mismatches": fact_match})
-    check("reconciliation: hand decisions (ties and overrides)", True,
-          {"decisions": [{k: r[k] for k in ("state_pcode", "party", "chosen", "reason")} for r in rec if r["rule"] == "decision"]},
-          gate=False)
+    info("reconciliation: hand decisions (ties and overrides)", {"decisions": [{k: r[k] for k in ("state_pcode", "party", "chosen", "reason")} for r in rec if r["rule"] == "decision"]})
     dissent = Counter(s for r in rec for s in srcs if r[s] and r[s] != r["chosen"])
-    check("reconciliation: cells where each copy differs from the chosen value", True, dict(dissent), gate=False)
+    info("reconciliation: cells where each copy differs from the chosen value", dict(dissent))
 
     # 8. Join-key gate
     with open(REP / "unmatched_keys.csv", encoding="utf-8") as f:
@@ -170,7 +172,7 @@ def main():
         check(f"geometry {fname}: keys = dim_state keys", g == keys,
               {"features": len(tj["objects"][obj]["geometries"]), "missing": sorted(keys - g), "extra": sorted(g - keys)})
     gm = json.loads((ASSETS / "geometry_manifest.json").read_text(encoding="utf-8"))["outputs"][0]
-    check("geometry: no invalid or empty shapes, no overlaps after simplification",
+    check("geometry (as reported by build_geometry.py manifest): no invalid or empty shapes, no overlaps",
           not gm["invalid_after_simplify"] and not gm["empty_after_simplify"] and gm["pairwise_overlap_area_deg2"] == 0,
           {k: gm[k] for k in ("invalid_after_simplify_before_repair", "invalid_after_simplify", "empty_after_simplify",
                               "pairwise_overlap_area_deg2", "max_area_change_ratio", "bytes")})
@@ -190,19 +192,19 @@ def main():
         acc_rows.append(row)
     if acc_rows:
         with open(REP / "mundx_state_accuracy.csv", "w", encoding="utf-8", newline="\n") as f:
-            f.write("# Mundx four-party rollup / INEC declared (Wikipedia By state). Ratios only; Mundx figures not redistributed.\n")
+            f.write("# Mundx four-party rollup / reconciled state votes (data/staging/fact_result_2023.csv). Ratios only.\n")
             wr = csv.DictWriter(f, fieldnames=list(acc_rows[0]), lineterminator="\n")
             wr.writeheader(); wr.writerows(acc_rows)
         r4 = sorted(x["four_party_ratio"] for x in acc_rows)
-        check("mundx four-party accuracy (info)", True,
-              {"min": r4[0], "median": r4[len(r4) // 2], "max": r4[-1],
-               "states_within_2pct": sum(abs(x - 1) <= 0.02 for x in r4)}, gate=False)
+        info("mundx four-party accuracy (info)", {"min": r4[0], "median": r4[len(r4) // 2], "max": r4[-1],
+               "states_within_2pct": sum(abs(x - 1) <= 0.02 for x in r4)})
 
     failed = [c["check"] for c in checks if c["status"] == "fail"]
     flagged = [c["check"] for c in checks if c["status"] == "flag"]
     out = {"built_by": "scripts/validate_phase2.py", "gate_passed": not failed,
            "summary": {"checks": len(checks), "pass": sum(c["status"] == "pass" for c in checks),
-                       "fail": len(failed), "flag": len(flagged)},
+                       "fail": len(failed), "flag": len(flagged),
+                       "info": sum(c["status"] == "info" for c in checks)},
            "failed": failed, "flagged": flagged, "checks": checks}
     (REP / "phase2_validation.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8", newline="\n")
     for c in checks:

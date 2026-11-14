@@ -1,7 +1,7 @@
 """Phase 2 geometry. Builds the two TopoJSON files for the Power BI Shape Map visual.
 
 1. pbip/assets/nga_states.topo.json  - HDX COD-AB admin1 (37 units), topology-preserving
-   Douglas-Peucker simplification (shared borders simplified once, so no gaps/overlaps).
+   Douglas-Peucker simplification (shared borders simplified once). Overlap is measured; gaps are not.
 2. pbip/assets/nga_tiles.topo.json   - equal-size square tiles laid out by
    data/reference/tile_grid_layout.csv (our own arrangement).
 Both carry properties state_pcode (join key) and state_name. A manifest records tool, version,

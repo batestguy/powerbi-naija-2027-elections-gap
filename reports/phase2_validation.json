@@ -3,9 +3,10 @@
   "gate_passed": true,
   "summary": {
     "checks": 33,
-    "pass": 27,
+    "pass": 22,
     "fail": 0,
-    "flag": 6
+    "flag": 6,
+    "info": 5
   },
   "failed": [],
   "flagged": [
@@ -168,7 +169,7 @@
     },
     {
       "check": "derived total valid per state vs Wikipedia and AGADA reported totals",
-      "status": "pass",
+      "status": "info",
       "gate": false,
       "evidence": {
         "differs_from_wikipedia": {
@@ -232,19 +233,21 @@
     },
     {
       "check": "states within 0.5 pp of 25% (rounding risk)",
-      "status": "pass",
+      "status": "info",
       "gate": false,
       "evidence": {
-        "cases": [
+        "cases [pct, state, party, votes above(+)/below(-) 25%]": [
           [
             24.855,
             "NG012",
-            "APC"
+            "APC",
+            -845.5
           ],
           [
             25.013,
             "NG002",
-            "APC"
+            "APC",
+            96.0
           ]
         ]
       }
@@ -339,7 +342,7 @@
     },
     {
       "check": "reconciliation: hand decisions (ties and overrides)",
-      "status": "pass",
+      "status": "info",
       "gate": false,
       "evidence": {
         "decisions": [
@@ -366,7 +369,7 @@
     },
     {
       "check": "reconciliation: cells where each copy differs from the chosen value",
-      "status": "pass",
+      "status": "info",
       "gate": false,
       "evidence": {
         "nigerialawyer": 7,
@@ -405,7 +408,7 @@
       }
     },
     {
-      "check": "geometry: no invalid or empty shapes, no overlaps after simplification",
+      "check": "geometry (as reported by build_geometry.py manifest): no invalid or empty shapes, no overlaps",
       "status": "pass",
       "gate": true,
       "evidence": {
@@ -433,7 +436,7 @@
     },
     {
       "check": "mundx four-party accuracy (info)",
-      "status": "pass",
+      "status": "info",
       "gate": false,
       "evidence": {
         "min": 0.3755,

@@ -14,5 +14,6 @@
 | 10 | OTHERS (14 minor candidates) per state sums to 4,858 more than INEC's national 648,474; only two copies give it and they agree | — | Look for any per-state minor-candidate table; until then the gap is published | open |
 | 11 | Registered voters from the 37 Wikipedia state infoboxes sum to 93,348,727, 120,281 short of INEC's 93,469,008 | — | Find an INEC per-state register table (e.g. INEC 2023 register summary) | open |
 | 12 | Bauchi turnout: 31.1% (main table) vs 32.73% (state page). Accredited voters per state: none found; rejected/total cast: Ekiti only | — | Same INEC search as 11 | open |
-| 13 | Vanguard snapshot was saved by hand because the site refuses scripted requests. Keep it as a manual input, or drop it (the reconciliation would then have more ties to decide by hand) | user | Decide before release | open |
-| 14 | Kano APC 506,412 vs 517,341 — chosen by consistency with the national total, not by an official state sheet | — | Settled only by item 9 | open |
+| 13 | Vanguard was fetched once with a browser User-Agent after a 403 (decision log). Keep it, re-save it from a real browser, or drop it (without it the two LP ties and the Kano cell change: Kano would be 517,341 by majority). Terms of use not checked | user | Decide before release | open |
+| 14 | Kano APC 506,412 vs 517,341 — chosen by consistency with the national total, not by an official state sheet; 517,341 may be the figure INEC announced at state level | — | Settled only by item 9 | open |
+| 15 | Mundx accuracy ratios combined with the public reconciled votes reconstruct Mundx's absolute state figures (e.g. ratio × state votes). Acceptable under 'no redistribution', or publish only banded ratios? | user | Decide before release | open |

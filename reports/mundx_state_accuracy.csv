@@ -1,4 +1,4 @@
-# Mundx four-party rollup / INEC declared (Wikipedia By state). Ratios only; Mundx figures not redistributed.
+# Mundx four-party rollup / reconciled state votes (data/staging/fact_result_2023.csv). Ratios only.
 state_pcode,state_name,apc_ratio,pdp_ratio,lp_ratio,nnpp_ratio,four_party_ratio,polling_unit_coverage
 NG001,Abia,15.5868,1.7514,0.8406,90.544,1.5719,0.8924
 NG002,Adamawa,0.9528,0.9211,0.9335,1.6682,0.9394,1.0

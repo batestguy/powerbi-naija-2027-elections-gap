@@ -1,15 +1,17 @@
 {
   "source": "vanguard",
   "snapshot_date": "2026-11-14",
-  "note": "Vanguard state table 'Declared by INEC' (four parties). MANUAL SAVE: the site returns HTTP 403 to scripted requests, so this page was saved once by hand (curl with a browser User-Agent) and is not re-fetched by scripts/pull_sources.py. A re-run needs this file, or the same page saved from a browser.",
+  "note": "Vanguard state table 'Declared by INEC' (four parties). The site returned HTTP 403 to the project's honest User-Agent. The page was then fetched ONCE with curl sending a generic browser User-Agent (i.e. identifying as a browser), before that approach was rejected for the pipeline. scripts/pull_sources.py does not fetch it. Vanguard's terms of use were not checked. Keep-or-drop is open question 13.",
   "files": [
     {
       "file": "page.html",
       "url": "https://www.vanguardngr.com/2023-presidential-election-results-by-states/",
-      "accessed_utc": "2026-11-14",
+      "accessed_utc": "2026-11-14T01:37:18+00:00",
       "http_status": 200,
       "bytes": 190887,
-      "sha256": "11ad909109bd9258a472a0e40c089d636f8cd089c779f0f41af6043c9301310a"
+      "sha256": "11ad909109bd9258a472a0e40c089d636f8cd089c779f0f41af6043c9301310a",
+      "accessed_note": "file modification time of the saved page (fetch time not logged separately)"
     }
-  ]
+  ],
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
 }

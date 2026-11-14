@@ -73,7 +73,7 @@ on the account, Phase 7 changes shape — find out now.
 
 **Deliverable:** raw snapshots + manifests, `data/staging/` tables, `reports/phase2_validation.json`, profiling summary.
 
-**Outcome (2026-11-14):** Wikipedia's By-state rows did not sum to INEC's national declaration, so state results are a five-copy reconciliation (decision log 2026-11-14). Gate passed: four-party state sums equal INEC national exactly; 0 unmatched keys; 25% count 29/21/16/1. Published gaps: OTHERS +4,858, registered voters −120,281. See `docs/data-profile.md`.
+**Outcome (2026-11-14):** Wikipedia's By-state rows did not sum to INEC's national declaration, so state results are a five-copy reconciliation (decision log 2026-11-14). Gate passed: four-party state sums equal INEC national exactly (independent evidence for PDP and NNPP; for APC and LP the match was used to choose 3 cells); 0 unmatched keys; 25% count 29/21/16/1, with APC's 29 resting on a 96-vote margin in Adamawa. Published gaps: OTHERS +4,858, registered voters −120,281. See `docs/data-profile.md`.
 
 ## Phase 3 — Model design
 **Goal:** a clean star model with geography as the spine.
