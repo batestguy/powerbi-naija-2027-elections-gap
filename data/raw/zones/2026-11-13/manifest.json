@@ -1,0 +1,18 @@
+{
+  "source": "zones",
+  "snapshot_date": "2026-11-13",
+  "note": "Wikipedia 'Geopolitical zones of Nigeria' (source for state -> zone). CC BY-SA 4.0.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "zones.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=Geopolitical_zones_of_Nigeria&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:33+00:00",
+      "http_status": 200,
+      "bytes": 6726,
+      "sha256": "1cc677fe0cf86623f332addbc46ee069770fab453f94dddb4ef4db6ce664ef2d",
+      "title": "Geopolitical_zones_of_Nigeria",
+      "revid": 1360299046
+    }
+  ]
+}

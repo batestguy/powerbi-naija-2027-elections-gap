@@ -1,0 +1,378 @@
+{
+  "source": "wikipedia_states",
+  "snapshot_date": "2026-11-13",
+  "note": "Full wikitext of the 37 per-state 2023 presidential pages linked from the main page's By state table. CC BY-SA 4.0.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "Abia_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Abia+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:43+00:00",
+      "http_status": 200,
+      "bytes": 31718,
+      "sha256": "c9880a2cf0e29a5c2ca5bf34a8ed10f3d11cb86a2b8c487d2a38c1c6bdd34e15",
+      "title": "2023 Nigerian presidential election in Abia State",
+      "revid": 1345344602
+    },
+    {
+      "file": "Adamawa_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Adamawa+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:46+00:00",
+      "http_status": 200,
+      "bytes": 35161,
+      "sha256": "6bd5c7d13d7991866945e468aa64317b07d5df390a1c7b395a973cbcc78b6ee2",
+      "title": "2023 Nigerian presidential election in Adamawa State",
+      "revid": 1344627074
+    },
+    {
+      "file": "Akwa_Ibom_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Akwa+Ibom+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:49+00:00",
+      "http_status": 200,
+      "bytes": 32718,
+      "sha256": "3926aaf34fe5f516ba579d0b993af7b5c494a682a8ac0507ca39776a50453b95",
+      "title": "2023 Nigerian presidential election in Akwa Ibom State",
+      "revid": 1344618821
+    },
+    {
+      "file": "Anambra_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Anambra+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:52+00:00",
+      "http_status": 200,
+      "bytes": 30611,
+      "sha256": "676bc15f84969038a08d96975d4ebf6e4d35d53963b37266c3e1fcafce6cf830",
+      "title": "2023 Nigerian presidential election in Anambra State",
+      "revid": 1361442585
+    },
+    {
+      "file": "Bauchi_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Bauchi+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:55+00:00",
+      "http_status": 200,
+      "bytes": 28861,
+      "sha256": "a098bab94bb2accc8746d8c13a2cc89ec6c8b4acec4db05aed3ed045ea7100f9",
+      "title": "2023 Nigerian presidential election in Bauchi State",
+      "revid": 1344912865
+    },
+    {
+      "file": "Bayelsa_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Bayelsa+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:57+00:00",
+      "http_status": 200,
+      "bytes": 27030,
+      "sha256": "4180527360ff31dab1735a11bd3cc0a1453a17851a5158925f97b8e838c1af49",
+      "title": "2023 Nigerian presidential election in Bayelsa State",
+      "revid": 1344632537
+    },
+    {
+      "file": "Benue_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Benue+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:00+00:00",
+      "http_status": 200,
+      "bytes": 30277,
+      "sha256": "0d81dd4dc3f472caedd76d9fd4a508d2442ca139759d1a403554c8c314cc5416",
+      "title": "2023 Nigerian presidential election in Benue State",
+      "revid": 1344616800
+    },
+    {
+      "file": "Borno_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Borno+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:03+00:00",
+      "http_status": 200,
+      "bytes": 29800,
+      "sha256": "c96e2eb2ea43fdbb013f4d8b983574ce72b85aaa8d0149f34b6aaeb696a73bae",
+      "title": "2023 Nigerian presidential election in Borno State",
+      "revid": 1344612791
+    },
+    {
+      "file": "Cross_River_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Cross+River+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:06+00:00",
+      "http_status": 200,
+      "bytes": 27848,
+      "sha256": "2294af016b4f2bed23230bcdbc8fad62c296194167d2f473c0a3d89d1572496e",
+      "title": "2023 Nigerian presidential election in Cross River State",
+      "revid": 1344629653
+    },
+    {
+      "file": "Delta_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Delta+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:09+00:00",
+      "http_status": 200,
+      "bytes": 30241,
+      "sha256": "713d08ede8b119f32e007e2d800846f1670c09c964c4699f89ba0157912e29ba",
+      "title": "2023 Nigerian presidential election in Delta State",
+      "revid": 1344644025
+    },
+    {
+      "file": "Ebonyi_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Ebonyi+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:13+00:00",
+      "http_status": 200,
+      "bytes": 26404,
+      "sha256": "a2a752dded6fe3063fc39b4c9e64f7d0d1f1c93c2a63f9967ab63daf438b3990",
+      "title": "2023 Nigerian presidential election in Ebonyi State",
+      "revid": 1344630560
+    },
+    {
+      "file": "Edo_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Edo+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:16+00:00",
+      "http_status": 200,
+      "bytes": 26810,
+      "sha256": "85f3a93bdf24ac729f3b754eccbfe6e342a919280909e6a09ba051178d927ddf",
+      "title": "2023 Nigerian presidential election in Edo State",
+      "revid": 1377214152
+    },
+    {
+      "file": "Ekiti_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Ekiti+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:20+00:00",
+      "http_status": 200,
+      "bytes": 31164,
+      "sha256": "10c87058afa86bd2382f4d308b3b773e9f4864232aba2af6f3dffc07dd7a0e1f",
+      "title": "2023 Nigerian presidential election in Ekiti State",
+      "revid": 1345363202
+    },
+    {
+      "file": "Enugu_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Enugu+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:23+00:00",
+      "http_status": 200,
+      "bytes": 27938,
+      "sha256": "aab4ee452e98f2ead213fa16d8672181608c078b9baee46140c9648f0054a5f4",
+      "title": "2023 Nigerian presidential election in Enugu State",
+      "revid": 1344631547
+    },
+    {
+      "file": "the_Federal_Capital_Territory.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+the+Federal+Capital+Territory&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:26+00:00",
+      "http_status": 200,
+      "bytes": 22433,
+      "sha256": "e6e70b372001a5f68d2d72122b344c97f15a52cf3bca786e41e1c90f3f16a556",
+      "title": "2023 Nigerian presidential election in the Federal Capital Territory",
+      "revid": 1344613926
+    },
+    {
+      "file": "Gombe_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Gombe+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:29+00:00",
+      "http_status": 200,
+      "bytes": 26364,
+      "sha256": "92274795476d6adfac3fa916a372ada19d41cf236741a494669a5d43454317d5",
+      "title": "2023 Nigerian presidential election in Gombe State",
+      "revid": 1344615672
+    },
+    {
+      "file": "Imo_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Imo+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:33+00:00",
+      "http_status": 200,
+      "bytes": 29479,
+      "sha256": "9139f0303c8d91ec2c9a9b874150285518f942a88587437bf9fcb1007b6f2814",
+      "title": "2023 Nigerian presidential election in Imo State",
+      "revid": 1344623567
+    },
+    {
+      "file": "Jigawa_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Jigawa+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:20:36+00:00",
+      "http_status": 200,
+      "bytes": 30411,
+      "sha256": "561fc39c2dfcc9aa8281133ca4c4bd85f751e122626589633605cb5def77aa4f",
+      "title": "2023 Nigerian presidential election in Jigawa State",
+      "revid": 1344636094
+    },
+    {
+      "file": "Kaduna_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Kaduna+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:05+00:00",
+      "http_status": 200,
+      "bytes": 32859,
+      "sha256": "b2a7f4c8a9c8517f7ff2f79f5d97ae3b59215b461e7d9167e76e187df4a7adac",
+      "title": "2023 Nigerian presidential election in Kaduna State",
+      "revid": 1344613024
+    },
+    {
+      "file": "Kano_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Kano+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:08+00:00",
+      "http_status": 200,
+      "bytes": 45585,
+      "sha256": "e80936301dbcc9391e4fb6ccc68582e69c34e7250ed0d409d8c86da7bec83fac",
+      "title": "2023 Nigerian presidential election in Kano State",
+      "revid": 1344612199
+    },
+    {
+      "file": "Katsina_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Katsina+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:11+00:00",
+      "http_status": 200,
+      "bytes": 33273,
+      "sha256": "448b82b373f2a9000d91dab80f5c321fc81e70385adfce6523aaa8e8fdda26d8",
+      "title": "2023 Nigerian presidential election in Katsina State",
+      "revid": 1344611205
+    },
+    {
+      "file": "Kebbi_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Kebbi+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:14+00:00",
+      "http_status": 200,
+      "bytes": 28122,
+      "sha256": "922c2d0aee20e25db5ff9fe2cecd14acb30cfac64aa636d40629055f995d8cf3",
+      "title": "2023 Nigerian presidential election in Kebbi State",
+      "revid": 1344634743
+    },
+    {
+      "file": "Kogi_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Kogi+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:16+00:00",
+      "http_status": 200,
+      "bytes": 28469,
+      "sha256": "13c9bb3442ea4fa316e4599da3886ac9407f0311f4bd6994d50fd4a9ab23a24f",
+      "title": "2023 Nigerian presidential election in Kogi State",
+      "revid": 1344622964
+    },
+    {
+      "file": "Kwara_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Kwara+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:19+00:00",
+      "http_status": 200,
+      "bytes": 28215,
+      "sha256": "4fdf077105964c44732a9774ddda3a9f612179f3228b6eae9b8ad8991e2cd424",
+      "title": "2023 Nigerian presidential election in Kwara State",
+      "revid": 1344633066
+    },
+    {
+      "file": "Lagos_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Lagos+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:22+00:00",
+      "http_status": 200,
+      "bytes": 50850,
+      "sha256": "d631c470610396185f1ad557be3c740e2efdcbcd6415e01ba59301024b512348",
+      "title": "2023 Nigerian presidential election in Lagos State",
+      "revid": 1344601586
+    },
+    {
+      "file": "Nasarawa_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Nasarawa+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:26+00:00",
+      "http_status": 200,
+      "bytes": 26388,
+      "sha256": "e07f1ba2852ae6d3924f06e31479b7cb1d744cebcb04539d246fe6204bd5ddfa",
+      "title": "2023 Nigerian presidential election in Nasarawa State",
+      "revid": 1344636191
+    },
+    {
+      "file": "Niger_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Niger+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:29+00:00",
+      "http_status": 200,
+      "bytes": 30647,
+      "sha256": "347eb13f02a0a440fa13a42379cd8b571565cd3b8cc842f297a4739449049860",
+      "title": "2023 Nigerian presidential election in Niger State",
+      "revid": 1346674653
+    },
+    {
+      "file": "Ogun_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Ogun+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:21:32+00:00",
+      "http_status": 200,
+      "bytes": 28835,
+      "sha256": "326dd0936d64e75481867d447ec081d72921b3530a3e3defa816d5a00d5dc1be",
+      "title": "2023 Nigerian presidential election in Ogun State",
+      "revid": 1344487354
+    },
+    {
+      "file": "Ondo_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Ondo+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:05+00:00",
+      "http_status": 200,
+      "bytes": 28473,
+      "sha256": "40feb77379d0b809dea8dd0b8e0f3c2a496d142dfb457d2b00f1606620e0be56",
+      "title": "2023 Nigerian presidential election in Ondo State",
+      "revid": 1344619656
+    },
+    {
+      "file": "Osun_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Osun+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:08+00:00",
+      "http_status": 200,
+      "bytes": 31915,
+      "sha256": "40893506976b8369af90c70f41c0003c772e3cf5ea1d213f67e548e75dd2dfdb",
+      "title": "2023 Nigerian presidential election in Osun State",
+      "revid": 1344619036
+    },
+    {
+      "file": "Oyo_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Oyo+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:11+00:00",
+      "http_status": 200,
+      "bytes": 33639,
+      "sha256": "fe51f3a0b0747be9bab9a2ad121bdba159ac7a3f9219d149e841a63c787b95ae",
+      "title": "2023 Nigerian presidential election in Oyo State",
+      "revid": 1344487149
+    },
+    {
+      "file": "Plateau_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Plateau+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:14+00:00",
+      "http_status": 200,
+      "bytes": 28012,
+      "sha256": "06ba12cc2d47bf663295fb3b3f656d9e9b183a3b7cc695af766679cd9545d459",
+      "title": "2023 Nigerian presidential election in Plateau State",
+      "revid": 1344483647
+    },
+    {
+      "file": "Rivers_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Rivers+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:18+00:00",
+      "http_status": 200,
+      "bytes": 32059,
+      "sha256": "e55eb725cae930260ee34320dd7f7ba0a9ee8073b8136e1b17a24f9c3ff5f94c",
+      "title": "2023 Nigerian presidential election in Rivers State",
+      "revid": 1344713761
+    },
+    {
+      "file": "Sokoto_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Sokoto+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:21+00:00",
+      "http_status": 200,
+      "bytes": 29407,
+      "sha256": "9b0a19abd42a072714c7bab2545a002e37b94a5785c71af3f3bccc607efb5794",
+      "title": "2023 Nigerian presidential election in Sokoto State",
+      "revid": 1344484352
+    },
+    {
+      "file": "Taraba_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Taraba+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:24+00:00",
+      "http_status": 200,
+      "bytes": 27375,
+      "sha256": "037c3435b1ad560045542b3f75701f03e73a715942012353ec9d572f0acca43e",
+      "title": "2023 Nigerian presidential election in Taraba State",
+      "revid": 1344484461
+    },
+    {
+      "file": "Yobe_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Yobe+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:27+00:00",
+      "http_status": 200,
+      "bytes": 26942,
+      "sha256": "a1ca5048593bdd2d9cba4348e59ece5359a8b91131947e878250f03385ab4845",
+      "title": "2023 Nigerian presidential election in Yobe State",
+      "revid": 1344484659
+    },
+    {
+      "file": "Zamfara_State.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023+Nigerian+presidential+election+in+Zamfara+State&prop=wikitext%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:22:30+00:00",
+      "http_status": 200,
+      "bytes": 27087,
+      "sha256": "70ad596cb5955ecf096b409a6255658a217eb5a88d224829952b872bff496dce",
+      "title": "2023 Nigerian presidential election in Zamfara State",
+      "revid": 1344485270
+    }
+  ]
+}

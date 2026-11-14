@@ -1,0 +1,408 @@
+{
+  "built_by": "scripts/build_staging.py",
+  "main_revid": 1381904162,
+  "zones_revid": 1360299046,
+  "nigerialawyer_number_format_fixes": [
+    {
+      "row": "Cross River",
+      "party": "PDP",
+      "raw": "95, 425",
+      "parsed_as": "95,425"
+    },
+    {
+      "row": "Kwara",
+      "party": "APC",
+      "raw": "263, 572",
+      "parsed_as": "263,572"
+    },
+    {
+      "row": "Kwara",
+      "party": "PDP",
+      "raw": "136, 909",
+      "parsed_as": "136,909"
+    },
+    {
+      "row": "Kwara",
+      "party": "LP",
+      "raw": "31, 166",
+      "parsed_as": "31,166"
+    },
+    {
+      "row": "Oyo",
+      "party": "APC",
+      "raw": "449, 884",
+      "parsed_as": "449,884"
+    },
+    {
+      "row": "Oyo",
+      "party": "LP",
+      "raw": "99, 110",
+      "parsed_as": "99,110"
+    },
+    {
+      "row": "Yobe",
+      "party": "PDP",
+      "raw": "198, 567",
+      "parsed_as": "198,567"
+    }
+  ],
+  "news_number_format_fixes": [
+    {
+      "where": "thisday Cross River PDP",
+      "raw": "95, 425",
+      "parsed_as": "95,425"
+    },
+    {
+      "where": "thisday Kwara APC",
+      "raw": "263, 572",
+      "parsed_as": "263,572"
+    },
+    {
+      "where": "thisday Kwara PDP",
+      "raw": "136, 909",
+      "parsed_as": "136,909"
+    },
+    {
+      "where": "thisday Kwara LP",
+      "raw": "31, 166",
+      "parsed_as": "31,166"
+    },
+    {
+      "where": "thisday Oyo APC",
+      "raw": "449, 884",
+      "parsed_as": "449,884"
+    },
+    {
+      "where": "thisday Oyo LP",
+      "raw": "99, 110",
+      "parsed_as": "99,110"
+    },
+    {
+      "where": "thisday Yobe PDP",
+      "raw": "198, 567",
+      "parsed_as": "198,567"
+    },
+    {
+      "where": "vanguard OGun LP",
+      "raw": "85.829",
+      "parsed_as": "85,829"
+    },
+    {
+      "where": "vanguard LAGOS NNPP",
+      "raw": "8, 442",
+      "parsed_as": "8,442"
+    },
+    {
+      "where": "vanguard Gombe LP",
+      "raw": "26, 160",
+      "parsed_as": "26,160"
+    },
+    {
+      "where": "vanguard NIGER APC",
+      "raw": "375, 183",
+      "parsed_as": "375,183"
+    },
+    {
+      "where": "vanguard NIGER PDP",
+      "raw": "284, 898",
+      "parsed_as": "284,898"
+    },
+    {
+      "where": "vanguard BENUE LP",
+      "raw": "30,8372",
+      "parsed_as": null
+    },
+    {
+      "where": "vanguard BAYELSA APC",
+      "raw": "42, 572",
+      "parsed_as": "42,572"
+    }
+  ],
+  "inputs": {
+    "wikipedia_main": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "sections.json",
+          "sha256": "8f3cf7c7fa4467258439cf309580ed61b53a02b70e9a48cb17d07e61d9ec912f",
+          "revid": 1381904162
+        },
+        {
+          "file": "by_state.json",
+          "sha256": "b532b80dc1ecd822d4c76d01895d14668f2fd484007af48aa54f736079979730",
+          "revid": 1381904162
+        },
+        {
+          "file": "by_zone.json",
+          "sha256": "d43da2843ba3faa2403fd38d5e44bbed60bf6f83c1e40f12c2677cfb4d1a664f",
+          "revid": 1381904162
+        }
+      ]
+    },
+    "wikipedia_states": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "Abia_State.json",
+          "sha256": "c9880a2cf0e29a5c2ca5bf34a8ed10f3d11cb86a2b8c487d2a38c1c6bdd34e15",
+          "revid": 1345344602
+        },
+        {
+          "file": "Adamawa_State.json",
+          "sha256": "6bd5c7d13d7991866945e468aa64317b07d5df390a1c7b395a973cbcc78b6ee2",
+          "revid": 1344627074
+        },
+        {
+          "file": "Akwa_Ibom_State.json",
+          "sha256": "3926aaf34fe5f516ba579d0b993af7b5c494a682a8ac0507ca39776a50453b95",
+          "revid": 1344618821
+        },
+        {
+          "file": "Anambra_State.json",
+          "sha256": "676bc15f84969038a08d96975d4ebf6e4d35d53963b37266c3e1fcafce6cf830",
+          "revid": 1361442585
+        },
+        {
+          "file": "Bauchi_State.json",
+          "sha256": "a098bab94bb2accc8746d8c13a2cc89ec6c8b4acec4db05aed3ed045ea7100f9",
+          "revid": 1344912865
+        },
+        {
+          "file": "Bayelsa_State.json",
+          "sha256": "4180527360ff31dab1735a11bd3cc0a1453a17851a5158925f97b8e838c1af49",
+          "revid": 1344632537
+        },
+        {
+          "file": "Benue_State.json",
+          "sha256": "0d81dd4dc3f472caedd76d9fd4a508d2442ca139759d1a403554c8c314cc5416",
+          "revid": 1344616800
+        },
+        {
+          "file": "Borno_State.json",
+          "sha256": "c96e2eb2ea43fdbb013f4d8b983574ce72b85aaa8d0149f34b6aaeb696a73bae",
+          "revid": 1344612791
+        },
+        {
+          "file": "Cross_River_State.json",
+          "sha256": "2294af016b4f2bed23230bcdbc8fad62c296194167d2f473c0a3d89d1572496e",
+          "revid": 1344629653
+        },
+        {
+          "file": "Delta_State.json",
+          "sha256": "713d08ede8b119f32e007e2d800846f1670c09c964c4699f89ba0157912e29ba",
+          "revid": 1344644025
+        },
+        {
+          "file": "Ebonyi_State.json",
+          "sha256": "a2a752dded6fe3063fc39b4c9e64f7d0d1f1c93c2a63f9967ab63daf438b3990",
+          "revid": 1344630560
+        },
+        {
+          "file": "Edo_State.json",
+          "sha256": "85f3a93bdf24ac729f3b754eccbfe6e342a919280909e6a09ba051178d927ddf",
+          "revid": 1377214152
+        },
+        {
+          "file": "Ekiti_State.json",
+          "sha256": "10c87058afa86bd2382f4d308b3b773e9f4864232aba2af6f3dffc07dd7a0e1f",
+          "revid": 1345363202
+        },
+        {
+          "file": "Enugu_State.json",
+          "sha256": "aab4ee452e98f2ead213fa16d8672181608c078b9baee46140c9648f0054a5f4",
+          "revid": 1344631547
+        },
+        {
+          "file": "the_Federal_Capital_Territory.json",
+          "sha256": "e6e70b372001a5f68d2d72122b344c97f15a52cf3bca786e41e1c90f3f16a556",
+          "revid": 1344613926
+        },
+        {
+          "file": "Gombe_State.json",
+          "sha256": "92274795476d6adfac3fa916a372ada19d41cf236741a494669a5d43454317d5",
+          "revid": 1344615672
+        },
+        {
+          "file": "Imo_State.json",
+          "sha256": "9139f0303c8d91ec2c9a9b874150285518f942a88587437bf9fcb1007b6f2814",
+          "revid": 1344623567
+        },
+        {
+          "file": "Jigawa_State.json",
+          "sha256": "561fc39c2dfcc9aa8281133ca4c4bd85f751e122626589633605cb5def77aa4f",
+          "revid": 1344636094
+        },
+        {
+          "file": "Kaduna_State.json",
+          "sha256": "b2a7f4c8a9c8517f7ff2f79f5d97ae3b59215b461e7d9167e76e187df4a7adac",
+          "revid": 1344613024
+        },
+        {
+          "file": "Kano_State.json",
+          "sha256": "e80936301dbcc9391e4fb6ccc68582e69c34e7250ed0d409d8c86da7bec83fac",
+          "revid": 1344612199
+        },
+        {
+          "file": "Katsina_State.json",
+          "sha256": "448b82b373f2a9000d91dab80f5c321fc81e70385adfce6523aaa8e8fdda26d8",
+          "revid": 1344611205
+        },
+        {
+          "file": "Kebbi_State.json",
+          "sha256": "922c2d0aee20e25db5ff9fe2cecd14acb30cfac64aa636d40629055f995d8cf3",
+          "revid": 1344634743
+        },
+        {
+          "file": "Kogi_State.json",
+          "sha256": "13c9bb3442ea4fa316e4599da3886ac9407f0311f4bd6994d50fd4a9ab23a24f",
+          "revid": 1344622964
+        },
+        {
+          "file": "Kwara_State.json",
+          "sha256": "4fdf077105964c44732a9774ddda3a9f612179f3228b6eae9b8ad8991e2cd424",
+          "revid": 1344633066
+        },
+        {
+          "file": "Lagos_State.json",
+          "sha256": "d631c470610396185f1ad557be3c740e2efdcbcd6415e01ba59301024b512348",
+          "revid": 1344601586
+        },
+        {
+          "file": "Nasarawa_State.json",
+          "sha256": "e07f1ba2852ae6d3924f06e31479b7cb1d744cebcb04539d246fe6204bd5ddfa",
+          "revid": 1344636191
+        },
+        {
+          "file": "Niger_State.json",
+          "sha256": "347eb13f02a0a440fa13a42379cd8b571565cd3b8cc842f297a4739449049860",
+          "revid": 1346674653
+        },
+        {
+          "file": "Ogun_State.json",
+          "sha256": "326dd0936d64e75481867d447ec081d72921b3530a3e3defa816d5a00d5dc1be",
+          "revid": 1344487354
+        },
+        {
+          "file": "Ondo_State.json",
+          "sha256": "40feb77379d0b809dea8dd0b8e0f3c2a496d142dfb457d2b00f1606620e0be56",
+          "revid": 1344619656
+        },
+        {
+          "file": "Osun_State.json",
+          "sha256": "40893506976b8369af90c70f41c0003c772e3cf5ea1d213f67e548e75dd2dfdb",
+          "revid": 1344619036
+        },
+        {
+          "file": "Oyo_State.json",
+          "sha256": "fe51f3a0b0747be9bab9a2ad121bdba159ac7a3f9219d149e841a63c787b95ae",
+          "revid": 1344487149
+        },
+        {
+          "file": "Plateau_State.json",
+          "sha256": "06ba12cc2d47bf663295fb3b3f656d9e9b183a3b7cc695af766679cd9545d459",
+          "revid": 1344483647
+        },
+        {
+          "file": "Rivers_State.json",
+          "sha256": "e55eb725cae930260ee34320dd7f7ba0a9ee8073b8136e1b17a24f9c3ff5f94c",
+          "revid": 1344713761
+        },
+        {
+          "file": "Sokoto_State.json",
+          "sha256": "9b0a19abd42a072714c7bab2545a002e37b94a5785c71af3f3bccc607efb5794",
+          "revid": 1344484352
+        },
+        {
+          "file": "Taraba_State.json",
+          "sha256": "037c3435b1ad560045542b3f75701f03e73a715942012353ec9d572f0acca43e",
+          "revid": 1344484461
+        },
+        {
+          "file": "Yobe_State.json",
+          "sha256": "a1ca5048593bdd2d9cba4348e59ece5359a8b91131947e878250f03385ab4845",
+          "revid": 1344484659
+        },
+        {
+          "file": "Zamfara_State.json",
+          "sha256": "70ad596cb5955ecf096b409a6255658a217eb5a88d224829952b872bff496dce",
+          "revid": 1344485270
+        }
+      ]
+    },
+    "zones": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "zones.json",
+          "sha256": "1cc677fe0cf86623f332addbc46ee069770fab453f94dddb4ef4db6ce664ef2d",
+          "revid": 1360299046
+        }
+      ]
+    },
+    "hdx_cod_ab": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "package_show.json",
+          "sha256": "3d32035f2c497e3820947b8b4b6d62497188b3d5829467826f976902e115bdfd",
+          "revid": null
+        },
+        {
+          "file": "nga_admin_boundaries.geojson.zip",
+          "sha256": "40180271a90a545153f97eee044db1c46ec67cba51788529df9a25918abd1d92",
+          "revid": null
+        }
+      ]
+    },
+    "nigerialawyer": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "results.html",
+          "sha256": "4bb3077c24f5ec2b7d0ab63ae9164c30ce1d15a4c9200fc19e6cba760068f136",
+          "revid": null
+        }
+      ]
+    },
+    "agada": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "agada_results.xlsx",
+          "sha256": "2f2618a07ec4f21c689b298e3d7da38e4cc0c9e81f0ae9d5a255e60fc3277476",
+          "revid": null
+        }
+      ]
+    },
+    "thisday": {
+      "snapshot_date": "2026-11-14",
+      "files": [
+        {
+          "file": "page.html",
+          "sha256": "134d974ad31d9aaea94bcef251593c1b7745e815f5eb27df329555e3dd99a260",
+          "revid": null
+        }
+      ]
+    },
+    "vanguard": {
+      "snapshot_date": "2026-11-14",
+      "files": [
+        {
+          "file": "page.html",
+          "sha256": "11ad909109bd9258a472a0e40c089d636f8cd089c779f0f41af6043c9301310a",
+          "revid": null
+        }
+      ]
+    },
+    "mundx": {
+      "snapshot_date": "2026-11-13",
+      "files": [
+        {
+          "file": "lgas.json",
+          "sha256": "1ca8ea4e2401f117c6878078165e89eb9c6187a440a01032872184dc2e4bb05f",
+          "revid": null
+        }
+      ]
+    }
+  }
+}

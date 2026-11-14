@@ -1,0 +1,28 @@
+# INEC national Declaration of Results, 2023 presidential election (1 March 2023). Transcribed by hand from the image in
+# INEC 'Report of the 2023 General Election', Annexure 2 (PDF page 457, printed page 418); raw file data/raw/inec_report/<date>/INEC-REPORT-2023.pdf.
+# Check: the 18 candidate rows sum to valid_votes (24,025,940); valid + rejected = votes_cast. Both are asserted in scripts/validate_phase2.py.
+measure,party,candidate,value
+candidate_votes,A,Imumolen Irene Christopher,61014
+candidate_votes,AA,Almustapha Hamza,14542
+candidate_votes,AAC,Sowore Omoyele Stephen,14608
+candidate_votes,ADC,Kachikwu Dumebi,81919
+candidate_votes,ADP,Sani Yabagi Yusuf,43924
+candidate_votes,APC,Tinubu Bola Ahmed,8794726
+candidate_votes,APGA,Umeadi Peter Nnanna Chukwudi,61966
+candidate_votes,APM,Ojei Princess Chichi,25961
+candidate_votes,APP,Nnadi Charles Osita,12839
+candidate_votes,BP,Adenuga Sunday Oluwafemi,16156
+candidate_votes,LP,Obi Peter Gregory,6101533
+candidate_votes,NNPP,Musa Mohammed Rabiu Kwankwaso,1496687
+candidate_votes,NRM,Osakwe Felix Johnson,24869
+candidate_votes,PDP,Abubakar Atiku,6984520
+candidate_votes,PRP,Abiola Latifu Kolawole,72144
+candidate_votes,SDP,Adebayo Adewole Ebenezer,80267
+candidate_votes,YPP,Ado-Ibrahim Abdulmalik,60600
+candidate_votes,ZLP,Nwanyanwu Daniel Daberechukwu,77665
+registered_voters,,,93469008
+collected_pvcs,,,87209007
+accredited_voters,,,25286616
+votes_cast,,,24965218
+valid_votes,,,24025940
+rejected_votes,,,939278

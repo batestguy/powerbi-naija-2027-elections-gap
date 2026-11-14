@@ -27,3 +27,12 @@ APC 8,794,726 · PDP 6,984,520 · LP 6,101,533 · NNPP 1,496,687 · registered 9
 | Stears Elections | https://www.stears.co/elections/2023/president/ | Web | State + LGA | proprietary / paywalled | **rejected** | Paid product; not scraped. |
 | Civic Hive live results | https://liveresults.civichive.org/ | Web app | LGA (claimed) | not found | **not verified** | Page loads; no public data endpoint found in the page. |
 | HDX search "nigeria election results" / "nigeria inec" | data.humdata.org | — | — | — | — | Only INEC LGA/ward *names* list (CC0); no results data. |
+
+## Additions 2026-11-14 (Phase 2 reconciliation)
+
+| Name | URL | Format | Grain | Auth | Licence | Confidence | Verdict | Reason |
+|------|-----|--------|-------|------|---------|------------|---------|--------|
+| INEC "Report of the 2023 General Election" | https://thenigerialawyer.com/wp-content/uploads/2024/02/INEC-REPORT-2023.pdf (mirror; not found on inecnigeria.org) | PDF, 526 pp, 17.4 MB (local only) | National | none | public report, licence not stated | high | **approved (national figures)** | Annexure 2 (PDF p.457) is an image of the national Declaration of Results: 18 candidates, registered, PVCs, accredited, cast, valid, rejected. No state breakdown. Transcribed to `data/reference/inec_national_declaration_2023.csv`; arithmetic checked. |
+| ThisDay "Final results ... as declared by INEC" | https://www.thisdaylive.com/2023/03/01/live-updates-final-results-of-2023-presidential-election-as-declared-by-inec-2/ | HTML table | State (four parties) | none | news article; vote counts used as facts with credit | medium | **conditional (one of five copies)** | Identical errors to thenigerialawyer.com (e.g. Zamfara PDP 93,978, Cross River NNPP 16,644), so it counts as the same copy. |
+| Vanguard "2023 Presidential Election Results By States (Declared by INEC)" | https://www.vanguardngr.com/2023-presidential-election-results-by-states/ | HTML table | State (four parties) | refuses scripted requests (403) | news article; vote counts used as facts with credit | medium | **conditional (one of five copies; manual snapshot)** | One cell unreadable ("30,8372", Benue LP) and left blank, not guessed. |
+| AGADA-BI state table (verdict update) | see row above | XLSX | State | none | none | medium | **conditional (one of five copies)** | Its four-party state sums equal INEC national for APC/PDP/NNPP; LP +20 (Kwara). Its values are used only where the copy majority or a logged decision selects them. |

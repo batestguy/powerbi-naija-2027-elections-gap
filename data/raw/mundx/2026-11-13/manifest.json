@@ -1,0 +1,16 @@
+{
+  "source": "mundx",
+  "snapshot_date": "2026-11-13",
+  "note": "Mundx four-party LGA rollup. NO LICENCE: local only, never commit the data file. Used only for an accuracy-ratio report.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "lgas.json",
+      "url": "https://mundx.com/assets/2023-map/data/lgas.json",
+      "accessed_utc": "2026-11-13T06:26:10+00:00",
+      "http_status": 200,
+      "bytes": 167199,
+      "sha256": "1ca8ea4e2401f117c6878078165e89eb9c6187a440a01032872184dc2e4bb05f"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "source": "nigerialawyer",
+  "snapshot_date": "2026-11-13",
+  "note": "Secondary copy of the INEC declaration (cross-check only).",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "results.html",
+      "url": "https://thenigerialawyer.com/inigeriaelections2023-final-results-of-2023-presidential-election-as-declared-by-ineci/",
+      "accessed_utc": "2026-11-13T06:26:06+00:00",
+      "http_status": 200,
+      "bytes": 191182,
+      "sha256": "4bb3077c24f5ec2b7d0ab63ae9164c30ce1d15a4c9200fc19e6cba760068f136"
+    }
+  ]
+}

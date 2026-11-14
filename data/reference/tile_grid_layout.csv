@@ -1,0 +1,40 @@
+# Equal-size tile grid for the 37 units (36 states + FCT). Arrangement is our own design for this project
+# (rough geographic placement, north at row 0, west at col 0); it is not taken from any external source.
+state_pcode,state_name,row,col
+NG034,Sokoto,0,0
+NG037,Zamfara,0,1
+NG021,Katsina,0,2
+NG018,Jigawa,0,3
+NG036,Yobe,0,4
+NG008,Borno,0,5
+NG022,Kebbi,1,0
+NG027,Niger,1,1
+NG019,Kaduna,1,2
+NG020,Kano,1,3
+NG005,Bauchi,1,4
+NG016,Gombe,1,5
+NG002,Adamawa,1,6
+NG031,Oyo,2,0
+NG024,Kwara,2,1
+NG015,Federal Capital Territory,2,2
+NG026,Nasarawa,2,3
+NG032,Plateau,2,4
+NG035,Taraba,2,5
+NG028,Ogun,3,0
+NG030,Osun,3,1
+NG013,Ekiti,3,2
+NG023,Kogi,3,3
+NG007,Benue,3,4
+NG025,Lagos,4,0
+NG029,Ondo,4,1
+NG012,Edo,4,2
+NG014,Enugu,4,3
+NG011,Ebonyi,4,4
+NG009,Cross River,4,5
+NG010,Delta,5,1
+NG004,Anambra,5,2
+NG017,Imo,5,3
+NG001,Abia,5,4
+NG003,Akwa Ibom,5,5
+NG006,Bayelsa,6,1
+NG033,Rivers,6,2

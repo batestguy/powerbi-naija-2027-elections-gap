@@ -1,0 +1,16 @@
+{
+  "source": "inec_report",
+  "snapshot_date": "2026-11-14",
+  "note": "INEC 'Report of the 2023 General Election' (mirror; not found on inecnigeria.org). Annexure 2, PDF page 457: national Declaration of Results (image). National totals only, no state breakdown.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "INEC-REPORT-2023.pdf",
+      "url": "https://thenigerialawyer.com/wp-content/uploads/2024/02/INEC-REPORT-2023.pdf",
+      "accessed_utc": "2026-11-14T01:43:53+00:00",
+      "http_status": 200,
+      "bytes": 17403184,
+      "sha256": "eb5c84f11f640e0806afd5a720f5140ee00fb1301718936d3f2b055379abdf1e"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "source": "thisday",
+  "snapshot_date": "2026-11-14",
+  "note": "ThisDay state table 'as announced by INEC' (four parties). Shares every discrepancy with thenigerialawyer.com, so treated as the same copy.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "page.html",
+      "url": "https://www.thisdaylive.com/2023/03/01/live-updates-final-results-of-2023-presidential-election-as-declared-by-inec-2/",
+      "accessed_utc": "2026-11-14T01:43:21+00:00",
+      "http_status": 200,
+      "bytes": 60259,
+      "sha256": "134d974ad31d9aaea94bcef251593c1b7745e815f5eb27df329555e3dd99a260"
+    }
+  ]
+}

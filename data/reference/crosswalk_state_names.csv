@@ -1,0 +1,127 @@
+# Explicit state-name crosswalk, authored and reviewed by hand for this project. Exact string match only (no fuzzy matching).
+name_variant,state_pcode,note
+ABIA,NG001,upper case (Mundx)
+Abia,NG001,canonical HDX adm1_name; also Wikipedia table label
+Abia State,NG001,"'<name> State' (Wikipedia page titles, zones page links)"
+ADAMAWA,NG002,upper case (Mundx)
+Adamawa,NG002,canonical HDX adm1_name; also Wikipedia table label
+Adamawa State,NG002,"'<name> State' (Wikipedia page titles, zones page links)"
+AKWA IBOM,NG003,upper case (Mundx)
+Akwa Ibom,NG003,canonical HDX adm1_name; also Wikipedia table label
+Akwa Ibom State,NG003,"'<name> State' (Wikipedia page titles, zones page links)"
+ANAMBRA,NG004,upper case (Mundx)
+Anambra,NG004,canonical HDX adm1_name; also Wikipedia table label
+Anambra State,NG004,"'<name> State' (Wikipedia page titles, zones page links)"
+BAUCHI,NG005,upper case (Mundx)
+Bauchi,NG005,canonical HDX adm1_name; also Wikipedia table label
+Bauchi State,NG005,"'<name> State' (Wikipedia page titles, zones page links)"
+BAYELSA,NG006,upper case (Mundx)
+Bayelsa,NG006,canonical HDX adm1_name; also Wikipedia table label
+Bayelsa State,NG006,"'<name> State' (Wikipedia page titles, zones page links)"
+BENUE,NG007,upper case (Mundx)
+Benue,NG007,canonical HDX adm1_name; also Wikipedia table label
+Benue State,NG007,"'<name> State' (Wikipedia page titles, zones page links)"
+BORNO,NG008,upper case (Mundx)
+Borno,NG008,canonical HDX adm1_name; also Wikipedia table label
+Borno State,NG008,"'<name> State' (Wikipedia page titles, zones page links)"
+CROSS RIVER,NG009,upper case (Mundx)
+Cross River,NG009,canonical HDX adm1_name; also Wikipedia table label
+Cross River State,NG009,"'<name> State' (Wikipedia page titles, zones page links)"
+DELTA,NG010,upper case (Mundx)
+Delta,NG010,canonical HDX adm1_name; also Wikipedia table label
+Delta State,NG010,"'<name> State' (Wikipedia page titles, zones page links)"
+EBONYI,NG011,upper case (Mundx)
+Ebonyi,NG011,canonical HDX adm1_name; also Wikipedia table label
+Ebonyi State,NG011,"'<name> State' (Wikipedia page titles, zones page links)"
+EDO,NG012,upper case (Mundx)
+Edo,NG012,canonical HDX adm1_name; also Wikipedia table label
+Edo State,NG012,"'<name> State' (Wikipedia page titles, zones page links)"
+EKITI,NG013,upper case (Mundx)
+Ekiti,NG013,canonical HDX adm1_name; also Wikipedia table label
+Ekiti State,NG013,"'<name> State' (Wikipedia page titles, zones page links)"
+ENUGU,NG014,upper case (Mundx)
+Enugu,NG014,canonical HDX adm1_name; also Wikipedia table label
+Enugu State,NG014,"'<name> State' (Wikipedia page titles, zones page links)"
+Abuja(FCT),NG015,thenigerialawyer.com label
+F.C.T.,NG015,Wikipedia By-state label ({{abbr|F.C.T.|...}})
+FCT,NG015,"AGADA, Mundx"
+Federal Capital Territory,NG015,canonical HDX adm1_name; zones page
+the Federal Capital Territory,NG015,Wikipedia state page title suffix
+GOMBE,NG016,upper case (Mundx)
+Gombe,NG016,canonical HDX adm1_name; also Wikipedia table label
+Gombe State,NG016,"'<name> State' (Wikipedia page titles, zones page links)"
+IMO,NG017,upper case (Mundx)
+Imo,NG017,canonical HDX adm1_name; also Wikipedia table label
+Imo State,NG017,"'<name> State' (Wikipedia page titles, zones page links)"
+JIGAWA,NG018,upper case (Mundx)
+Jigawa,NG018,canonical HDX adm1_name; also Wikipedia table label
+Jigawa State,NG018,"'<name> State' (Wikipedia page titles, zones page links)"
+KADUNA,NG019,upper case (Mundx)
+Kaduna,NG019,canonical HDX adm1_name; also Wikipedia table label
+Kaduna State,NG019,"'<name> State' (Wikipedia page titles, zones page links)"
+KANO,NG020,upper case (Mundx)
+Kano,NG020,canonical HDX adm1_name; also Wikipedia table label
+Kano State,NG020,"'<name> State' (Wikipedia page titles, zones page links)"
+KATSINA,NG021,upper case (Mundx)
+Katsina,NG021,canonical HDX adm1_name; also Wikipedia table label
+Katsina State,NG021,"'<name> State' (Wikipedia page titles, zones page links)"
+KEBBI,NG022,upper case (Mundx)
+Kebbi,NG022,canonical HDX adm1_name; also Wikipedia table label
+Kebbi State,NG022,"'<name> State' (Wikipedia page titles, zones page links)"
+KOGI,NG023,upper case (Mundx)
+Kogi,NG023,canonical HDX adm1_name; also Wikipedia table label
+Kogi State,NG023,"'<name> State' (Wikipedia page titles, zones page links)"
+KWARA,NG024,upper case (Mundx)
+Kwara,NG024,canonical HDX adm1_name; also Wikipedia table label
+Kwara State,NG024,"'<name> State' (Wikipedia page titles, zones page links)"
+LAGOS,NG025,upper case (Mundx)
+Lagos,NG025,canonical HDX adm1_name; also Wikipedia table label
+Lagos State,NG025,"'<name> State' (Wikipedia page titles, zones page links)"
+NASARAWA,NG026,upper case (Mundx)
+Nasarawa,NG026,canonical HDX adm1_name; also Wikipedia table label
+Nasarawa State,NG026,"'<name> State' (Wikipedia page titles, zones page links)"
+Nassarawa,NG026,alternate spelling (thenigerialawyer.com)
+NIGER,NG027,upper case (Mundx)
+Niger,NG027,canonical HDX adm1_name; also Wikipedia table label
+Niger State,NG027,"'<name> State' (Wikipedia page titles, zones page links)"
+OGUN,NG028,upper case (Mundx)
+Ogun,NG028,canonical HDX adm1_name; also Wikipedia table label
+Ogun State,NG028,"'<name> State' (Wikipedia page titles, zones page links)"
+ONDO,NG029,upper case (Mundx)
+Ondo,NG029,canonical HDX adm1_name; also Wikipedia table label
+Ondo State,NG029,"'<name> State' (Wikipedia page titles, zones page links)"
+OSUN,NG030,upper case (Mundx)
+Osun,NG030,canonical HDX adm1_name; also Wikipedia table label
+Osun State,NG030,"'<name> State' (Wikipedia page titles, zones page links)"
+OYO,NG031,upper case (Mundx)
+Oyo,NG031,canonical HDX adm1_name; also Wikipedia table label
+Oyo State,NG031,"'<name> State' (Wikipedia page titles, zones page links)"
+PLATEAU,NG032,upper case (Mundx)
+Plateau,NG032,canonical HDX adm1_name; also Wikipedia table label
+Plateau State,NG032,"'<name> State' (Wikipedia page titles, zones page links)"
+RIVERS,NG033,upper case (Mundx)
+Rivers,NG033,canonical HDX adm1_name; also Wikipedia table label
+Rivers State,NG033,"'<name> State' (Wikipedia page titles, zones page links)"
+SOKOTO,NG034,upper case (Mundx)
+Sokoto,NG034,canonical HDX adm1_name; also Wikipedia table label
+Sokoto State,NG034,"'<name> State' (Wikipedia page titles, zones page links)"
+TARABA,NG035,upper case (Mundx)
+Taraba,NG035,canonical HDX adm1_name; also Wikipedia table label
+Taraba State,NG035,"'<name> State' (Wikipedia page titles, zones page links)"
+YOBE,NG036,upper case (Mundx)
+Yobe,NG036,canonical HDX adm1_name; also Wikipedia table label
+Yobe State,NG036,"'<name> State' (Wikipedia page titles, zones page links)"
+ZAMFARA,NG037,upper case (Mundx)
+Zamfara,NG037,canonical HDX adm1_name; also Wikipedia table label
+Zamfara State,NG037,"'<name> State' (Wikipedia page titles, zones page links)"
+EkitI,NG013,Vanguard label (mixed case as printed)
+OGun,NG028,Vanguard label (mixed case as printed)
+enugu,NG014,Vanguard label (mixed case as printed)
+jIGAWA,NG018,Vanguard label (mixed case as printed)
+AKWA ibom,NG003,Vanguard label (mixed case as printed)
+kogi,NG023,Vanguard label (mixed case as printed)
+kano,NG020,Vanguard label (mixed case as printed)
+zamfara,NG037,Vanguard label (mixed case as printed)
+sokoto,NG034,Vanguard label (mixed case as printed)
+cROSS river,NG009,Vanguard label (mixed case as printed)
+delta,NG010,Vanguard label (mixed case as printed)

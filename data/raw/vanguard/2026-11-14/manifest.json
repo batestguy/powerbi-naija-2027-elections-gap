@@ -1,0 +1,15 @@
+{
+  "source": "vanguard",
+  "snapshot_date": "2026-11-14",
+  "note": "Vanguard state table 'Declared by INEC' (four parties). MANUAL SAVE: the site returns HTTP 403 to scripted requests, so this page was saved once by hand (curl with a browser User-Agent) and is not re-fetched by scripts/pull_sources.py. A re-run needs this file, or the same page saved from a browser.",
+  "files": [
+    {
+      "file": "page.html",
+      "url": "https://www.vanguardngr.com/2023-presidential-election-results-by-states/",
+      "accessed_utc": "2026-11-14",
+      "http_status": 200,
+      "bytes": 190887,
+      "sha256": "11ad909109bd9258a472a0e40c089d636f8cd089c779f0f41af6043c9301310a"
+    }
+  ]
+}

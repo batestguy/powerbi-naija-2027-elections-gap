@@ -1,0 +1,54 @@
+{
+  "built_by": "scripts/build_geometry.py",
+  "tools": {
+    "python": "3.12.13",
+    "topojson": "2.2",
+    "shapely": "2.2.0"
+  },
+  "outputs": [
+    {
+      "file": "pbip/assets/nga_states.topo.json",
+      "bytes": 31979,
+      "sha256": "264cd60390ad27b1558642013c59707a3370b38199a8be9f260679b103ee166c",
+      "source": "data/raw/hdx_cod_ab/2026-11-13/nga_admin_boundaries.geojson.zip -> nga_admin1.geojson",
+      "source_sha256": "40180271a90a545153f97eee044db1c46ec67cba51788529df9a25918abd1d92",
+      "source_geojson_bytes": 1660543,
+      "features": 37,
+      "vertices_before": 39147,
+      "vertices_after_arcs": 2437,
+      "simplification": {
+        "algorithm": "Douglas-Peucker on shared arcs (topology-preserving)",
+        "tolerance_degrees": 0.01,
+        "prevent_oversimplify": true,
+        "prequantize": 100000.0
+      },
+      "invalid_after_simplify_before_repair": [
+        "NG003",
+        "NG009"
+      ],
+      "repair": "union of own parts for invalid features, then topology rebuilt without simplification",
+      "invalid_after_simplify": [],
+      "empty_after_simplify": [],
+      "pairwise_overlap_area_deg2": 0.0,
+      "max_area_change_ratio": {
+        "state_pcode": "NG025",
+        "ratio": 0.00963
+      }
+    },
+    {
+      "file": "pbip/assets/nga_tiles.topo.json",
+      "bytes": 6802,
+      "sha256": "b88fec4eb330e8fc81ecad268fa1b5f1475fb57c72f7e48ac4f57c3f84110d0e",
+      "source": "data/reference/tile_grid_layout.csv (own design)",
+      "features": 37,
+      "tile": {
+        "origin_lonlat": [
+          3.0,
+          13.5
+        ],
+        "step_deg": 1.0,
+        "size_deg": 0.9
+      }
+    }
+  ]
+}

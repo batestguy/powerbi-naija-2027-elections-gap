@@ -1,0 +1,27 @@
+{
+  "source": "hdx_cod_ab",
+  "snapshot_date": "2026-11-13",
+  "note": "HDX COD-AB Nigeria administrative boundaries. CC BY-IGO. Zip kept local only.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "package_show.json",
+      "url": "https://data.humdata.org/api/3/action/package_show?id=cod-ab-nga",
+      "accessed_utc": "2026-11-13T06:23:02+00:00",
+      "http_status": 200,
+      "bytes": 65601,
+      "sha256": "3d32035f2c497e3820947b8b4b6d62497188b3d5829467826f976902e115bdfd"
+    },
+    {
+      "file": "nga_admin_boundaries.geojson.zip",
+      "url": "https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/7e30ec96-7f29-4ee8-9f4c-77633b353cbb/download/nga_admin_boundaries.geojson.zip",
+      "accessed_utc": "2026-11-13T06:23:04+00:00",
+      "http_status": 200,
+      "bytes": 11395117,
+      "sha256": "40180271a90a545153f97eee044db1c46ec67cba51788529df9a25918abd1d92",
+      "resource_id": "7e30ec96-7f29-4ee8-9f4c-77633b353cbb",
+      "resource_last_modified": "2026-04-16T09:05:30.712022",
+      "licence": "Creative Commons Attribution for Intergovernmental Organisations (CC BY-IGO)"
+    }
+  ]
+}

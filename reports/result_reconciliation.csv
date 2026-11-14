@@ -1,0 +1,19 @@
+state_pcode,party,wikipedia,agada,nigerialawyer,thisday,vanguard,chosen,rule,copies_for_chosen,copies_total,reason
+NG007,APC,310468,310468,310648,310648,310468,310468,majority,3,4,
+NG007,LP,308372,308372,308372,308372,,308372,unanimous,3,4,
+NG009,NNPP,1644,1644,16644,16644,1644,1644,majority,3,4,
+NG011,NNPP,1661,1661,1661,1661,2661,1661,majority,3,4,
+NG013,LP,11397,11397,11396,11396,11397,11397,majority,3,4,
+NG014,LP,428640,428640,428740,428740,428640,428640,majority,3,4,
+NG016,PDP,317123,319123,319123,319123,319123,319123,majority,3,4,
+NG017,APC,66171,66406,66406,66406,66406,66406,majority,3,4,
+NG017,PDP,30004,30234,30234,30234,30234,30234,majority,3,4,
+NG017,LP,352904,360495,360495,360495,360495,360495,majority,3,4,
+NG017,NNPP,1536,1552,1552,1552,1552,1552,majority,3,4,
+NG020,APC,517341,506412,517341,517341,517341,506412,decision,1,4,"Override of majority 517,341 (Wikipedia table, ThisDay/nigerialawyer, Vanguard). 506,412 (AGADA; also Wikipedia's Kano state page) is the only value with which the APC state sum equals INEC's national 8,794,726. The gap, 10,929, equals the APC figure printed twice on Wikipedia's Kano LGA table (Kibiya and Kura rows identical), consistent with a double count. Either value keeps APC above 25% in Kano."
+NG024,LP,31186,31186,31166,31166,31166,31166,decision,2,4,"Tie 31,166 (ThisDay/nigerialawyer, Vanguard) vs 31,186 (Wikipedia, AGADA). 31,166 makes the LP state sum equal INEC's national 6,101,533."
+NG024,NNPP,3141,3141,3141,3141,3142,3141,majority,3,4,
+NG026,PDP,147093,147093,147083,147083,147093,147093,majority,3,4,
+NG029,LP,44405,47350,47350,47350,44405,47350,decision,2,4,"Tie 47,350 (AGADA, ThisDay/nigerialawyer) vs 44,405 (Wikipedia, Vanguard). 47,350 makes the LP state sum equal INEC's national 6,101,533."
+NG036,PDP,196567,198567,198567,198567,198567,198567,majority,3,4,
+NG037,PDP,193978,193978,93978,93978,193978,193978,majority,3,4,

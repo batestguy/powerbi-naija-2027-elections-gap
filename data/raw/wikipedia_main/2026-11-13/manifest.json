@@ -1,0 +1,39 @@
+{
+  "source": "wikipedia_main",
+  "snapshot_date": "2026-11-13",
+  "note": "Sections 'By state' and 'By geopolitical zone' of the main 2023 page, pinned to one revision. CC BY-SA 4.0.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "sections.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&page=2023_Nigerian_presidential_election&prop=sections%7Crevid&redirects=1",
+      "accessed_utc": "2026-11-13T06:19:33+00:00",
+      "http_status": 200,
+      "bytes": 10767,
+      "sha256": "8f3cf7c7fa4467258439cf309580ed61b53a02b70e9a48cb17d07e61d9ec912f",
+      "revid": 1381904162
+    },
+    {
+      "file": "by_state.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&oldid=1381904162&section=40&prop=wikitext%7Ctext%7Crevid",
+      "accessed_utc": "2026-11-13T06:19:36+00:00",
+      "http_status": 200,
+      "bytes": 121741,
+      "sha256": "b532b80dc1ecd822d4c76d01895d14668f2fd484007af48aa54f736079979730",
+      "revid": 1381904162,
+      "section_index": "40",
+      "section_heading": "By state"
+    },
+    {
+      "file": "by_zone.json",
+      "url": "https://en.wikipedia.org/w/api.php?format=json&formatversion=2&action=parse&oldid=1381904162&section=39&prop=wikitext%7Ctext%7Crevid",
+      "accessed_utc": "2026-11-13T06:19:40+00:00",
+      "http_status": 200,
+      "bytes": 12618,
+      "sha256": "d43da2843ba3faa2403fd38d5e44bbed60bf6f83c1e40f12c2677cfb4d1a664f",
+      "revid": 1381904162,
+      "section_index": "39",
+      "section_heading": "By geopolitical zone"
+    }
+  ]
+}

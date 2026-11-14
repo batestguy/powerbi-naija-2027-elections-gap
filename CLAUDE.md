@@ -40,5 +40,12 @@ Delivery: desktop file (PBIP in git, `.pbix` as a GitHub Release asset) + walkth
 
 ## Environment and remaining blanks
 - Pinned environment: CPython 3.12.13 in project `.venv`, managed by uv (`uv sync`, `uv run`). Never use the system 3.14 or conda. Details: `docs/environment.md`.
-- Commands: data pull, profiling, validation, PBIR validate.
+- Commands: see `## Commands` below. PBIR validate: Phase 3.
 - Where large data lives (>5 MB goes to Hugging Face Datasets or LFS, not git).
+
+## Commands
+Run from the repo root, in the pinned environment:
+- `uv run python -I scripts/pull_sources.py [--skip-mundx] [--only src1,src2]` — raw snapshots to `data/raw/<source>/<date>/` with manifests. Vanguard is a manual snapshot (not fetched).
+- `uv run python -I scripts/build_staging.py` — staging tables, five-copy reconciliation (`reports/result_reconciliation.csv`), `reports/unmatched_keys.csv`.
+- `uv run python -I scripts/build_geometry.py` — TopoJSON for the Shape Map + `pbip/assets/geometry_manifest.json`.
+- `uv run python -I scripts/validate_phase2.py` — Phase 2 gate → `reports/phase2_validation.json`, `reports/mundx_state_accuracy.csv`; exits 1 on a gate failure.

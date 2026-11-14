@@ -1,0 +1,16 @@
+{
+  "source": "agada",
+  "snapshot_date": "2026-11-13",
+  "note": "AGADA-BI state table 'based on results declared by INEC'. No licence; cross-check only.",
+  "user_agent": "naija-2027-elections-gap/0.1 (research; non-commercial)",
+  "files": [
+    {
+      "file": "agada_results.xlsx",
+      "url": "https://raw.githubusercontent.com/AGADA-BI/Nigeria-2023-election-data/HEAD/2023%20Nigeria%20Presiential%20Election%20Results%20(Based%20on%20results%20declared%20by%20INEC).xlsx",
+      "accessed_utc": "2026-11-13T06:26:09+00:00",
+      "http_status": 200,
+      "bytes": 13484,
+      "sha256": "2f2618a07ec4f21c689b298e3d7da38e4cc0c9e81f0ae9d5a255e60fc3277476"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ data/**
 !data/**/
 !data/**/manifest*.json
 !data/**/.gitkeep
+!data/reference/*.csv
 
 # Power BI local caches
 pbip/**/.pbi/localSettings.json

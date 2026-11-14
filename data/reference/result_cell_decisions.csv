@@ -1,0 +1,9 @@
+# Hand decisions for state result cells that the copy-majority rule cannot settle (ties) or must override.
+# Rule (decision log 2026-11-14): one vote per independent copy of the INEC declaration (ThisDay and thenigerialawyer.com
+# count as one copy - identical errors). A tie, or a majority value that breaks the INEC national total, is decided here
+# by the INEC national Declaration (data/reference/inec_national_declaration_2023.csv). chosen_votes must equal a value
+# printed by at least one copy. Listed alternatives remain in reports/result_reconciliation.csv.
+state_pcode,party,chosen_votes,reason
+NG020,APC,506412,"Override of majority 517,341 (Wikipedia table, ThisDay/nigerialawyer, Vanguard). 506,412 (AGADA; also Wikipedia's Kano state page) is the only value with which the APC state sum equals INEC's national 8,794,726. The gap, 10,929, equals the APC figure printed twice on Wikipedia's Kano LGA table (Kibiya and Kura rows identical), consistent with a double count. Either value keeps APC above 25% in Kano."
+NG024,LP,31166,"Tie 31,166 (ThisDay/nigerialawyer, Vanguard) vs 31,186 (Wikipedia, AGADA). 31,166 makes the LP state sum equal INEC's national 6,101,533."
+NG029,LP,47350,"Tie 47,350 (AGADA, ThisDay/nigerialawyer) vs 44,405 (Wikipedia, Vanguard). 47,350 makes the LP state sum equal INEC's national 6,101,533."
