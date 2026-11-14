@@ -1,0 +1,18 @@
+table param_turnout
+	lineageTag: 9919035e-ca98-0f99-e1b1-5f86d705b550
+
+	measure 'param_turnout value' = SELECTEDVALUE ( param_turnout[Value], 0 )
+		formatString: 0
+		lineageTag: f1482e30-f308-9d61-38a2-8623b7009631
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 1377fe94-235d-c410-50b5-229767ce9099
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_turnout = calculated
+		mode: import
+		source = GENERATESERIES ( -50, 50, 1 )
+

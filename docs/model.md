@@ -100,3 +100,12 @@ uv run python -I scripts/build_pbip.py
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_reopen.ps1 -Force   # reopen Desktop + refresh data
 uv run python -I scripts/validate_phase3.py --no-refresh
 ```
+
+## Scenario layer (Phase 4)
+
+Method: `docs/methodology.md`. Nine disconnected What-If tables hold the slider values (`param_turnout`,
+`param_swing_national`, `param_swing_NC` … `param_swing_SW`, `param_rule`); each has a `<table> value` measure.
+All scenario logic is in measures of the `scenario` table (`Scenario share`, `Units secured`, `Tipping-point unit`, …).
+No scenario value is stored in any fact table. Checked against a re-implementation of the note
+(`reports/phase4_validation.json`) and a blind reproduction by a reviewer (`registers/qa-log.md`).
+*Clears the rule*, *Units still needed* and the *Tipping-point* measures always use all 37 units; the unit counts follow page filters.

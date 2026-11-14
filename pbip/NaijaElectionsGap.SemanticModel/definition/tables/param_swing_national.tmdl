@@ -1,0 +1,18 @@
+table param_swing_national
+	lineageTag: d76b993a-4638-8da7-4fc6-909704701d57
+
+	measure 'param_swing_national value' = SELECTEDVALUE ( param_swing_national[Value], 0 )
+		formatString: 0.0
+		lineageTag: b914f61e-89a0-19bf-aafd-22c39a612ad5
+
+	column Value
+		dataType: double
+		formatString: 0.0
+		lineageTag: 362c5d39-85bb-29c2-38c3-af10268e43e5
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_swing_national = calculated
+		mode: import
+		source = GENERATESERIES ( -20, 20, 0.5 )
+

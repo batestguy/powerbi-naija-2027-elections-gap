@@ -1,0 +1,1049 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "gate_passed": true,
+  "summary": {
+    "checks": 56,
+    "pass": 56,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "[neutral] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[neutral] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national +5] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[national +5] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 30,
+          "wr": 1,
+          "out": 6,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national -5, SE +10] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[national -5, SE +10] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 21,
+          "wr": 8,
+          "out": 8,
+          "cap": 0,
+          "with": 37,
+          "need": 3,
+          "clears": "No",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[supporters +20%, national +2] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[supporters +20%, national +2] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 30,
+          "wr": 1,
+          "out": 6,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[every slider at minimum] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[every slider at minimum] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 0,
+          "wr": 0,
+          "out": 37,
+          "cap": 33,
+          "with": 37,
+          "need": 24,
+          "clears": "No",
+          "tip": "NG021"
+        }
+      }
+    },
+    {
+      "check": "[every slider at maximum] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[every slider at maximum] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 37,
+          "wr": 0,
+          "out": 0,
+          "cap": 8,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[mixed] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[mixed] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 28,
+          "wr": 6,
+          "out": 3,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG032"
+        }
+      }
+    },
+    {
+      "check": "[odd: supporters -37%, national +7.5, mixed zones] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[odd: supporters -37%, national +7.5, mixed zones] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 25,
+          "wr": 6,
+          "out": 6,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG009"
+        }
+      }
+    },
+    {
+      "check": "[odd: supporters +13%, national -3.5] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[odd: supporters +13%, national -3.5] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 27,
+          "wr": 3,
+          "out": 7,
+          "cap": 3,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[supporter turnout alone at -50] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[supporter turnout alone at -50] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 18,
+          "wr": 1,
+          "out": 18,
+          "cap": 0,
+          "with": 37,
+          "need": 6,
+          "clears": "No",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[supporter turnout alone at +50] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[supporter turnout alone at +50] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 31,
+          "wr": 1,
+          "out": 5,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national swing alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[national swing alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 14,
+          "wr": 4,
+          "out": 19,
+          "cap": 7,
+          "with": 37,
+          "need": 10,
+          "clears": "No",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national swing alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[national swing alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 34,
+          "wr": 3,
+          "out": 0,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[zone NC alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NC alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 26,
+          "wr": 2,
+          "out": 9,
+          "cap": 1,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG035"
+        }
+      }
+    },
+    {
+      "check": "[zone NC alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NC alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 30,
+          "wr": 1,
+          "out": 6,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG020"
+        }
+      }
+    },
+    {
+      "check": "[zone NE alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NE alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 24,
+          "wr": 2,
+          "out": 11,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG006"
+        }
+      }
+    },
+    {
+      "check": "[zone NE alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NE alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG009"
+        }
+      }
+    },
+    {
+      "check": "[zone NW alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NW alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 26,
+          "wr": 2,
+          "out": 9,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG006"
+        }
+      }
+    },
+    {
+      "check": "[zone NW alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone NW alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[zone SE alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SE alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 5,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[zone SE alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SE alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 31,
+          "wr": 4,
+          "out": 2,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG020"
+        }
+      }
+    },
+    {
+      "check": "[zone SS alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SS alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 25,
+          "wr": 1,
+          "out": 11,
+          "cap": 1,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG035"
+        }
+      }
+    },
+    {
+      "check": "[zone SS alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SS alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 31,
+          "wr": 0,
+          "out": 6,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG010"
+        }
+      }
+    },
+    {
+      "check": "[zone SW alone at -20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SW alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG032"
+        }
+      }
+    },
+    {
+      "check": "[zone SW alone at +20] 148 unit shares = reference implementation, all within 0-1",
+      "status": "pass",
+      "evidence": {
+        "cells": 148,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "[zone SW alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "rows": 8,
+        "differences": [],
+        "sample_APC_N24": {
+          "sec": 29,
+          "wr": 1,
+          "out": 7,
+          "cap": 0,
+          "with": 37,
+          "need": 0,
+          "clears": "Yes",
+          "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "neutral sliders: units secured = baseline 25% count = 29 / 21 / 16 / 1",
+      "status": "pass",
+      "evidence": {
+        "APC": [
+          29,
+          29
+        ],
+        "PDP": [
+          21,
+          21
+        ],
+        "LP": [
+          16,
+          16
+        ],
+        "NNPP": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "check": "neutral sliders: every unit's scenario share = baseline share exactly",
+      "status": "pass",
+      "evidence": {
+        "max_abs_diff": 0
+      }
+    },
+    {
+      "check": "units secured never falls as national swing rises (-20 to +20, 81 steps)",
+      "status": "pass",
+      "evidence": {
+        "APC": {
+          "monotonic": true,
+          "at -20": 14,
+          "at 0": 29,
+          "at +20": 34
+        },
+        "PDP": {
+          "monotonic": true,
+          "at -20": 8,
+          "at 0": 21,
+          "at +20": 34
+        },
+        "LP": {
+          "monotonic": true,
+          "at -20": 9,
+          "at 0": 16,
+          "at +20": 26
+        },
+        "NNPP": {
+          "monotonic": true,
+          "at -20": 1,
+          "at 0": 1,
+          "at +20": 5
+        }
+      }
+    },
+    {
+      "check": "exact-boundary search: no reachable slider combination puts a unit exactly on 25% or 20%",
+      "status": "pass",
+      "evidence": {
+        "combinations": 2406628,
+        "exact_hits": []
+      }
+    },
+    {
+      "check": "zone filter on the page: rule, units still needed and tipping point stay national; zone count follows the filter",
+      "status": "pass",
+      "evidence": {
+        "setting": "national +7.5, N=24, zones NW and SE",
+        "differences": []
+      }
+    },
+    {
+      "check": "no candidate / OTHERS -> blank scenario",
+      "status": "pass",
+      "evidence": {
+        "none": null,
+        "others": null,
+        "others_share": null
+      }
+    }
+  ]
+}

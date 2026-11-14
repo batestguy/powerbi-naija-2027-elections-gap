@@ -1,0 +1,109 @@
+table scenario
+	lineageTag: a442799d-9f11-f602-9bc1-22ab023ec651
+
+	measure 'Supporter turnout' = SELECTEDVALUE ( param_turnout[Value], 0 ) / 100
+		formatString: 0%
+		lineageTag: bb1fbb9f-5b38-a045-9c82-c9435f905716
+
+	measure 'National swing' = SELECTEDVALUE ( param_swing_national[Value], 0 )
+		formatString: +0.0;-0.0;0.0
+		lineageTag: b62d6f54-61af-3ca2-afcb-7ae37fb899b3
+
+	measure 'Zone swing' = SWITCH ( SELECTEDVALUE ( dim_state[zone_code] ), "NC", SELECTEDVALUE ( param_swing_NC[Value], 0 ), "NE", SELECTEDVALUE ( param_swing_NE[Value], 0 ), "NW", SELECTEDVALUE ( param_swing_NW[Value], 0 ), "SE", SELECTEDVALUE ( param_swing_SE[Value], 0 ), "SS", SELECTEDVALUE ( param_swing_SS[Value], 0 ), "SW", SELECTEDVALUE ( param_swing_SW[Value], 0 ) )
+		formatString: +0.0;-0.0;0.0
+		lineageTag: 097de3dc-87f4-a3dd-50bf-7cf5f1c11fe2
+
+	measure 'Units needed (rule)' = SELECTEDVALUE ( param_rule[Value], 24 )
+		formatString: 0
+		lineageTag: 1e4a6c5f-cc89-6b20-80ff-45c0afd621a3
+
+	measure 'Candidate is valid' = VAR c = SELECTEDVALUE ( dim_party[party] ) RETURN NOT ISBLANK ( c ) && c <> "OTHERS"
+		lineageTag: a458d06b-8d02-edef-0e62-6991497e6aa2
+
+	measure 'Scenario valid votes' = VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, tv + cv * [Supporter turnout] )
+		formatString: #,0
+		lineageTag: 70821635-4b6a-a2ae-37ec-be0eea278d3a
+
+	measure 'Scenario share uncapped' = VAR cv = [Candidate votes] VAR tv = [Valid votes] VAR t = [Supporter turnout] RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) + ( [National swing] + [Zone swing] ) / 100 )
+		formatString: 0.00%
+		lineageTag: 45a6d835-f06c-36f7-546b-61408f84449f
+
+	measure 'Scenario share' = VAR u = [Scenario share uncapped] RETURN IF ( NOT ISBLANK ( u ), MIN ( 1, MAX ( 0, u ) ) )
+		formatString: 0.00%
+		lineageTag: a58063bc-0798-165b-379e-403d43380ff7
+
+	measure 'Scenario votes' = [Scenario share] * [Scenario valid votes]
+		formatString: #,0
+		lineageTag: a6921596-217f-360d-33ca-d1f7b2aef194
+
+	measure 'Scenario label' = VAR p = [Scenario share] RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "Secured", p >= 0.20, "Within reach", "Out of reach" )
+		lineageTag: 9b645e5d-bd35-29c3-46ae-51114ced6d34
+
+	measure 'Scenario label order' = VAR p = [Scenario share] RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, 1, p >= 0.20, 2, 3 )
+		formatString: 0
+		lineageTag: 1c529bab-cc0d-0fe2-0a34-bb253b7efa38
+
+	measure 'Points needed' = VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ), MAX ( 0, 0.25 - p ) * 100 )
+		formatString: 0.0
+		lineageTag: dddc7ed4-1202-aab9-fec2-da7f2814583e
+
+	measure 'Votes needed' = VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ), ROUNDUP ( MAX ( 0, 0.25 * [Scenario valid votes] - [Scenario votes] ), 0 ) )
+		formatString: #,0
+		lineageTag: ffb73f03-541b-1a43-8ad0-f92ba61f4074
+
+	measure 'Units secured' = IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), [Scenario share] >= 0.25 ) ) + 0 )
+		formatString: 0
+		lineageTag: 2d13b105-8597-ad0f-e098-7e31aaa2e35b
+
+	measure 'Units within reach' = IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), [Scenario share] >= 0.20 && [Scenario share] < 0.25 ) ) + 0 )
+		formatString: 0
+		lineageTag: 84be9939-71ce-c680-9c27-c17e554d322b
+
+	measure 'Units out of reach' = IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), NOT ISBLANK ( [Scenario share] ) && [Scenario share] < 0.20 ) ) + 0 )
+		formatString: 0
+		lineageTag: bebd805e-704a-72ea-7e30-ecd622e8a6de
+
+	measure 'Units with a scenario' = IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), NOT ISBLANK ( [Scenario share] ) ) ) + 0 )
+		formatString: 0
+		lineageTag: 757e99d6-4f2c-3114-7ffa-34752374ec15
+
+	measure 'Units at a cap' = IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), VAR u = [Scenario share uncapped] RETURN NOT ISBLANK ( u ) && ( u <= 0 || u >= 1 ) ) ) + 0 )
+		formatString: 0
+		lineageTag: 61a8a036-56bc-d91b-04cb-37029276003d
+
+	measure 'Units secured (national)' = CALCULATE ( [Units secured], REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) )
+		formatString: 0
+		lineageTag: bcac899c-c564-f338-d72e-3e0932bed155
+
+	measure 'Units still needed' = IF ( [Candidate is valid], MAX ( 0, [Units needed (rule)] - [Units secured (national)] ) )
+		formatString: 0
+		lineageTag: fee32701-13fd-0b1f-6277-81b6439fa34e
+
+	measure 'Clears the rule' = IF ( [Candidate is valid], IF ( [Units secured (national)] >= [Units needed (rule)], "Yes", "No" ) )
+		lineageTag: 8bbbfd4e-4a13-d324-95c7-221581f08ea2
+
+	measure 'Tipping-point P-code' = IF ( [Candidate is valid], VAR n = [Units needed (rule)] RETURN CALCULATE ( VAR tb = FILTER ( ADDCOLUMNS ( VALUES ( dim_state[state_pcode] ), "@p", [Scenario share] ), NOT ISBLANK ( [@p] ) ) VAR tp = TOPN ( n, tb, [@p], DESC, dim_state[state_pcode], ASC ) RETURN IF ( COUNTROWS ( tb ) >= n, MAXX ( TOPN ( 1, tp, [@p], ASC, dim_state[state_pcode], DESC ), dim_state[state_pcode] ) ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) )
+		lineageTag: 671f8d66-0d83-e9a0-1d17-d2089c4bea7e
+
+	measure 'Tipping-point unit' = VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), LOOKUPVALUE ( dim_state[state_name], dim_state[state_pcode], k ) )
+		lineageTag: f582f47d-47fc-0a4e-4f00-29e400677c91
+
+	measure 'Tipping-point share' = VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), CALCULATE ( [Scenario share], REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ), dim_state[state_pcode] = k ) )
+		formatString: 0.00%
+		lineageTag: 57b20f55-a638-3110-76ad-2aba9e91d520
+
+	measure 'Tipping-point gap (points)' = VAR p = [Tipping-point share] RETURN IF ( NOT ISBLANK ( p ), ( 0.25 - p ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		lineageTag: f52a752f-27ae-9616-0644-ad9a83397a9d
+
+	column Value
+		dataType: string
+		isHidden
+		lineageTag: 6a6025d0-4194-b193-3aaf-92b34d621206
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition scenario = calculated
+		mode: import
+		source = { "Scenario measures - see docs/methodology.md" }
+

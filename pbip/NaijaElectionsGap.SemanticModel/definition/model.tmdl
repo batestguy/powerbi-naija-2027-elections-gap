@@ -15,4 +15,14 @@ ref table dim_party
 ref table dim_state
 ref table fact_result_2023
 ref table fact_turnout_2023
+ref table param_turnout
+ref table param_swing_national
+ref table param_swing_NC
+ref table param_swing_NE
+ref table param_swing_NW
+ref table param_swing_SE
+ref table param_swing_SS
+ref table param_swing_SW
+ref table param_rule
+ref table scenario
 

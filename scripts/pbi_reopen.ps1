@@ -54,12 +54,14 @@ Write-Host "bridge connected (pid $($i.pid)); refreshing data"
 # The engine can lag the bridge. Wait until it answers a harmless Info call, then refresh ONCE.
 # (Retrying the refresh while the engine starts up left "Could not find a PackageSession" dialogs that block Desktop.)
 $engine = Join-Path $PSScriptRoot 'pbi_engine.ps1'
+# Desktop may run its own "Load" refresh on open (e.g. after new tables were added); pbi_engine.ps1 refuses while
+# any dialog is showing, so this loop also waits for that Load window to close.
 $t = 0
 do {
-  Start-Sleep 3; $t += 3
-  $info = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $engine -Action Info 2>$null | Out-String
-} until ($info -match '"database"' -or $t -ge 120)
-if ($info -notmatch '"database"') { throw 'Local engine did not answer within 120 s.' }
+  Start-Sleep 5; $t += 5
+  $info = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $engine -Action Info 2>&1 | Out-String
+} until ($info -match '"database"' -or $t -ge $TimeoutSec)
+if ($info -notmatch '"database"') { throw "Local engine not ready within $TimeoutSec s (a dialog may still be open): $info" }
 $r = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $engine -Action Refresh 2>&1 | Out-String
 if ($r -notmatch '"ok"') { throw "Refresh through the local engine did not succeed: $r" }
 [pscustomobject]@{ pid = $i.pid; file = $Pbip; refreshed = $true } | ConvertTo-Json

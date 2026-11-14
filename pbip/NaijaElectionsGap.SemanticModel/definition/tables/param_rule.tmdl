@@ -1,0 +1,18 @@
+table param_rule
+	lineageTag: 7bc4f017-4327-2337-c8cd-08280210d0a3
+
+	measure 'param_rule value' = SELECTEDVALUE ( param_rule[Value], 24 )
+		formatString: 0
+		lineageTag: 43fc8830-a0c0-c251-de56-c6c5d065dc45
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 21af20f3-4e0d-4f44-05fd-514a48f45226
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_rule = calculated
+		mode: import
+		source = GENERATESERIES ( 24, 25, 1 )
+

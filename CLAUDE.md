@@ -54,3 +54,4 @@ Run from the repo root, in the pinned environment:
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_reopen.ps1 [-Force]` — close and reopen Desktop on the PBIP and refresh data (needed after model/TMDL changes; `-Force` discards unsaved Desktop state).
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_engine.ps1 -Action Refresh|Query|Info [-Dax "..."]` — refresh or query the live model through Desktop's local engine.
 - `uv run python -I scripts/validate_phase3.py [--no-refresh]` — Phase 3 model checks against the live model → `reports/phase3_validation.json`.
+- `uv run python -I scripts/validate_phase4.py` — scenario engine vs an independent re-implementation of `docs/methodology.md` → `reports/phase4_validation.json`.

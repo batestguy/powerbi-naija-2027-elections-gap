@@ -17,7 +17,7 @@ Status key: `todo` · `doing` · `done` · `blocked`
 | 1 | Source validation + licence | done | Every source in `registers/sources.md` marked approved / conditional / rejected |
 | 2 | Acquisition + profiling | done | 37 units join across results, registered voters, zones and geometry with zero unmatched keys; state sums equal the INEC national totals exactly |
 | 3 | Model design (thin slice first) | done | One state works end-to-end in Desktop; then full model diagram + rationale |
-| 4 | Scenario engine | todo | Methodology note reproduces results by hand; extreme-slider tests pass |
+| 4 | Scenario engine | done | Methodology note reproduces results by hand; extreme-slider tests pass |
 | 5 | Report pages | todo | A non-specialist completes the core task unaided |
 | 6 | QA | todo | `registers/qa-log.md` all pass, or each failure has a resolution |
 | 7 | Release + docs | todo | Release `.pbix` opens on a clean profile; video linked; methodology and limits reachable from inside the report |
@@ -100,6 +100,8 @@ on the account, Phase 7 changes shape — find out now.
   at neutral settings the simulator equals the baseline exactly.
 
 **Deliverable:** methodology note + test results in `registers/qa-log.md`.
+
+**Outcome (2026-11-14):** `docs/methodology.md` (user decisions: additive swing, supporter turnout, 5-point band); engine = 9 What-If parameter tables + measures in `scenario` (`scripts/build_pbip.py`); `scripts/validate_phase4.py` re-implements the note (same author) — 56/56 pass (`reports/phase4_validation.json`); a reviewer reproduced 13 settings blind from the note alone, all identical (exit criterion met). Slider-to-visual propagation is tested in Phase 5, when the slicers exist. **Phase 5 must:** make every slider slicer single-select (a multi-select silently falls back to neutral), and show an assumptions panel bound to the selected values.
 
 ## Phase 5 — Report pages
 Build order: **Overview → Path to 24 → Spread Map → Scenario Simulator**, then **How to read this** and **Data Sources**.

@@ -1,0 +1,18 @@
+table param_swing_NW
+	lineageTag: 91dcaa97-2a8d-110c-0663-209bc347048c
+
+	measure 'param_swing_NW value' = SELECTEDVALUE ( param_swing_NW[Value], 0 )
+		formatString: 0.0
+		lineageTag: de3ab67e-0463-eadb-e392-c16b88d0f200
+
+	column Value
+		dataType: double
+		formatString: 0.0
+		lineageTag: 27aadef9-3348-58bc-014f-3f61b7dbb784
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_swing_NW = calculated
+		mode: import
+		source = GENERATESERIES ( -20, 20, 0.5 )
+

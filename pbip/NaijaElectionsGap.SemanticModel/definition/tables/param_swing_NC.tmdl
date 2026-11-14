@@ -1,0 +1,18 @@
+table param_swing_NC
+	lineageTag: d32f4ad8-cf2b-2dab-3fd1-1c702497f389
+
+	measure 'param_swing_NC value' = SELECTEDVALUE ( param_swing_NC[Value], 0 )
+		formatString: 0.0
+		lineageTag: fd011a83-b564-e716-b49e-fdbef2942cac
+
+	column Value
+		dataType: double
+		formatString: 0.0
+		lineageTag: 3ff52355-436e-58a5-dd7b-cfb15a609978
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_swing_NC = calculated
+		mode: import
+		source = GENERATESERIES ( -20, 20, 0.5 )
+

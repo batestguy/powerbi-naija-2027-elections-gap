@@ -74,7 +74,7 @@ SORT_BY = {("dim_party", "party"): "sort_order", ("dim_party", "candidate"): "so
 # dim_party is deliberately DISCONNECTED: a candidate selection must never filter the valid-vote denominator
 # (fact_turnout_2023) or other candidates' rows; measures read the selection with SELECTEDVALUE / TREATAS.
 SEL = "SELECTEDVALUE ( dim_party[party] )"
-MEASURES = {
+MEASURES: dict = {
     "fact_result_2023": [
         ("Total votes", "SUM ( fact_result_2023[votes] )", "#,0"),
         ("Valid votes", "SUM ( fact_turnout_2023[total_valid] )", "#,0"),
@@ -102,6 +102,92 @@ RELATIONSHIPS = [("fact_result_2023", "state_pcode", "dim_state", "state_pcode")
                  ("fact_turnout_2023", "state_pcode", "dim_state", "state_pcode"),
                  ("dim_state", "zone_code", "dim_zone", "zone_code")]
 
+# ---- Phase 4: scenario engine (docs/methodology.md). What-If parameters are disconnected calculated tables;
+# all scenario logic lives in measures of the 'scenario' table. Baseline facts are never touched.
+ZONES = ["NC", "NE", "NW", "SE", "SS", "SW"]
+PARAMS = {  # table: (DAX series, default, format, dataType)
+    "param_turnout": ("GENERATESERIES ( -50, 50, 1 )", 0, "0", "int64"),
+    "param_swing_national": ("GENERATESERIES ( -20, 20, 0.5 )", 0, "0.0", "double"),
+    **{f"param_swing_{z}": ("GENERATESERIES ( -20, 20, 0.5 )", 0, "0.0", "double") for z in ZONES},
+    "param_rule": ("GENERATESERIES ( 24, 25, 1 )", 24, "0", "int64"),
+}
+CALC_TABLES = {**{t: (src, "Value", dt, fmt, False) for t, (src, _, fmt, dt) in PARAMS.items()},
+               "scenario": ('{ "Scenario measures - see docs/methodology.md" }', "Value", "string", None, True)}
+OK = f'VAR c = {SEL} RETURN NOT ISBLANK ( c ) && c <> "OTHERS"'   # a single real candidate is selected
+SHARE = "[Scenario share]"
+NATIONAL = "REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone )"   # all 37 units, whatever the page filters
+MEASURES["scenario"] = [
+    # inputs
+    ("Supporter turnout", "SELECTEDVALUE ( param_turnout[Value], 0 ) / 100", "0%"),
+    ("National swing", "SELECTEDVALUE ( param_swing_national[Value], 0 )", "+0.0;-0.0;0.0"),
+    ("Zone swing", "SWITCH ( SELECTEDVALUE ( dim_state[zone_code] ), "
+                   + ", ".join(f'"{z}", SELECTEDVALUE ( param_swing_{z}[Value], 0 )' for z in ZONES) + " )",
+     "+0.0;-0.0;0.0"),
+    ("Units needed (rule)", "SELECTEDVALUE ( param_rule[Value], 24 )", "0"),
+    ("Candidate is valid", OK, None),
+    # per unit (one state in context), steps 1-3 of the note
+    # DAX names are case-insensitive: candidate votes = cv, valid votes = tv (never v / V)
+    ("Scenario valid votes", "VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN IF ( [Candidate is valid] && "
+                             "HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, tv + cv * [Supporter turnout] )",
+     "#,0"),
+    ("Scenario share uncapped", "VAR cv = [Candidate votes] VAR tv = [Valid votes] VAR t = [Supporter turnout] "
+                                "RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) "
+                                "&& tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) + ( [National swing] + [Zone swing] ) / 100 )",
+     "0.00%"),
+    ("Scenario share", "VAR u = [Scenario share uncapped] RETURN IF ( NOT ISBLANK ( u ), MIN ( 1, MAX ( 0, u ) ) )", "0.00%"),
+    ("Scenario votes", f"{SHARE} * [Scenario valid votes]", "#,0"),
+    ("Scenario label", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "Secured", '
+                       'p >= 0.20, "Within reach", "Out of reach" )', None),
+    ("Scenario label order", f"VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, 1, p >= 0.20, 2, 3 )",
+     "0"),
+    ("Points needed", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), MAX ( 0, 0.25 - p ) * 100 )", "0.0"),
+    ("Votes needed", "VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ), "
+                     "ROUNDUP ( MAX ( 0, 0.25 * [Scenario valid votes] - [Scenario votes] ), 0 ) )", "#,0"),
+    # national counts (iterate the 37 units)
+    ("Units secured", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), {SHARE} >= 0.25 ) ) + 0 )", "0"),
+    ("Units within reach", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                           f"{SHARE} >= 0.20 && {SHARE} < 0.25 ) ) + 0 )", "0"),
+    ("Units out of reach", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                           f"NOT ISBLANK ( {SHARE} ) && {SHARE} < 0.20 ) ) + 0 )", "0"),
+    ("Units with a scenario", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                              f"NOT ISBLANK ( {SHARE} ) ) ) + 0 )", "0"),
+    ("Units at a cap", "IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                       "VAR u = [Scenario share uncapped] RETURN NOT ISBLANK ( u ) && ( u <= 0 || u >= 1 ) ) ) + 0 )", "0"),
+    # The rule is national: these measures ignore any state or zone filter on the page (methodology: "all 37 units").
+    # The unit counts above deliberately follow such filters (e.g. "units secured in the North West").
+    ("Units secured (national)", f"CALCULATE ( [Units secured], {NATIONAL} )", "0"),
+    ("Units still needed", "IF ( [Candidate is valid], MAX ( 0, [Units needed (rule)] - [Units secured (national)] ) )", "0"),
+    ("Clears the rule", 'IF ( [Candidate is valid], IF ( [Units secured (national)] >= [Units needed (rule)], "Yes", "No" ) )',
+     None),
+    # tipping point: rank all 37 units by scenario share desc, ties by P-code asc; the unit in position N
+    ("Tipping-point P-code", "IF ( [Candidate is valid], VAR n = [Units needed (rule)] RETURN CALCULATE ( "
+                             f"VAR tb = FILTER ( ADDCOLUMNS ( VALUES ( dim_state[state_pcode] ), \"@p\", {SHARE} ), NOT ISBLANK ( [@p] ) ) "
+                             "VAR tp = TOPN ( n, tb, [@p], DESC, dim_state[state_pcode], ASC ) "
+                             "RETURN IF ( COUNTROWS ( tb ) >= n, MAXX ( TOPN ( 1, tp, [@p], ASC, dim_state[state_pcode], DESC ), "
+                             f"dim_state[state_pcode] ) ), {NATIONAL} ) )", None),
+    ("Tipping-point unit", 'VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), '
+                           'LOOKUPVALUE ( dim_state[state_name], dim_state[state_pcode], k ) )', None),
+    ("Tipping-point share", f"VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), "
+                            f"CALCULATE ( {SHARE}, {NATIONAL}, dim_state[state_pcode] = k ) )", "0.00%"),
+    ("Tipping-point gap (points)", "VAR p = [Tipping-point share] RETURN IF ( NOT ISBLANK ( p ), ( 0.25 - p ) * 100 )",
+     "+0.0;-0.0;0.0"),
+]
+for t, (_, dflt, fmt, _dt) in PARAMS.items():
+    MEASURES[t] = [(f"{t} value", f"SELECTEDVALUE ( {t}[Value], {dflt} )", fmt)]
+
+
+def calc_table_tmdl(name):
+    src, col, dt, fmt, hidden = CALC_TABLES[name]
+    out = [f"table {name}", f"\tlineageTag: {stable_uuid('table', name)}", ""]
+    for mname, expr, mfmt in MEASURES.get(name, []):
+        out += [f"\tmeasure '{mname}' = {expr}"] + ([f"\t\tformatString: {mfmt}"] if mfmt else []) + \
+               [f"\t\tlineageTag: {stable_uuid('measure', name, mname)}", ""]
+    out += [f"\tcolumn {col}", f"\t\tdataType: {dt}"] + ([f"\t\tformatString: {fmt}"] if fmt else []) + \
+           (["\t\tisHidden"] if hidden else []) + \
+           [f"\t\tlineageTag: {stable_uuid('col', name, col)}", "\t\tsummarizeBy: none", f"\t\tsourceColumn: [{col}]", ""]
+    out += [f"\tpartition {name} = calculated", "\t\tmode: import", f"\t\tsource = {src}", ""]
+    return "\n".join(out)
+
 
 def m_query(csv_name, cols):
     names = ", ".join(f'"{c}"' for c, *_ in cols)
@@ -119,8 +205,8 @@ def m_query(csv_name, cols):
 def table_tmdl(name, csv_name, cols):
     out = [f"table {name}", f"\tlineageTag: {stable_uuid('table', name)}", ""]
     for mname, expr, fmt in MEASURES.get(name, []):
-        out += [f"\tmeasure '{mname}' = {expr}", f"\t\tformatString: {fmt}",
-                f"\t\tlineageTag: {stable_uuid('measure', name, mname)}", ""]
+        out += [f"\tmeasure '{mname}' = {expr}"] + ([f"\t\tformatString: {fmt}"] if fmt else []) + \
+               [f"\t\tlineageTag: {stable_uuid('measure', name, mname)}", ""]
     for c, dt, _, summ in cols:
         out += [f"\tcolumn {c}", f"\t\tdataType: {dt}", f"\t\tlineageTag: {stable_uuid('col', name, c)}",
                 f"\t\tsummarizeBy: {summ}", f"\t\tsourceColumn: {c}"]
@@ -146,13 +232,15 @@ def build_model():
                                        "\tsourceQueryCulture: en-US", "\tdataAccessOptions", "\t\tlegacyRedirects",
                                        "\t\treturnErrorValuesAsNull", "", f"annotation PBI_QueryOrder = {order}", "",
                                        'annotation PBI_ProTooling = ["DevMode"]', ""]
-                                      + [f"ref table {t}" for t in TABLES]) + "\n\n")
+                                      + [f"ref table {t}" for t in list(TABLES) + list(CALC_TABLES)]) + "\n\n")
     path = DATA_FOLDER.replace('"', '""')
     write(d / "expressions.tmdl",
           f'expression DataFolder = "{path}" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]\n'
           f"\tlineageTag: {stable_uuid('expr', 'DataFolder')}\n\n\tannotation PBI_ResultType = Text\n\n")
     for t, (csv_name, cols) in TABLES.items():
         write(d / "tables" / f"{t}.tmdl", table_tmdl(t, csv_name, cols) + "\n")
+    for t in CALC_TABLES:
+        write(d / "tables" / f"{t}.tmdl", calc_table_tmdl(t) + "\n")
     rel = []
     for ft, fc, dt, dc in RELATIONSHIPS:
         rel += [f"relationship {stable_uuid('rel', ft, dt)}", f"\tfromColumn: {ft}.{fc}", f"\ttoColumn: {dt}.{dc}", ""]
