@@ -1,0 +1,5 @@
+expression DataFolder = "D:\PowerBiElections2026Naija\data\staging" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: a24d0aad-e819-5dc5-1432-ac4f61770656
+
+	annotation PBI_ResultType = Text
+

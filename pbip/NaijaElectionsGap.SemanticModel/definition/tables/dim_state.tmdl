@@ -1,0 +1,44 @@
+table dim_state
+	lineageTag: bb460a9f-400e-8d4f-713f-826af5e679f5
+
+	column state_pcode
+		dataType: string
+		lineageTag: c1419178-9c95-83b3-0a11-f2e7e3cceb79
+		summarizeBy: none
+		sourceColumn: state_pcode
+
+	column state_name
+		dataType: string
+		lineageTag: 260a05ec-84cb-ffe7-f92f-10dde47c1001
+		summarizeBy: none
+		sourceColumn: state_name
+
+	column zone
+		dataType: string
+		lineageTag: 9b473d8f-fe64-69ba-d3fe-c76e89285d49
+		summarizeBy: none
+		sourceColumn: zone
+
+	column zone_code
+		dataType: string
+		lineageTag: adc48cf5-5921-f15c-78b1-44a1377945e2
+		summarizeBy: none
+		sourceColumn: zone_code
+
+	column is_fct
+		dataType: int64
+		lineageTag: 316ac23e-25c3-25b6-6045-76f60d1c4b8d
+		summarizeBy: none
+		sourceColumn: is_fct
+
+	partition dim_state = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\dim_state.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "state_name", "zone", "zone_code", "is_fct"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"state_name", type text}, {"zone", type text}, {"zone_code", type text}, {"is_fct", Int64.Type}})
+				in
+				    Typed
+

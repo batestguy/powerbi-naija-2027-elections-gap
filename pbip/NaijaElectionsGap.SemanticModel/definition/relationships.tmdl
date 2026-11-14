@@ -1,0 +1,8 @@
+relationship 33dbd4a7-81b5-659d-c09b-64845e163a37
+	fromColumn: fact_result_2023.state_pcode
+	toColumn: dim_state.state_pcode
+
+relationship 475bd49c-000d-1020-3ed9-5bda5d392f15
+	fromColumn: fact_turnout_2023.state_pcode
+	toColumn: dim_state.state_pcode
+

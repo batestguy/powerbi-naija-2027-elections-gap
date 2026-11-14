@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "9f8e06188c5ec25d4c66",
+  "position": {
+    "x": 20,
+    "y": 20,
+    "z": 0,
+    "height": 120,
+    "width": 300,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_result_2023"
+                    }
+                  },
+                  "Property": "APC votes"
+                }
+              },
+              "queryRef": "fact_result_2023.APC votes",
+              "nativeQueryRef": "APC votes",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'APC votes, 2023 (INEC national: 8,794,726)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

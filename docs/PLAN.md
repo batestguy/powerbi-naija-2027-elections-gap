@@ -16,7 +16,7 @@ Status key: `todo` · `doing` · `done` · `blocked`
 | 0 | Environment audit | done | `docs/environment.md` lists tools, versions, publish tier and its limits |
 | 1 | Source validation + licence | done | Every source in `registers/sources.md` marked approved / conditional / rejected |
 | 2 | Acquisition + profiling | done | 37 units join across results, registered voters, zones and geometry with zero unmatched keys; state sums equal the INEC national totals exactly |
-| 3 | Model design (thin slice first) | todo | One state works end-to-end in Desktop; then full model diagram + rationale |
+| 3 | Model design (thin slice first) | doing | One state works end-to-end in Desktop; then full model diagram + rationale |
 | 4 | Scenario engine | todo | Methodology note reproduces results by hand; extreme-slider tests pass |
 | 5 | Report pages | todo | A non-specialist completes the core task unaided |
 | 6 | QA | todo | `registers/qa-log.md` all pass, or each failure has a resolution |
@@ -85,6 +85,8 @@ on the account, Phase 7 changes shape — find out now.
 - Single-direction relationships only, unless justified in the decision log.
 
 **Deliverable:** model diagram + short rationale in `docs/model.md`.
+
+**Thin slice (2026-11-14): passed.** `scripts/build_pbip.py` → `pbip/NaijaElectionsGap.*`; opens in Desktop 2.159; card reads 8,794,726; both Shape Maps (state boundaries, 37 tiles) render with every unit coloured (`reports/screenshots/phase3_thin_slice.png`). Next: full model (`dim_zone`, `dim_party`), `docs/model.md`.
 
 ## Phase 4 — Scenario engine
 **Goal:** transparent, parameter-driven simulation.

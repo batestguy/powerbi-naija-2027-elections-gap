@@ -1,0 +1,60 @@
+table fact_result_2023
+	lineageTag: d289f07a-b0ff-f8b4-e217-b2526fdf4b0f
+
+	measure 'Total votes' = SUM ( fact_result_2023[votes] )
+		formatString: #,0
+		lineageTag: de9f4970-a879-614c-c25f-8d764e72bf6e
+
+	measure 'Valid votes' = SUM ( fact_turnout_2023[total_valid] )
+		formatString: #,0
+		lineageTag: 28e025a0-5b9e-3957-6a94-ce4e6749a73d
+
+	measure 'APC votes' = CALCULATE ( [Total votes], fact_result_2023[party] = "APC" )
+		formatString: #,0
+		lineageTag: 26d19ac3-76ed-2032-17de-771e72839c72
+
+	measure 'APC share' = DIVIDE ( [APC votes], [Valid votes] )
+		formatString: 0.0%
+		lineageTag: 836ca96f-0659-17b9-75d0-30de4c3efba2
+
+	column state_pcode
+		dataType: string
+		lineageTag: 80dc75d2-0546-cd39-647d-05ebdb96750b
+		summarizeBy: none
+		sourceColumn: state_pcode
+
+	column party
+		dataType: string
+		lineageTag: d0e09b44-3279-30c0-0088-6bf3176d4526
+		summarizeBy: none
+		sourceColumn: party
+
+	column candidate
+		dataType: string
+		lineageTag: 49c7550b-73a6-811e-90c2-d69cbe87eff9
+		summarizeBy: none
+		sourceColumn: candidate
+
+	column votes
+		dataType: int64
+		lineageTag: a66ff2c3-37fb-e730-0809-216d0a4b4ad4
+		summarizeBy: sum
+		sourceColumn: votes
+
+	column votes_rule
+		dataType: string
+		lineageTag: 1f469ccb-88a4-d570-8aa5-9c98eaf4cb11
+		summarizeBy: none
+		sourceColumn: votes_rule
+
+	partition fact_result_2023 = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\fact_result_2023.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "party", "candidate", "votes", "votes_rule"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"party", type text}, {"candidate", type text}, {"votes", Int64.Type}, {"votes_rule", type text}})
+				in
+				    Typed
+

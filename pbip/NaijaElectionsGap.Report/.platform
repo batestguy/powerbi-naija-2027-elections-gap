@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "NaijaElectionsGap"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5b4d3a61-0f7d-4a64-a80f-9560725ddca7"
+  }
+}

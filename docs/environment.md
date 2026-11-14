@@ -53,3 +53,10 @@ Re-run all Phase 0 checks: `pwsh -File scripts/check_env.ps1` writes `reports/en
   and check it renders; watch the video end to end against the QA list.
 - Phase 7 "publish" becomes: tag a release with the `.pbix`, frozen data vintage, and video link.
 - Phase 2 geometry output must be **TopoJSON** if Shape Map is chosen.
+
+## Phase 3 additions (2026-11-14)
+- Installed globally with npm (user approved): `@microsoft/powerbi-report-authoring-cli` 0.5.0 (`powerbi-report-author`)
+  and `@microsoft/powerbi-desktop-bridge-cli` 1.0.0 (`powerbi-desktop`). Node v24.15.0.
+- `powerbi-desktop open` does not find the Microsoft Store edition by itself; set `PBI_DESKTOP_PATH`
+  (path in `CLAUDE.md` Commands). Desktop Bridge connected on 2.159 with no preview toggles changed.
+- The bridge has no data-refresh method: after opening, click Refresh once in Desktop.

@@ -1,0 +1,32 @@
+table fact_turnout_2023
+	lineageTag: 8a12699d-0ba1-727c-c727-5bff85981e01
+
+	column state_pcode
+		dataType: string
+		lineageTag: 8cf44520-f78d-bd01-fa47-98798f35b3a5
+		summarizeBy: none
+		sourceColumn: state_pcode
+
+	column registered
+		dataType: int64
+		lineageTag: 794caecc-a3d2-841d-8863-0211caebb814
+		summarizeBy: sum
+		sourceColumn: registered
+
+	column total_valid
+		dataType: int64
+		lineageTag: d8aa313d-e64f-488c-2388-33d6a2fc7fa6
+		summarizeBy: sum
+		sourceColumn: total_valid
+
+	partition fact_turnout_2023 = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\fact_turnout_2023.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "registered", "total_valid"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"registered", Int64.Type}, {"total_valid", Int64.Type}})
+				in
+				    Typed
+

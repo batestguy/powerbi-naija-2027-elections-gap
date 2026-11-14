@@ -8,3 +8,8 @@
 | 2026-11-14 | Unmatched state keys | pass (0) | `reports/unmatched_keys.csv` | — |
 | 2026-11-14 | Geometry valid, no overlaps | pass | `pbip/assets/geometry_manifest.json` from `uv run python -I scripts/build_geometry.py` | Akwa Ibom and Cross River repaired (decision log) |
 | 2026-11-14 | OTHERS / total valid state sums = INEC national | flag (+4,858) | `reports/phase2_validation.json` | Published as a limitation (open question 10) |
+| 2026-11-14 | Phase 3 thin slice opens in Desktop 2.159 (Store) from script-generated PBIP | pass | `reports/screenshots/phase3_thin_slice.png`; `powerbi-desktop reload` + `screenshot` | First open failed: measure `Votes` clashed with column `votes` (names are case-insensitive) — renamed `Total votes` |
+| 2026-11-14 | Card = INEC national APC 8,794,726 | pass | same screenshot | Display units set to none (default showed "9M") |
+| 2026-11-14 | Shape Map (state boundaries) and tile Shape Map render, all 37 units coloured | pass | same screenshot | — |
+| 2026-11-14 | PBIR validation | pass (0 errors, 0 warnings) | `powerbi-report-author validate pbip/NaijaElectionsGap.Report` | Desktop's save strips `$schema` from `.pbip` and `definition.pbir`; the generator restores it |
+| 2026-11-14 | Generator output = Desktop's saved model files | pass (all 7 TMDL files identical apart from CRLF) | diff of a Desktop-saved copy vs `build_pbip.py` output | — |
