@@ -6,3 +6,7 @@ relationship 475bd49c-000d-1020-3ed9-5bda5d392f15
 	fromColumn: fact_turnout_2023.state_pcode
 	toColumn: dim_state.state_pcode
 
+relationship 8d1a3b54-80a8-bf56-07ff-82d2129b5763
+	fromColumn: dim_state.zone_code
+	toColumn: dim_zone.zone_code
+

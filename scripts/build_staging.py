@@ -380,6 +380,14 @@ def main():
                  "source": f"Wikipedia 'Geopolitical zones of Nigeria', revid {zones_revid}"} for z, c in ZONE_CODES.items()]
     write_csv(STG / "dim_zone.csv", dim_zone, ["zone_code", "zone", "state_count", "source"])
 
+    lines = (REF / "party_display.csv").read_text(encoding="utf-8").splitlines()
+    dim_party = list(csv.DictReader(l for l in lines if not l.startswith("#")))
+    if [r["party"] for r in dim_party] != [p for p, _ in PARTIES] + ["OTHERS"]:
+        raise ValueError("data/reference/party_display.csv parties must be APC, PDP, LP, NNPP, OTHERS in that order")
+    for r in dim_party:
+        r["source"] = "data/reference/party_display.csv (own design)"
+    write_csv(STG / "dim_party.csv", dim_party, ["party", "candidate", "party_name", "sort_order", "colour_hex", "source"])
+
     fact = []
     for s in sorted(states, key=lambda s: s["state_pcode"] or ""):
         for party, cand in PARTIES + [("OTHERS", "Other candidates (14)")]:

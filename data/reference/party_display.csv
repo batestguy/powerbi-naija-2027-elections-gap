@@ -1,0 +1,8 @@
+# Display attributes for the four main candidates + OTHERS (own design). Colours: Okabe-Ito colour-blind-safe palette,
+# deliberately NOT party brand colours (avoids implying endorsement and red/green pairs). sort = 2023 national rank.
+party,candidate,party_name,sort_order,colour_hex
+APC,Bola Tinubu,All Progressives Congress,1,#0072B2
+PDP,Atiku Abubakar,Peoples Democratic Party,2,#E69F00
+LP,Peter Obi,Labour Party,3,#009E73
+NNPP,Rabiu Kwankwaso,New Nigeria Peoples Party,4,#CC79A7
+OTHERS,Other candidates (14),14 other candidates combined,5,#999999

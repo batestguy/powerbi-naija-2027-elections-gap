@@ -1,0 +1,190 @@
+{
+  "built_by": "scripts/validate_phase3.py",
+  "gate_passed": true,
+  "summary": {
+    "checks": 12,
+    "pass": 11,
+    "fail": 0,
+    "info": 1
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "model refresh through the local engine",
+      "status": "pass",
+      "evidence": {}
+    },
+    {
+      "check": "row counts in the model = staging CSVs",
+      "status": "pass",
+      "evidence": {
+        "model": {
+          "dim_zone": 6,
+          "dim_party": 5,
+          "dim_state": 37,
+          "fact_result_2023": 185,
+          "fact_turnout_2023": 37
+        },
+        "staging": {
+          "dim_zone": 6,
+          "dim_party": 5,
+          "dim_state": 37,
+          "fact_result_2023": 185,
+          "fact_turnout_2023": 37
+        }
+      }
+    },
+    {
+      "check": "no orphan keys (result/turnout -> state, state -> zone)",
+      "status": "pass",
+      "evidence": {
+        "result_no_state": null,
+        "turnout_no_state": null,
+        "state_no_zone": null
+      }
+    },
+    {
+      "check": "candidate votes = INEC national (APC, PDP, LP, NNPP)",
+      "status": "pass",
+      "evidence": {
+        "APC": {
+          "model": 8794726,
+          "inec": 8794726
+        },
+        "PDP": {
+          "model": 6984520,
+          "inec": 6984520
+        },
+        "LP": {
+          "model": 6101533,
+          "inec": 6101533
+        },
+        "NNPP": {
+          "model": 1496687,
+          "inec": 1496687
+        }
+      }
+    },
+    {
+      "check": "States at 25% or more = staging recompute = 29 / 21 / 16 / 1 (37 units incl. FCT)",
+      "status": "pass",
+      "evidence": {
+        "model": {
+          "APC": 29,
+          "PDP": 21,
+          "LP": 16,
+          "NNPP": 1
+        },
+        "staging_recompute": {
+          "APC": 29,
+          "PDP": 21,
+          "LP": 16,
+          "NNPP": 1
+        },
+        "declared": {
+          "APC": 29,
+          "PDP": 21,
+          "LP": 16,
+          "NNPP": 1
+        }
+      }
+    },
+    {
+      "check": "States with a computable share = 37 for every candidate",
+      "status": "pass",
+      "evidence": {
+        "APC": 37,
+        "PDP": 37,
+        "LP": 37,
+        "NNPP": 37
+      }
+    },
+    {
+      "check": "OTHERS row present, and its 25% count is blank (not a candidate)",
+      "status": "pass",
+      "evidence": {
+        "OTHERS": {
+          "party": "OTHERS",
+          "votes": 653332,
+          "share": 0.027187278591414236,
+          "t25": null,
+          "computable": null
+        }
+      }
+    },
+    {
+      "check": "info: national shares (model vs INEC totals) and 25% counts without FCT",
+      "status": "info",
+      "evidence": {
+        "national_share_model": {
+          "APC": 0.36597727632682026,
+          "PDP": 0.2906486917330003,
+          "LP": 0.25390471843673273,
+          "NNPP": 0.06228203491203247
+        },
+        "national_share_inec_totals": {
+          "APC": 0.36605127624559125,
+          "PDP": 0.29070746035326817,
+          "LP": 0.25395605749452466,
+          "NNPP": 0.06229462822266267
+        },
+        "t25_excluding_fct": {
+          "APC": 29,
+          "PDP": 21,
+          "LP": 15,
+          "NNPP": 1
+        }
+      }
+    },
+    {
+      "check": "all 185 state x candidate votes and shares = staging",
+      "status": "pass",
+      "evidence": {
+        "cells": 185,
+        "mismatches": []
+      }
+    },
+    {
+      "check": "guard: candidate selection does not filter valid votes (dim_party disconnected)",
+      "status": "pass",
+      "evidence": {
+        "all": 24030798,
+        "apc_selected": 24030798,
+        "lp_selected": 24030798,
+        "staging_sum": 24030798
+      }
+    },
+    {
+      "check": "no candidate or two candidates selected -> blank, not a number",
+      "status": "pass",
+      "evidence": {
+        "none_votes": null,
+        "none_t25": null,
+        "two_votes": null,
+        "two_t25": null
+      }
+    },
+    {
+      "check": "zone -> state relationship gives the expected state counts",
+      "status": "pass",
+      "evidence": {
+        "model": {
+          "NC": 7,
+          "NE": 6,
+          "NW": 7,
+          "SE": 5,
+          "SS": 6,
+          "SW": 6
+        },
+        "dim_zone": {
+          "NC": 7,
+          "NE": 6,
+          "NW": 7,
+          "SE": 5,
+          "SS": 6,
+          "SW": 6
+        }
+      }
+    }
+  ]
+}

@@ -19,14 +19,20 @@ table fact_turnout_2023
 		summarizeBy: sum
 		sourceColumn: total_valid
 
+	column turnout_pct_reported
+		dataType: double
+		lineageTag: 0823e25e-6be5-3911-cd2b-85828aa7a6c6
+		summarizeBy: none
+		sourceColumn: turnout_pct_reported
+
 	partition fact_turnout_2023 = m
 		mode: import
 		source =
 				let
 				    Source = Csv.Document(File.Contents(DataFolder & "\fact_turnout_2023.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
-				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "registered", "total_valid"}),
-				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"registered", Int64.Type}, {"total_valid", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "registered", "total_valid", "turnout_pct_reported"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"registered", Int64.Type}, {"total_valid", Int64.Type}, {"turnout_pct_reported", type number}})
 				in
 				    Typed
 

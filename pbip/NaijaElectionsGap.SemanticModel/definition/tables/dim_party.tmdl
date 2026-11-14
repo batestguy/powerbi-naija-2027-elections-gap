@@ -1,0 +1,46 @@
+table dim_party
+	lineageTag: 0cdaed2d-8dd4-a1e3-6182-a089dede501e
+
+	column party
+		dataType: string
+		lineageTag: ed92fcdb-6d2b-6df0-837b-7199e90b26b5
+		summarizeBy: none
+		sourceColumn: party
+		sortByColumn: sort_order
+
+	column candidate
+		dataType: string
+		lineageTag: 6af7d17c-9b5b-f3ae-5377-3461ebbc231a
+		summarizeBy: none
+		sourceColumn: candidate
+		sortByColumn: sort_order
+
+	column party_name
+		dataType: string
+		lineageTag: 60f3fbcd-a819-68e1-e854-00014f222f4c
+		summarizeBy: none
+		sourceColumn: party_name
+
+	column sort_order
+		dataType: int64
+		lineageTag: 6415d6ed-38ee-23de-e331-49eed6024484
+		summarizeBy: none
+		sourceColumn: sort_order
+
+	column colour_hex
+		dataType: string
+		lineageTag: 5778ed42-b7b6-cc62-072c-995625b7f3e7
+		summarizeBy: none
+		sourceColumn: colour_hex
+
+	partition dim_party = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\dim_party.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Selected = Table.SelectColumns(Promoted, {"party", "candidate", "party_name", "sort_order", "colour_hex"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"party", type text}, {"candidate", type text}, {"party_name", type text}, {"sort_order", Int64.Type}, {"colour_hex", type text}})
+				in
+				    Typed
+

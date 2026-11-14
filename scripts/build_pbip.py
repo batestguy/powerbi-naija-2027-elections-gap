@@ -45,6 +45,16 @@ def wjson(path, obj):
 
 TABLES = {
     # table: (csv, [(column, tmdl dataType, M type, summarizeBy)])
+    # Grain: dim_zone = zone (6); dim_state = state (37); dim_party = candidate (5, incl. OTHERS);
+    # fact_result_2023 = state x party (185, immutable baseline); fact_turnout_2023 = state (37).
+    "dim_zone": ("dim_zone.csv", [("zone_code", "string", "type text", "none"),
+                                  ("zone", "string", "type text", "none"),
+                                  ("state_count", "int64", "Int64.Type", "none")]),
+    "dim_party": ("dim_party.csv", [("party", "string", "type text", "none"),
+                                    ("candidate", "string", "type text", "none"),
+                                    ("party_name", "string", "type text", "none"),
+                                    ("sort_order", "int64", "Int64.Type", "none"),
+                                    ("colour_hex", "string", "type text", "none")]),
     "dim_state": ("dim_state.csv", [("state_pcode", "string", "type text", "none"),
                                     ("state_name", "string", "type text", "none"),
                                     ("zone", "string", "type text", "none"),
@@ -57,18 +67,40 @@ TABLES = {
                                                   ("votes_rule", "string", "type text", "none")]),
     "fact_turnout_2023": ("fact_turnout_2023.csv", [("state_pcode", "string", "type text", "none"),
                                                     ("registered", "int64", "Int64.Type", "sum"),
-                                                    ("total_valid", "int64", "Int64.Type", "sum")]),
+                                                    ("total_valid", "int64", "Int64.Type", "sum"),
+                                                    ("turnout_pct_reported", "double", "type number", "none")]),
 }
+SORT_BY = {("dim_party", "party"): "sort_order", ("dim_party", "candidate"): "sort_order"}
+# dim_party is deliberately DISCONNECTED: a candidate selection must never filter the valid-vote denominator
+# (fact_turnout_2023) or other candidates' rows; measures read the selection with SELECTEDVALUE / TREATAS.
+SEL = "SELECTEDVALUE ( dim_party[party] )"
 MEASURES = {
     "fact_result_2023": [
         ("Total votes", "SUM ( fact_result_2023[votes] )", "#,0"),
         ("Valid votes", "SUM ( fact_turnout_2023[total_valid] )", "#,0"),
         ("APC votes", 'CALCULATE ( [Total votes], fact_result_2023[party] = "APC" )', "#,0"),
         ("APC share", "DIVIDE ( [APC votes], [Valid votes] )", "0.0%"),
+        ("Candidate votes", f"VAR p = {SEL} RETURN IF ( NOT ISBLANK ( p ), "
+                            "CALCULATE ( [Total votes], fact_result_2023[party] = p ) )", "#,0"),
+        ("Candidate share", "DIVIDE ( [Candidate votes], [Valid votes] )", "0.00%"),
+        # Constitutional test per unit (36 states + FCT, 37 units - decision log 2026-11-13): at least one-quarter of
+        # valid votes, tested in whole numbers (4 x votes >= valid) so no floating-point rounding at the boundary.
+        # Only units where the share is computable are counted; see 'States with a computable share'. Blank for OTHERS.
+        ("States at 25% or more", f"VAR p = {SEL} RETURN IF ( NOT ISBLANK ( p ) && p <> \"OTHERS\", "
+                                  "COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                                  "NOT ISBLANK ( [Candidate votes] ) && NOT ISBLANK ( [Valid votes] ) && [Valid votes] > 0 "
+                                  "&& 4 * [Candidate votes] >= [Valid votes] ) ) + 0 )", "0"),
+        # Companion: units where the test could be applied at all. Must be shown next to the count, so a missing state
+        # is visible instead of silently counting as 'below 25%'.
+        ("States with a computable share", f"VAR p = {SEL} RETURN IF ( NOT ISBLANK ( p ) && p <> \"OTHERS\", "
+                                           "COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
+                                           "NOT ISBLANK ( [Candidate votes] ) && NOT ISBLANK ( [Valid votes] ) "
+                                           "&& [Valid votes] > 0 ) ) + 0 )", "0"),
     ]
 }
 RELATIONSHIPS = [("fact_result_2023", "state_pcode", "dim_state", "state_pcode"),
-                 ("fact_turnout_2023", "state_pcode", "dim_state", "state_pcode")]
+                 ("fact_turnout_2023", "state_pcode", "dim_state", "state_pcode"),
+                 ("dim_state", "zone_code", "dim_zone", "zone_code")]
 
 
 def m_query(csv_name, cols):
@@ -91,7 +123,10 @@ def table_tmdl(name, csv_name, cols):
                 f"\t\tlineageTag: {stable_uuid('measure', name, mname)}", ""]
     for c, dt, _, summ in cols:
         out += [f"\tcolumn {c}", f"\t\tdataType: {dt}", f"\t\tlineageTag: {stable_uuid('col', name, c)}",
-                f"\t\tsummarizeBy: {summ}", f"\t\tsourceColumn: {c}", ""]
+                f"\t\tsummarizeBy: {summ}", f"\t\tsourceColumn: {c}"]
+        if (name, c) in SORT_BY:
+            out += [f"\t\tsortByColumn: {SORT_BY[(name, c)]}"]
+        out += [""]
     out += [f"\tpartition {name} = m", "\t\tmode: import", "\t\tsource =", m_query(csv_name, cols), ""]
     return "\n".join(out)
 
@@ -200,10 +235,26 @@ def build_report():
                        # display units "1" = none, so the exact figure shows (must read 8,794,726)
                        "objects": {"value": [{"properties": {"labelDisplayUnits": lit("1D")}, "selector": {"id": "default"}}]},
                        "visualContainerObjects": title("APC votes, 2023 (INEC national: 8,794,726)")}}
-    visuals = [card,
-               shape_map(stable_id(pid, "map_states"), 20, 160, 600, 540, "nga_states.topo.json",
+    # Model check: one row per candidate from the disconnected dim_party. Must read 29 / 21 / 16 / 1 states at 25%+
+    # and the INEC national votes per candidate.
+    check = {"$schema": VC_SCHEMA, "name": stable_id(pid, "check_matrix"),
+             "position": {"x": 340, "y": 10, "z": 0, "height": 215, "width": 920, "tabOrder": 0},
+             "visual": {"visualType": "pivotTable",
+                        "query": {"queryState": {
+                            "Rows": {"projections": [proj("Column", "dim_party", "candidate")]},
+                            "Values": {"projections": [proj("Measure", "fact_result_2023", "Candidate votes"),
+                                                       proj("Measure", "fact_result_2023", "Candidate share"),
+                                                       proj("Measure", "fact_result_2023", "States at 25% or more"),
+                                                       proj("Measure", "fact_result_2023", "States with a computable share")]}}},
+                        "objects": {"columnHeaders": [{"properties": {"columnAdjustment": lit("'growToFit'"),
+                                                                      "autoSizeColumnWidth": lit("true")}}],
+                                    "subTotals": [{"properties": {"rowSubtotals": lit("false")}}]},
+                        "visualContainerObjects": title("Model check: national votes and units (36 states + FCT) at 25% or more "
+                                                        "(expected 29 / 21 / 16 / 1 of 37)")}}
+    visuals = [card, check,
+               shape_map(stable_id(pid, "map_states"), 20, 240, 600, 470, "nga_states.topo.json",
                          "APC share of valid votes - state boundaries"),
-               shape_map(stable_id(pid, "map_tiles"), 660, 160, 600, 540, "nga_tiles.topo.json",
+               shape_map(stable_id(pid, "map_tiles"), 660, 240, 600, 470, "nga_tiles.topo.json",
                          "APC share of valid votes - equal-size tiles")]
     for i, v in enumerate(visuals):
         v["position"]["tabOrder"] = i
@@ -215,4 +266,4 @@ if __name__ == "__main__":
     build_model()
     pid = build_report()
     print(f"  model: {SM.relative_to(ROOT)}  (DataFolder = {DATA_FOLDER})")
-    print(f"  report page {pid}: card + 2 shape maps")
+    print(f"  report page {pid}: card + model-check matrix + 2 shape maps")

@@ -6,10 +6,12 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
-annotation PBI_QueryOrder = ["dim_state","fact_result_2023","fact_turnout_2023","DataFolder"]
+annotation PBI_QueryOrder = ["dim_zone","dim_party","dim_state","fact_result_2023","fact_turnout_2023","DataFolder"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
+ref table dim_zone
+ref table dim_party
 ref table dim_state
 ref table fact_result_2023
 ref table fact_turnout_2023

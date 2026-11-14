@@ -17,6 +17,22 @@ table fact_result_2023
 		formatString: 0.0%
 		lineageTag: 836ca96f-0659-17b9-75d0-30de4c3efba2
 
+	measure 'Candidate votes' = VAR p = SELECTEDVALUE ( dim_party[party] ) RETURN IF ( NOT ISBLANK ( p ), CALCULATE ( [Total votes], fact_result_2023[party] = p ) )
+		formatString: #,0
+		lineageTag: 884a65e8-13d9-f4a6-1953-b97e15d44325
+
+	measure 'Candidate share' = DIVIDE ( [Candidate votes], [Valid votes] )
+		formatString: 0.00%
+		lineageTag: b555e953-c303-00fd-982b-3b75876add34
+
+	measure 'States at 25% or more' = VAR p = SELECTEDVALUE ( dim_party[party] ) RETURN IF ( NOT ISBLANK ( p ) && p <> "OTHERS", COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), NOT ISBLANK ( [Candidate votes] ) && NOT ISBLANK ( [Valid votes] ) && [Valid votes] > 0 && 4 * [Candidate votes] >= [Valid votes] ) ) + 0 )
+		formatString: 0
+		lineageTag: a3ca61ab-a950-d60c-6d0b-daffe72f98c2
+
+	measure 'States with a computable share' = VAR p = SELECTEDVALUE ( dim_party[party] ) RETURN IF ( NOT ISBLANK ( p ) && p <> "OTHERS", COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), NOT ISBLANK ( [Candidate votes] ) && NOT ISBLANK ( [Valid votes] ) && [Valid votes] > 0 ) ) + 0 )
+		formatString: 0
+		lineageTag: 8541acb6-8a95-4ec6-c723-9c6c8619b0c9
+
 	column state_pcode
 		dataType: string
 		lineageTag: 80dc75d2-0546-cd39-647d-05ebdb96750b

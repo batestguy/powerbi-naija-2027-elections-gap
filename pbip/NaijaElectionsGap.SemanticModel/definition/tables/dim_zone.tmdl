@@ -1,0 +1,32 @@
+table dim_zone
+	lineageTag: b8a02ae7-fe60-a8d8-b8e5-f749639424b5
+
+	column zone_code
+		dataType: string
+		lineageTag: 4fd349da-cfb6-2aa2-03c4-11f535264937
+		summarizeBy: none
+		sourceColumn: zone_code
+
+	column zone
+		dataType: string
+		lineageTag: e88a71e8-c95a-bc3b-c1f9-cfae505dadc0
+		summarizeBy: none
+		sourceColumn: zone
+
+	column state_count
+		dataType: int64
+		lineageTag: 4b713760-e435-ec29-2cac-ce4343cf0dc6
+		summarizeBy: none
+		sourceColumn: state_count
+
+	partition dim_zone = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\dim_zone.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Selected = Table.SelectColumns(Promoted, {"zone_code", "zone", "state_count"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"zone_code", type text}, {"zone", type text}, {"state_count", Int64.Type}})
+				in
+				    Typed
+
