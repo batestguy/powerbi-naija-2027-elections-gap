@@ -18,8 +18,8 @@ Status key: `todo` · `doing` · `done` · `blocked`
 | 2 | Acquisition + profiling | done | 37 units join across results, registered voters, zones and geometry with zero unmatched keys; state sums equal the INEC national totals exactly |
 | 3 | Model design (thin slice first) | done | One state works end-to-end in Desktop; then full model diagram + rationale |
 | 4 | Scenario engine | done | Methodology note reproduces results by hand; extreme-slider tests pass |
-| 5 | Report pages | todo | A non-specialist completes the core task unaided |
-| 6 | QA | todo | `registers/qa-log.md` all pass, or each failure has a resolution |
+| 5 | Report pages | done (person test pending) | A non-specialist completes the core task unaided |
+| 6 | QA | doing | `registers/qa-log.md` all pass, or each failure has a resolution |
 | 7 | Release + docs | todo | Release `.pbix` opens on a clean profile; video linked; methodology and limits reachable from inside the report |
 | 8 | Case study | todo | One-page case study + release + video links |
 

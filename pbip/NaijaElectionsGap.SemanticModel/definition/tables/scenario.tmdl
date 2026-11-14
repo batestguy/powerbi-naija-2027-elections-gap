@@ -96,6 +96,70 @@ table scenario
 		formatString: +0.0;-0.0;0.0
 		lineageTag: f52a752f-27ae-9616-0644-ad9a83397a9d
 
+	measure 'Scenario share after turnout' = VAR cv = [Candidate votes] VAR tv = [Valid votes] VAR t = [Supporter turnout] RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) )
+		formatString: 0.00%
+		lineageTag: 589dde70-2545-8b71-5109-492b8d83b16a
+
+	measure 'Rival scale' = VAR p1 = [Scenario share after turnout] VAR p2 = [Scenario share] RETURN IF ( NOT ISBLANK ( p2 ), IF ( p1 < 1, DIVIDE ( 1 - p2, 1 - p1 ), 0 ) )
+		formatString: 0.0000
+		lineageTag: 96c00d05-6776-f84e-ed58-ed128438c4c2
+
+	measure 'Scenario national votes' = IF ( [Candidate is valid], CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), [Scenario votes] ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) )
+		formatString: #,0
+		lineageTag: 7ddf0733-16f6-34c0-3c2c-db8f029a6768
+
+	measure 'Scenario national valid votes' = IF ( [Candidate is valid], CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), [Scenario valid votes] ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) )
+		formatString: #,0
+		lineageTag: f46f2980-dc0a-045b-e19c-e0cf1c6e7db9
+
+	measure 'Scenario national share' = DIVIDE ( [Scenario national votes], [Scenario national valid votes] )
+		formatString: 0.00%
+		lineageTag: f9290ca2-0616-4fa3-e452-944875f3d2b6
+
+	measure 'Leading rival' = IF ( [Candidate is valid], VAR c = SELECTEDVALUE ( dim_party[party] ) VAR tab = ADDCOLUMNS ( FILTER ( { "APC", "PDP", "LP", "NNPP" }, [Value] <> c ), "@v", VAR r = [Value] RETURN CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), fact_result_2023[party] = r ) * [Rival scale] ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) ) VAR top1 = TOPN ( 1, tab, [@v], DESC, [Value], ASC ) RETURN MAXX ( top1, [Value] ) )
+		lineageTag: cb32af95-d099-888d-948e-6306d1af32a4
+
+	measure 'Leading rival votes' = IF ( [Candidate is valid], VAR c = SELECTEDVALUE ( dim_party[party] ) VAR tab = ADDCOLUMNS ( FILTER ( { "APC", "PDP", "LP", "NNPP" }, [Value] <> c ), "@v", VAR r = [Value] RETURN CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), fact_result_2023[party] = r ) * [Rival scale] ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) ) RETURN MAXX ( tab, [@v] ) )
+		formatString: #,0
+		lineageTag: 0c8f7980-edde-d2cd-bde9-f1d3bbd66ca0
+
+	measure 'Leading rival units at 25%' = VAR r = [Leading rival] RETURN IF ( NOT ISBLANK ( r ), CALCULATE ( COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), fact_result_2023[party] = r ) * [Rival scale] >= 0.25 * [Scenario valid votes] ) ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) + 0 )
+		formatString: 0
+		lineageTag: 131eff5d-8b4a-89ff-0db2-f637de8a5ffe
+
+	measure 'Has most votes' = VAR a = [Scenario national votes] VAR b = [Leading rival votes] RETURN IF ( NOT ISBLANK ( a ), IF ( a > b, "Yes", IF ( a = b, "Tied", "No" ) ) )
+		lineageTag: 4e25a744-e3c4-0da8-57bd-3d5a6463ef81
+
+	measure 'Verdict' = VAR m = [Has most votes] VAR c = [Clears the rule] VAR r = [Leading rival] VAR rc = [Leading rival units at 25%] >= [Units needed (rule)] RETURN SWITCH ( TRUE (), ISBLANK ( m ), BLANK (), m = "Yes" && c = "Yes", "Outright win", m = "Yes", "No outright winner: run-off (most votes, but not 25% in enough units)", m = "Tied", "Tie on votes: no outright winner", rc, "Loses: " & r & " wins outright", "No outright winner: run-off (" & r & " has most votes)" )
+		lineageTag: 5418c2a8-6113-3f97-37f5-0570837d9fe4
+
+	measure 'Points from 25%' = VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ), ( p - 0.25 ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		lineageTag: 007045d6-c2c3-8f8b-a6ec-e3c694900a26
+
+	measure 'Scenario label colour' = VAR p = [Scenario share] RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "#0072B2", p >= 0.20, "#D55E00", "#767676" )
+		lineageTag: d6d9149f-9d66-2882-1d21-c892b529afa3
+
+	measure 'Baseline label colour' = VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), ISBLANK ( cv ) || ISBLANK ( tv ) || tv = 0, BLANK (), 4 * cv >= tv, "#0072B2", 5 * cv >= tv, "#D55E00", "#767676" )
+		lineageTag: 9fd95110-5960-39ef-f40d-88cefb01a0fb
+
+	measure 'Candidate national rank' = CALCULATE ( VAR c = SELECTEDVALUE ( dim_party[party] ) VAR mine = [Candidate votes] RETURN IF ( [Candidate is valid] && NOT ISBLANK ( mine ), COUNTROWS ( FILTER ( { "APC", "PDP", "LP", "NNPP" }, VAR r = [Value] RETURN r <> c && CALCULATE ( [Total votes], fact_result_2023[party] = r ) > mine ) ) + 1 ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) )
+		formatString: 0
+		lineageTag: 6191cdf9-b3ee-27ba-e723-246ee4869fbf
+
+	measure 'Baseline label' = VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), ISBLANK ( cv ) || ISBLANK ( tv ) || tv = 0, BLANK (), 4 * cv >= tv, "Secured", 5 * cv >= tv, "Within reach", "Out of reach" )
+		lineageTag: 036e7412-b5d3-33ac-21a9-6f92408a7f8e
+
+	measure 'Unit rank' = VAR me = SELECTEDVALUE ( dim_state[state_pcode] ) VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ) && NOT ISBLANK ( me ), CALCULATE ( COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), VAR q = [Scenario share] RETURN q > p || ( q = p && dim_state[state_pcode] < me ) ) ), REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone ) ) + 1 )
+		formatString: 0
+		lineageTag: 90f2dcff-f03b-2e34-16bf-e13876d492e7
+
+	measure 'Path column colour' = VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ) && SELECTEDVALUE ( dim_state[state_pcode] ) = k, "#1F1F1F", [Scenario label colour] )
+		lineageTag: 0ef93e0f-5b24-4721-f7b7-760e596d2cde
+
+	measure 'Assumptions in force' = IF ( [Candidate is valid], "Supporter turnout " & FORMAT ( [Supporter turnout], "+0%;-0%;0%" ) & " | national swing " & FORMAT ( [National swing], "+0.0;-0.0;0.0" ) & " pts | zones " & "NC " & FORMAT ( SELECTEDVALUE ( param_swing_NC[Value], 0 ), "+0.0;-0.0;0.0" ) & ", " & "NE " & FORMAT ( SELECTEDVALUE ( param_swing_NE[Value], 0 ), "+0.0;-0.0;0.0" ) & ", " & "NW " & FORMAT ( SELECTEDVALUE ( param_swing_NW[Value], 0 ), "+0.0;-0.0;0.0" ) & ", " & "SE " & FORMAT ( SELECTEDVALUE ( param_swing_SE[Value], 0 ), "+0.0;-0.0;0.0" ) & ", " & "SS " & FORMAT ( SELECTEDVALUE ( param_swing_SS[Value], 0 ), "+0.0;-0.0;0.0" ) & ", " & "SW " & FORMAT ( SELECTEDVALUE ( param_swing_SW[Value], 0 ), "+0.0;-0.0;0.0" ) & " | rule: " & [Units needed (rule)] & " of 37 units" )
+		lineageTag: 4d39de29-1992-c6e3-7d9d-b1a48bda6335
+
 	column Value
 		dataType: string
 		isHidden

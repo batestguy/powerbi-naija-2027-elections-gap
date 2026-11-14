@@ -116,6 +116,11 @@ CALC_TABLES = {**{t: (src, "Value", dt, fmt, False) for t, (src, _, fmt, dt) in 
 OK = f'VAR c = {SEL} RETURN NOT ISBLANK ( c ) && c <> "OTHERS"'   # a single real candidate is selected
 SHARE = "[Scenario share]"
 NATIONAL = "REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone )"   # all 37 units, whatever the page filters
+# the three other main candidates, each with national scenario votes = sum over units of 2023 votes x Rival scale
+RIVALS = ('VAR c = SELECTEDVALUE ( dim_party[party] ) '
+          'VAR tab = ADDCOLUMNS ( FILTER ( { "APC", "PDP", "LP", "NNPP" }, [Value] <> c ), "@v", VAR r = [Value] RETURN '
+          'CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), '
+          'fact_result_2023[party] = r ) * [Rival scale] ), ' + NATIONAL + ' ) ) ')
 MEASURES["scenario"] = [
     # inputs
     ("Supporter turnout", "SELECTEDVALUE ( param_turnout[Value], 0 ) / 100", "0%"),
@@ -171,6 +176,59 @@ MEASURES["scenario"] = [
                             f"CALCULATE ( {SHARE}, {NATIONAL}, dim_state[state_pcode] = k ) )", "0.00%"),
     ("Tipping-point gap (points)", "VAR p = [Tipping-point share] RETURN IF ( NOT ISBLANK ( p ), ( 0.25 - p ) * 100 )",
      "+0.0;-0.0;0.0"),
+    # ---- rivals and verdict (user decision 2026-11-14: other candidates scale with their 2023 shares) ----
+    ("Scenario share after turnout", "VAR cv = [Candidate votes] VAR tv = [Valid votes] VAR t = [Supporter turnout] "
+                                     "RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) "
+                                     "&& tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) )", "0.00%"),
+    # every other candidate's votes in the unit are multiplied by this factor: (1 - p2) / (1 - p1)
+    ("Rival scale", "VAR p1 = [Scenario share after turnout] VAR p2 = [Scenario share] RETURN IF ( NOT ISBLANK ( p2 ), "
+                    "IF ( p1 < 1, DIVIDE ( 1 - p2, 1 - p1 ), 0 ) )", "0.0000"),
+    ("Scenario national votes", f"IF ( [Candidate is valid], CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), "
+                                f"[Scenario votes] ), {NATIONAL} ) )", "#,0"),
+    ("Scenario national valid votes", f"IF ( [Candidate is valid], CALCULATE ( SUMX ( VALUES ( dim_state[state_pcode] ), "
+                                      f"[Scenario valid votes] ), {NATIONAL} ) )", "#,0"),
+    ("Scenario national share", "DIVIDE ( [Scenario national votes], [Scenario national valid votes] )", "0.00%"),
+    ("Leading rival", "IF ( [Candidate is valid], " + RIVALS + "VAR top1 = TOPN ( 1, tab, [@v], DESC, [Value], ASC ) "
+                      "RETURN MAXX ( top1, [Value] ) )", None),
+    ("Leading rival votes", "IF ( [Candidate is valid], " + RIVALS + "RETURN MAXX ( tab, [@v] ) )", "#,0"),
+    ("Leading rival units at 25%", "VAR r = [Leading rival] RETURN IF ( NOT ISBLANK ( r ), CALCULATE ( COUNTROWS ( FILTER ( "
+                                   "VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), "
+                                   "fact_result_2023[party] = r ) * [Rival scale] >= 0.25 * [Scenario valid votes] ) ), "
+                                   f"{NATIONAL} ) + 0 )", "0"),
+    ("Has most votes", 'VAR a = [Scenario national votes] VAR b = [Leading rival votes] RETURN IF ( NOT ISBLANK ( a ), '
+                       'IF ( a > b, "Yes", IF ( a = b, "Tied", "No" ) ) )', None),
+    ("Verdict", 'VAR m = [Has most votes] VAR c = [Clears the rule] VAR r = [Leading rival] '
+                'VAR rc = [Leading rival units at 25%] >= [Units needed (rule)] RETURN SWITCH ( TRUE (), ISBLANK ( m ), BLANK (), '
+                'm = "Yes" && c = "Yes", "Outright win", '
+                'm = "Yes", "No outright winner: run-off (most votes, but not 25% in enough units)", '
+                'm = "Tied", "Tie on votes: no outright winner", '
+                'rc, "Loses: " & r & " wins outright", '
+                '"No outright winner: run-off (" & r & " has most votes)" )', None),
+    # ---- display helpers for the report pages (Phase 5) ----
+    ("Points from 25%", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), ( p - 0.25 ) * 100 )", "+0.0;-0.0;0.0"),
+    ("Scenario label colour", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "#0072B2", '
+                              'p >= 0.20, "#D55E00", "#767676" )', None),
+    ("Baseline label colour", 'VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), '
+                              'ISBLANK ( cv ) || ISBLANK ( tv ) || tv = 0, BLANK (), 4 * cv >= tv, "#0072B2", '
+                              '5 * cv >= tv, "#D55E00", "#767676" )', None),
+    ("Candidate national rank", 'CALCULATE ( VAR c = SELECTEDVALUE ( dim_party[party] ) VAR mine = [Candidate votes] RETURN '
+                                'IF ( [Candidate is valid] && NOT ISBLANK ( mine ), COUNTROWS ( FILTER ( { "APC", "PDP", "LP", "NNPP" }, '
+                                'VAR r = [Value] RETURN r <> c && CALCULATE ( [Total votes], fact_result_2023[party] = r ) > mine ) ) + 1 ), '
+                                f'{NATIONAL} )', "0"),
+    ("Baseline label", 'VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), '
+                       'ISBLANK ( cv ) || ISBLANK ( tv ) || tv = 0, BLANK (), 4 * cv >= tv, "Secured", '
+                       '5 * cv >= tv, "Within reach", "Out of reach" )', None),
+    # rank of the unit among all 37 by scenario share (ties by P-code) - same order as the tipping point
+    ("Unit rank", f'VAR me = SELECTEDVALUE ( dim_state[state_pcode] ) VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ) && NOT ISBLANK ( me ), '
+                  f'CALCULATE ( COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), VAR q = {SHARE} RETURN q > p || '
+                  f'( q = p && dim_state[state_pcode] < me ) ) ), {NATIONAL} ) + 1 )', "0"),
+    ("Path column colour", 'VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ) && SELECTEDVALUE ( dim_state[state_pcode] ) = k, '
+                           '"#1F1F1F", [Scenario label colour] )', None),
+    ("Assumptions in force",'IF ( [Candidate is valid], "Supporter turnout " & FORMAT ( [Supporter turnout], "+0%;-0%;0%" ) '
+                             '& " | national swing " & FORMAT ( [National swing], "+0.0;-0.0;0.0" ) & " pts | zones " & '
+                             + ' & ", " & '.join(f'"{z} " & FORMAT ( SELECTEDVALUE ( param_swing_{z}[Value], 0 ), "+0.0;-0.0;0.0" )'
+                                                 for z in ZONES)
+                             + ' & " | rule: " & [Units needed (rule)] & " of 37 units" )', None),
 ]
 for t, (_, dflt, fmt, _dt) in PARAMS.items():
     MEASURES[t] = [(f"{t} value", f"SELECTEDVALUE ( {t}[Value], {dflt} )", fmt)]
@@ -298,11 +356,7 @@ def build_report():
     for path, schema in SCHEMAS.items():
         obj = json.loads(path.read_text(encoding="utf-8-sig"))
         wjson(path, {"$schema": schema, **{k: v for k, v in obj.items() if k != "$schema"}})
-    page_dir = next((RPT / "definition" / "pages").glob("*/page.json")).parent
-    pid = page_dir.name
-    vis = page_dir / "visuals"
-    if vis.exists():
-        shutil.rmtree(vis)
+    pid = CHECK_PAGE   # the Phase 3 thin-slice page, kept as a hidden "Model check" page for QA
     # register the two TopoJSON files as report resources
     rr = RPT / "StaticResources" / "RegisteredResources"
     rr.mkdir(parents=True, exist_ok=True)
@@ -344,14 +398,15 @@ def build_report():
                          "APC share of valid votes - state boundaries"),
                shape_map(stable_id(pid, "map_tiles"), 660, 240, 600, 470, "nga_tiles.topo.json",
                          "APC share of valid votes - equal-size tiles")]
-    for i, v in enumerate(visuals):
-        v["position"]["tabOrder"] = i
-        wjson(vis / v["name"] / "visual.json", v)
-    return pid
+    from pbip_pages import build_pages
+    return build_pages(RPT, wjson, extra_hidden=(pid, "Model check (hidden)", visuals))
 
+
+CHECK_PAGE = "3704ab6dfce14c89823a"
 
 if __name__ == "__main__":
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
     build_model()
-    pid = build_report()
+    order = build_report()
     print(f"  model: {SM.relative_to(ROOT)}  (DataFolder = {DATA_FOLDER})")
-    print(f"  report page {pid}: card + model-check matrix + 2 shape maps")
+    print(f"  report: {len(order)} pages ({len(order) - 1} visible + hidden model check)")

@@ -2,18 +2,13 @@
   "built_by": "scripts/validate_phase3.py",
   "gate_passed": true,
   "summary": {
-    "checks": 12,
-    "pass": 11,
+    "checks": 11,
+    "pass": 10,
     "fail": 0,
     "info": 1
   },
   "failed": [],
   "checks": [
-    {
-      "check": "model refresh through the local engine",
-      "status": "pass",
-      "evidence": {}
-    },
     {
       "check": "row counts in the model = staging CSVs",
       "status": "pass",

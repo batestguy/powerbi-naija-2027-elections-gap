@@ -1,0 +1,214 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "66e7c0944771270583be",
+  "position": {
+    "x": 20,
+    "y": 86,
+    "z": 3,
+    "height": 104,
+    "width": 1240,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_result_2023"
+                    }
+                  },
+                  "Property": "Candidate votes"
+                }
+              },
+              "queryRef": "fact_result_2023.Candidate votes",
+              "nativeQueryRef": "Candidate votes",
+              "displayName": "Votes, 2023"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_result_2023"
+                    }
+                  },
+                  "Property": "Candidate share"
+                }
+              },
+              "queryRef": "fact_result_2023.Candidate share",
+              "nativeQueryRef": "Candidate share",
+              "displayName": "Share of valid votes"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "scenario"
+                    }
+                  },
+                  "Property": "Candidate national rank"
+                }
+              },
+              "queryRef": "scenario.Candidate national rank",
+              "nativeQueryRef": "Candidate national rank",
+              "displayName": "National rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_result_2023"
+                    }
+                  },
+                  "Property": "States at 25% or more"
+                }
+              },
+              "queryRef": "fact_result_2023.States at 25% or more",
+              "nativeQueryRef": "States at 25% or more",
+              "displayName": "Units at 25% or more (of 37)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_result_2023"
+                    }
+                  },
+                  "Property": "States with a computable share"
+                }
+              },
+              "queryRef": "fact_result_2023.States with a computable share",
+              "nativeQueryRef": "States with a computable share",
+              "displayName": "Units with data"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "value": [
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Headline figures for the selected candidate in 2023: votes, share, national rank, units at 25% or more out of 37, and units with data.'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

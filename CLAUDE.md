@@ -55,3 +55,5 @@ Run from the repo root, in the pinned environment:
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_engine.ps1 -Action Refresh|Query|Info [-Dax "..."]` — refresh or query the live model through Desktop's local engine.
 - `uv run python -I scripts/validate_phase3.py [--no-refresh]` — Phase 3 model checks against the live model → `reports/phase3_validation.json`.
 - `uv run python -I scripts/validate_phase4.py` — scenario engine vs an independent re-implementation of `docs/methodology.md` → `reports/phase4_validation.json`.
+- Report pages live in `scripts/pbip_pages.py` (called by `build_pbip.py`). After report-only changes: `powerbi-desktop reload --pid <pid>`; after model changes: `scripts/pbi_reopen.ps1 -Force`. Screenshots: `powerbi-desktop screenshot-all --pid <pid> --output-dir reports/screenshots/phase5`. Test variants: `PBIP_SLIDER_PROBE=1` (sliders preset +5 national / −3 SE) and `PBIP_CANDIDATE="Peter Obi"`; always rebuild without them before committing.
+

@@ -57,6 +57,35 @@ def counts(party, st, n):
             "clears": "Yes" if sec >= n else "No", "tip": tipping(p, n)}
 
 
+def rivals(party, st, n):
+    """docs/methodology.md 'Rivals and the verdict': other candidates scale by (1 - p2) / (1 - p1) in each unit."""
+    nat_c = nat_valid = 0.0
+    rv = {r: 0.0 for r in PARTIES if r != party}
+    r25 = {r: 0 for r in rv}
+    for s in VALID:
+        v, V, t = VOTES[(s, party)], VALID[s], st["t"] / 100
+        V1 = V + v * t
+        p1 = v * (1 + t) / V1
+        p2, _ = scenario_share(s, party, st)
+        scale = (1 - p2) / (1 - p1) if p1 < 1 else 0
+        nat_c += p2 * V1
+        nat_valid += V1
+        for r in rv:
+            rv[r] += VOTES[(s, r)] * scale
+            r25[r] += VOTES[(s, r)] * scale >= 0.25 * V1
+    lead = sorted(rv, key=lambda r: (-rv[r], r))[0]
+    most = "Yes" if nat_c > rv[lead] else ("Tied" if nat_c == rv[lead] else "No")
+    clears = sum(scenario_share(s, party, st)[0] >= 0.25 for s in VALID) >= n
+    if most == "Yes":
+        verdict = "Outright win" if clears else "No outright winner: run-off (most votes, but not 25% in enough units)"
+    elif most == "Tied":
+        verdict = "Tie on votes: no outright winner"
+    else:
+        verdict = f"Loses: {lead} wins outright" if r25[lead] >= n else f"No outright winner: run-off ({lead} has most votes)"
+    return {"nat": nat_c, "share": nat_c / nat_valid, "lead": lead, "lead_votes": rv[lead], "lead_25": r25[lead],
+            "most": most, "verdict": verdict}
+
+
 def tipping(p, n):
     ranked = sorted(p, key=lambda s: (-p[s][0], s))   # share desc, P-code asc
     return ranked[n - 1]
@@ -127,6 +156,26 @@ def main():
               len([r for r in rows if r["party"] in PARTIES]) == 8 and not diffs,
               {"rows": len(rows), "differences": diffs,
                "sample_APC_N24": counts("APC", st, 24)})
+
+        # rivals, most votes and verdict
+        rows = dax(f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_party[party], param_rule[Value], '
+                   f'"nat", [Scenario national votes], "share", [Scenario national share], "lead", [Leading rival], '
+                   f'"lead_votes", [Leading rival votes], "lead_25", [Leading rival units at 25%], '
+                   f'"most", [Has most votes], "verdict", [Verdict]), {filters(st)})')
+        vd = []
+        for r in rows:
+            if r["party"] not in PARTIES:
+                continue
+            ref = rivals(r["party"], st, int(r["Value"]))
+            same = (r["lead"], r["lead_25"], r["most"], r["verdict"]) == (ref["lead"], ref["lead_25"], ref["most"], ref["verdict"]) \
+                and abs(r["nat"] - ref["nat"]) <= 1e-6 * max(1, ref["nat"]) \
+                and abs(r["lead_votes"] - ref["lead_votes"]) <= 1e-6 * max(1, ref["lead_votes"]) \
+                and abs(r["share"] - ref["share"]) <= 1e-9
+            if not same:
+                vd.append({"party": r["party"], "N": r["Value"], "model": {k: r[k] for k in ref}, "reference": ref})
+        check(f"[{label}] rivals, most votes and verdict = reference (N = 24 and 25)",
+              len([r for r in rows if r["party"] in PARTIES]) == 8 and not vd,
+              {"differences": vd[:4], "sample_APC_N24": rivals("APC", st, 24)})
 
     # neutral settings reproduce the 2023 baseline exactly
     n = dax('EVALUATE SUMMARIZECOLUMNS(dim_party[party], "sec", [Units secured], "base", [States at 25% or more])')

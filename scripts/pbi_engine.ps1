@@ -19,7 +19,8 @@ param(
   [string]$DaxFile,
   [string]$Out,
   [int]$DesktopPid = 0,
-  [int]$TimeoutSec = 300
+  [int]$TimeoutSec = 300,
+  [int]$DialogWaitSec = 180
 )
 $ErrorActionPreference = 'Stop'
 
@@ -42,8 +43,17 @@ public class PbiWin {
     return n; }
 }
 "@
-$dialogs = [PbiWin]::Count([uint32]$desk.Id) - 1
-if ($dialogs -gt 0) { throw "Power BI Desktop (pid $($desk.Id)) has $dialogs dialog(s) open - not proceeding. Close them or reopen Desktop." }
+# Desktop may be running its own "Load" (after opening or a model change). Wait until no dialog has been seen for
+# 3 checks in a row (2 s apart); give up after $DialogWaitSec with a clear message.
+$quiet = 0; $waited = 0
+while ($quiet -lt 3) {
+  $dialogs = [PbiWin]::Count([uint32]$desk.Id) - 1
+  if ($dialogs -gt 0) { $quiet = 0 } else { $quiet++ }
+  if ($quiet -lt 3) {
+    if ($waited -ge $DialogWaitSec) { throw "Power BI Desktop (pid $($desk.Id)) still has $dialogs dialog(s) open after $DialogWaitSec s - not proceeding." }
+    Start-Sleep 2; $waited += 2
+  }
+}
 
 $bin = Split-Path $desk.Path
 Add-Type -Path (Join-Path $bin 'Microsoft.PowerBI.AdomdClient.dll')

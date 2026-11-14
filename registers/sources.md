@@ -36,3 +36,11 @@ APC 8,794,726 · PDP 6,984,520 · LP 6,101,533 · NNPP 1,496,687 · registered 9
 | ThisDay "Final results ... as declared by INEC" | https://www.thisdaylive.com/2023/03/01/live-updates-final-results-of-2023-presidential-election-as-declared-by-inec-2/ | HTML table | State (four parties) | none | news article; vote counts used as facts with credit | medium | **conditional (one of five copies)** | Identical errors to thenigerialawyer.com (e.g. Zamfara PDP 93,978, Cross River NNPP 16,644), so it counts as the same copy. |
 | Vanguard "2023 Presidential Election Results By States (Declared by INEC)" | https://www.vanguardngr.com/2023-presidential-election-results-by-states/ | HTML table | State (four parties) | returned 403 to our User-Agent; fetched once with a browser User-Agent (decision log) | news article; vote counts used as facts with credit; terms not checked | medium | **conditional (one of five copies; open question 13)** | One cell unreadable ("30,8372", Benue LP) and left blank, not guessed. |
 | AGADA-BI state table (verdict update) | see row above | XLSX | State | none | none | medium | **conditional (one of five copies)** | Its four-party state sums equal INEC national for APC/PDP/NNPP; LP +20 (Kwara). Its values are used only where the copy majority or a logged decision selects them. |
+
+## Additions 2026-11-14 (Phase 5 Data Sources page)
+
+| Name | URL | Format | Grain | Auth | Licence | Confidence | Verdict | Reason |
+|------|-----|--------|-------|------|---------|------------|---------|--------|
+| Wikipedia "Geopolitical zones of Nigeria" | https://en.wikipedia.org/wiki/Geopolitical_zones_of_Nigeria (revid 1360299046) | Wikitext | State → zone | none | CC BY-SA 4.0 | high | **approved (zones)** | 37 units → 6 zones; FCT in North Central. `data/staging/dim_zone.csv` |
+| Wikipedia state pages — registered voters only (verdict update) | 37 pages "2023 Nigerian presidential election in X" | Wikitext infobox | State | none | CC BY-SA 4.0 | medium | **conditional (registered voters only)** | Still rejected for LGA results (row above). Used for registered voters; sum is 120,281 below INEC's 93,469,008 |
+| Equal-size tile layout | `data/reference/tile_grid_layout.csv` | CSV | State | — | own work | — | **approved** | Hand-designed grid, one tile per unit |

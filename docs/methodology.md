@@ -5,6 +5,8 @@ One page, written before the build. Anyone should be able to reproduce every sce
 `scripts/validate_phase4.py` re-implements this note and compares it with the model (same author — it mainly catches
 slips in the model's formulas). The independence evidence is a blind reproduction by a reviewer who used only this
 note and the data: 13 settings of their own choosing, all identical to the model (`registers/qa-log.md`, 2026-11-14).
+That reproduction predates the "Rivals and the verdict" section below; rivals are covered by `validate_phase4.py`
+(same author) and by spot checks in the Phase 5 review (3 settings, all matching).
 
 ## What the simulator does
 
@@ -68,6 +70,26 @@ West?". **Exactly 25%:** shares are compared as decimals here (the baseline coun
 reachable slider combination (2,406,628 in exact fractions, `reports/phase4_validation.json`) found no unit landing
 exactly on 25% or 20%, so the two methods agree everywhere.
 
+## Rivals and the verdict (added 2026-11-14, user decision)
+
+The verdict needs the other candidates' votes. In each unit, **every other candidate gains or loses in proportion to
+their 2023 share**: their votes are multiplied by `(1 − p2) / (1 − p1)` (0 if `p1 = 1`). Their 2023 votes already sit
+inside `V1` after step 1, so this keeps each unit's total at `V1`.
+
+- **National votes** = sum over units of `v2` (the candidate) or of `2023 votes × (1 − p2) / (1 − p1)` (each rival).
+- **Leading rival** = the other main candidate (APC, PDP, LP, NNPP) with the most national votes (ties by party code).
+  OTHERS (14 minor candidates combined) is not a candidate and is never the leading rival.
+- **Has most votes** = candidate's national votes > leading rival's (equal → "Tied").
+- **Verdict** (s.134 reading: most votes **and** 25% in at least `N` units):
+  - most votes and clears the rule → **Outright win**;
+  - most votes but does not clear the rule → **No outright winner: run-off**;
+  - tied on votes → **Tie on votes: no outright winner**;
+  - not most votes, and the leading rival has 25% in at least `N` units → **Loses: rival wins outright**;
+  - otherwise → **No outright winner: run-off (rival has most votes)**. Who would contest a run-off is not modelled.
+
+At neutral settings this reproduces 2023: APC 8,794,726, leading rival PDP 6,984,520, outright win
+(`reports/phase4_validation.json`).
+
 ## Assumptions and their limits (shown on the report pages, not only here)
 
 1. **Uniform swing within a zone.** Every unit in a zone moves by the same number of points. Real swings vary by
@@ -83,6 +105,8 @@ exactly on 25% or 20%, so the two methods agree everywhere.
 6. **The rule reading** (24 of 37, FCT counted as a unit) is our reading of s.134; 25 of 37 is offered as a
    sensitivity (decision log 2026-11-13; open question 1).
 7. **2027 registered voters are not used.** Shares do not depend on the size of the register.
+8. **Rivals move together.** When the candidate gains, every rival loses in proportion to its size in that unit;
+   real swings often come mostly from one rival. The verdict inherits this assumption.
 
 ## Tests the build must pass (`scripts/validate_phase4.py`)
 

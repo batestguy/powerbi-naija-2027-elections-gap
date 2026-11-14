@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "6af8a54d396af333f179",
+  "displayName": "Spread map",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "f07884b9628795189e51",
+      "target": "ec9ebe3c6c3ea7a29df2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f07884b9628795189e51",
+      "target": "af4bbeb63b10a1899b67",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f07884b9628795189e51",
+      "target": "31b2949520db696cb206",
+      "type": "NoFilter"
+    },
+    {
+      "source": "f07884b9628795189e51",
+      "target": "42def084797aba0ecb75",
+      "type": "NoFilter"
+    },
+    {
+      "source": "af4bbeb63b10a1899b67",
+      "target": "ec9ebe3c6c3ea7a29df2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "af4bbeb63b10a1899b67",
+      "target": "f07884b9628795189e51",
+      "type": "NoFilter"
+    },
+    {
+      "source": "af4bbeb63b10a1899b67",
+      "target": "31b2949520db696cb206",
+      "type": "NoFilter"
+    },
+    {
+      "source": "af4bbeb63b10a1899b67",
+      "target": "42def084797aba0ecb75",
+      "type": "NoFilter"
+    },
+    {
+      "source": "31b2949520db696cb206",
+      "target": "ec9ebe3c6c3ea7a29df2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "31b2949520db696cb206",
+      "target": "f07884b9628795189e51",
+      "type": "NoFilter"
+    },
+    {
+      "source": "31b2949520db696cb206",
+      "target": "af4bbeb63b10a1899b67",
+      "type": "NoFilter"
+    },
+    {
+      "source": "31b2949520db696cb206",
+      "target": "42def084797aba0ecb75",
+      "type": "NoFilter"
+    },
+    {
+      "source": "42def084797aba0ecb75",
+      "target": "ec9ebe3c6c3ea7a29df2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "42def084797aba0ecb75",
+      "target": "f07884b9628795189e51",
+      "type": "NoFilter"
+    },
+    {
+      "source": "42def084797aba0ecb75",
+      "target": "af4bbeb63b10a1899b67",
+      "type": "NoFilter"
+    },
+    {
+      "source": "42def084797aba0ecb75",
+      "target": "31b2949520db696cb206",
+      "type": "NoFilter"
+    }
+  ]
+}

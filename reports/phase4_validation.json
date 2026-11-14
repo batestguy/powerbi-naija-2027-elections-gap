@@ -3,8 +3,8 @@
   "method": "docs/methodology.md",
   "gate_passed": true,
   "summary": {
-    "checks": 56,
-    "pass": 56,
+    "checks": 81,
+    "pass": 81,
     "fail": 0
   },
   "grid": {
@@ -338,6 +338,22 @@
       }
     },
     {
+      "check": "[neutral] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 8794726.0,
+          "share": 0.36597727632682026,
+          "lead": "PDP",
+          "lead_votes": 6984520.0,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[national +5] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -360,6 +376,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national +5] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9996265.9,
+          "share": 0.4159772763268203,
+          "lead": "PDP",
+          "lead_votes": 6380332.019058306,
+          "lead_25": 19,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -390,6 +422,22 @@
       }
     },
     {
+      "check": "[national -5, SE +10] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 7816486.699999999,
+          "share": 0.3252695436913913,
+          "lead": "PDP",
+          "lead_votes": 7578804.8592125,
+          "lead_25": 22,
+          "most": "Yes",
+          "verdict": "No outright winner: run-off (most votes, but not 25% in enough units)"
+        }
+      }
+    },
+    {
       "check": "[supporters +20%, national +2] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -412,6 +460,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[supporters +20%, national +2] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 11069466.064000001,
+          "share": 0.4292197087096237,
+          "lead": "PDP",
+          "lead_votes": 6722447.849147988,
+          "lead_25": 17,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -442,6 +506,22 @@
       }
     },
     {
+      "check": "[every slider at minimum] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 69889.19999999997,
+          "share": 0.003559703128871742,
+          "lead": "PDP",
+          "lead_votes": 9484808.42276335,
+          "lead_25": 28,
+          "most": "No",
+          "verdict": "Loses: PDP wins outright"
+        }
+      }
+    },
+    {
       "check": "[every slider at maximum] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -464,6 +544,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[every slider at maximum] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 24149959.400000006,
+          "share": 0.8495083238061022,
+          "lead": "LP",
+          "lead_votes": 2272371.1168590095,
+          "lead_25": 7,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -494,6 +590,22 @@
       }
     },
     {
+      "check": "[mixed] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 8431849.674999999,
+          "share": 0.3642059160466034,
+          "lead": "PDP",
+          "lead_votes": 6932329.09600395,
+          "lead_25": 20,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[odd: supporters -37%, national +7.5, mixed zones] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -516,6 +628,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG009"
+        }
+      }
+    },
+    {
+      "check": "[odd: supporters -37%, national +7.5, mixed zones] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 7252652.242850001,
+          "share": 0.34907540685028954,
+          "lead": "PDP",
+          "lead_votes": 6164987.158790567,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -546,6 +674,22 @@
       }
     },
     {
+      "check": "[odd: supporters +13%, national -3.5] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9068874.059349999,
+          "share": 0.3602460306229076,
+          "lead": "PDP",
+          "lead_votes": 7411375.189091936,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[supporter turnout alone at -50] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -568,6 +712,22 @@
           "need": 6,
           "clears": "No",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[supporter turnout alone at -50] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 4397363.0,
+          "share": 0.22397318655650425,
+          "lead": "PDP",
+          "lead_votes": 6984520.0,
+          "lead_25": 26,
+          "most": "No",
+          "verdict": "Loses: PDP wins outright"
         }
       }
     },
@@ -598,6 +758,22 @@
       }
     },
     {
+      "check": "[supporter turnout alone at +50] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 13192089.0,
+          "share": 0.46405003123487304,
+          "lead": "PDP",
+          "lead_votes": 6984520.0,
+          "lead_25": 17,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[national swing alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -620,6 +796,22 @@
           "need": 10,
           "clears": "No",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[national swing alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 4341560.0,
+          "share": 0.18066649305611907,
+          "lead": "PDP",
+          "lead_votes": 9378956.040106138,
+          "lead_25": 26,
+          "most": "No",
+          "verdict": "Loses: PDP wins outright"
         }
       }
     },
@@ -650,6 +842,22 @@
       }
     },
     {
+      "check": "[national swing alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 13600885.599999998,
+          "share": 0.5659772763268202,
+          "lead": "PDP",
+          "lead_votes": 4567768.076233222,
+          "lead_25": 13,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone NC alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -672,6 +880,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG035"
+        }
+      }
+    },
+    {
+      "check": "[zone NC alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 7882972.0,
+          "share": 0.32803621419480117,
+          "lead": "PDP",
+          "lead_votes": 7391245.663242366,
+          "lead_25": 22,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -702,6 +926,22 @@
       }
     },
     {
+      "check": "[zone NC alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9707592.200000001,
+          "share": 0.40396462073377676,
+          "lead": "PDP",
+          "lead_votes": 6577570.811578651,
+          "lead_25": 17,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone NE alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -724,6 +964,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG006"
+        }
+      }
+    },
+    {
+      "check": "[zone NE alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 8106777.8,
+          "share": 0.33734950458157903,
+          "lead": "PDP",
+          "lead_votes": 7522540.347366242,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -754,6 +1010,22 @@
       }
     },
     {
+      "check": "[zone NE alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9482674.2,
+          "share": 0.3946050480720615,
+          "lead": "PDP",
+          "lead_votes": 6446499.652633758,
+          "lead_25": 20,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone NW alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -776,6 +1048,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG006"
+        }
+      }
+    },
+    {
+      "check": "[zone NW alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 7458787.4,
+          "share": 0.3103845074141941,
+          "lead": "PDP",
+          "lead_votes": 7811595.871211568,
+          "lead_25": 21,
+          "most": "No",
+          "verdict": "No outright winner: run-off (PDP has most votes)"
         }
       }
     },
@@ -806,6 +1094,22 @@
       }
     },
     {
+      "check": "[zone NW alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 10130664.6,
+          "share": 0.42157004523944647,
+          "lead": "PDP",
+          "lead_votes": 6157444.128788433,
+          "lead_25": 20,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone SE alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -828,6 +1132,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[zone SE alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 8667121.0,
+          "share": 0.36066721546242453,
+          "lead": "PDP",
+          "lead_votes": 6992353.217291961,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -858,6 +1178,22 @@
       }
     },
     {
+      "check": "[zone SE alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9241327.2,
+          "share": 0.38456181105596243,
+          "lead": "PDP",
+          "lead_votes": 6964713.756541608,
+          "lead_25": 21,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone SS alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -880,6 +1216,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG035"
+        }
+      }
+    },
+    {
+      "check": "[zone SS alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 8256083.2,
+          "share": 0.3435625899730837,
+          "lead": "PDP",
+          "lead_votes": 7174386.517588257,
+          "lead_25": 22,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
@@ -910,6 +1262,22 @@
       }
     },
     {
+      "check": "[zone SS alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9366254.0,
+          "share": 0.3897604232701719,
+          "lead": "PDP",
+          "lead_votes": 6784534.150096516,
+          "lead_25": 20,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone SW alone at -20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -936,6 +1304,22 @@
       }
     },
     {
+      "check": "[zone SW alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 7943448.600000001,
+          "share": 0.33055284306413796,
+          "lead": "PDP",
+          "lead_votes": 7409434.423405745,
+          "lead_25": 24,
+          "most": "Yes",
+          "verdict": "Outright win"
+        }
+      }
+    },
+    {
       "check": "[zone SW alone at +20] 148 unit shares = reference implementation, all within 0-1",
       "status": "pass",
       "evidence": {
@@ -958,6 +1342,22 @@
           "need": 0,
           "clears": "Yes",
           "tip": "NG003"
+        }
+      }
+    },
+    {
+      "check": "[zone SW alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "differences": [],
+        "sample_APC_N24": {
+          "nat": 9646003.4,
+          "share": 0.4014017095895026,
+          "lead": "PDP",
+          "lead_votes": 6559605.576594255,
+          "lead_25": 20,
+          "most": "Yes",
+          "verdict": "Outright win"
         }
       }
     },
