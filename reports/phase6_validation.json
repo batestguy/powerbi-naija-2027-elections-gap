@@ -1,0 +1,201 @@
+{
+  "built_by": "scripts/validate_phase6.py",
+  "gate_passed": true,
+  "summary": {
+    "checks": 9,
+    "pass": 9,
+    "fail": 0
+  },
+  "not_scriptable": [
+    "tooltips render as designed (needs hover)",
+    "keyboard-only path and screen reader in Desktop",
+    "release .pbix on a clean Windows profile (Phase 7 builds the .pbix)",
+    "non-specialist completes the core task unaided"
+  ],
+  "failed": [],
+  "checks": [
+    {
+      "check": "refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs",
+      "status": "pass",
+      "evidence": {
+        "cache_files": []
+      }
+    },
+    {
+      "check": "validate_phase3.py passes on the current build",
+      "status": "pass",
+      "evidence": {
+        "exit_code": 0,
+        "summary": "  gate PASSED: {'checks': 11, 'pass': 10, 'fail': 0, 'info': 1}"
+      }
+    },
+    {
+      "check": "validate_phase4.py passes on the current build",
+      "status": "pass",
+      "evidence": {
+        "exit_code": 0,
+        "summary": "  gate PASSED: {'checks': 81, 'pass': 81, 'fail': 0}"
+      }
+    },
+    {
+      "check": "national candidate totals = each independent copy within 20 votes",
+      "status": "pass",
+      "evidence": {
+        "model": {
+          "APC": 8794726,
+          "PDP": 6984520,
+          "LP": 6101533,
+          "NNPP": 1496687,
+          "OTHERS": 653332
+        },
+        "model_minus_copy": {
+          "wikipedia_main_total_row": {
+            "APC": 0,
+            "PDP": 0,
+            "LP": 0,
+            "NNPP": 0
+          },
+          "nigerialawyer_total_row": {
+            "APC": 0,
+            "PDP": 0,
+            "LP": 0,
+            "NNPP": 0
+          },
+          "thisday_total_row": {
+            "APC": 0,
+            "PDP": 0,
+            "LP": 0,
+            "NNPP": 0
+          },
+          "vanguard_total_row": {
+            "APC": 0,
+            "PDP": 0,
+            "LP": 0,
+            "NNPP": 16
+          },
+          "inec_declaration": {
+            "APC": 0,
+            "PDP": 0,
+            "LP": 0,
+            "NNPP": 0
+          }
+        },
+        "worst_abs_diff": 16
+      }
+    },
+    {
+      "check": "embedded map files = built files, and every map key matches a model key (both maps, 0 unmatched)",
+      "status": "pass",
+      "evidence": {
+        "nga_states.topo.json": {
+          "embedded_sha_equals_manifest": true,
+          "features": 37,
+          "map_keys_not_in_model": [],
+          "model_keys_not_in_map": []
+        },
+        "nga_tiles.topo.json": {
+          "embedded_sha_equals_manifest": true,
+          "features": 37,
+          "map_keys_not_in_model": [],
+          "model_keys_not_in_map": []
+        }
+      }
+    },
+    {
+      "check": "simulator sliders saved at neutral values (all swings 0, turnout 0, rule 24)",
+      "status": "pass",
+      "evidence": {
+        "param_swing_SS": "0D",
+        "param_rule": "24L",
+        "param_swing_SW": "0D",
+        "param_swing_SE": "0D",
+        "param_swing_NW": "0D",
+        "param_swing_NC": "0D",
+        "param_swing_national": "0D",
+        "param_turnout": "0L",
+        "param_swing_NE": "0D"
+      }
+    },
+    {
+      "check": "overview = simulator at saved slider values: 37 unit shares and labels, national share, units at 25%",
+      "status": "pass",
+      "evidence": {
+        "national": {
+          "APC": {
+            "share": 0.36597727632682026,
+            "sshare": 0.36597727632682026,
+            "t25": 29,
+            "sec": 29
+          },
+          "PDP": {
+            "share": 0.2906486917330003,
+            "sshare": 0.2906486917330003,
+            "t25": 21,
+            "sec": 21
+          },
+          "LP": {
+            "share": 0.25390471843673273,
+            "sshare": 0.25390471843673273,
+            "t25": 16,
+            "sec": 16
+          },
+          "NNPP": {
+            "share": 0.06228203491203247,
+            "sshare": 0.06228203491203247,
+            "t25": 1,
+            "sec": 1
+          }
+        },
+        "mismatches": []
+      }
+    },
+    {
+      "check": "every visual on visible pages has alt text and a unique tab position",
+      "status": "pass",
+      "evidence": {
+        "Data sources": {
+          "visuals": 1,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Path to 24": {
+          "visuals": 7,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Scenario simulator": {
+          "visuals": 19,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Spread map": {
+          "visuals": 8,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "How to read this": {
+          "visuals": 1,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Candidate overview": {
+          "visuals": 7,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        }
+      }
+    },
+    {
+      "check": "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)",
+      "status": "pass",
+      "evidence": {
+        "seconds_net_of_call_overhead": {
+          "Path to 24 table": 0.72,
+          "Simulator cards": 0.833,
+          "Spread map": 0.0
+        },
+        "call_overhead_s": 6.197
+      }
+    }
+  ]
+}

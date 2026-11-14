@@ -236,7 +236,7 @@ def page_overview(pid):
     v.append(textbox(sid(pid, "notes"), 600, 456, 660, 256, [
         (KEY, 9, False, INK),
         ("The rule counts 37 units: the 36 states plus the FCT. Without the FCT, Peter Obi has 15 units, not 16.", 9, False, INK),
-        ("Notes on specific candidates. Close calls: Tinubu is 96 votes above 25% in Adamawa and 845.5 below in Edo. Valid votes carry an unexplained "
+        ("Notes on specific candidates. Close calls: Tinubu is 96 votes above 25% in Adamawa and about 846 below in Edo. Valid votes carry an unexplained "
          "4,858-vote excess in the minor-candidates column, larger than the Adamawa margin, so 29 could be 28 or 30.", 9, False, INK),
         ("Kano (Tinubu): 506,412 used; three of four copies print 517,341. Either way he is above 25% there.", 9, False, INK)],
         alt="Notes: colour key, how the 37 units are counted, close calls and data gaps."))

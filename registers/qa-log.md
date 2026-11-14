@@ -30,3 +30,15 @@
 | 2026-11-14 | Accessibility: keyboard path, screen reader, axe scan | not run | — | Tab order and alt text are set in the files; contrast computed (row above). The project gate (WCAG 2.2 AA) is checked in Phase 6 |
 | 2026-11-14 | Tooltips render as designed | not run | — | Phase 6 |
 | 2026-11-14 | Interaction latency (brief checkpoint) | not measured | — | Phase 6 |
+| 2026-11-14 | Phase 6: refresh from a clean cache (no `cache.abf` on disk; Desktop opened and refreshed from the staging CSVs) | pass | `reports/phase6_validation.json` from `uv run python -I scripts/validate_phase6.py` | — |
+| 2026-11-14 | Phase 6: Phase 3 and Phase 4 checks re-run on the committed Phase 5 build | pass (Phase 3: 10 pass / 1 info; Phase 4: 81/81) | same | — |
+| 2026-11-14 | Phase 6: national candidate totals in the model vs five independent copies (Wikipedia, NigeriaLawyer, ThisDay, Vanguard total rows; INEC declaration), tolerance 20 votes | pass (all 0, except Vanguard NNPP +16) | same | Tolerance set after seeing the known Vanguard NNPP difference (1,496,671 vs 1,496,687), already recorded in Phase 2; any other difference would fail |
+| 2026-11-14 | Phase 6: geometry after import — map files embedded in the report = built files (sha256), both maps 37 features, 0 unmatched keys either way | pass | same | — |
+| 2026-11-14 | Phase 6: Overview page = Simulator at the simulator's saved slider values (all 0, rule 24): 37 unit shares + labels and national share + units at 25%, all four candidates | pass (0 mismatches); screenshots agree (Tinubu: 29 units, 36.60%) | same; `reports/screenshots/phase6/*.png` | — |
+| 2026-11-14 | Phase 6: static accessibility — alt text on every visual of the six visible pages, unique tab order per page | pass | same | Keyboard-only and screen-reader runs still need a person (below) |
+| 2026-11-14 | Phase 6: engine time for heaviest page queries at a non-neutral setting | pass (Path to 24 ≈ 0.7 s, Simulator cards ≈ 0.8 s, Spread map below noise) | same | Rough: each call carries ≈ 6.2 s of PowerShell start-up, subtracted; rendering time not measured. Desktop only — no published tier (decision log) |
+| 2026-11-14 | Phase 6: all pages render after the Phase 5 commit | pass | `reports/screenshots/phase6/*.png` (Tinubu) | — |
+| 2026-11-14 | Tooltips render as designed (needs hover) | not run | — | Needs a person |
+| 2026-11-14 | Keyboard-only path and screen reader in Desktop | not run | — | Needs a person. An automated axe scan does not apply: no web page is published |
+| 2026-11-14 | Release `.pbix` opens on a clean Windows profile | not run | — | Phase 7 creates the `.pbix` |
+| 2026-11-14 | Overview note: "845.5 below in Edo" reworded to "about 846 below" (a quarter of an odd total gives half a vote) | fixed in files; PBIR validate 0/0; not re-rendered (Desktop had unsaved state) | `scripts/pbip_pages.py`; `powerbi-report-author validate` | Render at next open |
