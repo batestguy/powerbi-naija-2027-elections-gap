@@ -8,7 +8,7 @@ Updated: 2026-11-16. Update this file in every stage commit.
 | 0–4 Environment, sources, data, model, scenario engine | done | 44ca968 |
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
-| 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | see git log |
+| 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
 | 5c Merge parties + head to head | **queued** (decisions taken, nothing built) | — |
 | 7 Release + docs, 8 Case study | todo | — |
 
