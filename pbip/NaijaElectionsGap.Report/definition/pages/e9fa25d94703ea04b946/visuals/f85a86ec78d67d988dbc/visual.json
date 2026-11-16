@@ -6,7 +6,7 @@
     "y": 8,
     "z": 0,
     "height": 34,
-    "width": 940,
+    "width": 600,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Candidate overview: the 2023 baseline",
+                    "value": "Candidate overview: 2023",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "18pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Candidate overview: the 2023 baseline'"
+                  "Value": "'Candidate overview: 2023'"
                 }
               }
             }

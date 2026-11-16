@@ -1,0 +1,39 @@
+# ISO 3166-2:NG codes without the 'NG-' prefix. Source: https://en.wikipedia.org/w/index.php?title=ISO_3166-2:NG&oldid=1323080227 (accessed 2026-11-14); built by scripts/build_state_codes.py. FCT = 'FC'.
+state_pcode,state_name,state_code,iso_3166_2
+NG001,Abia,AB,NG-AB
+NG002,Adamawa,AD,NG-AD
+NG003,Akwa Ibom,AK,NG-AK
+NG004,Anambra,AN,NG-AN
+NG005,Bauchi,BA,NG-BA
+NG006,Bayelsa,BY,NG-BY
+NG007,Benue,BE,NG-BE
+NG008,Borno,BO,NG-BO
+NG009,Cross River,CR,NG-CR
+NG010,Delta,DE,NG-DE
+NG011,Ebonyi,EB,NG-EB
+NG012,Edo,ED,NG-ED
+NG013,Ekiti,EK,NG-EK
+NG014,Enugu,EN,NG-EN
+NG015,Federal Capital Territory,FC,NG-FC
+NG016,Gombe,GO,NG-GO
+NG017,Imo,IM,NG-IM
+NG018,Jigawa,JI,NG-JI
+NG019,Kaduna,KD,NG-KD
+NG020,Kano,KN,NG-KN
+NG021,Katsina,KT,NG-KT
+NG022,Kebbi,KE,NG-KE
+NG023,Kogi,KO,NG-KO
+NG024,Kwara,KW,NG-KW
+NG025,Lagos,LA,NG-LA
+NG026,Nasarawa,NA,NG-NA
+NG027,Niger,NI,NG-NI
+NG028,Ogun,OG,NG-OG
+NG029,Ondo,ON,NG-ON
+NG030,Osun,OS,NG-OS
+NG031,Oyo,OY,NG-OY
+NG032,Plateau,PL,NG-PL
+NG033,Rivers,RI,NG-RI
+NG034,Sokoto,SO,NG-SO
+NG035,Taraba,TA,NG-TA
+NG036,Yobe,YO,NG-YO
+NG037,Zamfara,ZA,NG-ZA

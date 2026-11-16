@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "953c9b139456c7673fb1",
   "position": {
-    "x": 950,
-    "y": 478,
-    "z": 18,
-    "height": 234,
-    "width": 310,
-    "tabOrder": 18
+    "x": 958,
+    "y": 466,
+    "z": 32,
+    "height": 246,
+    "width": 302,
+    "tabOrder": 32
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Reading the verdict",
+                    "value": "Colour key (codes: see Spread map)",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -32,7 +32,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "'Short of 25%' at the tipping point: negative means above 25%. Outright win = most votes and 25% in the needed number of units. Run-off = nobody meets both. 'Loses' = a rival meets both. Who would contest a run-off is not modelled.",
+                    "value": "███ ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#0072B2"
+                    }
+                  },
+                  {
+                    "value": "blue: above a quarter (the deeper, the safer)",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -45,7 +53,78 @@
               {
                 "textRuns": [
                   {
-                    "value": "Map: blue above 25%, vermillion below, near-white at 25%; hover a tile for its share and label. Units at a cap means a slider pushed a share past 0% or 100% and it was held there.",
+                    "value": "□□□ ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#767676"
+                    }
+                  },
+                  {
+                    "value": "white or pale: close to a quarter",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "███ ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#D55E00"
+                    }
+                  },
+                  {
+                    "value": "vermillion: below a quarter (the deeper, the further away)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Try these: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "\"everywhere\" +3 (a small gain); North West −10 (a big loss in one region); turnout −20 (supporters stay at home). Set everything back to 0 to see 2023 again.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Good to know: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "a zone change adds to the change everywhere. More on Technical notes.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -127,7 +206,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'How to read the verdict and the map.'"
+                  "Value": "'Map colour key, example what-ifs to try, and the assumptions behind the simulator.'"
                 }
               }
             }

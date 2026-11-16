@@ -2,18 +2,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "af4bbeb63b10a1899b67",
   "position": {
-    "x": 438,
+    "x": 326,
     "y": 86,
-    "z": 4,
-    "height": 512,
-    "width": 410,
-    "tabOrder": 4
+    "z": 8,
+    "height": 390,
+    "width": 340,
+    "tabOrder": 8
   },
   "visual": {
-    "visualType": "shapeMap",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Category": {
+        "Rows": {
           "projections": [
             {
               "field": {
@@ -23,15 +23,35 @@
                       "Entity": "dim_state"
                     }
                   },
-                  "Property": "state_pcode"
+                  "Property": "tile_row"
                 }
               },
-              "queryRef": "dim_state.state_pcode",
-              "nativeQueryRef": "state_pcode"
+              "queryRef": "dim_state.tile_row",
+              "nativeQueryRef": "tile_row",
+              "displayName": "Row"
             }
           ]
         },
-        "Value": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_state"
+                    }
+                  },
+                  "Property": "tile_col"
+                }
+              },
+              "queryRef": "dim_state.tile_col",
+              "nativeQueryRef": "tile_col",
+              "displayName": "Column"
+            }
+          ]
+        },
+        "Values": {
           "projections": [
             {
               "field": {
@@ -41,157 +61,48 @@
                       "Entity": "scenario"
                     }
                   },
-                  "Property": "Points from 25%"
+                  "Property": "Tile code"
                 }
               },
-              "queryRef": "scenario.Points from 25%",
-              "nativeQueryRef": "Points from 25%",
-              "displayName": "Points from 25%"
-            }
-          ]
-        },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "scenario"
-                    }
-                  },
-                  "Property": "Scenario share"
-                }
-              },
-              "queryRef": "scenario.Scenario share",
-              "nativeQueryRef": "Scenario share",
-              "displayName": "Share"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "scenario"
-                    }
-                  },
-                  "Property": "Scenario label"
-                }
-              },
-              "queryRef": "scenario.Scenario label",
-              "nativeQueryRef": "Scenario label",
-              "displayName": "Label"
+              "queryRef": "scenario.Tile code",
+              "nativeQueryRef": "Tile code",
+              "displayName": "Code"
             }
           ]
         }
       }
     },
     "objects": {
-      "shape": [
+      "values": [
         {
           "properties": {
-            "map": {
-              "geoJson": {
-                "type": {
+            "backColor": {
+              "solid": {
+                "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'packaged'"
-                    }
-                  }
-                },
-                "name": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'nga_tiles.topo.json'"
-                    }
-                  }
-                },
-                "content": {
-                  "expr": {
-                    "ResourcePackageItem": {
-                      "PackageName": "RegisteredResources",
-                      "PackageType": 1,
-                      "ItemName": "nga_tiles.topo.json"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Tile fill"
                     }
                   }
                 }
               }
             },
-            "projectionEnum": {
-              "expr": {
-                "Literal": {
-                  "Value": "'mercator'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "Measure": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "scenario"
-                            }
-                          },
-                          "Property": "Points from 25%"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
                         }
                       },
-                      "FillRule": {
-                        "linearGradient3": {
-                          "min": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#D55E00'"
-                              }
-                            },
-                            "value": {
-                              "Literal": {
-                                "Value": "-25D"
-                              }
-                            }
-                          },
-                          "mid": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#F2F2F2'"
-                              }
-                            },
-                            "value": {
-                              "Literal": {
-                                "Value": "0D"
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#0072B2'"
-                              }
-                            },
-                            "value": {
-                              "Literal": {
-                                "Value": "25D"
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "Literal": {
-                                "Value": "'noColor'"
-                              }
-                            }
-                          }
-                        }
-                      }
+                      "Property": "Tile text colour"
                     }
                   }
                 }
@@ -205,7 +116,197 @@
                   "matchingOption": 1
                 }
               }
-            ]
+            ],
+            "metadata": "scenario.Tile code"
+          }
+        },
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "6D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTotals": [
+        {
+          "properties": {
+            "rowSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "columnSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVerticalWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontalWeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       ]
@@ -224,7 +325,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Equal-size tiles (every unit the same size)'"
+                  "Value": "'Equal-size squares, with state codes'"
                 }
               }
             }
@@ -237,7 +338,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tile map with one equal square per unit, same colours as the state map, so small states are as visible as large ones.'"
+                  "Value": "'Tile grid with one equal square per state and its two-letter code inside, same colours as the state map, so small states are as visible as large ones. Codes and names are listed below.'"
                 }
               }
             }
@@ -298,6 +399,20 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'c094746d844041d5e164'"
                 }
               }
             }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "7fee7a6703ed78e3259d",
   "position": {
-    "x": 20,
+    "x": 230,
     "y": 86,
-    "z": 3,
-    "height": 104,
-    "width": 1240,
-    "tabOrder": 3
+    "z": 7,
+    "height": 80,
+    "width": 1030,
+    "tabOrder": 7
   },
   "visual": {
     "visualType": "cardVisual",
@@ -28,7 +28,7 @@
               },
               "queryRef": "scenario.Units secured (national)",
               "nativeQueryRef": "Units secured (national)",
-              "displayName": "Units at 25%+"
+              "displayName": "States won (of 37)"
             },
             {
               "field": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "scenario.Units needed (rule)",
               "nativeQueryRef": "Units needed (rule)",
-              "displayName": "Units needed"
+              "displayName": "States needed to win"
             },
             {
               "field": {
@@ -58,7 +58,7 @@
               },
               "queryRef": "scenario.Units still needed",
               "nativeQueryRef": "Units still needed",
-              "displayName": "Still needed"
+              "displayName": "More states needed"
             },
             {
               "field": {
@@ -73,7 +73,7 @@
               },
               "queryRef": "scenario.Clears the rule",
               "nativeQueryRef": "Clears the rule",
-              "displayName": "Clears the 25% rule"
+              "displayName": "Meets the 25% rule?"
             },
             {
               "field": {
@@ -88,22 +88,7 @@
               },
               "queryRef": "scenario.Tipping-point unit",
               "nativeQueryRef": "Tipping-point unit",
-              "displayName": "Tipping-point unit"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "scenario"
-                    }
-                  },
-                  "Property": "Tipping-point gap (points)"
-                }
-              },
-              "queryRef": "scenario.Tipping-point gap (points)",
-              "nativeQueryRef": "Tipping-point gap (points)",
-              "displayName": "Tipping point: short of 25% (pts)"
+              "displayName": "The deciding state"
             }
           ]
         }
@@ -142,6 +127,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
             }
           },
           "selector": {
@@ -170,7 +162,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Counts for the 25% rule: units at 25% or more, units needed, still needed, whether the rule is cleared, the tipping-point unit and its distance from 25%.'"
+                  "Value": "'Counts for the rule: states won out of 37, states needed to win, more states needed, whether the rule is met, and the deciding state.'"
                 }
               }
             }
@@ -218,6 +210,42 @@
               "expr": {
                 "Literal": {
                   "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Party accent colour"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

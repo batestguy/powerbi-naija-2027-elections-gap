@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "31b2949520db696cb206",
   "position": {
-    "x": 856,
+    "x": 672,
     "y": 86,
-    "z": 5,
-    "height": 512,
-    "width": 404,
-    "tabOrder": 5
+    "z": 9,
+    "height": 390,
+    "width": 388,
+    "tabOrder": 9
   },
   "visual": {
     "visualType": "pivotTable",
@@ -28,7 +28,7 @@
               },
               "queryRef": "dim_state.state_name",
               "nativeQueryRef": "state_name",
-              "displayName": "Unit"
+              "displayName": "State"
             }
           ]
         },
@@ -47,7 +47,7 @@
               },
               "queryRef": "scenario.Scenario label",
               "nativeQueryRef": "Scenario label",
-              "displayName": "Label"
+              "displayName": "Status"
             },
             {
               "field": {
@@ -103,6 +103,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -135,7 +142,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Every unit in words'"
+                  "Value": "'Every state in words'"
                 }
               }
             }
@@ -148,7 +155,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Table of all 37 units with their label and points above or below 25%, the same information as the map colours.'"
+                  "Value": "'Table of all 37 states with their status and points above or below a quarter of the vote, the same information as the map colours.'"
                 }
               }
             }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "e7a79b137d52f99f21f3",
   "position": {
-    "x": 226,
-    "y": 208,
-    "z": 6,
-    "height": 120,
+    "x": 428,
+    "y": 251,
+    "z": 14,
+    "height": 82,
     "width": 200,
-    "tabOrder": 6
+    "tabOrder": 14
   },
   "visual": {
     "visualType": "slicer",
@@ -73,14 +73,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'North East swing (pts)'"
+                  "Value": "'What if things change only in the North East? (points)'"
                 }
               }
             }
@@ -150,7 +150,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Slider: North East swing (pts). Neutral value 0.'"
+                  "Value": "'Slider: What if things change only in the North East? (points). Starts at 0.'"
                 }
               }
             }

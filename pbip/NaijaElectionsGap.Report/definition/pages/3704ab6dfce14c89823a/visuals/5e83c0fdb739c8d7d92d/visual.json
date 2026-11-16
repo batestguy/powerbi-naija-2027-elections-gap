@@ -23,11 +23,11 @@
                       "Entity": "dim_state"
                     }
                   },
-                  "Property": "state_pcode"
+                  "Property": "state_name"
                 }
               },
-              "queryRef": "dim_state.state_pcode",
-              "nativeQueryRef": "state_pcode",
+              "queryRef": "dim_state.state_name",
+              "nativeQueryRef": "state_name",
               "active": true
             }
           ]

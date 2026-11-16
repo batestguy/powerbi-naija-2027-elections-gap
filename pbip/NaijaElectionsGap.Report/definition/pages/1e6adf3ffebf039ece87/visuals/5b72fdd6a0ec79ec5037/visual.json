@@ -1,0 +1,462 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "5b72fdd6a0ec79ec5037",
+  "position": {
+    "x": 40,
+    "y": 302,
+    "z": 1,
+    "height": 410,
+    "width": 1000,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Photo credits (Wikimedia Commons, accessed 14 Nov 2026; cropped and resized, shared under the same licence: CC BY-SA 4.0 = creativecommons.org/licenses/by-sa/4.0, CC BY 4.0 = creativecommons.org/licenses/by/4.0)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Candidate overview: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_15.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Path to 24: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_03.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Spread map: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Ibukun Emiola, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Area_shot_of_polling_units.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "What-if simulator: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_26.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Iyusuf615, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Voters_queue_to_cast_their_vote_at_Pantami,_Gombe.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Technical notes: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Iyusuf615, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:NYSC_member_counting_votes_during_2023_presidential_election_in_Gombe.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Data sources: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_12.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Portrait, Bola Tinubu: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Nosa Asemota, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Bola_Tinubu_portrait_(cropped).jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Portrait, Atiku Abubakar: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Etauso, CC0, commons.wikimedia.org/wiki/File:Atiku_Abubakar_2023.jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Portrait, Peter Obi: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Dgr8Josh, CC BY 4.0, commons.wikimedia.org/wiki/File:H.E._Peter_Obi_(cropped).jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Portrait, Rabiu Kwankwaso: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "VOA, Public domain, commons.wikimedia.org/wiki/File:Rabiu_Kwankwaso_(cropped).jpg",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Party logos are trademarks of their respective parties, shown for identification only; no endorsement implied. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Licence as stated on each file page: APC en.wikipedia.org/wiki/File:All_Progressives_Congress_logo.png (fair use) ; PDP en.wikipedia.org/wiki/File:Logo_of_the_Peoples_Democratic_Party_(Nigeria).png (fair use) ; LP en.wikipedia.org/wiki/File:Labour_Party_(Nigeria)_logo.png (fair use) ; NNPP en.wikipedia.org/wiki/File:Logo_of_the_New_Nigeria_People%27s_Party.png (fair use) ; ADC en.wikipedia.org/wiki/File:African_Democratic_Congress_logo.png (fair use) ; NDC commons.wikimedia.org/wiki/File:Nigeria_Democratic_Party_Logo.jpg (cc0)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Party now (news reports checked 14 Nov 2026; not an official INEC list, and it can change before 2027)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Bola Tinubu: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "APC as of 2026-05-25, Leadership (via AllAfrica), allafrica.com/stories/202605250112.html",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Atiku Abubakar: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "ADC as of 2026-05-27, Premium Times (via AllAfrica), allafrica.com/stories/202605280129.html",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Peter Obi: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "NDC as of 2026-11-08, Vanguard, www.vanguardngr.com/2026/11/2027-obi-is-coming-to-stop-the-erosion-of-nigerias-commonwealth-ndc-tells-tinubu/",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Rabiu Kwankwaso: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "NDC as of 2026-05-30, Vanguard, www.vanguardngr.com/2026/05/2027-presidency-peter-obi-picks-kwankwaso-as-running-mate/",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Credits: each page photo and candidate portrait with photographer, licence and file page; the news reports used for each candidate''s party now.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "source": "https://en.wikipedia.org/wiki/ISO_3166-2:NG",
+  "api_url": "https://en.wikipedia.org/w/api.php?action=parse&page=ISO_3166-2%3ANG&prop=wikitext%7Crevid&format=json",
+  "revid": 1323080227,
+  "pinned_url": "https://en.wikipedia.org/w/index.php?title=ISO_3166-2:NG&oldid=1323080227",
+  "licence": "CC BY-SA 4.0 (Wikipedia text); the codes themselves are ISO 3166-2 identifiers",
+  "accessed_utc": "2026-11-14T10:53:29+00:00",
+  "files": [
+    {
+      "file": "iso_3166-2_NG.parse.json",
+      "bytes": 5239,
+      "sha256": "45cd275b37f9b4db86500737f38022100d81d56bd586a32542b0a1edb0f96df7"
+    }
+  ]
+}

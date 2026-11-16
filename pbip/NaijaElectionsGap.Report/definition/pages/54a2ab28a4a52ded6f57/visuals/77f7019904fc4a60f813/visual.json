@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "77f7019904fc4a60f813",
   "position": {
-    "x": 440,
-    "y": 170,
-    "z": 14,
-    "height": 80,
-    "width": 820,
-    "tabOrder": 14
+    "x": 644,
+    "y": 182,
+    "z": 27,
+    "height": 56,
+    "width": 616,
+    "tabOrder": 27
   },
   "visual": {
     "visualType": "cardVisual",
@@ -28,7 +28,7 @@
               },
               "queryRef": "scenario.Has most votes",
               "nativeQueryRef": "Has most votes",
-              "displayName": "Most votes?"
+              "displayName": "Most votes nationwide?"
             },
             {
               "field": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "scenario.Leading rival",
               "nativeQueryRef": "Leading rival",
-              "displayName": "Leading rival"
+              "displayName": "Closest rival (party)"
             },
             {
               "field": {
@@ -53,27 +53,12 @@
                       "Entity": "scenario"
                     }
                   },
-                  "Property": "Tipping-point unit"
+                  "Property": "Scenario national share"
                 }
               },
-              "queryRef": "scenario.Tipping-point unit",
-              "nativeQueryRef": "Tipping-point unit",
-              "displayName": "Tipping point"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "scenario"
-                    }
-                  },
-                  "Property": "Tipping-point gap (points)"
-                }
-              },
-              "queryRef": "scenario.Tipping-point gap (points)",
-              "nativeQueryRef": "Tipping-point gap (points)",
-              "displayName": "Short of 25% (pts)"
+              "queryRef": "scenario.Scenario national share",
+              "nativeQueryRef": "Scenario national share",
+              "displayName": "Share of the vote nationwide"
             }
           ]
         }
@@ -100,7 +85,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "13D"
                 }
               }
             }
@@ -117,6 +102,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
                 }
               }
             }
@@ -147,7 +139,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Whether the candidate has the most votes nationally, the leading rival, the tipping-point unit and its gap to 25% in points (negative = above 25%).'"
+                  "Value": "'Whether the candidate has the most votes nationwide, the closest rival''s party and the candidate''s share of the vote nationwide.'"
                 }
               }
             }
@@ -195,6 +187,42 @@
               "expr": {
                 "Literal": {
                   "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Party accent colour"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

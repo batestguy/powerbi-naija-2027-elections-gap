@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "c449152dc3d36001debb",
   "position": {
-    "x": 440,
-    "y": 254,
-    "z": 15,
-    "height": 80,
-    "width": 820,
-    "tabOrder": 15
+    "x": 644,
+    "y": 242,
+    "z": 28,
+    "height": 56,
+    "width": 616,
+    "tabOrder": 28
   },
   "visual": {
     "visualType": "cardVisual",
@@ -28,7 +28,7 @@
               },
               "queryRef": "scenario.Units secured (national)",
               "nativeQueryRef": "Units secured (national)",
-              "displayName": "Secured /37"
+              "displayName": "States won (of 37)"
             },
             {
               "field": {
@@ -43,22 +43,7 @@
               },
               "queryRef": "scenario.Units still needed",
               "nativeQueryRef": "Units still needed",
-              "displayName": "Still needed"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "scenario"
-                    }
-                  },
-                  "Property": "Scenario national share"
-                }
-              },
-              "queryRef": "scenario.Scenario national share",
-              "nativeQueryRef": "Scenario national share",
-              "displayName": "National share"
+              "displayName": "More states needed"
             },
             {
               "field": {
@@ -73,7 +58,7 @@
               },
               "queryRef": "scenario.Units at a cap",
               "nativeQueryRef": "Units at a cap",
-              "displayName": "Capped units"
+              "displayName": "States that hit 0% or 100%"
             }
           ]
         }
@@ -100,7 +85,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "13D"
                 }
               }
             }
@@ -117,6 +102,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
                 }
               }
             }
@@ -147,7 +139,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scenario counters: units secured out of 37, units still needed, national share and units held at the 0% or 100% cap.'"
+                  "Value": "'Your what-if: states won out of 37, more states needed, and states where a slider pushed the share to 0% or 100%.'"
                 }
               }
             }
@@ -195,6 +187,42 @@
               "expr": {
                 "Literal": {
                   "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Party accent colour"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

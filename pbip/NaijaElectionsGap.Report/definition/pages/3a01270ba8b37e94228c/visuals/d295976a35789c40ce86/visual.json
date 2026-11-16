@@ -6,7 +6,7 @@
     "y": 8,
     "z": 0,
     "height": 34,
-    "width": 940,
+    "width": 600,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Path to 24: which units carry the 25% test",
+                    "value": "Path to 24: the states that count",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "18pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Path to 24: which units carry the 25% test'"
+                  "Value": "'Path to 24: the states that count'"
                 }
               }
             }

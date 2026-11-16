@@ -1,40 +1,70 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f6bec0fab6a098393797",
+  "name": "7b70357c9b45f5e2d820",
   "position": {
-    "x": 226,
-    "y": 578,
-    "z": 12,
-    "height": 134,
-    "width": 200,
-    "tabOrder": 12
+    "x": 704,
+    "y": 10,
+    "z": 4,
+    "height": 66,
+    "width": 60,
+    "tabOrder": 4
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "image",
     "objects": {
-      "general": [
+      "image": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Assumptions: same swing in every unit of a zone (national + zone), capped 0-100%; supporter turnout = the candidate's 2023 voters only; rivals move in proportion to their 2023 shares. See 'How to read this'.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
+            "sourceType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'imageUrl'"
+                }
               }
-            ]
+            },
+            "sourceUrl": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "scenario"
+                    }
+                  },
+                  "Property": "Party logo"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "imageScaling": [
+        {
+          "properties": {
+            "imageScalingType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Fit'"
+                }
+              }
+            }
           }
         }
       ]
     },
     "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "background": [
         {
           "properties": {
@@ -101,7 +131,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Assumptions behind the simulator.'"
+                  "Value": "'Logo of the selected candidate''s 2023 party (trademark, shown for identification only).'"
                 }
               }
             }

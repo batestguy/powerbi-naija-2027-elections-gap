@@ -44,3 +44,53 @@ APC 8,794,726 · PDP 6,984,520 · LP 6,101,533 · NNPP 1,496,687 · registered 9
 | Wikipedia "Geopolitical zones of Nigeria" | https://en.wikipedia.org/wiki/Geopolitical_zones_of_Nigeria (revid 1360299046) | Wikitext | State → zone | none | CC BY-SA 4.0 | high | **approved (zones)** | 37 units → 6 zones; FCT in North Central. `data/staging/dim_zone.csv` |
 | Wikipedia state pages — registered voters only (verdict update) | 37 pages "2023 Nigerian presidential election in X" | Wikitext infobox | State | none | CC BY-SA 4.0 | medium | **conditional (registered voters only)** | Still rejected for LGA results (row above). Used for registered voters; sum is 120,281 below INEC's 93,469,008 |
 | Equal-size tile layout | `data/reference/tile_grid_layout.csv` | CSV | State | — | own work | — | **approved** | Hand-designed grid, one tile per unit |
+
+## Additions 2026-11-14 (decorative photos, report redesign)
+
+All from Wikimedia Commons, accessed 2026-11-14 via the Commons API (User-Agent `NaijaElectionsGap-report/1.0 (open-data project)`), downloaded as Commons' 1920-px-wide rendition, then cropped to 190×560 (shown at 2×: 380×1120 px), resized and re-saved as JPEG with metadata removed by `scripts/build_photos.py`. Raw files + manifest (URL, SHA-256, author, licence): `data/raw/photos/2026-11-14/` (local only); processed files + crop boxes: `pbip/assets/photos/photos_manifest.json`. The cropped versions are adaptations and are shared under the same licence (CC BY-SA 4.0). Content rule: neutral election scenes only.
+
+| Page | Photo (file page) | Author | Licence | Shows |
+|------|-------------------|--------|---------|-------|
+| Candidate overview | https://commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_15.jpg | Yemi festus | CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0) | labelled ballot boxes |
+| Path to 24 | https://commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_03.jpg | Yemi festus | CC BY-SA 4.0 | voters checking the posted register |
+| Spread map | https://commons.wikimedia.org/wiki/File:Area_shot_of_polling_units.jpg | Ibukun Emiola | CC BY-SA 4.0 | voters at polling units |
+| What-if simulator | https://commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_26.jpg | Yemi festus | CC BY-SA 4.0 | official setting up a voting cubicle |
+| How to read this | https://commons.wikimedia.org/wiki/File:Voters_queue_to_cast_their_vote_at_Pantami,_Gombe.jpg | Iyusuf615 | CC BY-SA 4.0 | voters queueing, Pantami, Gombe |
+| Technical notes | https://commons.wikimedia.org/wiki/File:NYSC_member_counting_votes_during_2023_presidential_election_in_Gombe.jpg | Iyusuf615 | CC BY-SA 4.0 | public vote count, Pantami, Gombe |
+| Data sources | https://commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_12.jpg | Yemi festus | CC BY-SA 4.0 | polling officials at a table |
+
+## Additions 2026-11-14 (candidate identity, state codes)
+
+Candidate portraits (free licences only; square crop 160 px, embedded as data URIs; `scripts/build_photos.py`, raw in `data/raw/photos/2026-11-14/candidates/`):
+
+| Candidate | File page | Author | Licence | Accessed |
+|---|---|---|---|---|
+| Bola Tinubu | https://commons.wikimedia.org/wiki/File:Bola_Tinubu_portrait_(cropped).jpg | Nosa Asemota | CC BY-SA 4.0 | 2026-11-14 |
+| Atiku Abubakar | https://commons.wikimedia.org/wiki/File:Atiku_Abubakar_2023.jpg | Etauso | CC0 | 2026-11-14 |
+| Peter Obi | https://commons.wikimedia.org/wiki/File:H.E._Peter_Obi_(cropped).jpg | Dgr8Josh | CC BY 4.0 | 2026-11-14 |
+| Rabiu Kwankwaso | https://commons.wikimedia.org/wiki/File:Rabiu_Kwankwaso_(cropped).jpg | VOA | Public domain | 2026-11-14 |
+
+Party logos — trademarks, shown for identification only (user decision 2026-11-14); licence as stated by the file page; raw in `data/raw/party_logos/2026-11-14/`. NDC's CC0 claim is by an unknown uploader and is not verified:
+
+| Party | File page | Licence status (as stated) | Accessed |
+|---|---|---|---|
+| APC | https://en.wikipedia.org/wiki/File:All_Progressives_Congress_logo.png | Fair use (trademark) | 2026-11-14 |
+| PDP | https://en.wikipedia.org/wiki/File:Logo_of_the_Peoples_Democratic_Party_(Nigeria).png | Fair use (trademark) | 2026-11-14 |
+| LP | https://en.wikipedia.org/wiki/File:Labour_Party_(Nigeria)_logo.png | Fair use (trademark) | 2026-11-14 |
+| NNPP | https://en.wikipedia.org/wiki/File:Logo_of_the_New_Nigeria_People%27s_Party.png | Fair use (trademark) | 2026-11-14 |
+| ADC | https://en.wikipedia.org/wiki/File:African_Democratic_Congress_logo.png | Fair use (trademark) | 2026-11-14 |
+| NDC | https://commons.wikimedia.org/wiki/File:Nigeria_Democratic_Party_Logo.jpg | CC0 (trademark) | 2026-11-14 |
+
+Party now (dated news reports, `data/reference/party_now.csv`; not INEC's candidate list):
+
+| Candidate | Party now | As of | Publisher | URL | Accessed |
+|---|---|---|---|---|---|
+| Bola Tinubu | APC | 2026-05-25 | Leadership (via AllAfrica) | https://allafrica.com/stories/202605250112.html | 2026-11-14 |
+| Atiku Abubakar | ADC | 2026-05-27 | Premium Times (via AllAfrica) | https://allafrica.com/stories/202605280129.html | 2026-11-14 |
+| Peter Obi | NDC | 2026-11-08 | Vanguard | https://www.vanguardngr.com/2026/11/2027-obi-is-coming-to-stop-the-erosion-of-nigerias-commonwealth-ndc-tells-tinubu/ | 2026-11-14 |
+| Rabiu Kwankwaso | NDC | 2026-05-30 | Vanguard | https://www.vanguardngr.com/2026/05/2027-presidency-peter-obi-picks-kwankwaso-as-running-mate/ | 2026-11-14 |
+
+| Name | URL | Format | Grain | Auth | Licence | Confidence | Verdict | Reason |
+|------|-----|--------|-------|------|---------|------------|---------|--------|
+| Wikipedia "ISO 3166-2:NG" (state codes) | https://en.wikipedia.org/w/index.php?title=ISO_3166-2:NG&oldid=1323080227 | Wikitext (API) | State | none | CC BY-SA 4.0 (page text); codes are ISO identifiers | high | **approved (state codes)** | 37 codes, all unique, all matched to `dim_state` by name (FCT = FC); `scripts/build_state_codes.py` → `data/reference/state_codes_iso3166.csv` |
+| Locator map "Where is each state?" | own work from HDX COD-AB boundaries (simplified) | PNG | State | — | CC BY-IGO (boundaries) | — | **approved** | `scripts/build_photos.py` (`build_locator`) |

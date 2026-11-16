@@ -10,8 +10,8 @@
       "nodes": [
         {
           "location": {
-            "x": 334.1847511806298,
-            "y": -15.324992632435283
+            "x": 3742.18475118063,
+            "y": 11.675007367564717
           },
           "nodeIndex": "dim_state",
           "nodeLineageTag": "bb460a9f-400e-8d4f-713f-826af5e679f5",
@@ -23,8 +23,8 @@
         },
         {
           "location": {
-            "x": 618.36163941535983,
-            "y": -50
+            "x": 4026.3616394153596,
+            "y": -23
           },
           "nodeIndex": "fact_result_2023",
           "nodeLineageTag": "d289f07a-b0ff-f8b4-e217-b2526fdf4b0f",
@@ -36,13 +36,169 @@
         },
         {
           "location": {
-            "x": 50,
-            "y": -10.259883455093757
+            "x": 3458,
+            "y": 16.740116544906243
           },
           "nodeIndex": "fact_turnout_2023",
           "nodeLineageTag": "8a12699d-0ba1-727c-c727-5bff85981e01",
           "size": {
             "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 25
+          },
+          "nodeIndex": "scenario",
+          "nodeLineageTag": "a442799d-9f11-f602-9bc1-22ab023ec651",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 75
+          },
+          "nodeIndex": "dim_party",
+          "nodeLineageTag": "0cdaed2d-8dd4-a1e3-6182-a089dede501e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 99
+          },
+          "nodeIndex": "dim_zone",
+          "nodeLineageTag": "b8a02ae7-fe60-a8d8-b8e5-f749639424b5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 63
+          },
+          "nodeIndex": "param_rule",
+          "nodeLineageTag": "7bc4f017-4327-2337-c8cd-08280210d0a3",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_national",
+          "nodeLineageTag": "d76b993a-4638-8da7-4fc6-909704701d57",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1420,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_NC",
+          "nodeLineageTag": "d32f4ad8-cf2b-2dab-3fd1-1c702497f389",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_NE",
+          "nodeLineageTag": "854be2ac-4042-8b41-24ab-063fd6728046",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1988,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_NW",
+          "nodeLineageTag": "91dcaa97-2a8d-110c-0663-209bc347048c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2272,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_SE",
+          "nodeLineageTag": "a3594de1-3475-f083-82cd-c68eaffe3964",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2556,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_SS",
+          "nodeLineageTag": "3a9065d9-c99f-3802-47f0-c693898c61fc",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2840,
+            "y": 63
+          },
+          "nodeIndex": "param_swing_SW",
+          "nodeLineageTag": "756b92c1-146b-868c-a53c-7d381a3ea070",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3124,
+            "y": 63
+          },
+          "nodeIndex": "param_turnout",
+          "nodeLineageTag": "9919035e-ca98-0f99-e1b1-5f86d705b550",
+          "size": {
+            "height": 224,
             "width": 234
           },
           "zIndex": 0

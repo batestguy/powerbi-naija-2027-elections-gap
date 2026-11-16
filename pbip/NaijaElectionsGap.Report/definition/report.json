@@ -36,6 +36,46 @@
           "name": "nga_tiles.topo.json",
           "path": "nga_tiles.topo.json",
           "type": "ShapeMap"
+        },
+        {
+          "name": "photo_overview.jpg",
+          "path": "photo_overview.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_path.jpg",
+          "path": "photo_path.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_map.jpg",
+          "path": "photo_map.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_simulator.jpg",
+          "path": "photo_simulator.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_howto.jpg",
+          "path": "photo_howto.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_technical.jpg",
+          "path": "photo_technical.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "photo_sources.jpg",
+          "path": "photo_sources.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "locator_states.png",
+          "path": "locator_states.png",
+          "type": "Image"
         }
       ]
     }

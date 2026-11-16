@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "7b6965beaa4005152ea6",
   "position": {
-    "x": 600,
-    "y": 456,
-    "z": 6,
-    "height": 256,
-    "width": 660,
-    "tabOrder": 6
+    "x": 508,
+    "y": 604,
+    "z": 12,
+    "height": 108,
+    "width": 552,
+    "tabOrder": 12
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "Colour key: blue = 25% or more (secured); vermillion (dark orange) = 20% to under 25% (within reach); grey = under 20% (out of reach). The dashed line marks 25%. Hover a column for its label and share; the Path to 24 page lists every unit with its label in words.",
+                    "value": "How sure are these margins? ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "The vote counts include 4,858 votes that nobody can place in a state (in the minor candidates' column). A margin smaller than that could change with better data.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -32,33 +40,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "The rule counts 37 units: the 36 states plus the FCT. Without the FCT, Peter Obi has 15 units, not 16.",
+                    "value": "Kano: ",
                     "textStyle": {
-                      "fontFamily": "Segoe UI",
+                      "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
                       "color": "#1F1F1F"
                     }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
+                  },
                   {
-                    "value": "Notes on specific candidates. Close calls: Tinubu is 96 votes above 25% in Adamawa and about 846 below in Edo. Valid votes carry an unexplained 4,858-vote excess in the minor-candidates column, larger than the Adamawa margin, so 29 could be 28 or 30.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Kano (Tinubu): 506,412 used; three of four copies print 517,341. Either way he is above 25% there.",
+                    "value": "one figure is disputed, Bola Tinubu's votes there (we use 506,412; three of four copies print 517,341). Either figure gives the same answer for every candidate: who has a quarter in Kano does not change. Formulas and terms: see the Technical notes page.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -140,7 +130,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Notes: colour key, how the 37 units are counted, close calls and data gaps.'"
+                  "Value": "'Notes: how sure the margins are, the Kano figure, and where the formulas are.'"
                 }
               }
             }

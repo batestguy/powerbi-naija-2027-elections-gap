@@ -14,7 +14,7 @@ vote as one copy. Unanimous or clear-majority values are used; ties and override
 data/reference/result_cell_decisions.csv. Every non-unanimous cell is written to
 reports/result_reconciliation.csv. Without --date, each source's latest snapshot is used.
 """
-import csv, html, json, re, sys, zipfile
+import csv, hashlib, html, json, re, sys, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -370,11 +370,21 @@ def main():
     total_valid = {p: sum(chosen[(p, party)] for party, _ in PARTIES) + wik[p]["OTHERS"] for p in wik}
     src_recon = ("Reconciled from five copies of the INEC state declaration (Wikipedia revid "
                  f"{revid}, AGADA-BI, thenigerialawyer.com, ThisDay, Vanguard); see reports/result_reconciliation.csv")
+    # display attributes (2026-11-14): ISO 3166-2:NG code (scripts/build_state_codes.py) and the equal-size tile
+    # position (data/reference/tile_grid_layout.csv), so the tile map can be drawn as a labelled chart
+    def ref_rows(name):
+        return {r["state_pcode"]: r for r in csv.DictReader(
+            l for l in (REF / name).read_text(encoding="utf-8").splitlines() if not l.startswith("#"))}
+    iso, tiles = ref_rows("state_codes_iso3166.csv"), ref_rows("tile_grid_layout.csv")
+    if set(iso) != set(hdx_name) or set(tiles) != set(hdx_name) or len({r["state_code"] for r in iso.values()}) != len(hdx_name):
+        raise ValueError("state codes / tile layout do not cover every state exactly once")
     dim_state = [{"state_pcode": p, "state_name": n,
                   "wiki_name": next((s["wiki_name"] for s in states if s["state_pcode"] == p), None),
                   "zone": zone_of.get(p), "zone_code": ZONE_CODES.get(zone_of.get(p)),
-                  "is_fct": int(p == "NG015")} for p, n in sorted(hdx)]
-    write_csv(STG / "dim_state.csv", dim_state, ["state_pcode", "state_name", "wiki_name", "zone", "zone_code", "is_fct"])
+                  "is_fct": int(p == "NG015"), "state_code": iso[p]["state_code"],
+                  "tile_row": int(tiles[p]["row"]), "tile_col": int(tiles[p]["col"])} for p, n in sorted(hdx)]
+    write_csv(STG / "dim_state.csv", dim_state, ["state_pcode", "state_name", "wiki_name", "zone", "zone_code", "is_fct",
+                                                 "state_code", "tile_row", "tile_col"])
 
     dim_zone = [{"zone_code": c, "zone": z, "state_count": sum(1 for v in zone_of.values() if v == z),
                  "source": f"Wikipedia 'Geopolitical zones of Nigeria', revid {zones_revid}"} for z, c in ZONE_CODES.items()]
@@ -473,7 +483,12 @@ def main():
                "news_number_format_fixes": td_fixes + vg_fixes,
                "inputs": {"wikipedia_main": ref(wm_man), "wikipedia_states": ref(ws_man), "zones": ref(z_man),
                           "hdx_cod_ab": ref(hdx_man), "nigerialawyer": ref(nl_man), "agada": ref(ag_man), "thisday": ref(td_man), "vanguard": ref(vg_man),
-                          **({"mundx": ref(mx_man)} if mx_man else {})}}
+                          **({"mundx": ref(mx_man)} if mx_man else {})},
+               # dim_state display columns (2026-11-14): state_code from the ISO 3166-2:NG list, tile_row/tile_col
+               "reference_files": {n: hashlib.sha256((REF / n).read_bytes()).hexdigest()
+                                   for n in ("state_codes_iso3166.csv", "tile_grid_layout.csv")},
+               "dim_state_columns": ["state_pcode", "state_name", "wiki_name", "zone", "zone_code", "is_fct",
+                                     "state_code", "tile_row", "tile_col"]}
     (STG / "manifest.json").write_text(json.dumps(stg_man, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"  unmatched names: {len(xw.unmatched)}; nigerialawyer number-format fixes: {len(nl_fixes)}")
 

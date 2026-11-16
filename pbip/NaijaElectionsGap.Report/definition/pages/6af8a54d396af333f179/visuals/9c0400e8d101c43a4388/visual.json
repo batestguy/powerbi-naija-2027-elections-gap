@@ -6,7 +6,7 @@
     "y": 8,
     "z": 0,
     "height": 34,
-    "width": 940,
+    "width": 600,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Spread map: where the 25% hold is strong or fragile",
+                    "value": "Spread map: strong and fragile states",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "18pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Spread map: where the 25% hold is strong or fragile'"
+                  "Value": "'Spread map: strong and fragile states'"
                 }
               }
             }

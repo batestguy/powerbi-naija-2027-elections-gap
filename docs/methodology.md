@@ -59,6 +59,15 @@ simulator equals the 2023 baseline.
 - **Points needed** in a unit = `max(0, 0.25 − p2) × 100`. **Votes needed** = `max(0, 0.25 × V1 − v2)`, rounded up:
   votes that would have to **switch** to the candidate from others, with the unit's total held fixed — not new votes added.
   Both are per unit: blank when the page shows the whole country.
+- **Votes to spare** in a unit (added 2026-11-14) = `max(0, v2 − 0.25 × V1)`, rounded down: votes that could switch
+  **from** the candidate to others, unit total fixed, while the candidate keeps at least 25%. (The model adds 10⁻⁶
+  before rounding down only to absorb floating-point error on whole-number margins.)
+- **Plain-words sentences (2026-11-14, user decision: gaps in people, not only points).** *Deciding state sentence*:
+  the tipping-point unit, its gap in points (one decimal), and — if the candidate is at or above 25% there — its votes
+  to spare, otherwise its votes needed. *Closest calls* (2023 Overview, baseline only, whole-number test): the unit won
+  with the smallest `4v − V ≥ 0` (margin `(4v − V) / 4`, rounded down) and the unit missed with the smallest
+  `V − 4v > 0` (votes needed `(V − 4v) / 4`, rounded up); ties by P-code. `scripts/validate_phase6.py` recomputes both
+  sentences, and votes needed / to spare for every unit, in exact fractions from the staging CSVs.
 - **Units at a cap** = units whose share before capping (`p1 + swing`) is ≤ 0 or ≥ 1. Shown, so an extreme swing is
   never silently flattened.
 - The tipping-point unit is blank when fewer than `N` units have a share (cannot happen with the current data: all 37 do).

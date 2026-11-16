@@ -404,5 +404,20 @@
         }
       ]
     }
-  }
+  },
+  "reference_files": {
+    "state_codes_iso3166.csv": "6c56cb787def34a7cfbce4e6849ace61036e1c121e7d86a8d49cadb2c70f5909",
+    "tile_grid_layout.csv": "45e47eede263834c8cd40660e2a1b4cc849a9fbcb6f99383911b4ad081ea84d8"
+  },
+  "dim_state_columns": [
+    "state_pcode",
+    "state_name",
+    "wiki_name",
+    "zone",
+    "zone_code",
+    "is_fct",
+    "state_code",
+    "tile_row",
+    "tile_col"
+  ]
 }

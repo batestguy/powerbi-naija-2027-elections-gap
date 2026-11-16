@@ -3,11 +3,11 @@
   "name": "22113b62575339d470a5",
   "position": {
     "x": 20,
-    "y": 450,
-    "z": 5,
-    "height": 262,
-    "width": 560,
-    "tabOrder": 5
+    "y": 454,
+    "z": 10,
+    "height": 258,
+    "width": 470,
+    "tabOrder": 10
   },
   "visual": {
     "visualType": "pivotTable",
@@ -47,7 +47,7 @@
               },
               "queryRef": "fact_result_2023.Candidate share",
               "nativeQueryRef": "Candidate share",
-              "displayName": "Share"
+              "displayName": "Share of the vote"
             },
             {
               "field": {
@@ -62,7 +62,7 @@
               },
               "queryRef": "fact_result_2023.States at 25% or more",
               "nativeQueryRef": "States at 25% or more",
-              "displayName": "Units at 25%+"
+              "displayName": "States won"
             },
             {
               "field": {
@@ -77,7 +77,7 @@
               },
               "queryRef": "fact_result_2023.States with a computable share",
               "nativeQueryRef": "States with a computable share",
-              "displayName": "Units"
+              "displayName": "States"
             }
           ]
         }
@@ -95,6 +95,13 @@
               }
             },
             "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "wordWrap": {
               "expr": {
                 "Literal": {
                   "Value": "true"
@@ -132,7 +139,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'By geopolitical zone'"
+                  "Value": "'By zone of the country'"
                 }
               }
             }
@@ -145,7 +152,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Table of the selected candidate''s 2023 share and units at 25% or more in each of the six zones.'"
+                  "Value": "'Table of the selected candidate''s 2023 share of the vote and states won (a quarter of the vote or more) in each of the six zones.'"
                 }
               }
             }

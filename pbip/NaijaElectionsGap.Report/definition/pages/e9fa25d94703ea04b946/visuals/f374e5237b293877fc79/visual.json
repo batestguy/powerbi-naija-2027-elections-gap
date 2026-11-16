@@ -3,11 +3,11 @@
   "name": "f374e5237b293877fc79",
   "position": {
     "x": 20,
-    "y": 194,
-    "z": 4,
-    "height": 250,
-    "width": 1240,
-    "tabOrder": 4
+    "y": 186,
+    "z": 8,
+    "height": 212,
+    "width": 1040,
+    "tabOrder": 8
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -28,7 +28,7 @@
               },
               "queryRef": "dim_state.state_name",
               "nativeQueryRef": "state_name",
-              "displayName": "Unit"
+              "displayName": "State"
             }
           ]
         },
@@ -47,7 +47,7 @@
               },
               "queryRef": "fact_result_2023.Candidate share",
               "nativeQueryRef": "Candidate share",
-              "displayName": "Share of valid votes"
+              "displayName": "Share of the vote"
             }
           ]
         },
@@ -66,7 +66,7 @@
               },
               "queryRef": "scenario.Baseline label",
               "nativeQueryRef": "Baseline label",
-              "displayName": "Label"
+              "displayName": "Status"
             },
             {
               "field": {
@@ -224,7 +224,7 @@
             "style": {
               "expr": {
                 "Literal": {
-                  "Value": "'dashed'"
+                  "Value": "'solid'"
                 }
               }
             },
@@ -233,7 +233,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F1F1F'"
+                      "Value": "'#882255'"
                     }
                   }
                 }
@@ -242,14 +242,21 @@
             "width": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "3D"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             },
             "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "'25%'"
+                  "Value": "'A quarter of the vote (25%)'"
                 }
               }
             },
@@ -272,7 +279,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F1F1F'"
+                      "Value": "'#882255'"
                     }
                   }
                 }
@@ -313,7 +320,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Share of valid votes in each unit, 2023 (dashed line = 25%)'"
+                  "Value": "'Share of the vote in each state, 2023 (highest first)'"
                 }
               }
             }
@@ -326,7 +333,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Bar chart of the selected candidate''s 2023 share in all 37 units, highest first, with a fixed line at 25%. Blue bars are at or above 25%, vermillion 20 to 25%, grey below 20%.'"
+                  "Value": "'Column chart of the selected candidate''s 2023 share of the vote in all 37 states, highest first, with a fixed wine-coloured line at a quarter of the vote. Blue columns are at a quarter or more, vermillion 20% to just under a quarter, grey under 20%.'"
                 }
               }
             }

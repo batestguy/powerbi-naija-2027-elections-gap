@@ -4,10 +4,10 @@
   "position": {
     "x": 20,
     "y": 86,
-    "z": 3,
-    "height": 104,
-    "width": 1240,
-    "tabOrder": 3
+    "z": 7,
+    "height": 96,
+    "width": 1040,
+    "tabOrder": 7
   },
   "visual": {
     "visualType": "cardVisual",
@@ -43,7 +43,7 @@
               },
               "queryRef": "fact_result_2023.Candidate share",
               "nativeQueryRef": "Candidate share",
-              "displayName": "Share of valid votes"
+              "displayName": "Share of the vote"
             },
             {
               "field": {
@@ -58,7 +58,7 @@
               },
               "queryRef": "scenario.Candidate national rank",
               "nativeQueryRef": "Candidate national rank",
-              "displayName": "National rank"
+              "displayName": "Place nationally"
             },
             {
               "field": {
@@ -73,7 +73,7 @@
               },
               "queryRef": "fact_result_2023.States at 25% or more",
               "nativeQueryRef": "States at 25% or more",
-              "displayName": "Units at 25% or more (of 37)"
+              "displayName": "States won (of 37)"
             },
             {
               "field": {
@@ -88,7 +88,7 @@
               },
               "queryRef": "fact_result_2023.States with a computable share",
               "nativeQueryRef": "States with a computable share",
-              "displayName": "Units with data"
+              "displayName": "States with results"
             }
           ]
         }
@@ -155,7 +155,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Headline figures for the selected candidate in 2023: votes, share, national rank, units at 25% or more out of 37, and units with data.'"
+                  "Value": "'Headline figures for the selected candidate in 2023: votes, share of the vote, place nationally, states with a quarter of the vote or more out of 37, and states with results.'"
                 }
               }
             }
@@ -203,6 +203,42 @@
               "expr": {
                 "Literal": {
                   "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Party accent colour"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

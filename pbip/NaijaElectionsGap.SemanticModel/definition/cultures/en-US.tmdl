@@ -1,0 +1,680 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dim_zone.zone": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_zone",
+			          "ConceptualProperty": "zone"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Zone": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_result_2023.candidate_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_result_2023",
+			          "ConceptualProperty": "Candidate share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Share of the vote": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_result_2023.states_at_25_or_more": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_result_2023",
+			          "ConceptualProperty": "States at 25% or more"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "States won": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "States won (of 37)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_result_2023.states_with_a_computable_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_result_2023",
+			          "ConceptualProperty": "States with a computable share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "States": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "States with results": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_result_2023.candidate_votes": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_result_2023",
+			          "ConceptualProperty": "Candidate votes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Votes, 2023": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Votes": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.candidate_national_rank": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Candidate national rank"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Place nationally": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.baseline_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Baseline label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_secured_national": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units secured (national)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "States won (of 37)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_needed_rule": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units needed (rule)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "States needed to win": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_still_needed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units still needed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "More states needed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.clears_the_rule": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Clears the rule"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Meets the 25% rule?": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.tippingpoint_unit": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Tipping-point unit"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "The deciding state": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.unit_rank": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Unit rank"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Rank": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.scenario_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Scenario label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Status": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.scenario_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Scenario share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Share": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Share of the vote": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.points_needed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Points needed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Points short": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Points short of a quarter": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.votes_needed": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Votes needed"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Extra votes needed to reach a quarter": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.points_from_25": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Points from 25%"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Points vs 25%": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Points above (+) or below (-) a quarter": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_secured": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units secured"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Won": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_within_reach": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units within reach"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Within reach": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_out_of_reach": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units out of reach"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Out of reach": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.tile_code": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Tile code"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Code": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.has_most_votes": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Has most votes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Most votes nationwide?": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.leading_rival": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Leading rival"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Closest rival (party)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.scenario_national_share": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Scenario national share"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Share of the vote nationwide": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "scenario.units_at_a_cap": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "scenario",
+			          "ConceptualProperty": "Units at a cap"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "States that hit 0% or 100%": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_state.state_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_state",
+			          "ConceptualProperty": "state_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "State": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_state.tile_row": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_state",
+			          "ConceptualProperty": "tile_row"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Row": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_state.tile_col": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_state",
+			          "ConceptualProperty": "tile_col"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Column": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

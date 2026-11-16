@@ -23,6 +23,7 @@ must carry the story for everyone else.
 | Power BI Desktop | Microsoft Store edition, 2.159.1231.0 | Store edition auto-updates; record version in each release |
 | Power BI CLIs (`powerbi-report-author`, `powerbi-desktop`, pbi-tools, Tabular Editor) | Not installed | PBIR files can still be edited by hand; decide in Phase 3 whether a CLI is worth adding |
 | Python for data prep | **Pinned: CPython 3.12.13 via uv 0.11.28, project `.venv`** | `pyproject.toml`, `.python-version`, `uv.lock` committed |
+| Python packages | openpyxl, shapely, topojson; **pillow 13.0.0 added 2026-11-14** (`uv add pillow`) for `scripts/build_photos.py` | Locked in `uv.lock` |
 | Other Python on PATH | 3.14 (system), miniconda | **Do not use** for this project |
 | R | 4.5.2 | Not planned for use |
 | Node.js | Installed | Candidate for `mapshaper` (geometry simplification) in Phase 2 — not installed yet |

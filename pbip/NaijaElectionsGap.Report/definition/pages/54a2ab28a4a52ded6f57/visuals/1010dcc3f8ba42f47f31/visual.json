@@ -5,8 +5,8 @@
     "x": 20,
     "y": 44,
     "z": 1,
-    "height": 22,
-    "width": 940,
+    "height": 40,
+    "width": 600,
     "tabOrder": 1
   },
   "visual": {
@@ -19,11 +19,19 @@
               {
                 "textRuns": [
                   {
-                    "value": "Move the sliders. Every figure on this page updates. A what-if tool, not a forecast.",
+                    "value": "How to play: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "1. Pick a candidate (top right). 2. Move a slider, or type a number in its box. 3. Watch who wins and how many states change. A what-if tool, not a forecast.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "10pt",
-                      "color": "#505050"
+                      "color": "#1F1F1F"
                     }
                   }
                 ],
@@ -101,7 +109,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Move the sliders; every figure updates. A what-if tool, not a forecast.'"
+                  "Value": "'How to play: pick a candidate, move a slider, watch who wins and how many states change.'"
                 }
               }
             }

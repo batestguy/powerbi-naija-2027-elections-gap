@@ -2,8 +2,8 @@
   "built_by": "scripts/validate_phase6.py",
   "gate_passed": true,
   "summary": {
-    "checks": 9,
-    "pass": 9,
+    "checks": 16,
+    "pass": 16,
     "fail": 0
   },
   "not_scriptable": [
@@ -84,20 +84,26 @@
       }
     },
     {
-      "check": "embedded map files = built files, and every map key matches a model key (both maps, 0 unmatched)",
+      "check": "embedded map files = built files, and every map key and name matches the model (both maps, 0 unmatched)",
       "status": "pass",
       "evidence": {
         "nga_states.topo.json": {
           "embedded_sha_equals_manifest": true,
           "features": 37,
           "map_keys_not_in_model": [],
-          "model_keys_not_in_map": []
+          "model_keys_not_in_map": [],
+          "map_names_not_in_model": [],
+          "model_names_not_in_map": [],
+          "pcode_name_pairs_differ": []
         },
         "nga_tiles.topo.json": {
           "embedded_sha_equals_manifest": true,
           "features": 37,
           "map_keys_not_in_model": [],
-          "model_keys_not_in_map": []
+          "model_keys_not_in_map": [],
+          "map_names_not_in_model": [],
+          "model_names_not_in_map": [],
+          "pcode_name_pairs_differ": []
         }
       }
     },
@@ -154,34 +160,400 @@
       "status": "pass",
       "evidence": {
         "Data sources": {
-          "visuals": 1,
+          "visuals": 4,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Technical notes": {
+          "visuals": 7,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
         "Path to 24": {
-          "visuals": 7,
+          "visuals": 15,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
-        "Scenario simulator": {
-          "visuals": 19,
+        "What-if simulator": {
+          "visuals": 35,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
         "Spread map": {
-          "visuals": 8,
+          "visuals": 16,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
         "How to read this": {
-          "visuals": 1,
+          "visuals": 3,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
         "Candidate overview": {
-          "visuals": 7,
+          "visuals": 15,
           "missing_alt_text": [],
           "tab_order_unique": true
+        }
+      }
+    },
+    {
+      "check": "every map (incl. the hidden check page) is located by state name; no P-code in any map field (hover shows names; rendering of the hover itself not checked)",
+      "status": "pass",
+      "evidence": {
+        "Model check (hidden) / 2b0bf2cb489d03008ded": {
+          "location": [
+            "state_name"
+          ],
+          "fields": [
+            "dim_state.state_name",
+            "fact_result_2023.APC share"
+          ]
+        },
+        "Model check (hidden) / 5e83c0fdb739c8d7d92d": {
+          "location": [
+            "state_name"
+          ],
+          "fields": [
+            "dim_state.state_name",
+            "fact_result_2023.APC share"
+          ]
+        },
+        "Spread map / f07884b9628795189e51": {
+          "location": [
+            "state_name"
+          ],
+          "fields": [
+            "dim_state.state_name",
+            "scenario.Points from 25%",
+            "scenario.Scenario share",
+            "scenario.Scenario label"
+          ]
+        }
+      }
+    },
+    {
+      "check": "state codes: 37 unique two-letter ISO 3166-2:NG codes in the model, each = the sourced reference file; every state has a tile position",
+      "status": "pass",
+      "evidence": {
+        "codes": {
+          "NG001": "AB",
+          "NG002": "AD",
+          "NG003": "AK",
+          "NG004": "AN",
+          "NG005": "BA",
+          "NG006": "BY",
+          "NG007": "BE",
+          "NG008": "BO",
+          "NG009": "CR",
+          "NG010": "DE",
+          "NG011": "EB",
+          "NG012": "ED",
+          "NG013": "EK",
+          "NG014": "EN",
+          "NG015": "FC",
+          "NG016": "GO",
+          "NG017": "IM",
+          "NG018": "JI",
+          "NG019": "KD",
+          "NG020": "KN",
+          "NG021": "KT",
+          "NG022": "KE",
+          "NG023": "KO",
+          "NG024": "KW",
+          "NG025": "LA",
+          "NG026": "NA",
+          "NG027": "NI",
+          "NG028": "OG",
+          "NG029": "ON",
+          "NG030": "OS",
+          "NG031": "OY",
+          "NG032": "PL",
+          "NG033": "RI",
+          "NG034": "SO",
+          "NG035": "TA",
+          "NG036": "YO",
+          "NG037": "ZA"
+        },
+        "reference": "data/reference/state_codes_iso3166.csv"
+      }
+    },
+    {
+      "check": "sentences and votes needed / to spare = independent exact computation from staging",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "settings": [
+          "neutral, N=24",
+          "neutral, N=25",
+          "turnout +10, national +4, SE -6, NW +3, N=25",
+          "turnout -20, national -3.5, SS +7.5, N=24"
+        ],
+        "sentences_seen": {
+          "neutral, N=24 / APC": "Akwa Ibom is the deciding state. Bola Tinubu is 3.9 points above a quarter of the vote there: about 21,847 votes could switch to other candidates before the state is lost.",
+          "neutral, N=24 / PDP": "Plateau is the deciding state. Atiku Abubakar is 2.6 points short of a quarter of the vote there: about 28,235 more votes would need to switch from other candidates to Atiku Abubakar.",
+          "neutral, N=24 / LP": "Ondo is the deciding state. Peter Obi is 16.5 points short of a quarter of the vote there: about 91,139 more votes would need to switch from other candidates to Peter Obi.",
+          "neutral, N=24 / NNPP": "Oyo is the deciding state. Rabiu Kwankwaso is 24.5 points short of a quarter of the vote there: about 198,277 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+          "neutral, N=25 / APC": "Gombe is the deciding state. Bola Tinubu is 3.7 points above a quarter of the vote there: about 18,966 votes could switch to other candidates before the state is lost.",
+          "neutral, N=25 / PDP": "Ogun is the deciding state. Atiku Abubakar is 3.7 points short of a quarter of the vote there: about 21,200 more votes would need to switch from other candidates to Atiku Abubakar.",
+          "neutral, N=25 / LP": "Kwara is the deciding state. Peter Obi is 18.4 points short of a quarter of the vote there: about 86,332 more votes would need to switch from other candidates to Peter Obi.",
+          "neutral, N=25 / NNPP": "Edo is the deciding state. Rabiu Kwankwaso is 24.5 points short of a quarter of the vote there: about 142,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+          "turnout +10, national +4, SE -6, NW +3, N=25 / APC": "Gombe is the deciding state. Bola Tinubu is 9.7 points above a quarter of the vote there: about 51,059 votes could switch to other candidates before the state is lost.",
+          "turnout +10, national +4, SE -6, NW +3, N=25 / PDP": "Ogun is the deciding state. Atiku Abubakar is 2.0 points above a quarter of the vote there: about 11,787 votes could switch to other candidates before the state is lost.",
+          "turnout +10, national +4, SE -6, NW +3, N=25 / LP": "Kwara is the deciding state. Peter Obi is 13.8 points short of a quarter of the vote there: about 65,070 more votes would need to switch from other candidates to Peter Obi.",
+          "turnout +10, national +4, SE -6, NW +3, N=25 / NNPP": "Edo is the deciding state. Rabiu Kwankwaso is 20.5 points short of a quarter of the vote there: about 119,107 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+          "turnout -20, national -3.5, SS +7.5, N=24 / APC": "Nasarawa is the deciding state. Bola Tinubu is 1.2 points short of a quarter of the vote there: about 5,868 more votes would need to switch from other candidates to Bola Tinubu.",
+          "turnout -20, national -3.5, SS +7.5, N=24 / PDP": "Edo is the deciding state. Atiku Abubakar is 8.3 points short of a quarter of the vote there: about 46,636 more votes would need to switch from other candidates to Atiku Abubakar.",
+          "turnout -20, national -3.5, SS +7.5, N=24 / LP": "Ondo is the deciding state. Peter Obi is 21.5 points short of a quarter of the vote there: about 117,298 more votes would need to switch from other candidates to Peter Obi.",
+          "turnout -20, national -3.5, SS +7.5, N=24 / NNPP": "Kebbi is the deciding state. Rabiu Kwankwaso is 25.0 points short of a quarter of the vote there: about 139,629 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+          "closest calls / APC": "Bola Tinubu in 2023: Adamawa, the narrowest state won, was about 96 votes above a quarter of the vote. Edo, the narrowest miss, needed about 846 more votes switching to Bola Tinubu from other candidates.",
+          "closest calls / PDP": "Atiku Abubakar in 2023: Delta, the narrowest state won, was about 7,764 votes above a quarter of the vote. Cross River, the narrowest miss, needed about 8,817 more votes switching to Atiku Abubakar from other candidates.",
+          "closest calls / LP": "Peter Obi in 2023: Bayelsa, the narrowest state won, was about 8,643 votes above a quarter of the vote. Akwa Ibom, the narrowest miss, needed about 6,090 more votes switching to Peter Obi from other candidates.",
+          "closest calls / NNPP": "Rabiu Kwankwaso in 2023: Kano, the narrowest state won, was about 574,510 votes above a quarter of the vote. Bayelsa, the narrowest miss, needed about 40,792 more votes switching to Rabiu Kwankwaso from other candidates."
+        },
+        "per_state_cells_compared": 1184
+      }
+    },
+    {
+      "check": "result sentence and settings sentence = Phase 4 reference for every candidate at several settings",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "seen": {
+          "neutral, N=24 / APC": {
+            "r": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 29 states (24 needed).",
+            "s": "No changes: this is the 2023 result. 24 states needed to win."
+          },
+          "neutral, N=24 / PDP": {
+            "r": "Atiku Abubakar loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 24 states needed to win."
+          },
+          "neutral, N=24 / LP": {
+            "r": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 24 states needed to win."
+          },
+          "neutral, N=24 / NNPP": {
+            "r": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 24 states needed to win."
+          },
+          "neutral, N=25 / APC": {
+            "r": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 29 states (25 needed).",
+            "s": "No changes: this is the 2023 result. 25 states needed to win."
+          },
+          "neutral, N=25 / PDP": {
+            "r": "Atiku Abubakar loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 25 states needed to win."
+          },
+          "neutral, N=25 / LP": {
+            "r": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 25 states needed to win."
+          },
+          "neutral, N=25 / NNPP": {
+            "r": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "No changes: this is the 2023 result. 25 states needed to win."
+          },
+          "turnout +10, national +4, SE -6, NW +3, N=25 / APC": {
+            "r": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 31 states (25 needed).",
+            "s": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 25 states needed to win."
+          },
+          "turnout +10, national +4, SE -6, NW +3, N=25 / PDP": {
+            "r": "Atiku Abubakar wins outright: the most votes nationwide and a quarter of the vote in 26 states (25 needed).",
+            "s": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 25 states needed to win."
+          },
+          "turnout +10, national +4, SE -6, NW +3, N=25 / LP": {
+            "r": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 25 states needed to win."
+          },
+          "turnout +10, national +4, SE -6, NW +3, N=25 / NNPP": {
+            "r": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 25 states needed to win."
+          },
+          "turnout -20, national -3.5, SS +7.5, N=24 / APC": {
+            "r": "Bola Tinubu loses: Atiku Abubakar (PDP) has the most votes and a quarter of the vote in enough states.",
+            "s": "-3.5 points everywhere; +7.5 in the South South; -20% turnout among the candidate's 2023 voters. 24 states needed to win."
+          },
+          "turnout -20, national -3.5, SS +7.5, N=24 / PDP": {
+            "r": "Atiku Abubakar loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "-3.5 points everywhere; +7.5 in the South South; -20% turnout among the candidate's 2023 voters. 24 states needed to win."
+          },
+          "turnout -20, national -3.5, SS +7.5, N=24 / LP": {
+            "r": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "-3.5 points everywhere; +7.5 in the South South; -20% turnout among the candidate's 2023 voters. 24 states needed to win."
+          },
+          "turnout -20, national -3.5, SS +7.5, N=24 / NNPP": {
+            "r": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "s": "-3.5 points everywhere; +7.5 in the South South; -20% turnout among the candidate's 2023 voters. 24 states needed to win."
+          }
+        }
+      }
+    },
+    {
+      "check": "candidate identity: portrait = built file, party now = dated source file, party-colour text contrast >= 4.5:1",
+      "status": "pass",
+      "evidence": {
+        "failed": [],
+        "parties": {
+          "APC": {
+            "photo_chars": 10815,
+            "logo_chars": 7710,
+            "badge": "APC",
+            "identity": "2023: APC. Now: APC (Leadership, 25 May 2026)",
+            "bg": "#0072B2",
+            "fg": "#FFFFFF",
+            "contrast": 5.19,
+            "portrait_licence": "CC BY-SA 4.0",
+            "party_now_source": "https://allafrica.com/stories/202605250112.html",
+            "as_of": "2026-05-25"
+          },
+          "PDP": {
+            "photo_chars": 5727,
+            "logo_chars": 15726,
+            "badge": "PDP",
+            "identity": "2023: PDP. Now: ADC (Premium Times, 27 May 2026)",
+            "bg": "#E69F00",
+            "fg": "#1F1F1F",
+            "contrast": 7.32,
+            "portrait_licence": "CC0",
+            "party_now_source": "https://allafrica.com/stories/202605280129.html",
+            "as_of": "2026-05-27"
+          },
+          "LP": {
+            "photo_chars": 7095,
+            "logo_chars": 18990,
+            "badge": "LP",
+            "identity": "2023: LP. Now: NDC (Vanguard, 8 Nov 2026)",
+            "bg": "#009E73",
+            "fg": "#1F1F1F",
+            "contrast": 4.82,
+            "portrait_licence": "CC BY 4.0",
+            "party_now_source": "https://www.vanguardngr.com/2026/11/2027-obi-is-coming-to-stop-the-erosion-of-nigerias-commonwealth-ndc-tells-tinubu/",
+            "as_of": "2026-11-08"
+          },
+          "NNPP": {
+            "photo_chars": 7923,
+            "logo_chars": 13538,
+            "badge": "NNPP",
+            "identity": "2023: NNPP. Now: NDC (Vanguard, 30 May 2026)",
+            "bg": "#CC79A7",
+            "fg": "#1F1F1F",
+            "contrast": 5.38,
+            "portrait_licence": "Public domain",
+            "party_now_source": "https://www.vanguardngr.com/2026/05/2027-presidency-peter-obi-picks-kwankwaso-as-running-mate/",
+            "as_of": "2026-05-30"
+          }
+        }
+      }
+    },
+    {
+      "check": "fixed 2023 numbers in page text (4,858; Kano figures; 29 states / Adamawa margin) = staging, and the Kano dispute changes no candidate's quarter there",
+      "status": "pass",
+      "evidence": {
+        "expected_text": {
+          "others gap": "4,858",
+          "Kano used": "506,412",
+          "Kano alternative": "517,341",
+          "Tinubu states": "29 states in 2023 rest on 96 votes in Adamawa"
+        },
+        "found_in_report": {
+          "others gap": true,
+          "Kano used": true,
+          "Kano alternative": true,
+          "Tinubu states": true
+        },
+        "kano_quarter_same_under_either_figure": true,
+        "kano_quarter": {
+          "APC": true,
+          "PDP": false,
+          "LP": false,
+          "NNPP": true
+        },
+        "narrowest_tinubu_state": "Adamawa"
+      }
+    },
+    {
+      "check": "photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one per visible page, decorative alt text, last in tab order (before its caption)",
+      "status": "pass",
+      "evidence": {
+        "files": {
+          "photo_overview.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 59702,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_path.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 91897,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_map.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 185527,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_simulator.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 57889,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_howto.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 123520,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_technical.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 104674,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          },
+          "photo_sources.jpg": {
+            "embedded_sha_equals_manifest": true,
+            "bytes": 80078,
+            "licence": "CC BY-SA 4.0",
+            "licence_ok": true
+          }
+        },
+        "total_bytes": 703287,
+        "pages": {
+          "Data sources": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "Technical notes": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "Path to 24": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "What-if simulator": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "Spread map": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "How to read this": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          },
+          "Candidate overview": {
+            "photos": 1,
+            "photo_last_but_caption": true,
+            "alt_starts_decorative": true
+          }
         }
       }
     },
@@ -190,11 +562,11 @@
       "status": "pass",
       "evidence": {
         "seconds_net_of_call_overhead": {
-          "Path to 24 table": 0.72,
-          "Simulator cards": 0.833,
+          "Path to 24 table": 0.0,
+          "Simulator cards": 1.733,
           "Spread map": 0.0
         },
-        "call_overhead_s": 6.197
+        "call_overhead_s": 9.793
       }
     }
   ]

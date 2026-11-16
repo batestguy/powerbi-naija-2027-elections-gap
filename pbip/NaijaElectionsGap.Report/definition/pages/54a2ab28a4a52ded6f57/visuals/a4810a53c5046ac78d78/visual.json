@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "a4810a53c5046ac78d78",
   "position": {
-    "x": 226,
-    "y": 86,
-    "z": 4,
-    "height": 120,
+    "x": 428,
+    "y": 126,
+    "z": 10,
+    "height": 82,
     "width": 200,
-    "tabOrder": 4
+    "tabOrder": 10
   },
   "visual": {
     "visualType": "slicer",
@@ -73,14 +73,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'National swing (points)'"
+                  "Value": "'What if they gain or lose support everywhere? (points)'"
                 }
               }
             }
@@ -150,7 +150,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Slider: National swing (points). Neutral value 0.'"
+                  "Value": "'Slider: What if they gain or lose support everywhere? (points). Starts at 0.'"
                 }
               }
             }

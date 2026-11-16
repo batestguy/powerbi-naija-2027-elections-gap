@@ -4,10 +4,10 @@
   "position": {
     "x": 20,
     "y": 86,
-    "z": 3,
-    "height": 512,
-    "width": 410,
-    "tabOrder": 3
+    "z": 7,
+    "height": 390,
+    "width": 300,
+    "tabOrder": 7
   },
   "visual": {
     "visualType": "shapeMap",
@@ -23,11 +23,12 @@
                       "Entity": "dim_state"
                     }
                   },
-                  "Property": "state_pcode"
+                  "Property": "state_name"
                 }
               },
-              "queryRef": "dim_state.state_pcode",
-              "nativeQueryRef": "state_pcode"
+              "queryRef": "dim_state.state_name",
+              "nativeQueryRef": "state_name",
+              "displayName": "State"
             }
           ]
         },
@@ -46,7 +47,7 @@
               },
               "queryRef": "scenario.Points from 25%",
               "nativeQueryRef": "Points from 25%",
-              "displayName": "Points from 25%"
+              "displayName": "Points above (+) or below (-) a quarter"
             }
           ]
         },
@@ -65,7 +66,7 @@
               },
               "queryRef": "scenario.Scenario share",
               "nativeQueryRef": "Scenario share",
-              "displayName": "Share"
+              "displayName": "Share of the vote"
             },
             {
               "field": {
@@ -80,7 +81,7 @@
               },
               "queryRef": "scenario.Scenario label",
               "nativeQueryRef": "Scenario label",
-              "displayName": "Label"
+              "displayName": "Status"
             }
           ]
         }
@@ -237,7 +238,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Map of Nigeria''s 37 units coloured by the selected candidate''s share relative to 25%: blue above, vermillion below, near-white close to 25%.'"
+                  "Value": "'Map of Nigeria''s 37 states coloured by the selected candidate''s share against a quarter of the vote: blue above, vermillion below, near-white close to a quarter. Hover a state for its name, share and status.'"
                 }
               }
             }

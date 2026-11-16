@@ -77,7 +77,7 @@ def rivals(party, st, n):
     most = "Yes" if nat_c > rv[lead] else ("Tied" if nat_c == rv[lead] else "No")
     clears = sum(scenario_share(s, party, st)[0] >= 0.25 for s in VALID) >= n
     if most == "Yes":
-        verdict = "Outright win" if clears else "No outright winner: run-off (most votes, but not 25% in enough units)"
+        verdict = "Outright win" if clears else "No outright winner: run-off (most votes, but not 25% in enough states)"
     elif most == "Tied":
         verdict = "Tie on votes: no outright winner"
     else:

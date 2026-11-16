@@ -6,7 +6,7 @@
     "y": 8,
     "z": 0,
     "height": 34,
-    "width": 940,
+    "width": 600,
     "tabOrder": 0
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Scenario simulator: what if 2027 differs?",
+                    "value": "What-if simulator: try 2027",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "18pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scenario simulator'"
+                  "Value": "'What-if simulator: try 2027'"
                 }
               }
             }

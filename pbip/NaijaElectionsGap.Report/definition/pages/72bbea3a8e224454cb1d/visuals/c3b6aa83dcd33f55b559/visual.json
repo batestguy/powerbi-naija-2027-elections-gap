@@ -6,7 +6,7 @@
     "y": 24,
     "z": 0,
     "height": 680,
-    "width": 1200,
+    "width": 1000,
     "tabOrder": 0
   },
   "visual": {
@@ -53,7 +53,7 @@
                     }
                   },
                   {
-                    "value": "To win outright, a presidential candidate needs the most votes nationally and at least 25% of the votes in at least two-thirds of the states. We count 37 units (36 states plus the FCT) and use 24 as the default; 25 is offered as a stricter reading. This is our reading of section 134 of the Constitution, checked against an unofficial copy.",
+                    "value": "To win outright, a presidential candidate needs the most votes nationwide and at least a quarter (25%) of the votes in at least two-thirds of the states. Abuja (the Federal Capital Territory) counts as a state here, so there are 37. We use 24 states as the default; 25 is offered as a stricter reading. This is our reading of section 134 of the Constitution, checked against an unofficial copy.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -87,7 +87,7 @@
                     }
                   },
                   {
-                    "value": "2023 results per unit, reconciled from five secondary copies of INEC's declaration, because INEC's own state sheet is not public. PDP and NNPP state totals add up to INEC's national declaration with no adjustment; for APC and Labour they match because three disputed cells were chosen to make them match. The minor-candidates column is 4,858 votes too high nationally, and nobody can yet say where.",
+                    "value": "The 2023 result in each state, put together from five copies of INEC's declaration, because INEC's own state sheet is not public. PDP and NNPP state totals add up to INEC's national declaration with no adjustment; for APC and Labour they match because three disputed figures were chosen to make them match. The minor candidates' column is 4,858 votes too high nationally, and nobody can yet say where.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -121,7 +121,41 @@
                     }
                   },
                   {
-                    "value": "Swing adds the same number of points in every unit of a zone. Supporter turnout changes only the candidate's own 2023 voters. Rivals gain or lose in proportion to their 2023 shares. No new candidates, mergers or boundary changes. It is a what-if tool, not a forecast: it says nothing about how likely a scenario is.",
+                    "value": "A change in vote share adds the same number of points in every state of a zone. Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 votes. No new candidates, mergers or boundary changes. It is a what-if tool, not a forecast: it says nothing about how likely any what-if is.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "8pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Words used. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "\"Won\" (or \"Secured\") = a quarter of the vote or more in a state; \"Within reach\" = 20% to just under a quarter; \"Out of reach\" = under 20%. \"The deciding state\" = the weakest state the candidate needs to reach 24 (or 25). Exact definitions and formulas are on the Technical notes page.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -155,7 +189,7 @@
                     }
                   },
                   {
-                    "value": "It is not an electoral authority and not INEC's figures. It has no local-government detail. Small swings near 25% are within the data's uncertainty: for example, Tinubu's 2023 count of 29 rests on 96 votes in Adamawa.",
+                    "value": "It is not an electoral authority and not INEC's figures. It has no local-government detail. Small changes near a quarter of the vote are within the data's uncertainty: for example, Bola Tinubu's 29 states in 2023 rest on 96 votes in Adamawa.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -173,32 +207,6 @@
                       "fontFamily": "Segoe UI",
                       "fontSize": "8pt",
                       "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Full method: docs/methodology.md. Data profile and gaps: docs/data-profile.md (both in the project repository).",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "10pt",
-                      "color": "#505050"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": " ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "8pt",
-                      "color": "#505050"
                     }
                   }
                 ],

@@ -5,8 +5,8 @@
     "x": 20,
     "y": 44,
     "z": 1,
-    "height": 22,
-    "width": 940,
+    "height": 40,
+    "width": 600,
     "tabOrder": 1
   },
   "visual": {
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "2023 baseline (reconciled from five copies of INEC's declaration). Move the sliders on the Simulator page.",
+                    "value": "2023 result. To try a different 2027, use the What-if simulator page. Abuja (the Federal Capital Territory) counts as a state here, so there are 37.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "10pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'2023 baseline (reconciled from five copies of INEC''s declaration). Move the sliders on the Simulator page.'"
+                  "Value": "'2023 result. To try a different 2027, use the What-if simulator page. Abuja (the Federal Capital Territory) counts as a state here, so there are 37.'"
                 }
               }
             }

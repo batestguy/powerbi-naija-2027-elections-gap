@@ -31,14 +31,32 @@ table dim_state
 		summarizeBy: none
 		sourceColumn: is_fct
 
+	column state_code
+		dataType: string
+		lineageTag: baeb8bd3-74ff-42e1-8be7-6390c85a72d4
+		summarizeBy: none
+		sourceColumn: state_code
+
+	column tile_row
+		dataType: int64
+		lineageTag: 798c59d3-a4d7-8f31-ac6a-cd2f8fba9e44
+		summarizeBy: none
+		sourceColumn: tile_row
+
+	column tile_col
+		dataType: int64
+		lineageTag: 0084c003-eb16-e8c3-df4f-d95056596d2d
+		summarizeBy: none
+		sourceColumn: tile_col
+
 	partition dim_state = m
 		mode: import
 		source =
 				let
 				    Source = Csv.Document(File.Contents(DataFolder & "\dim_state.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
-				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "state_name", "zone", "zone_code", "is_fct"}),
-				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"state_name", type text}, {"zone", type text}, {"zone_code", type text}, {"is_fct", Int64.Type}})
+				    Selected = Table.SelectColumns(Promoted, {"state_pcode", "state_name", "zone", "zone_code", "is_fct", "state_code", "tile_row", "tile_col"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"state_pcode", type text}, {"state_name", type text}, {"zone", type text}, {"zone_code", type text}, {"is_fct", Int64.Type}, {"state_code", type text}, {"tile_row", Int64.Type}, {"tile_col", Int64.Type}})
 				in
 				    Typed
 

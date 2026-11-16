@@ -59,7 +59,11 @@ TABLES = {
                                     ("state_name", "string", "type text", "none"),
                                     ("zone", "string", "type text", "none"),
                                     ("zone_code", "string", "type text", "none"),
-                                    ("is_fct", "int64", "Int64.Type", "none")]),
+                                    ("is_fct", "int64", "Int64.Type", "none"),
+                                    # display only (2026-11-14): ISO 3166-2:NG code and equal-size tile position
+                                    ("state_code", "string", "type text", "none"),
+                                    ("tile_row", "int64", "Int64.Type", "none"),
+                                    ("tile_col", "int64", "Int64.Type", "none")]),
     "fact_result_2023": ("fact_result_2023.csv", [("state_pcode", "string", "type text", "none"),
                                                   ("party", "string", "type text", "none"),
                                                   ("candidate", "string", "type text", "none"),
@@ -105,6 +109,8 @@ RELATIONSHIPS = [("fact_result_2023", "state_pcode", "dim_state", "state_pcode")
 # ---- Phase 4: scenario engine (docs/methodology.md). What-If parameters are disconnected calculated tables;
 # all scenario logic lives in measures of the 'scenario' table. Baseline facts are never touched.
 ZONES = ["NC", "NE", "NW", "SE", "SS", "SW"]
+ZONE_NAMES = {"NC": "North Central and Abuja", "NE": "North East", "NW": "North West", "SE": "South East",
+              "SS": "South South", "SW": "South West"}
 PARAMS = {  # table: (DAX series, default, format, dataType)
     "param_turnout": ("GENERATESERIES ( -50, 50, 1 )", 0, "0", "int64"),
     "param_swing_national": ("GENERATESERIES ( -20, 20, 0.5 )", 0, "0.0", "double"),
@@ -200,7 +206,7 @@ MEASURES["scenario"] = [
     ("Verdict", 'VAR m = [Has most votes] VAR c = [Clears the rule] VAR r = [Leading rival] '
                 'VAR rc = [Leading rival units at 25%] >= [Units needed (rule)] RETURN SWITCH ( TRUE (), ISBLANK ( m ), BLANK (), '
                 'm = "Yes" && c = "Yes", "Outright win", '
-                'm = "Yes", "No outright winner: run-off (most votes, but not 25% in enough units)", '
+                'm = "Yes", "No outright winner: run-off (most votes, but not 25% in enough states)", '
                 'm = "Tied", "Tie on votes: no outright winner", '
                 'rc, "Loses: " & r & " wins outright", '
                 '"No outright winner: run-off (" & r & " has most votes)" )', None),
@@ -224,12 +230,143 @@ MEASURES["scenario"] = [
                   f'( q = p && dim_state[state_pcode] < me ) ) ), {NATIONAL} ) + 1 )', "0"),
     ("Path column colour", 'VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ) && SELECTEDVALUE ( dim_state[state_pcode] ) = k, '
                            '"#1F1F1F", [Scenario label colour] )', None),
-    ("Assumptions in force",'IF ( [Candidate is valid], "Supporter turnout " & FORMAT ( [Supporter turnout], "+0%;-0%;0%" ) '
-                             '& " | national swing " & FORMAT ( [National swing], "+0.0;-0.0;0.0" ) & " pts | zones " & '
-                             + ' & ", " & '.join(f'"{z} " & FORMAT ( SELECTEDVALUE ( param_swing_{z}[Value], 0 ), "+0.0;-0.0;0.0" )'
-                                                 for z in ZONES)
-                             + ' & " | rule: " & [Units needed (rule)] & " of 37 units" )', None),
+    # Settings in force, as a plain sentence (user request 2026-11-14): only the sliders that are not at 0 are named.
+    ("Assumptions in force", 'IF ( [Candidate is valid], VAR t = [Supporter turnout] VAR sw = [National swing] '
+                             'VAR z = CONCATENATEX ( FILTER ( { ' + ", ".join(
+                                 f'( {i}, "{ZONE_NAMES[zc]}", SELECTEDVALUE ( param_swing_{zc}[Value], 0 ) )'
+                                 for i, zc in enumerate(ZONES)) + ' }, [Value3] <> 0 ), '
+                             'FORMAT ( [Value3], "+0.0;-0.0" ) & " in the " & [Value2], ", ", [Value1], ASC ) '
+                             'VAR parts = { ( 1, IF ( sw <> 0, FORMAT ( sw, "+0.0;-0.0" ) & " points everywhere" ) ), ( 2, z ), '
+                             '( 3, IF ( t <> 0, FORMAT ( t, "+0%;-0%" ) & " turnout among the candidate\'s 2023 voters" ) ) } '
+                             'VAR s = CONCATENATEX ( FILTER ( parts, [Value2] <> "" ), [Value2], "; ", [Value1], ASC ) '
+                             'RETURN IF ( s = "", "No changes: this is the 2023 result", s ) & ". " & [Units needed (rule)] '
+                             '& " states needed to win." )', None),
+    # ---- plain-words sentences (user decision 2026-11-14: gaps in people, not only percentage points) ----
+    # Votes to spare in a unit: votes that could switch from the candidate to others (unit total fixed) while the
+    # candidate keeps at least 25%: max(0, v2 - 0.25 x V1), rounded down (docs/methodology.md). The 1E-6 only absorbs
+    # floating-point error when the margin is a whole number (e.g. exactly 96 votes); it never changes a true fraction.
+    ("Votes to spare", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), "
+                       "ROUNDDOWN ( MAX ( 0, [Scenario votes] - 0.25 * [Scenario valid votes] ) + 1E-6, 0 ) )", "#,0"),
+    ("Deciding state sentence", 'VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), '
+                                'VAR c = SELECTEDVALUE ( dim_party[candidate] ) VAR g = [Tipping-point gap (points)] '
+                                f'VAR need = CALCULATE ( [Votes needed], {NATIONAL}, dim_state[state_pcode] = k ) '
+                                f'VAR spare = CALCULATE ( [Votes to spare], {NATIONAL}, dim_state[state_pcode] = k ) '
+                                'RETURN [Tipping-point unit] & " is the deciding state. " & IF ( g <= 0, '
+                                'c & " is " & FORMAT ( -g, "0.0" ) & " points above a quarter of the vote there: about " '
+                                '& FORMAT ( spare, "#,0" ) & " votes could switch to other candidates before the state is lost.", '
+                                'c & " is " & FORMAT ( g, "0.0" ) & " points short of a quarter of the vote there: about " '
+                                '& FORMAT ( need, "#,0" ) & " more votes would need to switch from other candidates to " & c & "." ) )',
+     None),
+    # 2023 baseline only (whole-number test, as 'States at 25% or more'): the narrowest state won and the narrowest miss.
+    # 4 x votes - valid votes is a whole number, so margins of a quarter are exact: spare = rounded down, needed = rounded up.
+    # Result as a sentence (user request 2026-11-14); same logic as [Verdict] (docs/methodology.md "Rivals and the verdict")
+    ("Result sentence", 'VAR m = [Has most votes] VAR c = [Clears the rule] VAR k = [Units secured (national)] '
+                        'VAR n = [Units needed (rule)] VAR nm = SELECTEDVALUE ( dim_party[candidate] ) VAR r = [Leading rival] '
+                        'VAR rn = CALCULATE ( MAX ( dim_party[candidate] ), REMOVEFILTERS ( dim_party ), dim_party[party] = r ) '
+                        'VAR rc = [Leading rival units at 25%] >= n RETURN SWITCH ( TRUE (), ISBLANK ( m ), BLANK (), '
+                        'm = "Yes" && c = "Yes", nm & " wins outright: the most votes nationwide and a quarter of the vote in " '
+                        '& k & " states (" & n & " needed).", '
+                        'm = "Yes", "No outright winner: " & nm & " has the most votes but a quarter of the vote in only " & k '
+                        '& " states (" & n & " needed). This would go to a run-off.", '
+                        'm = "Tied", "Tie on votes: no outright winner.", '
+                        'rc, nm & " loses: " & rn & " (" & r & ") has the most votes and a quarter of the vote in enough states.", '
+                        '"No outright winner: " & rn & " (" & r & ") has the most votes but not a quarter of the vote in enough '
+                        'states. This would go to a run-off." )', None),
+    ("Closest calls sentence", 'IF ( [Candidate is valid], VAR c = SELECTEDVALUE ( dim_party[candidate] ) '
+                               'VAR tb = CALCULATETABLE ( FILTER ( ADDCOLUMNS ( SUMMARIZE ( dim_state, dim_state[state_pcode], '
+                               'dim_state[state_name] ), "@v", [Candidate votes], "@t", [Valid votes] ), NOT ISBLANK ( [@v] ) '
+                               f'&& [@t] > 0 ), {NATIONAL} ) '
+                               'VAR won = TOPN ( 1, FILTER ( tb, 4 * [@v] >= [@t] ), 4 * [@v] - [@t], ASC, dim_state[state_pcode], ASC ) '
+                               'VAR miss = TOPN ( 1, FILTER ( tb, 4 * [@v] < [@t] ), [@t] - 4 * [@v], ASC, dim_state[state_pcode], ASC ) '
+                               'VAR a = IF ( COUNTROWS ( won ) > 0, MAXX ( won, dim_state[state_name] ) & ", the narrowest state won, was about " '
+                               '& FORMAT ( MAXX ( won, ROUNDDOWN ( ( 4 * [@v] - [@t] ) / 4, 0 ) ), "#,0" ) & " votes above a quarter of the vote.", '
+                               '"No state reached a quarter of the vote." ) '
+                               'VAR b = IF ( COUNTROWS ( miss ) > 0, " " & MAXX ( miss, dim_state[state_name] ) & ", the narrowest miss, needed about " '
+                               '& FORMAT ( MAXX ( miss, ROUNDUP ( ( [@t] - 4 * [@v] ) / 4, 0 ) ), "#,0" ) '
+                               '& " more votes switching to " & c & " from other candidates.", " Every state reached a quarter of the vote." ) '
+                               'RETURN c & " in 2023: " & a & b )', None),
 ]
+
+
+# ---- candidate identity (user request 2026-11-14): portrait, party badge, party colour accents, party now ----
+def _identity_measures():
+    import csv as _csv
+    cands = {c["party"]: c for c in json.loads((PBIP / "assets" / "photos" / "candidates_manifest.json")
+                                                 .read_text(encoding="utf-8"))["candidates"]}
+    with open(ROOT / "data" / "reference" / "party_display.csv", encoding="utf-8") as f:
+        colours = {r["party"]: r["colour_hex"] for r in _csv.DictReader(l for l in f if not l.startswith("#"))}
+    with open(ROOT / "data" / "reference" / "party_now.csv", encoding="utf-8") as f:
+        now = {r["party_2023"]: r for r in _csv.DictReader(l for l in f if not l.startswith("#"))}
+
+    def lum(h):
+        c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+        c = [x / 12.92 if x <= 0.03928 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+    def contrast(a, b):
+        hi, lo = sorted((lum(a), lum(b)), reverse=True)
+        return (hi + 0.05) / (lo + 0.05)
+    text = {}
+    for party, hexc in colours.items():   # white or ink text, whichever passes 4.5:1 with more margin
+        best = max(("#FFFFFF", "#1F1F1F"), key=lambda tc: contrast(hexc, tc))
+        assert contrast(hexc, best) >= 4.5, (party, hexc)
+        text[party] = best
+    sel = "SELECTEDVALUE ( dim_party[party] )"
+
+    def switch(values, default='""'):
+        return f"SWITCH ( {sel}, " + ", ".join(f'"{k}", "{v}"' for k, v in values.items()) + f", {default} )"
+
+    def nice(d):
+        y, m, dd = d.split("-")
+        return f"{int(dd)} {['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][int(m)]} {y}"
+    ident = {p: (f"2023: {p}. Now: {r['party_now']} ({r['source_publisher'].split(' (')[0]}, {nice(r['as_of'])})")
+             for p, r in now.items()}
+    logos = {l["party"]: l["data_uri"] for l in json.loads((PBIP / "assets" / "photos" / "logos_manifest.json")
+                                                             .read_text(encoding="utf-8"))["logos"]}
+    return [("Party accent colour", f'IF ( [Candidate is valid], {switch(colours)}, "#505050" )', None),
+            ("Party accent text colour", f'IF ( [Candidate is valid], {switch(text)}, "#FFFFFF" )', None),
+            ("Party badge", f"IF ( [Candidate is valid], {sel} )", None),
+            ("Party identity", f"IF ( [Candidate is valid], {switch(ident)} )", None),
+            ("Candidate photo", f"IF ( [Candidate is valid], {switch({p: c['data_uri'] for p, c in cands.items()})} )",
+             None),
+            ("Party now badge", f"IF ( [Candidate is valid], {switch({p: r['party_now'] for p, r in now.items()})} )", None),
+            # party logos: trademarks, identification only (user decision 2026-11-14); PBIP_NO_LOGOS=1 -> badges
+            ("Party logo", f"IF ( [Candidate is valid], {switch({p: logos[p] for p in now})} )", None),
+            ("Party now logo", f"IF ( [Candidate is valid], {switch({p: logos[r['party_now']] for p, r in now.items()})} )",
+             None)]
+
+
+MEASURES["scenario"] += _identity_measures()
+# tile chart helpers (2026-11-14): the equal-size tile map drawn as a scatter chart so each tile can carry its code
+MEASURES["scenario"] += [
+    ("Grid column", "IF ( HASONEVALUE ( dim_state[state_pcode] ), MIN ( dim_state[tile_col] ) )", "0"),
+    ("Grid row", "IF ( HASONEVALUE ( dim_state[state_pcode] ), 10 - MIN ( dim_state[tile_row] ) )", "0"),
+    ("State name", "SELECTEDVALUE ( dim_state[state_name] )", None),
+    # tile grid as a matrix (simulator page): code in each cell, cell colour = the same fixed 3-colour scale as the maps
+    # (vermillion at -25 points, #F2F2F2 at 0, blue at +25, linear in each RGB channel), text black or white,
+    # whichever contrasts more with that cell (always >= 4.5:1)
+    ("Tile code", "IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ), MIN ( dim_state[state_code] ) )", None),
+    ("Tile fill", "VAR p = [Points from 25%] RETURN IF ( NOT ISBLANK ( p ) && HASONEVALUE ( dim_state[state_pcode] ), "
+                  "VAR f = MIN ( 1, ABS ( p ) / 25 ) "
+                  "VAR r = ROUND ( IF ( p < 0, 242 + ( 213 - 242 ) * f, 242 + ( 0 - 242 ) * f ), 0 ) "
+                  "VAR g = ROUND ( IF ( p < 0, 242 + ( 94 - 242 ) * f, 242 + ( 114 - 242 ) * f ), 0 ) "
+                  "VAR b = ROUND ( IF ( p < 0, 242 + ( 0 - 242 ) * f, 242 + ( 178 - 242 ) * f ), 0 ) "
+                  'VAR hx = "0123456789ABCDEF" '
+                  'RETURN "#" & MID ( hx, INT ( r / 16 ) + 1, 1 ) & MID ( hx, MOD ( r, 16 ) + 1, 1 ) '
+                  "& MID ( hx, INT ( g / 16 ) + 1, 1 ) & MID ( hx, MOD ( g, 16 ) + 1, 1 ) "
+                  "& MID ( hx, INT ( b / 16 ) + 1, 1 ) & MID ( hx, MOD ( b, 16 ) + 1, 1 ) )", None),
+    ("Tile text colour", "VAR p = [Points from 25%] RETURN IF ( NOT ISBLANK ( p ) && HASONEVALUE ( dim_state[state_pcode] ), "
+                         "VAR f = MIN ( 1, ABS ( p ) / 25 ) "
+                         "VAR r = ROUND ( IF ( p < 0, 242 + ( 213 - 242 ) * f, 242 + ( 0 - 242 ) * f ), 0 ) / 255 "
+                         "VAR g = ROUND ( IF ( p < 0, 242 + ( 94 - 242 ) * f, 242 + ( 114 - 242 ) * f ), 0 ) / 255 "
+                         "VAR b = ROUND ( IF ( p < 0, 242 + ( 0 - 242 ) * f, 242 + ( 178 - 242 ) * f ), 0 ) / 255 "
+                         "VAR lr = IF ( r <= 0.03928, r / 12.92, POWER ( ( r + 0.055 ) / 1.055, 2.4 ) ) "
+                         "VAR lg = IF ( g <= 0.03928, g / 12.92, POWER ( ( g + 0.055 ) / 1.055, 2.4 ) ) "
+                         "VAR lb = IF ( b <= 0.03928, b / 12.92, POWER ( ( b + 0.055 ) / 1.055, 2.4 ) ) "
+                         "VAR l = 0.2126 * lr + 0.7152 * lg + 0.0722 * lb "
+                         'RETURN IF ( 1.05 / ( l + 0.05 ) > ( l + 0.05 ) / 0.05, "#FFFFFF", "#000000" ) )', None),
+]
+DATA_CATEGORY = {("scenario", m): "ImageUrl" for m in ("Candidate photo", "Party logo", "Party now logo")}
 for t, (_, dflt, fmt, _dt) in PARAMS.items():
     MEASURES[t] = [(f"{t} value", f"SELECTEDVALUE ( {t}[Value], {dflt} )", fmt)]
 
@@ -239,6 +376,7 @@ def calc_table_tmdl(name):
     out = [f"table {name}", f"\tlineageTag: {stable_uuid('table', name)}", ""]
     for mname, expr, mfmt in MEASURES.get(name, []):
         out += [f"\tmeasure '{mname}' = {expr}"] + ([f"\t\tformatString: {mfmt}"] if mfmt else []) + \
+               ([f"\t\tdataCategory: {DATA_CATEGORY[(name, mname)]}"] if (name, mname) in DATA_CATEGORY else []) + \
                [f"\t\tlineageTag: {stable_uuid('measure', name, mname)}", ""]
     out += [f"\tcolumn {col}", f"\t\tdataType: {dt}"] + ([f"\t\tformatString: {fmt}"] if fmt else []) + \
            (["\t\tisHidden"] if hidden else []) + \
@@ -325,7 +463,9 @@ def shape_map(vid, x, y, w, h, resource, label):
             "position": {"x": x, "y": y, "z": 0, "height": h, "width": w, "tabOrder": 0},
             "visual": {"visualType": "shapeMap",
                        "query": {"queryState": {
-                           "Category": {"projections": [proj("Column", "dim_state", "state_pcode")]},
+                           # bound to the state name (TopoJSON property state_name = dim_state[state_name] for all 37,
+                           # checked by validate_phase6), so hover shows the name, not the P-code
+                           "Category": {"projections": [proj("Column", "dim_state", "state_name")]},
                            "Value": {"projections": [proj("Measure", "fact_result_2023", "APC share")]}}},
                        "objects": {"shape": [{"properties": {
                            "map": {"geoJson": {
@@ -364,6 +504,15 @@ def build_report():
     for f in ("nga_states.topo.json", "nga_tiles.topo.json"):
         shutil.copyfile(PBIP / "assets" / f, rr / f)
         items.append({"name": f, "path": f, "type": "ShapeMap"})
+    # decorative side-panel photos (scripts/build_photos.py; credits in photos_manifest.json)
+    for old in rr.glob("photo_*.jpg"):
+        old.unlink()
+    for ph in json.loads((PBIP / "assets" / "photos" / "photos_manifest.json").read_text(encoding="utf-8"))["photos"]:
+        f = Path(ph["output"]).name
+        shutil.copyfile(PBIP / "assets" / "photos" / f, rr / f)
+        items.append({"name": f, "path": f, "type": "Image"})
+    shutil.copyfile(PBIP / "assets" / "photos" / "locator_states.png", rr / "locator_states.png")   # "Where is each state?"
+    items.append({"name": "locator_states.png", "path": "locator_states.png", "type": "Image"})
     rep_path = RPT / "definition" / "report.json"
     rep = json.loads(rep_path.read_text(encoding="utf-8"))
     rep["resourcePackages"] = [p for p in rep["resourcePackages"] if p["name"] != "RegisteredResources"]

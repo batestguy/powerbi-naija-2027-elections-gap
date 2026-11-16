@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "c094746d844041d5e164",
+  "displayName": "State on hover (tooltip)",
+  "displayOption": "ActualSize",
+  "height": 150,
+  "width": 320,
+  "visualInteractions": [
+    {
+      "source": "0a810aba4c3753971077",
+      "target": "30c9287c4bdedd28f20a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "0a810aba4c3753971077",
+      "target": "58904c82f711e689995d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "30c9287c4bdedd28f20a",
+      "target": "0a810aba4c3753971077",
+      "type": "NoFilter"
+    },
+    {
+      "source": "30c9287c4bdedd28f20a",
+      "target": "58904c82f711e689995d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "58904c82f711e689995d",
+      "target": "0a810aba4c3753971077",
+      "type": "NoFilter"
+    },
+    {
+      "source": "58904c82f711e689995d",
+      "target": "30c9287c4bdedd28f20a",
+      "type": "NoFilter"
+    }
+  ],
+  "visibility": "HiddenInViewMode",
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Tooltip",
+    "parameters": []
+  }
+}

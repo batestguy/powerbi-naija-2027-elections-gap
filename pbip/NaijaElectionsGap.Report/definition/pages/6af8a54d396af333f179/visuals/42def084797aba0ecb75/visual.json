@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "42def084797aba0ecb75",
   "position": {
-    "x": 20,
-    "y": 606,
-    "z": 6,
-    "height": 106,
-    "width": 600,
-    "tabOrder": 6
+    "x": 720,
+    "y": 480,
+    "z": 12,
+    "height": 82,
+    "width": 340,
+    "tabOrder": 12
   },
   "visual": {
     "visualType": "cardVisual",
@@ -28,7 +28,7 @@
               },
               "queryRef": "scenario.Units secured",
               "nativeQueryRef": "Units secured",
-              "displayName": "Secured (25%+)"
+              "displayName": "Won"
             },
             {
               "field": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "scenario.Units within reach",
               "nativeQueryRef": "Units within reach",
-              "displayName": "Within reach (20-25%)"
+              "displayName": "Within reach"
             },
             {
               "field": {
@@ -58,7 +58,7 @@
               },
               "queryRef": "scenario.Units out of reach",
               "nativeQueryRef": "Units out of reach",
-              "displayName": "Out of reach (<20%)"
+              "displayName": "Out of reach"
             }
           ]
         }
@@ -97,6 +97,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
             }
           },
           "selector": {
@@ -125,7 +132,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Counts of units secured, within reach and out of reach for the selected candidate.'"
+                  "Value": "'Counts of states won, within reach and out of reach for the selected candidate.'"
                 }
               }
             }
@@ -173,6 +180,42 @@
               "expr": {
                 "Literal": {
                   "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "scenario"
+                        }
+                      },
+                      "Property": "Party accent colour"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
                 }
               }
             }

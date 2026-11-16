@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "ddc8a43e8d25bbb32b6f",
   "position": {
-    "x": 640,
-    "y": 606,
-    "z": 7,
-    "height": 106,
-    "width": 620,
-    "tabOrder": 7
+    "x": 330,
+    "y": 568,
+    "z": 13,
+    "height": 144,
+    "width": 730,
+    "tabOrder": 13
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,36 @@
               {
                 "textRuns": [
                   {
-                    "value": "Colour scale is fixed: deep vermillion = 25 or more points below 25%; near-white = at 25%; deep blue = 25 or more points above. Hover a unit for its share and label. Large states are not more important: the rule counts units, which is why the equal-size tiles are shown.",
+                    "value": "Reading the map. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Deepest blue = 25 or more points above a quarter; deepest vermillion = 25 or more below. Hover a state on the boundary map for its name, share and status. The rule counts states, not land, so the equal-size squares show small states as clearly as big ones. The grey map's codes match the squares.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "State codes: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "AB Abia · AD Adamawa · AK Akwa Ibom · AN Anambra · BA Bauchi · BE Benue · BO Borno · BY Bayelsa · CR Cross River · DE Delta · EB Ebonyi · ED Edo · EK Ekiti · EN Enugu · FC Federal Capital Territory · GO Gombe · IM Imo · JI Jigawa · KD Kaduna · KE Kebbi · KN Kano · KO Kogi · KT Katsina · KW Kwara · LA Lagos · NA Nasarawa · NI Niger · OG Ogun · ON Ondo · OS Osun · OY Oyo · PL Plateau · RI Rivers · SO Sokoto · TA Taraba · YO Yobe · ZA Zamfara",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -101,7 +130,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Notes: how to read the map colours.'"
+                  "Value": "'Notes: how to read the map colours, and the list of two-letter state codes with their names.'"
                 }
               }
             }

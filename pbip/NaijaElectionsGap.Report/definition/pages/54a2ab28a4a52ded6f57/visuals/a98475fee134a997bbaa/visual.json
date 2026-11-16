@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "a98475fee134a997bbaa",
   "position": {
-    "x": 20,
-    "y": 86,
-    "z": 3,
-    "height": 120,
+    "x": 222,
+    "y": 126,
+    "z": 8,
+    "height": 82,
     "width": 200,
-    "tabOrder": 3
+    "tabOrder": 8
   },
   "visual": {
     "visualType": "slicer",
@@ -73,14 +73,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Supporter turnout vs others (%)'"
+                  "Value": "'What if more (or fewer) of their 2023 voters turn out? (%)'"
                 }
               }
             }
@@ -150,7 +150,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Slider: Supporter turnout vs others (%). Neutral value 0.'"
+                  "Value": "'Slider: What if more (or fewer) of their 2023 voters turn out? (%). Starts at 0.'"
                 }
               }
             }

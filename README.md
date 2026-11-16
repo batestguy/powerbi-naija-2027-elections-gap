@@ -24,3 +24,5 @@ reports/     generated checks (e.g. unmatched LGA keys)
 
 ## Licence
 Code: to be decided. Data: each source keeps its own terms — see `registers/sources.md`.
+Photos and portraits: Wikimedia Commons, free licences only (CC0, public domain, CC BY, CC BY-SA); credits on the report's Data sources page and in `registers/sources.md`.
+Party logos are trademarks of their respective parties, shown for identification only; no endorsement implied. Build with `PBIP_NO_LOGOS=1` to show abbreviation badges instead.

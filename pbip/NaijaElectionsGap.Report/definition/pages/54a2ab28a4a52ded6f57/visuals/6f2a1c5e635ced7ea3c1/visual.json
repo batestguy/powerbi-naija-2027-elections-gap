@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "6f2a1c5e635ced7ea3c1",
   "position": {
-    "x": 20,
-    "y": 208,
-    "z": 5,
-    "height": 120,
+    "x": 222,
+    "y": 251,
+    "z": 12,
+    "height": 82,
     "width": 200,
-    "tabOrder": 5
+    "tabOrder": 12
   },
   "visual": {
     "visualType": "slicer",
@@ -73,14 +73,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'North Central + FCT swing (pts)'"
+                  "Value": "'What if things change only in the North Central and Abuja? (points)'"
                 }
               }
             }
@@ -150,7 +150,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Slider: North Central + FCT swing (pts). Neutral value 0.'"
+                  "Value": "'Slider: What if things change only in the North Central and Abuja? (points). Starts at 0.'"
                 }
               }
             }

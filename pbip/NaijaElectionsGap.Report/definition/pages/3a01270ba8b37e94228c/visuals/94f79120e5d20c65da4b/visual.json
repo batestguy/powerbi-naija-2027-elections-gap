@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "94f79120e5d20c65da4b",
   "position": {
-    "x": 20,
-    "y": 496,
-    "z": 5,
-    "height": 216,
-    "width": 760,
-    "tabOrder": 5
+    "x": 230,
+    "y": 514,
+    "z": 11,
+    "height": 198,
+    "width": 800,
+    "tabOrder": 11
   },
   "visual": {
     "visualType": "pivotTable",
@@ -28,7 +28,7 @@
               },
               "queryRef": "dim_state.state_name",
               "nativeQueryRef": "state_name",
-              "displayName": "Unit"
+              "displayName": "State"
             }
           ]
         },
@@ -62,7 +62,7 @@
               },
               "queryRef": "scenario.Scenario label",
               "nativeQueryRef": "Scenario label",
-              "displayName": "Label"
+              "displayName": "Status"
             },
             {
               "field": {
@@ -92,7 +92,7 @@
               },
               "queryRef": "scenario.Points needed",
               "nativeQueryRef": "Points needed",
-              "displayName": "Points to 25%"
+              "displayName": "Points short"
             },
             {
               "field": {
@@ -107,7 +107,7 @@
               },
               "queryRef": "scenario.Votes needed",
               "nativeQueryRef": "Votes needed",
-              "displayName": "Votes to switch"
+              "displayName": "Extra votes needed to reach a quarter"
             }
           ]
         }
@@ -148,6 +148,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -180,7 +187,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Every unit: label and distance to 25%'"
+                  "Value": "'Every state: status and distance to a quarter of the vote'"
                 }
               }
             }
@@ -193,7 +200,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Table of all 37 units with label, share, points needed and votes needed to reach 25%.'"
+                  "Value": "'Table of all 37 states with rank, status, share of the vote, points short of a quarter and extra votes needed to reach a quarter.'"
                 }
               }
             }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "de578db648a4f627b1c6",
   "position": {
-    "x": 20,
-    "y": 194,
-    "z": 4,
-    "height": 296,
-    "width": 1240,
-    "tabOrder": 4
+    "x": 230,
+    "y": 270,
+    "z": 9,
+    "height": 196,
+    "width": 1030,
+    "tabOrder": 9
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -28,7 +28,7 @@
               },
               "queryRef": "dim_state.state_name",
               "nativeQueryRef": "state_name",
-              "displayName": "Unit"
+              "displayName": "State"
             }
           ]
         },
@@ -47,7 +47,7 @@
               },
               "queryRef": "scenario.Scenario share",
               "nativeQueryRef": "Scenario share",
-              "displayName": "Share"
+              "displayName": "Share of the vote"
             }
           ]
         },
@@ -81,7 +81,7 @@
               },
               "queryRef": "scenario.Scenario label",
               "nativeQueryRef": "Scenario label",
-              "displayName": "Label"
+              "displayName": "Status"
             },
             {
               "field": {
@@ -96,7 +96,7 @@
               },
               "queryRef": "scenario.Points needed",
               "nativeQueryRef": "Points needed",
-              "displayName": "Points needed"
+              "displayName": "Points short of a quarter"
             },
             {
               "field": {
@@ -111,7 +111,7 @@
               },
               "queryRef": "scenario.Votes needed",
               "nativeQueryRef": "Votes needed",
-              "displayName": "Votes needed"
+              "displayName": "Extra votes needed to reach a quarter"
             }
           ]
         }
@@ -254,7 +254,7 @@
             "style": {
               "expr": {
                 "Literal": {
-                  "Value": "'dashed'"
+                  "Value": "'solid'"
                 }
               }
             },
@@ -263,7 +263,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F1F1F'"
+                      "Value": "'#882255'"
                     }
                   }
                 }
@@ -272,14 +272,21 @@
             "width": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "3D"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             },
             "displayName": {
               "expr": {
                 "Literal": {
-                  "Value": "'25%'"
+                  "Value": "'A quarter of the vote (25%)'"
                 }
               }
             },
@@ -302,7 +309,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F1F1F'"
+                      "Value": "'#882255'"
                     }
                   }
                 }
@@ -343,7 +350,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'37 units ranked by share (dashed line = 25%; black column = tipping-point unit)'"
+                  "Value": "'All 37 states ranked by share of the vote (the black column is the deciding state)'"
                 }
               }
             }
@@ -356,7 +363,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Bar chart of all 37 units ranked by the selected candidate''s share, with a fixed 25% line; colour shows secured, within reach or out of reach. Hover for votes needed to reach 25%.'"
+                  "Value": "'Column chart of all 37 states ranked by the selected candidate''s share of the vote, with a fixed wine-coloured line at a quarter; colour shows won, within reach or out of reach; the deciding state is black. Hover for extra votes needed.'"
                 }
               }
             }

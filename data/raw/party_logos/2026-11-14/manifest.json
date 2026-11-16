@@ -1,0 +1,85 @@
+{
+  "source": "Wikipedia / Wikimedia Commons file pages",
+  "access_date": "2026-11-14",
+  "use": "trademarks, identification only (nominative use); not relicensed",
+  "files": [
+    {
+      "key": "APC",
+      "file": "APC.png",
+      "title": "File:All Progressives Congress logo.png",
+      "file_page": "https://en.wikipedia.org/wiki/File:All_Progressives_Congress_logo.png",
+      "url": "https://upload.wikimedia.org/wikipedia/en/2/23/All_Progressives_Congress_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:03:53+00:00",
+      "bytes": 42488,
+      "sha256": "a02070eed6cd22b71a05546d7eed20cc1a253df654d26195b069525d231a1a3d",
+      "licence_as_stated": "Fair use",
+      "non_free_flag": "true",
+      "author": ""
+    },
+    {
+      "key": "PDP",
+      "file": "PDP.png",
+      "title": "File:Logo of the Peoples Democratic Party (Nigeria).png",
+      "file_page": "https://en.wikipedia.org/wiki/File:Logo_of_the_Peoples_Democratic_Party_(Nigeria).png",
+      "url": "https://upload.wikimedia.org/wikipedia/en/6/62/Logo_of_the_Peoples_Democratic_Party_%28Nigeria%29.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:03:58+00:00",
+      "bytes": 46710,
+      "sha256": "52eb76e59256b571aee546073fb495fd931e8c87ca476147ac1b10ded9293655",
+      "licence_as_stated": "Fair use",
+      "non_free_flag": "true",
+      "author": ""
+    },
+    {
+      "key": "LP",
+      "file": "LP.png",
+      "title": "File:Labour Party (Nigeria) logo.png",
+      "file_page": "https://en.wikipedia.org/wiki/File:Labour_Party_(Nigeria)_logo.png",
+      "url": "https://upload.wikimedia.org/wikipedia/en/5/5f/Labour_Party_%28Nigeria%29_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:04:04+00:00",
+      "bytes": 94674,
+      "sha256": "940e3cd967d3b6c11bc837fbe24a38493b257666b6e7b6b374c1747576fe3587",
+      "licence_as_stated": "Fair use",
+      "non_free_flag": "true",
+      "author": ""
+    },
+    {
+      "key": "NNPP",
+      "file": "NNPP.png",
+      "title": "File:Logo of the New Nigeria People's Party.png",
+      "file_page": "https://en.wikipedia.org/wiki/File:Logo_of_the_New_Nigeria_People%27s_Party.png",
+      "url": "https://upload.wikimedia.org/wikipedia/en/3/32/Logo_of_the_New_Nigeria_People%27s_Party.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:04:10+00:00",
+      "bytes": 101852,
+      "sha256": "54c1d515def34c8e399fb09206df4464f380226d67d04711de0d5f9e2b39fb3c",
+      "licence_as_stated": "Fair use",
+      "non_free_flag": "true",
+      "author": ""
+    },
+    {
+      "key": "ADC",
+      "file": "ADC.png",
+      "title": "File:African Democratic Congress logo.png",
+      "file_page": "https://en.wikipedia.org/wiki/File:African_Democratic_Congress_logo.png",
+      "url": "https://upload.wikimedia.org/wikipedia/en/2/24/African_Democratic_Congress_logo.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:04:15+00:00",
+      "bytes": 45052,
+      "sha256": "ed221240f91c0c4caf47082414fe32edc5469df3e5eb019f11a1a7750991d919",
+      "licence_as_stated": "Fair use",
+      "non_free_flag": "true",
+      "author": ""
+    },
+    {
+      "key": "NDC",
+      "file": "NDC.jpg",
+      "title": "File:Nigeria Democratic Party Logo.jpg",
+      "file_page": "https://commons.wikimedia.org/wiki/File:Nigeria_Democratic_Party_Logo.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/06/Nigeria_Democratic_Party_Logo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "accessed_utc": "2026-11-14T11:04:21+00:00",
+      "bytes": 19621,
+      "sha256": "8e572cdad044cdbc0360512796c6cba2b6b75f6a084e20db0b29f8d3e5d57efa",
+      "licence_as_stated": "CC0",
+      "non_free_flag": "",
+      "author": "Unknown authorUnknown author"
+    }
+  ]
+}
