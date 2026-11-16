@@ -1,0 +1,76 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f56501b0551cb7f2692a",
+  "displayName": "Head to head state (tooltip)",
+  "displayOption": "ActualSize",
+  "height": 150,
+  "width": 320,
+  "visualInteractions": [
+    {
+      "source": "4a51e60efc726b3a3381",
+      "target": "7eff015a772025061daa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4a51e60efc726b3a3381",
+      "target": "4f1b73b266d9c03d8efc",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4a51e60efc726b3a3381",
+      "target": "7225f8bf56ee5725aa0f",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7eff015a772025061daa",
+      "target": "4a51e60efc726b3a3381",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7eff015a772025061daa",
+      "target": "4f1b73b266d9c03d8efc",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7eff015a772025061daa",
+      "target": "7225f8bf56ee5725aa0f",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4f1b73b266d9c03d8efc",
+      "target": "4a51e60efc726b3a3381",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4f1b73b266d9c03d8efc",
+      "target": "7eff015a772025061daa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4f1b73b266d9c03d8efc",
+      "target": "7225f8bf56ee5725aa0f",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7225f8bf56ee5725aa0f",
+      "target": "4a51e60efc726b3a3381",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7225f8bf56ee5725aa0f",
+      "target": "7eff015a772025061daa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7225f8bf56ee5725aa0f",
+      "target": "4f1b73b266d9c03d8efc",
+      "type": "NoFilter"
+    }
+  ],
+  "visibility": "HiddenInViewMode",
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Tooltip",
+    "parameters": []
+  }
+}

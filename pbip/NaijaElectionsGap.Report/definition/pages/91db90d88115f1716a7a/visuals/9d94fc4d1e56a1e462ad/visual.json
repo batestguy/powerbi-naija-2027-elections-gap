@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "f500962890cc999bc757",
+  "name": "9d94fc4d1e56a1e462ad",
   "position": {
-    "x": 432,
-    "y": 586,
-    "z": 25,
-    "height": 122,
-    "width": 196,
-    "tabOrder": 25
+    "x": 650,
+    "y": 4,
+    "z": 2,
+    "height": 20,
+    "width": 610,
+    "tabOrder": 2
   },
   "visual": {
     "visualType": "textbox",
@@ -19,10 +19,18 @@
               {
                 "textRuns": [
                   {
-                    "value": "The constitution says two-thirds of the states. Courts have not said whether that means 24 or 25 once Abuja counts as a state. See Technical notes.",
+                    "value": "███ ",
                     "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
+                      "color": "#0072B2"
+                    }
+                  },
+                  {
+                    "value": "The coalition (Side A)",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
                       "color": "#1F1F1F"
                     }
                   }
@@ -101,7 +109,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Why the number of states needed can be 24 or 25.'"
+                  "Value": "'The coalition (Side A)'"
                 }
               }
             }

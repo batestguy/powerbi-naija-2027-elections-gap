@@ -121,7 +121,41 @@
                     }
                   },
                   {
-                    "value": "A change in vote share adds the same number of points in every state of a zone. Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 votes. No new candidates, mergers or boundary changes. It is a what-if tool, not a forecast: it says nothing about how likely any what-if is.",
+                    "value": "A change in vote share adds the same number of points in every state of a zone. Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 votes. No new candidates or boundary changes, and no merged parties unless you switch the coalition On. It is a what-if tool, not a forecast: it says nothing about how likely any what-if is.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "8pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Merging parties. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "Two pages add 2023 votes together. \"Merge two parties\" joins a lead party and a partner; \"Head to head\" sets that coalition against one party or another coalition. You choose how many of the partner's voters follow (an assumption: no published figure exists); those who do not follow stay home. These are 2023 votes recombined, not a forecast. On the What-if simulator, \"Use the coalition\" (Off by default) applies every slider to the coalition instead of the candidate. Only \"NDC (Obi + Kwankwaso)\" is a real ticket.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",

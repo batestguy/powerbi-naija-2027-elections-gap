@@ -12,6 +12,12 @@ A scenario and communication tool, not an electoral authority. The 2023 baseline
 **four-party rollup, not official INEC results**. Scenario outputs are assumptions made visible,
 not forecasts.
 
+## Report pages
+Candidate overview · Path to 24 · Spread map · What-if simulator (with a "Use the coalition" switch, Off by default) ·
+Merge two parties · Head to head · How to read this · Technical notes · Data sources. Details: [`docs/page-guide.md`](docs/page-guide.md).
+The two coalition pages recombine 2023 votes (lead + the share of a partner's voters who follow; the rest stay home);
+only "NDC (Obi + Kwankwaso)" is a real ticket, every other pairing is a what-if. Method: [`docs/methodology.md`](docs/methodology.md).
+
 ## Layout
 ```
 data/        raw / staging / presentation — not committed (see .gitignore); manifests are

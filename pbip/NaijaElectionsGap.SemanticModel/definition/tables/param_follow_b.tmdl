@@ -1,0 +1,18 @@
+table param_follow_b
+	lineageTag: aa47c2a9-05cf-1819-f7e4-1a777bcaa072
+
+	measure 'param_follow_b value' = SELECTEDVALUE ( param_follow_b[Value], 100 )
+		formatString: 0
+		lineageTag: 3e407200-ea01-f7e8-6e0b-3b8b051fc053
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: e12f7e6c-a944-cdd0-6238-0edf5e28b12d
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_follow_b = calculated
+		mode: import
+		source = GENERATESERIES ( 0, 100, 5 )
+

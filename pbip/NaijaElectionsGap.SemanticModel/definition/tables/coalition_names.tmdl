@@ -1,0 +1,37 @@
+table coalition_names
+	lineageTag: 14b14927-b3e9-2a6c-dd37-f3e3eab7f8d2
+
+	column lead
+		dataType: string
+		lineageTag: c7ba13ef-4799-376c-3ecf-817c662e22ec
+		summarizeBy: none
+		sourceColumn: [lead]
+
+	column partner
+		dataType: string
+		lineageTag: f2647fc2-e643-0f53-59ad-52f803928a60
+		summarizeBy: none
+		sourceColumn: [partner]
+
+	column display_name
+		dataType: string
+		lineageTag: af94ba9b-4170-a781-ce01-f62a42ae2726
+		summarizeBy: none
+		sourceColumn: [display_name]
+
+	column status
+		dataType: string
+		lineageTag: eb8ea11b-a88d-d365-2cdf-09fab4d92950
+		summarizeBy: none
+		sourceColumn: [status]
+
+	column source_label
+		dataType: string
+		lineageTag: 3a6e023a-e81e-cec2-ff25-d8f74ef396e6
+		summarizeBy: none
+		sourceColumn: [source_label]
+
+	partition coalition_names = calculated
+		mode: import
+		source = DATATABLE ( "lead", STRING, "partner", STRING, "display_name", STRING, "status", STRING, "source_label", STRING, { { "APC", "PDP", "APC + PDP (what-if)", "hypothetical", "" }, { "APC", "LP", "APC + LP (what-if)", "hypothetical", "" }, { "APC", "NNPP", "APC + NNPP (what-if)", "hypothetical", "" }, { "PDP", "APC", "PDP + APC (what-if)", "hypothetical", "" }, { "PDP", "LP", "PDP + LP (what-if)", "hypothetical", "" }, { "PDP", "NNPP", "PDP + NNPP (what-if)", "hypothetical", "" }, { "LP", "APC", "LP + APC (what-if)", "hypothetical", "" }, { "LP", "PDP", "LP + PDP (what-if)", "hypothetical", "" }, { "LP", "NNPP", "NDC (Obi + Kwankwaso)", "real", "Nigeria Democratic Congress, 31 May 2026" }, { "NNPP", "APC", "NNPP + APC (what-if)", "hypothetical", "" }, { "NNPP", "PDP", "NNPP + PDP (what-if)", "hypothetical", "" }, { "NNPP", "LP", "NNPP + LP (what-if)", "hypothetical", "" } } )
+

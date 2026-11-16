@@ -1,0 +1,20 @@
+table coal_switch
+	lineageTag: 11ef3f20-d3fa-e08c-4aca-7255fe7bb188
+
+	column Value
+		dataType: string
+		lineageTag: 984b6c74-4425-d003-d84a-1b4e0d20668d
+		summarizeBy: none
+		sourceColumn: [Value]
+		sortByColumn: sort
+
+	column sort
+		dataType: int64
+		lineageTag: 405a79e6-2783-16e8-6f6e-a7f4675c6928
+		summarizeBy: none
+		sourceColumn: [sort]
+
+	partition coal_switch = calculated
+		mode: import
+		source = DATATABLE ( "Value", STRING, "sort", INTEGER, { { "Off", 1 }, { "On", 2 } } )
+

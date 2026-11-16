@@ -1,0 +1,26 @@
+table coal_b_partner
+	lineageTag: 200ea885-c4d2-61ac-78a5-ff0e780d1471
+
+	column party
+		dataType: string
+		lineageTag: 55185189-fa58-af8d-509d-ace6441b41ff
+		summarizeBy: none
+		sourceColumn: [party]
+
+	column choice
+		dataType: string
+		lineageTag: d0b747b6-96c4-ae03-4236-746987b5e946
+		summarizeBy: none
+		sourceColumn: [choice]
+		sortByColumn: sort
+
+	column sort
+		dataType: int64
+		lineageTag: 936f6962-a972-1cf7-8a1d-52028306b6f8
+		summarizeBy: none
+		sourceColumn: [sort]
+
+	partition coal_b_partner = calculated
+		mode: import
+		source = DATATABLE ( "party", STRING, "choice", STRING, "sort", INTEGER, { { "APC", "Bola Tinubu (APC)", 1 }, { "PDP", "Atiku Abubakar (PDP)", 2 }, { "LP", "Peter Obi (LP)", 3 }, { "NNPP", "Rabiu Kwankwaso (NNPP)", 4 }, { "NONE", "Nobody: one party alone", 5 } } )
+

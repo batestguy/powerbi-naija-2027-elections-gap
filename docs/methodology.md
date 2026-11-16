@@ -125,3 +125,91 @@ At neutral settings this reproduces 2023: APC 8,794,726, leading rival PDP 6,984
 - Model equals this note for every unit and every count across 25 settings (incl. odd values), for N = 24 and 25.
 - With a zone filter on the page, the national measures stay national.
 - More national swing never lowers units secured.
+
+## Coalitions (added 2026-11-16, user decisions)
+
+Written before the build, like the sections above (decision log 2026-11-14 and 2026-11-16; evidence in
+`docs/coalition-research.md`). The sections above are unchanged: with the coalition switch **Off** (the default) every
+simulator number is exactly what those sections describe. Assumption 4 above ("no merged parties") holds everywhere
+except on the two coalition pages and in the simulator with the switch **On**.
+
+### Sides and inputs
+
+- A **side** is either one of the four 2023 main candidates' parties (APC, PDP, LP, NNPP) or a **coalition** of exactly
+  two of them: a **lead** `L` (top of the ticket) and a **partner** `P`.
+- **Side A** is always a coalition (lead + partner). **Side B** (Head to head page and simulator) is one party alone
+  or another two-party coalition. Each of the four parties may be used at most once across both sides.
+- **Follow rate** `F` (slider, 0–100%, step 5, default 100%): the percentage of the partner's 2023 voters who vote for
+  the coalition. One per side that has a partner (`F_A`, `F_B`). `f = F / 100`.
+- **Non-followers stay home**: they leave the valid total; none go to another party.
+- OTHERS (14 minor candidates) and any main party not used on either side keep their 2023 votes.
+- The coalition's name comes from `data/reference/coalition_names.csv` (one row per ordered pair, with its source).
+  Only LP lead + NNPP partner has a real name: "NDC (Obi + Kwankwaso)", the joint NDC ticket since 2026-05-31. Every
+  other pairing is hypothetical and called "X + Y (what-if)".
+
+### Votes after recombination, per state `s`
+
+With `v_X` = party X's 2023 votes and `V` = 2023 valid votes in the state:
+
+- Side A votes: `c = v_LA + f_A × v_PA`.
+- Side B votes: `b = v_LB` (+ `f_B × v_PB` if Side B has a partner).
+- Valid votes on the **Merge two parties** page (Side A only): `V'_A = V − (1 − f_A) × v_PA`.
+- Valid votes on the **Head to head** page and in the simulator: `V' = V − (1 − f_A) × v_PA − (1 − f_B) × v_PB`
+  (the last term only if Side B has a partner).
+- Shares: `c / V'_A` (Merge page), `c / V'` and `b / V'` (Head to head).
+
+At `F_A = 100%`: `c = v_LA + v_PA` and `V'_A = V`. At `F_A = 0`: `c = v_LA` and `V'_A = V − v_PA`.
+
+### Exact tests on the coalition pages (no floating point)
+
+Because `F` is a whole percentage, multiplying by 100 makes every quantity a whole number:
+`C = 100 v_LA + F_A v_PA`, `B = 100 v_LB + F_B v_PB`, `W = 100 V − (100 − F_A) v_PA − (100 − F_B) v_PB`
+(`W_A` = the same without the Side B term).
+
+- **Secured** (a quarter or more): `4 C ≥ W` (Merge page: `4 C ≥ W_A`); **Within reach**: `5 C ≥ W` but not secured;
+  **Out of reach** otherwise. Side B and unused parties: `4 B ≥ W`, `4 × 100 v_X ≥ W`.
+- **Who leads a state** (Head to head): the largest of `C`, `B` and `100 v_X` for each main party not used on either side
+  (OTHERS is never a leader). If the largest value is shared, the state is a **tie**.
+- **National**: votes and valid totals are sums over the 37 states (the formulas are linear, so national `C` = 100 ×
+  national `v_LA` + `F_A` × national `v_PA`). The national comparison uses the same whole numbers.
+- `scripts/validate_phase4.py` reproduces all of this in exact fractions (Python `fractions`) from the staging CSVs.
+
+### Verdict on the coalition pages
+
+Same s.134 reading as "Rivals and the verdict", with **Side A as the candidate**. Rival entities = Side B (one entity,
+identified by its lead's code; shown as "lead+partner" if it has a partner, e.g. "PDP+APC") and each main party not used
+on either side. OTHERS is never a rival winner. Leading rival = the rival entity with the most national votes (ties by
+code). `N` = the rule slider's value (24 when the page has no rule slider, as on both coalition pages).
+Outright win / run-off / tie / loses — the same five outcomes and the same tests as above, using whole-number counts
+of states at 25%+ for Side A and for the leading rival. The Merge page has no verdict (it compares the coalition with
+its lead alone).
+
+### Simulator with the coalition switch On
+
+Replace the candidate's 2023 votes `v` by `c` and `V` by `V'` (both sides, as on the Head to head page) in steps 1–3:
+
+1. `v1 = c × (1 + t)`, `V1 = V' + c × t`, `p1 = v1 / V1` — turnout applies to the coalition's recombined voters.
+2. `p2 = min(1, max(0, p1 + (S + Z_zone(s)) / 100))`.
+3. `v2 = p2 × V1`.
+
+Labels, counts, caps, tipping point, votes needed / to spare and the sentences then follow the sections above
+unchanged (decimal comparison, as for the simulator today; an exact search of every reachable setting for boundary
+hits is in `validate_phase4.py`). **Rivals**: Side B as one entity with votes `b`, and each unused main party with its
+2023 votes, all multiplied by `(1 − p2) / (1 − p1)` (0 if `p1 = 1`); OTHERS scales the same way but is never a rival
+winner. Leading rival = the rival entity with the most national votes, ties by code. Verdict as above. The candidate
+picked at the top of the page is ignored while the switch is On.
+
+**Invalid selections** (no lead or partner chosen; lead = partner; a party used on both sides or twice; Side B's
+partner = Side B's lead) give **blank figures** and a plain-words message saying what to change — never a number.
+
+### Assumptions (stated on the pages in plain words)
+
+1. The follow rate is an assumption, not a measurement. No published rate exists; the 2011→2015 APC merger only loosely
+   suggests that most partner voters followed (`docs/coalition-research.md`), and cannot give a number.
+2. Partner voters who do not follow stay home; none go to a rival.
+3. In the simulator, the coalition's partner voters are assumed to respond to the sliders exactly like the lead's.
+4. These are 2023 votes recombined, not a 2027 forecast: 2023 votes for parties whose candidates have since moved are
+   attached to the 2023 party, not to anyone's 2027 ticket.
+5. "NDC (Obi + Kwankwaso)" is a real ticket (NDC release 2026-05-31; ThisDay INEC list ~2026-09-13); every other pairing
+   is hypothetical.
+6. Side B as one entity: when Side B is a coalition, its two parts move together under the simulator's rival rule.

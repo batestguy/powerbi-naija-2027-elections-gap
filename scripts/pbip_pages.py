@@ -28,6 +28,8 @@ with open(_ASSETS / "data" / "reference" / "party_now.csv", encoding="utf-8") as
     PARTY_NOW = list(_csv.DictReader(l for l in _f if not l.startswith("#")))
 for _r in PARTY_NOW:
     CANDS[_r["party_2023"]]["candidate"] = _r["candidate"]
+with open(_ASSETS / "data" / "reference" / "coalition_names.csv", encoding="utf-8") as _f:
+    COAL_NAMES = list(_csv.DictReader(l for l in _f if not l.startswith("#")))
 with open(_ASSETS / "data" / "staging" / "dim_state.csv", encoding="utf-8") as _f:
     CODES = sorted((r["state_code"], r["state_name"]) for r in _csv.DictReader(_f))
 CODE_LIST = " \u00b7 ".join(f"{c} {n}" for c, n in CODES)
@@ -143,7 +145,7 @@ MAP_ALT = ("Map colour key: blue = above a quarter of the vote, deeper blue is s
            "vermillion = below a quarter, deeper is further away. The scale is fixed at 25 points either side.")
 
 
-def cards(name, x, y, w, h, measures, title, alt, value_pt=None, label_pt=None, accent=True):
+def cards(name, x, y, w, h, measures, title, alt, value_pt=None, label_pt=None, accent=True, border=None):
     """measures: list of (table, measure, display name). Labels and values wrap instead of being cut off.
     accent: a 2 px border in the selected candidate's party colour (decoration only; never encodes data)."""
     vp = {"labelDisplayUnits": lit("1D"), "textWrap": lit("true")}
@@ -161,6 +163,9 @@ def cards(name, x, y, w, h, measures, title, alt, value_pt=None, label_pt=None, 
         v["visualContainerObjects"]["border"] = [{"properties": {
             "show": lit("true"), "color": {"solid": {"color": {"expr": meas("scenario", "Party accent colour")}}},
             "width": lit("2D")}}]
+    elif border:
+        v["visualContainerObjects"]["border"] = [{"properties": {
+            "show": lit("true"), "color": {"solid": {"color": lit(f"'{border}'")}}, "width": lit("2D")}}]
     return container(name, x, y, w, h, v)
 
 
@@ -191,7 +196,7 @@ def candidate_photo(name, x, y, w, h, measure="Candidate photo", alt=None):
     return container(name, x, y, w, h, v)
 
 
-def classic_card(name, x, y, w, h, measure, title, alt, value_pt, colour=None, accent=True, bold=True):
+def classic_card(name, x, y, w, h, measure, title, alt, value_pt, colour=None, accent=True, bold=True, border=None):
     """Classic card: its value wraps onto several lines in a small box (the new card truncated long text to one line).
     title: shown as the visual title (None hides it); colour: a measure name returning the text colour."""
     lab = {"fontSize": lit(f"{value_pt}D"), "fontFamily": s("Segoe UI Semibold" if bold else "Segoe UI")}
@@ -207,12 +212,15 @@ def classic_card(name, x, y, w, h, measure, title, alt, value_pt, colour=None, a
         v["visualContainerObjects"]["border"] = [{"properties": {
             "show": lit("true"), "color": {"solid": {"color": {"expr": meas("scenario", "Party accent colour")}}},
             "width": lit("2D")}}]
+    elif border:
+        v["visualContainerObjects"]["border"] = [{"properties": {
+            "show": lit("true"), "color": {"solid": {"color": lit(f"'{border}'")}}, "width": lit("2D")}}]
     return container(name, x, y, w, h, v)
 
 
-def sentence(name, x, y, w, h, measure, label, alt, value_pt=11):
+def sentence(name, x, y, w, h, measure, label, alt, value_pt=11, accent=True, border=None):
     """One long text measure shown as a wrapped sentence under a small title."""
-    return classic_card(name, x, y, w, h, measure, label, alt, value_pt)
+    return classic_card(name, x, y, w, h, measure, label, alt, value_pt, accent=accent, border=border)
 
 
 def candidate_slicer(name, x, y, w, h):
@@ -237,7 +245,7 @@ def candidate_slicer(name, x, y, w, h):
     return container(name, x, y, w, h, v, fc)
 
 
-def param_slicer(name, x, y, w, h, table, label, default, integer):
+def param_slicer(name, x, y, w, h, table, label, default, integer, sync=None, hidden=False):
     """Single-value slider bound to a What-If table, pre-set to its neutral value. Its plain-words label is a textbox
     above it (slicer headers cannot wrap), so the slicer header is hidden."""
     val = f"{default}L" if integer else f"{default}D"
@@ -252,7 +260,32 @@ def param_slicer(name, x, y, w, h, table, label, default, integer):
                                                                   "Left": {"Column": {"Expression": {"SourceRef": {"Source": "p"}}, "Property": "Value"}},
                                                                   "Right": {"Literal": {"Value": val}}}}}]}}}}]},
          "visualContainerObjects": vco(None, f"Slider: {label}. Starts at {default}.")}
-    return container(name, x, y, w, h, v)
+    if sync:
+        v["syncGroup"] = {"groupName": sync, "fieldChanges": True, "filterChanges": True}
+    c = container(name, x, y, w, h, v)
+    if hidden:   # synced but not shown (the engine on this page uses the value picked on a coalition page)
+        c["isHidden"] = True
+    return c
+
+
+def choice_slicer(name, x, y, w, h, table, header, preset, sync, alt, column="choice", hidden=False, show_header=True):
+    """Single-select dropdown on a disconnected coalition table, pre-set, synced across pages by `sync`."""
+    v = {"visualType": "slicer",
+         "syncGroup": {"groupName": sync, "fieldChanges": True, "filterChanges": True},
+         "query": {"queryState": {"Values": {"projections": [proj("Column", table, column)]}}},
+         "objects": {"data": [{"properties": {"mode": s("Dropdown")}}],
+                     "selection": [{"properties": {"strictSingleSelect": lit("true"), "selectAllCheckboxEnabled": lit("false")}}],
+                     "header": [{"properties": {"show": lit("true" if show_header else "false"), "text": s(header)}}],
+                     "general": [{"properties": {"filter": {"filter": {
+                         "Version": 2, "From": [{"Name": "d", "Entity": table, "Type": 0}],
+                         "Where": [{"Condition": {"In": {
+                             "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": column}}],
+                             "Values": [[{"Literal": {"Value": "'" + preset.replace("'", "''") + "'"}}]]}}}]}}}}]},
+         "visualContainerObjects": vco(None, alt)}
+    c = container(name, x, y, w, h, v)
+    if hidden:
+        c["isHidden"] = True
+    return c
 
 
 def bar_chart(name, x, y, w, h, value, colour, title, alt, tooltips=()):
@@ -361,7 +394,8 @@ def tile_chart(name, x, y, w, h, title, alt, label_pt=10, marker=40):
     return container(name, x, y, w, h, v)
 
 
-def tile_matrix(name, x, y, w, h, title, alt, value_pt=10, pad=1):
+def tile_matrix(name, x, y, w, h, title, alt, value_pt=10, pad=1, code="Tile code", fill="Tile fill",
+                text="Tile text colour", tip=None):
     """Equal-size tile map as a matrix: one cell per grid position, the state's code inside, the cell coloured on the
     maps' fixed scale and the code in black or white, whichever contrasts more (measures Tile fill / Tile text colour).
     The grid's row and column numbers are layout only and are drawn in the background colour."""
@@ -371,11 +405,11 @@ def tile_matrix(name, x, y, w, h, title, alt, value_pt=10, pad=1):
     v = {"visualType": "pivotTable",
          "query": {"queryState": {"Rows": {"projections": [proj("Column", "dim_state", "tile_row", "Row")]},
                                   "Columns": {"projections": [proj("Column", "dim_state", "tile_col", "Column")]},
-                                  "Values": {"projections": [proj("Measure", "scenario", "Tile code", "Code")]}}},
+                                  "Values": {"projections": [proj("Measure", "scenario", code, "Code")]}}},
          "objects": {
-             "values": [{"properties": {"backColor": {"solid": {"color": {"expr": meas("scenario", "Tile fill")}}},
-                                        "fontColor": {"solid": {"color": {"expr": meas("scenario", "Tile text colour")}}}},
-                         "selector": {**wild, "metadata": "scenario.Tile code"}},
+             "values": [{"properties": {"backColor": {"solid": {"color": {"expr": meas("scenario", fill)}}},
+                                        "fontColor": {"solid": {"color": {"expr": meas("scenario", text)}}}},
+                         "selector": {**wild, "metadata": f"scenario.{code}"}},
                         {"properties": {"fontSize": lit(f"{value_pt}D"), "bold": lit("true")}}],
              "columnHeaders": [{"properties": {**hide, "autoSizeColumnWidth": lit("false")}}],
              "rowHeaders": [{"properties": hide}],
@@ -386,7 +420,7 @@ def tile_matrix(name, x, y, w, h, title, alt, value_pt=10, pad=1):
                                       "gridHorizontalWeight": lit("3D"), "rowPadding": lit(f"{pad}D"),
                                       "outlineColor": {"solid": {"color": lit("'#FFFFFF'")}}}}]},
          "visualContainerObjects": {**vco(title, alt), "visualTooltip": [{"properties": {
-             "show": lit("true"), "type": s("Canvas"), "section": s(TILE_TIP)}}]}}
+             "show": lit("true"), "type": s("Canvas"), "section": s(tip or TILE_TIP)}}]}}
     return container(name, x, y, w, h, v)
 
 
@@ -619,10 +653,19 @@ def page_sim(pid):
                          alt=f"Slider label: {label}"))
         v.append(param_slicer(sid(pid, key), x, y + 40, 200, 82, table, label,
                               24 if table == "param_rule" else defaults.get(table, 0), integer))
-    v.append(textbox(sid(pid, "rulenote"), sx + 206 + 4, 86 + 4 * 125, 196, 122, [
-        ("The constitution says two-thirds of the states. Courts have not said whether that means 24 or 25 once Abuja "
-         "counts as a state. See Technical notes.", 9, False, INK)],
-        alt="Why the number of states needed can be 24 or 25."))
+    # Coalition switch (user decision 2026-11-16) where the 24-or-25 note was (that note stays on Path to 24, How to
+    # read this and Technical notes). Default Off = today's engine; PBIP_COALITION_ON=1 builds a test variant set to On.
+    cx0, cy0 = sx + 206, 86 + 4 * 125
+    v.append(textbox(sid(pid, "coal_label"), cx0 + 4, cy0, 196, 18,
+                     [([("Use the coalition?", INK, True), (" (Off or On)", MUTED, False)], 9, False, INK)],
+                     alt="Switch label: use the coalition? Off or On."))
+    v.append(choice_slicer(sid(pid, "coal_switch"), cx0, cy0 + 18, 200, 48, "coal_switch", "Use the coalition (Off or On)",
+                           "On" if COALITION_ON else "Off", "coal_switch",
+                           "Switch: use the coalition picked on the Head to head page instead of the candidate. Off by "
+                           "default.", column="Value", show_header=False))
+    v.append(sentence(sid(pid, "coal_inuse"), cx0, cy0 + 68, 200, 58, "Simulator coalition sentence", None,
+                      "Sentence: whether the simulator uses the coalition, which coalition and follow rates, and against "
+                      "whom.", value_pt=8, accent=False, border=MUTED))
     rx = sx + 412 + 10
     rw = W - 20 - rx
     v.append(sentence(sid(pid, "verdict"), rx, 86, rw, 92, "Result sentence", "Result",
@@ -655,8 +698,190 @@ def page_sim(pid):
          "\u221220 (supporters stay at home). Set everything back to 0 to see 2023 again.", 9, False, INK),
         ("Good to know: :: a zone change adds to the change everywhere. More on Technical notes.", 9, False, INK)],
         alt="Map colour key, example what-ifs to try, and the assumptions behind the simulator."))
+    # the coalition's pickers and follow sliders, synced from the coalition pages but not shown here
+    v += side_controls(pid, "A", cx0, cy0, hidden=True) + side_controls(pid, "B", cx0, cy0, hidden=True)
     v += photo(pid, "simulator", LEFT_X)
     return "What-if simulator", v
+
+
+# ---------------- coalition pages (user decisions 2026-11-16; docs/methodology.md "Coalitions") ----------------
+COALITION_ON = os.environ.get("PBIP_COALITION_ON") == "1"   # test variant: simulator switch preset On
+NOBODY = "Nobody: one party alone"
+
+
+def choice(party):
+    return f"{CANDS[party]['candidate']} ({party})"
+
+
+# preset (user decision 2026-11-16): Side A = Peter Obi (LP) lead + Rabiu Kwankwaso (NNPP) partner, 100% follow;
+# Side B = Bola Tinubu (APC) alone
+PRESET = {"A": (choice("LP"), choice("NNPP")), "B": (choice("APC"), NOBODY)}
+SIDE_COLOUR = {"A": BLUE, "B": ORANGE}
+
+
+def side_controls(pid, side, x0, y0, hidden=False, heading=None):
+    """Lead and partner pickers (with portraits) and the follow slider for one side, synced across the coalition pages
+    and the simulator. hidden: only the three slicers, not shown (the simulator)."""
+    lo = side.lower()
+    lead, partner = PRESET[side]
+    tl, tp, tf = f"coal_{lo}_lead", f"coal_{lo}_partner", f"param_follow_{lo}"
+    pl = "Partner (or Nobody)" if side == "B" else "Partner party"
+    q = "Partner voters who follow (%)"
+    sl = [choice_slicer(sid(pid, side, "lead"), x0 + 60, y0 + 22, 150, 76, tl, "Lead party", lead, tl,
+                        f"Side {side} lead party picker: the party at the top of the ticket. Starts at {lead}.",
+                        hidden=hidden),
+          choice_slicer(sid(pid, side, "partner"), x0 + 276, y0 + 22, 150, 76, tp, pl, partner, tp,
+                        f"Side {side} partner picker" + (", or Nobody for one party alone" if side == "B" else "")
+                        + f". Starts at {partner}.", hidden=hidden),
+          param_slicer(sid(pid, side, "follow"), x0 + 430, y0 + 52, 180, 56, tf,
+                       f"Side {side}: how many of the partner's 2023 voters follow (%)", 100, True, sync=tf,
+                       hidden=hidden)]
+    if hidden:
+        for c in sl:
+            c["position"].update({"x": x0, "y": y0, "width": 150, "height": 76})
+        return sl
+    head = heading or (f"Side {side}" + (": the coalition (blue)" if side == "A" else ": one party or another coalition (vermillion)"))
+    return [textbox(sid(pid, side, "head"), x0, y0, 610, 20, [([(BAR + " ", SIDE_COLOUR[side], True), (head, INK, True)], 10,
+                                                              False, INK)], alt=head),
+            candidate_photo(sid(pid, side, "lead_photo"), x0, y0 + 24, 56, 66, f"Side {side} lead photo",
+                            f"Photo of Side {side}'s lead candidate (free-licence portrait; credit on the Data sources page)."),
+            sl[0],
+            candidate_photo(sid(pid, side, "partner_photo"), x0 + 216, y0 + 24, 56, 66, f"Side {side} partner photo",
+                            f"Photo of Side {side}'s partner (free-licence portrait; credit on the Data sources page)."),
+            sl[1],
+            textbox(sid(pid, side, "follow_label"), x0 + 434, y0 + 20, 176, 32,
+                    [([(q, INK, True), (" (an assumption)", MUTED, False)], 9, False, INK)], alt=f"Slider label: {q}"),
+            sl[2]]
+
+
+COAL_ASSUME = [
+    ("What this page assumes. :: How many of the partner's voters follow is an assumption, not a measurement: no "
+     "published figure exists. The 2011 to 2015 APC merger only loosely suggests that most partner voters followed.",
+     9, False, INK),
+    ("Partner voters who do not follow stay home: :: none go to another party, so the state's total shrinks.", 9, False, INK),
+    ("2023 votes recombined, :: not a 2027 forecast. Every other party keeps its 2023 votes. No swing, no turnout change "
+     "(the What-if simulator adds those when its coalition switch is On).", 9, False, INK),
+    ("Names: :: \"NDC (Obi + Kwankwaso)\" is a real joint ticket (NDC, 31 May 2026). Every other pairing is "
+     "hypothetical and named \"X + Y (what-if)\".", 9, False, INK),
+]
+
+
+def page_merge(pid):
+    v = [textbox(sid(pid, "title"), 20, 8, 620, 34, [("Merge two parties: 2023 votes added together", 18, True, INK)],
+                 alt="Merge two parties: 2023 votes added together"),
+         textbox(sid(pid, "subtitle"), 20, 44, 620, 40, [
+             ("Pick a lead party and a partner. The coalition gets the lead's 2023 votes plus the partner's voters who "
+              "follow; the rest stay home. Abuja counts as a state, so there are 37.", 10, False, MUTED)],
+             alt="Subtitle: how the coalition's votes are made.")]
+    v += side_controls(pid, "A", 650, 4, heading="The coalition (Side A)")
+    v.append(sentence(sid(pid, "msg"), 20, 116, 620, 74, "Side A message", "The coalition",
+                      "Who is in the coalition, whether it is a real ticket, and how many partner voters follow; or what to "
+                      "change if the choice is not complete.", value_pt=10, accent=False, border=BLUE))
+    v.append(cards(sid(pid, "kpis"), 650, 116, 610, 74,
+                   [("scenario", "Side A states at 25% (merge)", "Coalition: states won (of 37)"),
+                    ("scenario", "Side A lead states at 25%", "Lead alone, 2023: states won"),
+                    ("scenario", "Side A national votes", "Coalition votes"),
+                    ("scenario", "Side A national share (merge)", "Coalition share of the vote")],
+                   None, "Headline figures: states where the coalition has a quarter of the vote or more (of 37), the same "
+                         "count for the lead party alone in 2023, the coalition's votes and its share nationwide.",
+                   value_pt=14, label_pt=9, accent=False, border=BLUE))
+    v.append(bar_chart(sid(pid, "bars"), 20, 196, 820, 262, ("scenario", "Side A share (merge)", "Coalition share"),
+                       ("scenario", "Side A status colour (merge)"),
+                       "The coalition's share of the vote in each state (highest first)",
+                       "Column chart of the coalition's share of the vote in all 37 states, highest first, with a fixed "
+                       "wine-coloured line at a quarter of the vote. Blue columns are at a quarter or more, vermillion 20% "
+                       "to just under a quarter, grey under 20%.",
+                       tooltips=[("scenario", "Side A status (merge)", "Status"),
+                                 ("scenario", "Side A lead share", "Lead alone, 2023"),
+                                 ("scenario", "Side A votes", "Coalition votes")]))
+    v.append(key_box(sid(pid, "key"), 28, 460, 812, 44, STATUS_KEY, STATUS_ALT))
+    v.append(textbox(sid(pid, "assume"), 28, 510, 812, 202, COAL_ASSUME,
+                     alt="What this page assumes: follow rate is an assumption; non-followers stay home; 2023 votes "
+                         "recombined, not a forecast; which names are real."))
+    v.append(matrix(sid(pid, "table"), 850, 196, 410, 516, [("dim_state", "state_name", "State")],
+                    [("scenario", "Side A lead share", "Lead alone"), ("scenario", "Side A share (merge)", "Coalition"),
+                     ("scenario", "Side A change (points)", "Change (points)"),
+                     ("scenario", "Side A status (merge)", "Status")],
+                    "Every state: the lead alone and the coalition",
+                    "Table of all 37 states: the lead party's 2023 share alone, the coalition's share, the change in "
+                    "points and the coalition's status.", sort=("scenario", "Side A share (merge)")))
+    return "Merge two parties", v
+
+
+H2H_KEY = [(BLUE, "Side A leads"), (ORANGE, "Side B leads"), (GREY, "another party leads, or a tie")]
+H2H_TIP = sid("page", "h2htip")
+
+
+def page_h2h(pid):
+    v = [textbox(sid(pid, "title"), 20, 8, 1240, 34, [("Head to head: two sides, 2023 votes recombined", 18, True, INK)],
+                 alt="Head to head: two sides, 2023 votes recombined"),
+         textbox(sid(pid, "subtitle"), 20, 44, 1240, 36, [
+             ("Side A is a coalition of two parties; Side B is one party or another coalition. Each party can be used once. "
+              "No swing or turnout change. Abuja counts as a state, so there are 37. 24 states needed.", 10, False, MUTED)],
+             alt="Subtitle: what the two sides are.")]
+    v += side_controls(pid, "A", 20, 84) + side_controls(pid, "B", 650, 84)
+    v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 58, "Side A message", None,
+                      "Side A in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
+                      border=BLUE))
+    v.append(sentence(sid(pid, "msg_b"), 650, 196, 610, 58, "Side B message", None,
+                      "Side B in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
+                      border=ORANGE))
+    v.append(cards(sid(pid, "nat_a"), 20, 258, 610, 66,
+                   [("scenario", "Side A national votes (head to head)", "Side A votes"),
+                    ("scenario", "Side A national share (head to head)", "Side A share"),
+                    ("scenario", "Side A states at 25% (head to head)", "Side A: states at 25%+"),
+                    ("scenario", "States led by Side A", "States Side A leads")],
+                   None, "Side A nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
+                         "where Side A has the most votes.", value_pt=13, label_pt=9, accent=False, border=BLUE))
+    v.append(cards(sid(pid, "nat_b"), 650, 258, 610, 66,
+                   [("scenario", "Side B national votes", "Side B votes"),
+                    ("scenario", "Side B national share (head to head)", "Side B share"),
+                    ("scenario", "Side B states at 25% (head to head)", "Side B: states at 25%+"),
+                    ("scenario", "States led by Side B", "States Side B leads")],
+                   None, "Side B nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
+                         "where Side B has the most votes.", value_pt=13, label_pt=9, accent=False, border=ORANGE))
+    v.append(sentence(sid(pid, "verdict"), 20, 328, 1240, 58, "Head to head sentence", "Result (Side A's view; 24 states "
+                      "needed)", "Result as a sentence: whether Side A wins outright, loses, or it goes to a run-off.",
+                      value_pt=10, accent=False, border=MUTED))
+    v.append(tile_matrix(sid(pid, "tiles"), 20, 390, 330, 258, "Who leads each state",
+                         "Tile grid, one square per state with its two-letter code inside: blue where Side A has the most "
+                         "votes, vermillion where Side B does, grey where another party leads or it is a tie. The table "
+                         "beside it gives the same in words.", value_pt=10, pad=3, code="Head to head tile code",
+                         fill="Head to head leader colour", text="Head to head leader text colour", tip=H2H_TIP))
+    v.append(key_box(sid(pid, "key"), 28, 652, 322, 60, H2H_KEY,
+                     "Colour key: blue = Side A leads; vermillion = Side B leads; grey = another party leads, or a tie.",
+                     stacked=True))
+    v.append(matrix(sid(pid, "table"), 360, 390, 620, 322, [("dim_state", "state_name", "State")],
+                    [("scenario", "Side A share (head to head)", "Side A share"),
+                     ("scenario", "Side B share (head to head)", "Side B share"),
+                     ("scenario", "Who leads (head to head)", "Who leads"),
+                     ("scenario", "Side A at 25% (head to head)", "Side A a quarter?"),
+                     ("scenario", "Side B at 25% (head to head)", "Side B a quarter?")],
+                    "Every state: both sides",
+                    "Table of all 37 states: each side's share of the vote, who leads, and whether each side has a quarter "
+                    "of the vote.", sort=("scenario", "Side A share (head to head)")))
+    v.append(textbox(sid(pid, "notes"), 990, 390, 270, 322, [
+        ("Assumptions. :: How many partner voters follow is an assumption; no published figure exists. Those who do not "
+         "follow stay home.", 9, False, INK),
+        ("Recombined 2023 votes, :: not a 2027 forecast. Parties on neither side keep their 2023 votes; the 14 minor "
+         "candidates are never counted as a leader.", 9, False, INK),
+        ("Real or what-if: :: only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. Try it under 2027 what-ifs: "
+         "What-if simulator, switch \"Use the coalition\" On.", 9, False, INK)],
+        alt="Notes: the assumptions behind this page and how to use the coalition in the simulator."))
+    return "Head to head", v
+
+
+def page_h2htip(pid):
+    """Hover card for the head-to-head tile map: the state's name, both sides' shares and who leads."""
+    return "Head to head state (tooltip)", [
+        classic_card(sid(pid, "name"), 8, 6, TIP_W - 16, 44, "State name", None, "Name of the state under the pointer.", 14,
+                     accent=False),
+        classic_card(sid(pid, "a"), 8, 52, 96, 90, "Side A share (head to head)", "Side A", "Side A's share in this state.",
+                     12, accent=False),
+        classic_card(sid(pid, "b"), 108, 52, 96, 90, "Side B share (head to head)", "Side B", "Side B's share in this state.",
+                     12, accent=False),
+        classic_card(sid(pid, "lead"), 208, 52, TIP_W - 216, 90, "Who leads (head to head)", "Who leads",
+                     "Who has the most votes in this state.", 10, accent=False)]
 
 
 HOW = [
@@ -671,8 +896,13 @@ HOW = [
      "candidates' column is 4,858 votes too high nationally, and nobody can yet say where.", 10, False, INK),
     ("What the simulator assumes. :: A change in vote share adds the same number of points in every state of a zone. "
      "Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 "
-     "votes. No new candidates, mergers or boundary changes. It is a what-if tool, not a forecast: it says nothing about "
-     "how likely any what-if is.", 10, False, INK),
+     "votes. No new candidates or boundary changes, and no merged parties unless you switch the coalition On. It is a "
+     "what-if tool, not a forecast: it says nothing about how likely any what-if is.", 10, False, INK),
+    ("Merging parties. :: Two pages add 2023 votes together. \"Merge two parties\" joins a lead party and a partner; "
+     "\"Head to head\" sets that coalition against one party or another coalition. You choose how many of the partner's "
+     "voters follow (an assumption: no published figure exists); those who do not follow stay home. These are 2023 votes "
+     "recombined, not a forecast. On the What-if simulator, \"Use the coalition\" (Off by default) applies every slider "
+     "to the coalition instead of the candidate. Only \"NDC (Obi + Kwankwaso)\" is a real ticket.", 10, False, INK),
     ("Words used. :: \"Won\" (or \"Secured\") = a quarter of the vote or more in a state; \"Within reach\" = 20% to just "
      "under a quarter; \"Out of reach\" = under 20%. \"The deciding state\" = the weakest state the candidate needs to "
      "reach 24 (or 25). Exact definitions and formulas are on the Technical notes page.", 10, False, INK),
@@ -742,7 +972,14 @@ TECH = [
         ("f", "Rival’s new votes = rival’s 2023 votes"),
         ("f", "× (100% − new share) ÷ (100% − share after turnout)"),
         ("t", "0 if the share after turnout is 100%. The state’s total stays the same."),
-        ("t", "Closest rival = the other main candidate (APC, PDP, LP, NNPP) with the most votes nationwide.")])],
+        ("t", "Closest rival = the other main candidate (APC, PDP, LP, NNPP) with the most votes nationwide.")]),
+     ("Merging two parties", [
+        ("t", "f = share of the partner’s 2023 voters who follow (0% to 100%)."),
+        ("f", "Coalition votes = lead’s votes + f × partner’s votes"),
+        ("f", "Valid votes = 2023 valid votes − (1 − f) × partner’s votes"),
+        ("t", "Those who do not follow stay home. Side B with a partner: the same for its partner. Tested in whole "
+              "numbers: 4 × coalition votes ≥ valid votes."),
+        ("t", "Switch On: the simulator uses coalition votes and these valid votes in Step 1; Side B moves as one rival.")])],
     [("How we pick the deciding state", [
         ("t", "Rank all 37 by new share, highest first (ties: by state code, A to Z)."),
         ("f", "Deciding state = the state in position N"),
@@ -824,8 +1061,17 @@ def page_sources(pid):
                         for l in LOGO_LIST), 9, False, INK))
     credits.append(("Party now (news reports checked 14 Nov 2026; not an official INEC list, and it can change before 2027)", 10, True, INK))
     for r in PARTY_NOW:
+        extra = (f" Role: {r['role']}." if r.get("role") else "") + (
+            f" {r['note']} ({r['note_source_publisher']}, {r['note_date']}, {r['note_source_url'].replace('https://', '')})."
+            if r.get("note") else "")
         credits.append((f"{r['candidate']}: :: {r['party_now']} as of {r['as_of']}, {r['source_publisher']}, "
-                        f"{r['source_url'].replace('https://', '')}", 9, False, INK))
+                        f"{r['source_url'].replace('https://', '')}.{extra}", 9, False, INK))
+    real = [r for r in COAL_NAMES if r["status"] == "real"]
+    credits.append(("Coalition names: :: " + "; ".join(
+        f"\"{r['display_name']}\" is a real joint ticket ({r['source_publisher']}, {r['as_of']}, "
+        f"{r['source_url'].replace('https://', '')})" for r in real)
+        + ". Every other pairing is hypothetical, named \"X + Y (what-if)\" (data/reference/coalition_names.csv).",
+        9, False, INK))
     v.append(textbox(sid(pid, "credits"), 40, 302, cw, 410, credits,
                      alt="Credits: each page photo and candidate portrait with photographer, licence and file page; the "
                          "news reports used for each candidate's party now."))
@@ -850,6 +1096,7 @@ def page_tiletip(pid):
 
 
 PAGES = [("overview", page_overview), ("path", page_path), ("map", page_map), ("simulator", page_sim),
+         ("merge", page_merge), ("h2h", page_h2h),
          ("howto", page_how), ("technical", page_technical), ("sources", page_sources)]
 NON_DATA = ("slicer", "textbox", "image")   # the candidate photo is an image too   # never cross-filter sources; textboxes and images are never targets
 
@@ -871,6 +1118,9 @@ def build_pages(report_dir, write_json, extra_hidden=None):
     display, visuals = page_tiletip(TILE_TIP)
     write_page(pages_dir, TILE_TIP, display, visuals, write_json, hidden=True, tooltip=True)
     order.append(TILE_TIP)
+    display, visuals = page_h2htip(H2H_TIP)
+    write_page(pages_dir, H2H_TIP, display, visuals, write_json, hidden=True, tooltip=True)
+    order.append(H2H_TIP)
     if extra_hidden:
         pid, display, visuals = extra_hidden
         write_page(pages_dir, pid, display, visuals, write_json, hidden=True)

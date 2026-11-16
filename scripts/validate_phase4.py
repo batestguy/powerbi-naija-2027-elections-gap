@@ -5,6 +5,10 @@ the blind reproduction by the Phase 4 reviewer is the independence evidence - re
 that reads only the staging CSVs, and compares it with the model's measures for a grid of slider settings,
 including every slider at its minimum and maximum. Writes reports/phase4_validation.json; exits 1 on a failure.
 
+Coalitions (2026-11-16): a second exact re-implementation (Python fractions / whole numbers) of the methodology's
+"Coalitions" section is compared with the coalition measures for every 2 v 1 and 2 v 2 pairing at several follow rates,
+the simulator with the coalition switch On, invalid choices, and the switch Off.
+
 Requires Desktop open on pbip/NaijaElectionsGap.pbip with data refreshed (scripts/pbi_reopen.ps1).
 Usage (repo root):  uv run python -I scripts/validate_phase4.py
 """
@@ -123,6 +127,421 @@ GRID = {
 }
 
 
+# ---------------- coalitions: reference implementation of docs/methodology.md "Coalitions" (exact fractions) ----------
+# Reads only the staging CSVs and data/reference/coalition_names.csv; compares with the model's coalition measures.
+from fractions import Fraction as Fr
+import math, tempfile
+from decimal import Decimal, ROUND_HALF_UP
+
+REFD = ROOT / "data" / "reference"
+
+
+def read_ref(name):
+    with open(REFD / name, encoding="utf-8") as f:
+        return list(csv.DictReader(l for l in f if not l.startswith("#")))
+
+
+CAND = {r["party"]: r["candidate"] for r in read("dim_party.csv")}
+NAMES = {(r["lead"], r["partner"]): r for r in read_ref("coalition_names.csv")}
+SNAME = {s["state_pcode"]: s["state_name"] for s in STATES}
+
+
+def dax_file(q):
+    """Long queries go through a file (command-line length limit)."""
+    with tempfile.NamedTemporaryFile("w", suffix=".dax", delete=False, encoding="utf-8") as f:
+        f.write(q)
+    try:
+        r = subprocess.run(PS + ["-Action", "Query", "-DaxFile", f.name], capture_output=True, text=True,
+                           encoding="utf-8", timeout=600)
+    finally:
+        Path(f.name).unlink(missing_ok=True)
+    if r.returncode:
+        raise RuntimeError(r.stderr or r.stdout)
+    return [{k.rsplit("[", 1)[-1].rstrip("]"): v for k, v in row.items()} for row in json.loads(r.stdout.lstrip("﻿"))]
+
+
+def cfg_filters(c):
+    """c = (al, ap, fa, bl, bp, fb); bp None = Side B alone. Any element None = no selection (left unfiltered)."""
+    al, ap, fa, bl, bp, fb = c
+    f = []
+    for tbl, val in (("coal_a_lead", al), ("coal_a_partner", ap), ("coal_b_lead", bl)):
+        if val is not None:
+            f.append(f'TREATAS({{"{val}"}}, {tbl}[party])')
+    f.append(f'TREATAS({{"{bp or "NONE"}"}}, coal_b_partner[party])')
+    f += [f"TREATAS({{{fa}}}, param_follow_a[Value])", f"TREATAS({{{fb}}}, param_follow_b[Value])"]
+    return f
+
+
+def side_name(lead, partner):
+    return NAMES[(lead, partner)]["display_name"] if partner else f"{CAND[lead]} ({lead})"
+
+
+def coal_per_state(al, ap, fa, bl, bp, fb):
+    """Whole numbers x100 per state: C (Side A), WA (valid, merge page), B (Side B), W (valid, head to head)."""
+    out = {}
+    for s in VALID:
+        C = 100 * VOTES[(s, al)] + fa * VOTES[(s, ap)]
+        WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
+        B = 100 * VOTES[(s, bl)] + (fb * VOTES[(s, bp)] if bp else 0)
+        W = WA - ((100 - fb) * VOTES[(s, bp)] if bp else 0)
+        unused = [x for x in PARTIES if x not in (al, ap, bl, bp)]
+        o = max((100 * VOTES[(s, x)] for x in unused), default=-1)
+        lead = "A" if C > B and C > o else "B" if B > C and B > o else "O" if o > C and o > B else "T"
+        if lead == "O":
+            lead_txt = sorted(unused, key=lambda x: (-VOTES[(s, x)], x))[0] + " (on neither side)"
+        else:
+            lead_txt = {"A": "Side A", "B": "Side B", "T": "Tie"}[lead]
+        status = "Secured" if 4 * C >= WA else "Within reach" if 5 * C >= WA else "Out of reach"
+        out[s] = {"C": C, "WA": WA, "B": B, "W": W, "lead": lead, "lead_txt": lead_txt, "status": status,
+                  "a25": "Yes" if 4 * C >= W else "No", "b25": "Yes" if 4 * B >= W else "No"}
+    return out
+
+
+def verdict_strings(most, a_clears, r_disp, r_clears, nm, rl, k, n):
+    if most == "Yes":
+        v = "Outright win" if a_clears else "No outright winner: run-off (most votes, but not 25% in enough states)"
+        s = (f"{nm} wins outright: the most votes nationwide and a quarter of the vote in {k} states ({n} needed)."
+             if a_clears else f"No outright winner: {nm} has the most votes but a quarter of the vote in only {k} states "
+                              f"({n} needed). This would go to a run-off.")
+    elif most == "Tied":
+        v, s = "Tie on votes: no outright winner", "Tie on votes: no outright winner."
+    elif r_clears:
+        v, s = f"Loses: {r_disp} wins outright", f"{nm} loses: {rl} has the most votes and a quarter of the vote in enough states."
+    else:
+        v = f"No outright winner: run-off ({r_disp} has most votes)"
+        s = (f"No outright winner: {rl} has the most votes but not a quarter of the vote in enough states. This would go "
+             f"to a run-off.")
+    return v, s
+
+
+def coal_national(al, ap, fa, bl, bp, fb, n):
+    per = coal_per_state(al, ap, fa, bl, bp, fb)
+    C = sum(p["C"] for p in per.values())
+    WA = sum(p["WA"] for p in per.values())
+    W = sum(p["W"] for p in per.values())
+    Bn = sum(p["B"] for p in per.values())
+    ents = {bl: Bn, **{x: 100 * sum(VOTES[(s, x)] for s in VALID) for x in PARTIES if x not in (al, ap, bl, bp)}}
+    r = sorted(ents, key=lambda x: (-ents[x], x))[0]
+    rv = ents[r]
+    r_st = sum(4 * (per[s]["B"] if r == bl else 100 * VOTES[(s, r)]) >= per[s]["W"] for s in VALID)
+    most = "Yes" if C > rv else "Tied" if C == rv else "No"
+    a_st = sum(p["a25"] == "Yes" for p in per.values())
+    r_disp = f"{r}+{bp}" if (r == bl and bp) else r
+    rl = side_name(bl, bp) if r == bl else f"{CAND[r]} ({r})"
+    v, s = verdict_strings(most, a_st >= n, r_disp, r_st >= n, side_name(al, ap), rl, a_st, n)
+    return {"stM": sum(4 * p["C"] >= p["WA"] for p in per.values()),
+            "leadSt": sum(4 * VOTES[(s, al)] >= VALID[s] for s in VALID),
+            "natA": Fr(C, 100), "shAM": Fr(C, WA), "shAh": Fr(C, W), "shBh": Fr(Bn, W), "natB": Fr(Bn, 100),
+            "stA": a_st, "stB": sum(p["b25"] == "Yes" for p in per.values()),
+            "ledA": sum(p["lead"] == "A" for p in per.values()), "ledB": sum(p["lead"] == "B" for p in per.values()),
+            "rival": r_disp, "rx100": rv, "rst": r_st, "most": most, "verdict": v, "sent": s,
+            "nameA": side_name(al, ap), "nameB": side_name(bl, bp)}
+
+
+def coal_sim(c, st, n):
+    """Simulator with the switch On: steps 1-3 on c and V', rivals as entities (exact fractions)."""
+    al, ap, fa, bl, bp, fb = c
+    per = coal_per_state(al, ap, fa, bl, bp, fb)
+    t = Fr(st["t"]).limit_denominator(1000) / 100
+    rows, nat_c, nat_v = {}, Fr(0), Fr(0)
+    ents = [bl] + [x for x in PARTIES if x not in (al, ap, bl, bp)]
+    rv = {e: Fr(0) for e in ents}
+    r25 = {e: 0 for e in ents}
+    for s in VALID:
+        cv, Vp = Fr(per[s]["C"], 100), Fr(per[s]["W"], 100)
+        V1 = Vp + cv * t
+        p1 = cv * (1 + t) / V1
+        sw = (Fr(st["S"]).limit_denominator(10) + Fr(st["Z"][ZONE[s]]).limit_denominator(10)) / 100
+        u = p1 + sw
+        p2 = min(Fr(1), max(Fr(0), u))
+        scale = (1 - p2) / (1 - p1) if p1 < 1 else Fr(0)
+        v2 = p2 * V1
+        rows[s] = {"p": p2, "u": u, "V1": V1, "v2": v2, "need": math.ceil(max(Fr(0), V1 / 4 - v2)),
+                   "spare": math.floor(max(Fr(0), v2 - V1 / 4))}
+        nat_c += v2
+        nat_v += V1
+        for e in ents:
+            ev = (Fr(per[s]["B"], 100) if e == bl else Fr(VOTES[(s, e)])) * scale
+            rv[e] += ev
+            r25[e] += ev >= V1 / 4
+    sec = sum(r["p"] >= Fr(1, 4) for r in rows.values())
+    ranked = sorted(rows, key=lambda s: (-rows[s]["p"], s))
+    tip = ranked[n - 1]
+    lead = sorted(ents, key=lambda e: (-rv[e], e))[0]
+    most = "Yes" if nat_c > rv[lead] else "Tied" if nat_c == rv[lead] else "No"
+    r_disp = f"{lead}+{bp}" if (lead == bl and bp) else lead
+    nm = side_name(al, ap)
+    rl = side_name(bl, bp) if lead == bl else f"{CAND[lead]} ({lead})"
+    verdict, _ = verdict_strings(most, sec >= n, r_disp, r25[lead] >= n, nm, rl, sec, n)
+    # Result sentence (the simulator's own wording) and deciding-state sentence
+    if most == "Yes":
+        result = (f"{nm} wins outright: the most votes nationwide and a quarter of the vote in {sec} states ({n} needed)."
+                  if sec >= n else f"No outright winner: {nm} has the most votes but a quarter of the vote in only {sec} "
+                                   f"states ({n} needed). This would go to a run-off.")
+    elif most == "Tied":
+        result = "Tie on votes: no outright winner."
+    elif r25[lead] >= n:
+        result = f"{nm} loses: {rl} has the most votes and a quarter of the vote in enough states."
+    else:
+        result = (f"No outright winner: {rl} has the most votes but not a quarter of the vote in enough states. This would "
+                  f"go to a run-off.")
+    gap = (Fr(1, 4) - rows[tip]["p"]) * 100
+    g1 = (Decimal(abs(gap).numerator) / Decimal(abs(gap).denominator)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+    decide = (f"{SNAME[tip]} is the deciding state. {nm} is {g1} points above a quarter of the vote there: about "
+              f"{rows[tip]['spare']:,} votes could switch to other candidates before the state is lost." if gap <= 0 else
+              f"{SNAME[tip]} is the deciding state. {nm} is {g1} points short of a quarter of the vote there: about "
+              f"{rows[tip]['need']:,} more votes would need to switch from other candidates to {nm}.")
+    zname = {"NC": "North Central and Abuja", "NE": "North East", "NW": "North West", "SE": "South East",
+             "SS": "South South", "SW": "South West"}
+    parts = ([f"{st['S']:+.1f} points everywhere"] if st["S"] else []) + \
+            ([", ".join(f"{st['Z'][z]:+.1f} in the {zname[z]}" for z in ZONES if st["Z"][z])] if any(st["Z"].values()) else []) + \
+            ([f"{int(st['t']):+d}% turnout among the coalition's 2023 voters"] if st["t"] else [])
+    inforce = ("; ".join(parts) if parts else "No changes: this is the 2023 result") + f". {n} states needed to win."
+    return {"per": rows, "sec": sec, "wr": sum(Fr(1, 5) <= r["p"] < Fr(1, 4) for r in rows.values()),
+            "out": sum(r["p"] < Fr(1, 5) for r in rows.values()), "cap": sum(r["u"] <= 0 or r["u"] >= 1 for r in rows.values()),
+            "with": 37, "need": max(0, n - sec), "clears": "Yes" if sec >= n else "No", "tip": tip,
+            "nat": nat_c, "share": nat_c / nat_v, "lead": r_disp, "lead_votes": rv[lead], "lead_25": r25[lead],
+            "most": most, "verdict": verdict, "result": result, "decide": decide, "inforce": inforce}
+
+
+def close(a, b, rel=1e-9):
+    return a is not None and abs(float(a) - float(b)) <= rel * max(1.0, abs(float(b)))
+
+
+ALL_2V1 = [(al, ap, f, bl, None, 100) for al in PARTIES for ap in PARTIES if ap != al
+           for bl in PARTIES if bl not in (al, ap) for f in (0, 35, 100)]
+FOLLOW_2V2 = [(100, 100), (0, 35), (35, 0), (55, 100), (5, 95)]
+ALL_2V2 = [(al, ap, fa, bl, bp, fb) for al in PARTIES for ap in PARTIES if ap != al
+           for bl in PARTIES if bl not in (al, ap) for bp in PARTIES if bp not in (al, ap, bl) for fa, fb in FOLLOW_2V2]
+PRESET = ("LP", "NNPP", 100, "APC", None, 100)
+
+
+def coalition_pages_check():
+    configs = [PRESET] + ALL_2V1 + ALL_2V2
+    state_bad, nat_bad, f_bad = [], [], []
+    for i in range(0, len(configs), 40):
+        batch = configs[i:i + 40]
+        parts = []
+        for j, c in enumerate(batch):
+            parts.append(f'CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_pcode]), "cfg", {i + j}, '
+                         '"A100", [Side A x100], "WA", [Valid x100 (merge)], "W", [Valid x100 (head to head)], '
+                         '"B100", [Side B x100], "st", [Side A status (merge)], "lead", [Who leads (head to head)], '
+                         '"a25", [Side A at 25% (head to head)], "b25", [Side B at 25% (head to head)], '
+                         '"shA", [Side A share (merge)], "shAh", [Side A share (head to head)], '
+                         f'"shB", [Side B share (head to head)]), {", ".join(cfg_filters(c))})')
+        rows = dax_file("EVALUATE UNION(" + ", ".join(parts) + ")")
+        got = {(r["cfg"], r["state_pcode"]): r for r in rows}
+        for j, c in enumerate(batch):
+            per = coal_per_state(*c)
+            for s, ref in per.items():
+                g = got.get((i + j, s))
+                ok = g is not None and (g["A100"], g["WA"], g["W"], g["B100"]) == (ref["C"], ref["WA"], ref["W"], ref["B"]) \
+                    and g["st"] == ref["status"] and g["lead"] == ref["lead_txt"] and g["a25"] == ref["a25"] \
+                    and g["b25"] == ref["b25"] and close(g["shA"], Fr(ref["C"], ref["WA"]), 1e-12) \
+                    and close(g["shAh"], Fr(ref["C"], ref["W"]), 1e-12) and close(g["shB"], Fr(ref["B"], ref["W"]), 1e-12)
+                if not ok:
+                    state_bad.append({"config": c, "state": s, "model": g, "reference": {k: str(v) for k, v in ref.items()}})
+                # follow-rate end points: at 100% the coalition = lead + partner exactly; at 0 it = lead, V' = V - partner
+                al, ap, fa = c[:3]
+                if g is not None and fa == 100 and (g["A100"] != 100 * (VOTES[(s, al)] + VOTES[(s, ap)]) or g["WA"] != 100 * VALID[s]):
+                    f_bad.append({"config": c, "state": s, "model": g})
+                if g is not None and fa == 0 and (g["A100"] != 100 * VOTES[(s, al)] or g["WA"] != 100 * (VALID[s] - VOTES[(s, ap)])):
+                    f_bad.append({"config": c, "state": s, "model": g})
+        # national, both rule readings
+        parts = []
+        for j, c in enumerate(batch):
+            for n in (24, 25):
+                parts.append(f'CALCULATETABLE(ROW("cfg", {i + j}, "N", {n}, "stM", [Side A states at 25% (merge)], '
+                             '"leadSt", [Side A lead states at 25%], "natA", [Side A national votes], '
+                             '"shAM", [Side A national share (merge)], "shAh", [Side A national share (head to head)], '
+                             '"shBh", [Side B national share (head to head)], "natB", [Side B national votes], '
+                             '"stA", [Side A states at 25% (head to head)], "stB", [Side B states at 25% (head to head)], '
+                             '"ledA", [States led by Side A], "ledB", [States led by Side B], "rival", [Head to head rival], '
+                             '"rx100", [Head to head rival x100], "rst", [Head to head rival states at 25%], '
+                             '"most", [Head to head most votes], "verdict", [Head to head verdict], '
+                             '"sent", [Head to head sentence], "nameA", [Side A name], "nameB", [Side B name]), '
+                             f'{", ".join(cfg_filters(c))}, TREATAS({{{n}}}, param_rule[Value]))')
+        nat_rows = []
+        for k in range(0, len(parts), 16):   # 8 pairings x 2 rules per query (80 at once ran out of engine memory)
+            nat_rows += dax_file("EVALUATE UNION(" + ", ".join(parts[k:k + 16]) + ")")
+        for r in nat_rows:
+            c = batch[r["cfg"] - i]
+            ref = coal_national(*c, r["N"])
+            diff = {k: [r.get(k), str(v)] for k, v in ref.items()
+                    if not (close(r.get(k), v, 1e-12) if isinstance(v, Fr) else r.get(k) == v)}
+            if diff:
+                nat_bad.append({"config": c, "N": r["N"], "differences": diff})
+    n_states = 37 * len(configs)
+    check(f"coalition pages, per state: whole-number votes and valid totals, shares, status, who leads and 25% flags = "
+          f"exact reference ({len(configs)} pairings x follow rates: preset, every 2 v 1 at 0/35/100%, every 2 v 2 at 5 "
+          f"follow-rate pairs; {n_states} state rows)", not state_bad, {"mismatches": state_bad[:5], "count": len(state_bad)})
+    check("coalition pages, national: states at 25%+ (coalition, lead alone, both sides), votes, shares, states led, "
+          "leading rival, most votes, verdict and sentence = exact reference (N = 24 and 25)", not nat_bad,
+          {"mismatches": nat_bad[:5], "count": len(nat_bad), "preset_N24": {k: str(v) for k, v in coal_national(*PRESET, 24).items()}})
+    check("follow 100%: coalition = lead + partner exactly and valid total unchanged; follow 0: coalition = lead and "
+          "valid total = 2023 valid - partner's votes (every state, every pairing at those rates)", not f_bad,
+          {"mismatches": f_bad[:5]})
+
+
+SIM_CONFIGS = {"preset NDC (Obi + Kwankwaso) 100% vs APC": PRESET,
+               "2 v 2: PDP+LP 35% vs APC+NNPP 70%": ("PDP", "LP", 35, "APC", "NNPP", 70),
+               "2 v 1: APC+PDP 0% vs NNPP": ("APC", "PDP", 0, "NNPP", None, 100),
+               "2 v 1: NNPP+LP 85% vs PDP": ("NNPP", "LP", 85, "PDP", None, 100)}
+SIM_SETTINGS = {
+    "neutral": setting(),
+    "every slider at minimum": setting(t=-50, S=-20, **{z: -20 for z in ZONES}),
+    "every slider at maximum": setting(t=50, S=20, **{z: 20 for z in ZONES}),
+    "national +5": setting(S=5),
+    "supporters +20%, national -2": setting(t=20, S=-2),
+    "odd: supporters -37%, national +7.5, mixed zones": setting(t=-37, S=7.5, NC=3, NE=-2.5, SE=1, SS=-4.5, SW=6),
+    "odd: supporters +13%, national -3.5, NW +0.5, SE -6.5": setting(t=13, S=-3.5, NW=0.5, SE=-6.5),
+    "mixed": setting(t=-10, S=1.5, NC=3, NE=-2, NW=-4.5, SE=12, SS=6, SW=-1),
+    "national -20 alone": setting(S=-20),
+}
+
+
+def coalition_simulator_check():
+    bad = []
+    for label, st in SIM_SETTINGS.items():
+        names = list(SIM_CONFIGS)
+        on = ['TREATAS({"On"}, coal_switch[Value])', filters(st)]
+        parts = [f'CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_pcode]), "cfg", {j}, "p", [Scenario share], '
+                 f'"u", [Scenario share uncapped], "need", [Votes needed], "spare", [Votes to spare]), '
+                 f'{", ".join(on + cfg_filters(SIM_CONFIGS[k]))})' for j, k in enumerate(names)]
+        rows = dax_file("EVALUATE UNION(" + ", ".join(parts) + ")")
+        parts = [f'CALCULATETABLE(ROW("cfg", {j}, "N", {n}, "sec", [Units secured], "wr", [Units within reach], '
+                 '"out", [Units out of reach], "cap", [Units at a cap], "with", [Units with a scenario], '
+                 '"need", [Units still needed], "clears", [Clears the rule], "tip", [Tipping-point P-code], '
+                 '"nat", [Scenario national votes], "share", [Scenario national share], "lead", [Leading rival], '
+                 '"lead_votes", [Leading rival votes], "lead_25", [Leading rival units at 25%], "most", [Has most votes], '
+                 '"verdict", [Verdict], "result", [Result sentence], "decide", [Deciding state sentence], '
+                 f'"inforce", [Assumptions in force]), {", ".join(on + cfg_filters(SIM_CONFIGS[k]))}, '
+                 f'TREATAS({{{n}}}, param_rule[Value]))' for j, k in enumerate(names) for n in (24, 25)]
+        nat = dax_file("EVALUATE UNION(" + ", ".join(parts) + ")")
+        refs = {}
+        for r in nat:
+            k = names[r["cfg"]]
+            ref = refs[(k, r["N"])] = coal_sim(SIM_CONFIGS[k], st, r["N"])
+            diff = {}
+            for key in ("sec", "wr", "out", "cap", "with", "need", "clears", "tip", "lead", "lead_25", "most", "verdict",
+                        "result", "decide", "inforce"):
+                if r[key] != ref[key]:
+                    diff[key] = [r[key], ref[key]]
+            for key in ("nat", "lead_votes"):
+                if not close(r[key], ref[key], 1e-9):
+                    diff[key] = [r[key], float(ref[key])]
+            if not close(r["share"], ref["share"], 1e-12):
+                diff["share"] = [r["share"], float(ref["share"])]
+            if diff:
+                bad.append({"setting": label, "coalition": k, "N": r["N"], "differences": diff})
+        for r in rows:
+            k = names[r["cfg"]]
+            ref = refs[(k, 24)]["per"][r["state_pcode"]]
+            if not (close(r["p"], ref["p"], 1e-12) and close(r["u"], ref["u"], 1e-12) and r["need"] == ref["need"]
+                    and r["spare"] == ref["spare"] and 0 <= r["p"] <= 1):
+                bad.append({"setting": label, "coalition": k, "state": r["state_pcode"], "model": r,
+                            "reference": {x: str(y) for x, y in ref.items()}})
+        if len(rows) != 37 * len(names) or len(nat) != 2 * len(names):
+            bad.append({"setting": label, "rows": len(rows), "national_rows": len(nat)})
+    check(f"simulator with the coalition switch On: per-state shares (capped and uncapped), votes needed / to spare, "
+          f"counts, cap count, tipping point, rivals, most votes, verdict, result / deciding-state / settings sentences "
+          f"= exact reference ({len(SIM_SETTINGS)} slider settings incl. extremes and odd values x {len(SIM_CONFIGS)} "
+          f"coalitions incl. 2 v 2, N = 24 and 25)", not bad,
+          {"mismatches": bad[:6], "count": len(bad),
+           "preset_neutral_N24": {k: (str(v) if not isinstance(v, dict) else "...")
+                                  for k, v in coal_sim(PRESET, setting(), 24).items()}})
+
+
+def coalition_invalid_check():
+    cases = {"Side A lead = partner (LP, LP)": (("LP", "LP", 100, "APC", None, 100), "same party", True),
+             "no Side A lead chosen": ((None, "NNPP", 100, "APC", None, 100), "lead party", True),
+             "Side B lead already on Side A": (("LP", "NNPP", 100, "NNPP", None, 100), "already on Side A", False),
+             "Side B partner already on Side A": (("LP", "NNPP", 100, "APC", "LP", 100), "already on Side A", False),
+             "Side B partner = Side B lead": (("LP", "NNPP", 100, "APC", "APC", 100), "same", False),
+             "no Side B lead chosen": (("LP", "NNPP", 100, None, None, 100), "main party", False)}
+    bad, seen = [], {}
+    for name, (c, word, a_bad) in cases.items():
+        f = ", ".join(cfg_filters(c))
+        r = dax_file(f'EVALUATE CALCULATETABLE(ROW("msgA", [Side A message], "msgB", [Side B message], '
+                     '"stM", [Side A states at 25% (merge)], "natA", [Side A national votes], "shA", [Side A national share (merge)], '
+                     '"stA", [Side A states at 25% (head to head)], "natB", [Side B national votes], "verdict", [Head to head verdict], '
+                     '"sent", [Head to head sentence], "ledA", [States led by Side A], '
+                     '"sim_sec", CALCULATE([Units secured (national)], coal_switch[Value] = "On"), '
+                     '"sim_verdict", CALCULATE([Verdict], coal_switch[Value] = "On"), '
+                     '"sim_result", CALCULATE([Result sentence], coal_switch[Value] = "On"), '
+                     '"sim_share", CALCULATE([Scenario share], coal_switch[Value] = "On", dim_state[state_pcode] = "NG001"), '
+                     '"sim_rival", CALCULATE([Leading rival], coal_switch[Value] = "On"), '
+                     '"sim_msg", CALCULATE([Simulator coalition sentence], coal_switch[Value] = "On")), '
+                     f'{f}, TREATAS({{"APC"}}, dim_party[party]))')[0]
+        seen[name] = r
+        blank_keys = ["stA", "natB", "verdict", "sent", "ledA", "sim_sec", "sim_verdict", "sim_result", "sim_share", "sim_rival"]
+        if a_bad:
+            blank_keys += ["stM", "natA", "shA"]
+        msg = r["msgA"] if a_bad else r["msgB"]
+        if any(r[k] is not None for k in blank_keys) or word not in (msg or "") or "not complete" not in (r["sim_msg"] or ""):
+            bad.append(name)
+    check("invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank "
+          "figures on both coalition pages and in the simulator with the switch On, and a message saying what to change",
+          not bad, {"failed": bad, "seen": seen})
+
+
+def coalition_switch_off_check():
+    """Switch Off (explicitly, with a coalition picked) = no coalition filter at all, for every candidate."""
+    st = setting(t=10, S=4, SE=-6, NW=3)
+    meas = ('"sec", [Units secured (national)], "tip", [Tipping-point P-code], "nat", [Scenario national votes], '
+            '"lead", [Leading rival], "lead_votes", [Leading rival votes], "lead25", [Leading rival units at 25%], '
+            '"verdict", [Verdict], "result", [Result sentence], "decide", [Deciding state sentence], '
+            '"inforce", [Assumptions in force], "share", [Scenario national share]')
+    base = dax(f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_party[party], {meas}), {filters(st)})')
+    off = dax_file(f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_party[party], {meas}), {filters(st)}, '
+                   f'TREATAS({{"Off"}}, coal_switch[Value]), {", ".join(cfg_filters(("PDP", "LP", 35, "APC", "NNPP", 70)))})')
+    a = {r["party"]: r for r in base if r["party"] in PARTIES}
+    b = {r["party"]: r for r in off if r["party"] in PARTIES}
+    check("switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate "
+          "(turnout +10, national +4, SE -6, NW +3)", a == b and len(a) == 4, {"no_coalition": a, "switch_off": b})
+
+
+def coalition_boundary_search():
+    """Exact search (whole numbers): can any reachable simulator setting with the switch On put Side A exactly on 25% or
+    20% in a state? p1 = C (100 + k) / (100 W + C k) with C, W the x100 whole numbers; a hit needs 200 p1 to be a whole
+    number m0 with 50 - m0 or 40 - m0 within the reachable total swing (-80..80 half-points)."""
+    import numpy as np
+    ks = np.arange(-50, 51, dtype=np.int64)
+    hits, combos = [], 0
+    for al in PARTIES:
+        for ap in PARTIES:
+            if ap == al:
+                continue
+            others = [x for x in PARTIES if x not in (al, ap)]
+            for s in VALID:
+                for fa in range(0, 101, 5):
+                    C = 100 * VOTES[(s, al)] + fa * VOTES[(s, ap)]
+                    WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
+                    Ws = {WA} | {WA - (100 - fb) * VOTES[(s, bp)] for bp in others for fb in range(0, 101, 5)}
+                    for W in Ws:
+                        combos += len(ks)
+                        num = 200 * C * (100 + ks)
+                        den = 100 * W + C * ks
+                        ok = den > 0
+                        idx = np.nonzero(ok & (num % np.where(ok, den, 1) == 0))[0]
+                        for i in idx:
+                            m0 = int(num[i] // den[i])
+                            if any(-80 <= target - m0 <= 80 for target in (50, 40)):
+                                hits.append({"lead": al, "partner": ap, "follow": fa, "state": s, "W": int(W),
+                                             "turnout": int(ks[i]), "p1_x200": m0})
+    check("exact-boundary search, switch On: no reachable setting (every pairing, follow rates, Side B partner, turnout, "
+          "swing) puts the coalition exactly on 25% or 20% in any state", not hits,
+          {"combinations_turnout_level": combos, "swing_steps_each": 161, "exact_hits": hits[:10], "hit_count": len(hits)})
+
+
+def coalition_checks():
+    coalition_pages_check()
+    coalition_simulator_check()
+    coalition_invalid_check()
+    coalition_switch_off_check()
+    coalition_boundary_search()
+
+
 def main():
     for label, st in GRID.items():
         # per unit x candidate
@@ -231,6 +650,10 @@ def main():
     b = dax('EVALUATE ROW("none", [Units secured], "others", CALCULATE([Units secured], dim_party[party] = "OTHERS"),'
             ' "others_share", CALCULATE([Scenario share], dim_party[party] = "OTHERS", dim_state[state_pcode] = "NG001"))')[0]
     check("no candidate / OTHERS -> blank scenario", all(v is None for v in b.values()), b)
+
+    # coalitions (docs/methodology.md "Coalitions", added 2026-11-16): pages, simulator switch On, invalid choices,
+    # switch Off = today's engine, exact-boundary search
+    coalition_checks()
 
     failed = [c["check"] for c in checks if c["status"] == "fail"]
     out = {"built_by": "scripts/validate_phase4.py", "method": "docs/methodology.md", "gate_passed": not failed,

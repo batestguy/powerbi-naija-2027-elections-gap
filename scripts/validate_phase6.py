@@ -15,6 +15,10 @@ Covers the brief's Phase 6 list where a script can decide it:
  11. (2026-11-14 redesign) Result sentence and settings sentence = the Phase 4 reference (validate_phase4.py functions)
  12. (2026-11-14 redesign) Candidate identity: portrait data URI = built file (<= 30,000 chars), party now = the dated
      sources in data/reference/party_now.csv, party-colour text contrast >= 4.5:1 (recomputed here)
+ 13. (2026-11-16 coalitions) Coalition names: every "real" row of data/reference/coalition_names.csv has a source
+     (publisher, URL, date) and the model's name table = the CSV; the real ticket's date on the pages = the CSV
+ 14. (2026-11-16 coalitions) Coalition pickers, follow sliders and switch saved at the preset (LP + NNPP, 100%, vs APC
+     alone; switch Off) and synced across the coalition pages and the simulator
 Writes reports/phase6_validation.json; exits 1 on any gate failure.
 
 Usage (repo root, Desktop open on pbip/NaijaElectionsGap.pbip):  uv run python -I scripts/validate_phase6.py
@@ -205,10 +209,15 @@ def result_check():
 
 
 def expected_identity(party, r):
-    """Identity text rebuilt from party_now.csv (publisher and full date), independent of the generator."""
-    y, m, d = r["as_of"].split("-")
-    month = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split()[int(m) - 1]
-    return f"2023: {party}. Now: {r['party_now']} ({r['source_publisher'].split(' (')[0]}, {int(d)} {month} {y})"
+    """Identity text rebuilt from party_now.csv (publisher and full date; 2026-11-16: role and dated short note),
+    independent of the generator."""
+    def day(x):
+        y, m, d = x.split("-")
+        return f"{int(d)} {'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()[int(m) - 1]} {y}"
+    role = f", {r['role']}" if r.get("role") else ""
+    note = (f". {r['note_short']} ({r['note_source_publisher'].split(' (')[0]}, {day(r['note_date'])})"
+            if r.get("note_short") else "")
+    return f"2023: {party}. Now: {r['party_now']}{role} ({r['source_publisher'].split(' (')[0]}, {day(r['as_of'])}){note}"
 
 
 def identity_check():
@@ -243,6 +252,69 @@ def identity_check():
         if not ok:
             bad.append(party)
     return not bad, {"failed": bad, "parties": ev}
+
+
+NO_PHOTO = {"Merge two parties", "Head to head"}
+COAL_ON = 'coal_switch[Value] = "On"'
+COAL_2V2 = ('coal_a_lead[party] = "PDP", coal_a_partner[party] = "LP", coal_b_lead[party] = "APC", '
+            'coal_b_partner[party] = "NNPP", param_follow_a[Value] = 35, param_follow_b[Value] = 70')
+
+
+def coalition_names_check(pg):
+    rows = read("coalition_names.csv", REF)
+    model = {(r["l"], r["p"]): (r["n"], r["st"]) for r in dax('EVALUATE SELECTCOLUMNS(coalition_names, "l", '
+             'coalition_names[lead], "p", coalition_names[partner], "n", coalition_names[display_name], "st", '
+             'coalition_names[status])')}
+    csvm = {(r["lead"], r["partner"]): (r["display_name"], r["status"]) for r in rows}
+    real = [r for r in rows if r["status"] == "real"]
+    no_source = [r["display_name"] for r in real if not (r["source_url"].startswith("https://") and r["as_of"]
+                                                         and r["source_publisher"])]
+    pairs_ok = len(rows) == 12 and set(csvm) == {(a, b) for a in PARTIES for b in PARTIES if a != b}
+    bad_status = [r["display_name"] for r in rows if r["status"] not in ("real", "hypothetical")
+                  or (r["status"] == "hypothetical" and not r["display_name"].endswith("(what-if)"))]
+    text = " ".join(json.dumps(v, ensure_ascii=False) for p in pg.values() for v in p["visuals"])
+
+    def day(x):
+        y, m, d = x.split("-")
+        return f"{int(d)} {'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()[int(m) - 1]} {y}"
+    page_dates = {r["display_name"]: (day(r["as_of"]) in text and r["as_of"] in text) for r in real}
+    ok = model == csvm and not no_source and pairs_ok and not bad_status and all(page_dates.values()) and len(real) >= 1
+    return ok, {"real_rows": [{k: r[k] for k in ("lead", "partner", "display_name", "source_publisher", "source_url",
+                                                  "as_of")} for r in real],
+                "real_without_source": no_source, "model_equals_csv": model == csvm, "all_12_ordered_pairs": pairs_ok,
+                "bad_status_or_name": bad_status, "real_date_in_page_text": page_dates}
+
+
+def coalition_preset_check(pg, follow):
+    """Saved slicer states: pickers at the preset, follow 100, switch Off; same sync group per field on every page."""
+    want = {"coal_a_lead": "'Peter Obi (LP)'", "coal_a_partner": "'Rabiu Kwankwaso (NNPP)'",
+            "coal_b_lead": "'Bola Tinubu (APC)'", "coal_b_partner": "'Nobody: one party alone'", "coal_switch": "'Off'",
+            "param_follow_a": "100L", "param_follow_b": "100L"}
+    found, bad = {}, []
+    for name in ("Merge two parties", "Head to head", "What-if simulator"):
+        for v in pg[name]["visuals"]:
+            q = v["visual"]
+            if q.get("visualType") != "slicer":
+                continue
+            tbl = q["query"]["queryState"]["Values"]["projections"][0]["field"]["Column"]["Expression"]["SourceRef"]["Entity"]
+            if tbl not in want:
+                continue
+            cond = q["objects"]["general"][0]["properties"]["filter"]["filter"]["Where"][0]["Condition"]
+            val = (cond["In"]["Values"][0][0]["Literal"]["Value"] if "In" in cond
+                   else cond["Comparison"]["Right"]["Literal"]["Value"])
+            grp = q.get("syncGroup", {}).get("groupName")
+            found.setdefault(tbl, []).append({"page": name, "value": val, "sync": grp, "hidden": v.get("isHidden", False)})
+            if val != want[tbl] or grp != tbl:
+                bad.append({"page": name, "table": tbl, "value": val, "sync": grp})
+    expect_pages = {"coal_a_lead": 3, "coal_a_partner": 3, "coal_b_lead": 2, "coal_b_partner": 2, "coal_switch": 1,
+                    "param_follow_a": 3, "param_follow_b": 2}
+    counts = {t: len(found.get(t, [])) for t in want}
+    sim_visible = [x for t in want for x in found.get(t, []) if x["page"] == "What-if simulator" and not x["hidden"]
+                   and t != "coal_switch"]
+    ok = not bad and counts == expect_pages and not sim_visible and follow == {"param_follow_a": "100L",
+                                                                              "param_follow_b": "100L"}
+    return ok, {"found": found, "mismatches": bad, "counts": counts, "expected_counts": expect_pages,
+                "simulator_follow_saved": follow, "pickers_visible_on_simulator": sim_visible}
 
 
 def page_numbers_check():
@@ -328,6 +400,7 @@ def main():
             saved[tbl] = cond["Comparison"]["Right"]["Literal"]["Value"]
         except (KeyError, IndexError, TypeError):
             continue
+    follow = {t: saved.pop(t) for t in [t for t in saved if t.startswith("param_follow_")]}   # coalition (hidden, synced)
     neutral = all((val in ("24L", "24D") if t == "param_rule" else val in ("0L", "0D")) for t, val in saved.items())
     check("simulator sliders saved at neutral values (all swings 0, turnout 0, rule 24)", neutral and len(saved) == 9, saved)
 
@@ -437,11 +510,21 @@ def main():
         tab[name] = {"photos": len(imgs), "photo_last_but_caption": bool(imgs) and imgs[-1] == len(vis) - 2,
                      "alt_starts_decorative": all(a.startswith("'Decorative photo:") for a in alts)}
     check("photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one "
-          "per visible page, decorative alt text, last in tab order (before its caption)",
+          "per visible page except the two coalition pages (none, by design: no room beside their pickers), decorative "
+          "alt text, last in tab order (before its caption)",
           all(v["embedded_sha_equals_manifest"] and v["licence_ok"] and v["bytes"] <= 250_000 for v in ph.values())
-          and pman["total_bytes"] <= 2_000_000 and len(tab) == 7
-          and all(v["photos"] == 1 and v["photo_last_but_caption"] and v["alt_starts_decorative"] for v in tab.values()),
-          {"files": ph, "total_bytes": pman["total_bytes"], "pages": tab})
+          and pman["total_bytes"] <= 2_000_000 and len(tab) == 9
+          and all((v["photos"] == 0) if name in NO_PHOTO else
+                  (v["photos"] == 1 and v["photo_last_but_caption"] and v["alt_starts_decorative"]) for name, v in tab.items()),
+          {"files": ph, "total_bytes": pman["total_bytes"], "pages": tab,
+           "pages_without_photo_by_design": sorted(NO_PHOTO)})
+
+    # 13-14. coalitions
+    check("coalition names: every real row has publisher, URL and date; model name table = CSV; real ticket's date on "
+          "the pages = CSV", *coalition_names_check(pg))
+    check("coalition pickers, follow sliders and switch saved at the preset (Obi (LP) + Kwankwaso (NNPP), 100%, vs "
+          "Tinubu (APC) alone; switch Off), in matching sync groups on the coalition pages and the simulator",
+          *coalition_preset_check(pg, follow))
 
     # 7. engine time for the heaviest queries at a non-neutral setting (median of 3, minus a trivial-query baseline)
     busy = ("param_swing_national[Value] = 4, param_swing_SE[Value] = -6, param_swing_NW[Value] = 3, "
@@ -454,6 +537,15 @@ def main():
                            f'"need", [Units still needed], "ns", [Scenario national share], "cap", [Units at a cap]), {busy})',
         "Spread map": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_pcode], "s", [Scenario share], '
                       f'"d", [Points from 25%]), {busy})',
+        # coalitions (2026-11-16): simulator cards with the switch On (2 v 2), and the Head to head page's heaviest parts
+        "Simulator cards (coalition On, 2 v 2)": f'EVALUATE CALCULATETABLE(ROW("v", [Verdict], "m", [Has most votes], '
+                           f'"rv", [Leading rival], "tu", [Tipping-point unit], "tg", [Tipping-point gap (points)], '
+                           f'"sec", [Units secured (national)], "need", [Units still needed], "ns", [Scenario national share], '
+                           f'"cap", [Units at a cap], "r", [Result sentence]), {busy}, {COAL_ON}, {COAL_2V2})',
+        "Head to head table + cards": f'EVALUATE CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_name]), "a", '
+                           f'[Side A share (head to head)], "b", [Side B share (head to head)], "w", [Who leads (head to head)], '
+                           f'"a25", [Side A at 25% (head to head)], "b25", [Side B at 25% (head to head)], "s", '
+                           f'[Head to head sentence], "la", [States led by Side A], "c", [Head to head leader colour]), {COAL_2V2})',
     }
 
     def timed(q):

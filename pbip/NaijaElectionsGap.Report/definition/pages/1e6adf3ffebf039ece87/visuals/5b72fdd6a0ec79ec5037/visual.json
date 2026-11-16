@@ -305,7 +305,7 @@
                     }
                   },
                   {
-                    "value": "APC as of 2026-05-25, Leadership (via AllAfrica), allafrica.com/stories/202605250112.html",
+                    "value": "APC as of 2026-05-25, Leadership (via AllAfrica), allafrica.com/stories/202605250112.html.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -326,7 +326,7 @@
                     }
                   },
                   {
-                    "value": "ADC as of 2026-05-27, Premium Times (via AllAfrica), allafrica.com/stories/202605280129.html",
+                    "value": "ADC as of 2026-05-27, Premium Times (via AllAfrica), allafrica.com/stories/202605280129.html. His ADC ticket is under court challenge: on 5 Nov 2026 the Federal High Court in Abuja nullified the ADC leadership's decisions, including the presidential primary; the ADC is appealing (Pulse, 2026-11-05, www.pulse.ng/story/atiku-abubakar-adc-ticket-nullified-court-ruling-2026110511553453175).",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -347,7 +347,7 @@
                     }
                   },
                   {
-                    "value": "NDC as of 2026-11-08, Vanguard, www.vanguardngr.com/2026/11/2027-obi-is-coming-to-stop-the-erosion-of-nigerias-commonwealth-ndc-tells-tinubu/",
+                    "value": "NDC as of 2026-11-08, Vanguard, www.vanguardngr.com/2026/11/2027-obi-is-coming-to-stop-the-erosion-of-nigerias-commonwealth-ndc-tells-tinubu/.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -368,7 +368,28 @@
                     }
                   },
                   {
-                    "value": "NDC as of 2026-05-30, Vanguard, www.vanguardngr.com/2026/05/2027-presidency-peter-obi-picks-kwankwaso-as-running-mate/",
+                    "value": "NDC as of 2026-05-30, Vanguard, www.vanguardngr.com/2026/05/2027-presidency-peter-obi-picks-kwankwaso-as-running-mate/. Role: running mate to Peter Obi. NDC special convention affirmed the Peter Obi / Rabiu Kwankwaso ticket for 2027 (Nigeria Democratic Congress (NDC), 2026-05-31, ndcnigeria.com/news/ndc-special-convention-affirms-peter-obi-kwankwaso-ticket-for-2027-c548f05b).",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Coalition names: ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  },
+                  {
+                    "value": "\"NDC (Obi + Kwankwaso)\" is a real joint ticket (Nigeria Democratic Congress (NDC), 2026-05-31, ndcnigeria.com/news/ndc-special-convention-affirms-peter-obi-kwankwaso-ticket-for-2027-c548f05b). Every other pairing is hypothetical, named \"X + Y (what-if)\" (data/reference/coalition_names.csv).",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",

@@ -21,14 +21,23 @@ Kwankwaso, and the no-logos fallback).
 | Candidate overview | How did this candidate do in 2023? | Votes, share, place, states won (of 37), states with results; all 37 states as columns with the bold wine 25% line and a colour key; zone table; closest calls in votes; how sure the margins are | right |
 | Path to 24 | Which states carry the 25% test? | States won, needed, more needed, rule met, deciding state; the deciding state in votes; ranked columns (deciding state black); table with "Extra votes needed to reach a quarter" | left |
 | Spread map | Where is the hold strong or fragile? | Boundary map (hover = state name), equal-size squares with ISO codes in each square, "Every state in words" table, grey "Where is each state?" locator with codes, colour key, counts, code list | right |
-| What-if simulator | What if 2027 differs? | How to play; nine sliders as questions; result sentence; most votes / closest rival / national share; states won / more needed / hit 0% or 100%; deciding state in votes; settings in words; coded tile grid; colour key; "Try these" examples (text) | left |
-| How to read this | What does this claim, and not claim? | The rule, what the numbers are, what the simulator assumes, words used, what it does not claim | right |
+| What-if simulator | What if 2027 differs? | How to play; nine sliders as questions; result sentence; most votes / closest rival / national share; states won / more needed / hit 0% or 100%; deciding state in votes; settings in words; coded tile grid; colour key; "Try these" examples (text). Since 2026-11-16: "Use the coalition?" switch (Off by default; On = every slider applies to Head to head's Side A, Side B is one rival) and "Coalition the simulator is using" card, in place of the 24-or-25 note; the coalition pickers and follow sliders are on this page too, hidden and synced | left |
+| Merge two parties (added 2026-11-16) | What if two 2023 parties had run as one? | Lead and partner pickers with portraits; "partner voters who follow" slider (0–100%, default 100%); the coalition in words (real ticket or what-if); states won by the coalition vs the lead alone, coalition votes and share; ranked columns with the 25% line and colour key; table per state (lead alone, coalition, change, status); assumptions | none (no room beside the pickers) |
+| Head to head (added 2026-11-16) | Coalition against one party or another coalition | Side A and Side B pickers and follow sliders; each side in words (or what to change); votes, share, states at 25%+ and states led, per side; result sentence (Side A's view, 24 needed); tile map by who leads (blue A, vermillion B, grey other/tie) with key and a hover card; table per state; assumptions | none |
+| How to read this | What does this claim, and not claim? | The rule, what the numbers are, what the simulator assumes, merging parties, words used, what it does not claim | right |
 | Technical notes | How exactly is each number made? | Plain section titles; one formula per line in words and symbols (×, ÷, −, ≥, ≤), same mathematics as `docs/methodology.md`; state code list | left |
 | Data sources | Where does each number and picture come from? | Data sources; photo and portrait credits; party-logo trademark notice and file pages; "party now" sources | right |
 | Model check (hidden) | QA only | The Phase 3 check page | — |
 
-Header of every data page: the candidate's free-licence portrait, the 2023 party logo, a box in the party's accent
-colour with "2023: APC. Now: APC (Leadership, 25 May 2026)", the party-now logo, and the candidate selector.
+Header of every candidate data page: the candidate's free-licence portrait, the 2023 party logo, a box in the party's accent
+colour with "2023: APC. Now: APC (Leadership, 25 May 2026)" (since 2026-11-16 also a role, e.g. "running mate to
+Peter Obi", and a dated short note, e.g. "ADC ticket under court challenge (Pulse, 5 Nov 2026)"), the party-now logo,
+and the candidate selector. The two coalition pages have no candidate header: their pickers choose parties.
+
+Coalition pickers (lead, partner, follow rate per side) are synced across Merge two parties, Head to head and the
+simulator; preset Peter Obi (LP) + Rabiu Kwankwaso (NNPP), 100% follow, vs Bola Tinubu (APC) alone. Screenshots:
+`reports/screenshots/coalition/` (default build) and `reports/screenshots/coalition_on/` (simulator with the switch
+preset On, test build `PBIP_COALITION_ON=1`).
 `PBIP_NO_LOGOS=1` at build time replaces both logos with abbreviation badges.
 
 ## Design rules applied

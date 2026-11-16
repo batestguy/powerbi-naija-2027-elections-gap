@@ -9,7 +9,7 @@ Updated: 2026-11-16. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | **queued** (decisions taken, nothing built) | — |
+| 5c Merge parties + head to head | **built, partly verified, too slow with the switch On** (see below) | this commit |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Redesign round (user requests 2026-11-14)
@@ -25,6 +25,21 @@ Updated: 2026-11-16. Update this file in every stage commit.
 Status 2026-11-16: all 8 built except the "Try these" / reset buttons (item 7, shown as text; open question 18). Reviewer pass done; fixes applied: full identity-text check in `validate_phase6.py`, "party now" caveat on Data sources, logo-takedown mitigation corrected in `registers/risks.md`. Rebuilt from the generator after a Desktop save had overwritten the report files.
 
 Still open from the review (minor): Overview Kano note is about Tinubu whatever candidate is selected; a few frozen 2023 numbers in page text (4,858; Kano 506,412 / 517,341; "96 votes in Adamawa") are not tied to a validator; tile-map hover shows the code, not the name.
+
+## Coalition build status (2026-11-16, work-in-progress commit)
+Built: pages "Merge two parties" and "Head to head", simulator switch "Use the coalition?" (default Off), follow sliders, preset NDC (Obi + Kwankwaso) vs APC, `data/reference/coalition_names.csv`, method in `docs/methodology.md` "Coalitions", coalition checks in `validate_phase4.py` / `validate_phase6.py`.
+
+Verified this session:
+- `build_pbip.py` builds 12 pages (11 visible); `powerbi-report-author validate` 0 errors, 0 warnings.
+- Bug fixed: the switch-On rival code used a DAX variable named `lead`, which this Desktop rejects ("The syntax for 'lead' is incorrect"); every measure built on `ON_TAB` (Leading rival, its votes, its states at 25%, Has most votes, Verdict, Result sentence) failed, even with the switch Off. Renamed to `rx`. After the fix (switch Off, APC): Result sentence = "Bola Tinubu wins outright: … 29 states (24 needed)", Verdict = "Outright win", Leading rival = PDP.
+- `validate_phase3.py` pass (07:40).
+- Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
+
+Not verified / open:
+- **Performance blocker:** with the switch On, one ROW of rival/verdict measures takes ~9–30 s (overhead subtracted not yet; PowerShell start-up ≈ 6 s). `coalition_simulator_check`'s national query (8 configs × measures) failed with "not enough memory"; `validate_phase4.py` timed out at 1,800 s inside `validate_phase6.py`. Phase 6 limit is 2 s per page query. Likely cause (unconfirmed): each of Leading rival / votes / units at 25% / code recomputes the whole `ON_TAB` per-state table, and Result sentence / Verdict / Has most votes / Leading rival name nest them. Next step: time single measures with `scratchpad`-style script (preset NDC vs APC, switch On), then compute `ON_TAB` once (e.g. one measure returning the needed values, or fewer nested calls) and re-run.
+- Not yet run to completion: `coalition_pages_check` (193 pairings), `coalition_simulator_check`, `coalition_boundary_search`, rest of `validate_phase6.py`. `reports/phase4_validation.json` and `phase6_validation.json` on disk are from 03:34 / 03:47, **before** the coalition checks existed.
+- No screenshots of the coalition pages; no reviewer pass on the coalition method.
+- Machine memory is tight: one background run was killed for low memory; the Desktop engine uses ~2 GB.
 
 ## Next: coalition feature (user decisions 2026-11-14, updated 2026-11-16)
 - Coalition = at most two 2023 candidates' parties. Head to head = coalition vs one candidate, or coalition vs coalition.

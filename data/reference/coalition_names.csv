@@ -1,0 +1,17 @@
+# Display name of each two-party coalition (lead = top of the ticket, partner = second), for the coalition pages and
+# the simulator's coalition switch (user decision 2026-11-16). Editable: Power BI cannot take free text, so the name is
+# picked from this list. status = real (a dated public source shows the joint ticket) or hypothetical (generated name,
+# no source). Real rows need source_url and as_of; checked by scripts/validate_phase6.py. Evidence: docs/coalition-research.md.
+lead,partner,display_name,status,source_publisher,source_title,source_url,as_of,accessed,note
+APC,PDP,APC + PDP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+APC,LP,APC + LP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+APC,NNPP,APC + NNPP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+PDP,APC,PDP + APC (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+PDP,LP,PDP + LP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+PDP,NNPP,PDP + NNPP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+LP,APC,LP + APC (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+LP,PDP,LP + PDP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+LP,NNPP,NDC (Obi + Kwankwaso),real,Nigeria Democratic Congress (NDC),"NDC special convention affirms Peter Obi, Kwankwaso ticket for 2027",https://ndcnigeria.com/news/ndc-special-convention-affirms-peter-obi-kwankwaso-ticket-for-2027-c548f05b,2026-05-31,2026-11-16,"Peter Obi (LP in 2023) presidential candidate, Rabiu Kwankwaso (NNPP in 2023) running mate, one NDC ticket. Also on INEC's final list (ThisDay ~2026-09-13: https://www.thisdaylive.com/2026/09/13/2027-tinubu-atiku-obi-15-others-make-inecs-final-list-of-presidential-candidates/)"
+NNPP,APC,NNPP + APC (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+NNPP,PDP,NNPP + PDP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,"hypothetical pairing; no joint ticket found (docs/coalition-research.md, 2026-11-16)"
+NNPP,LP,NNPP + LP (what-if),hypothetical,none — hypothetical,,,,2026-11-16,hypothetical: the real NDC ticket has Obi (LP) at the top; choose LP as lead and NNPP as partner for it
