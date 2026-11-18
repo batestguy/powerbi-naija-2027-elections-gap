@@ -10,7 +10,11 @@ Coalitions (2026-11-16): a second exact re-implementation (Python fractions / wh
 the simulator with the coalition switch On, invalid choices, and the switch Off.
 
 Requires Desktop open on pbip/NaijaElectionsGap.pbip with data refreshed (scripts/pbi_reopen.ps1).
-Usage (repo root):  uv run python -I scripts/validate_phase4.py
+Usage (repo root):  uv run python -I scripts/validate_phase4.py                 (all parts -> phase4_validation.json)
+                    uv run python -I scripts/validate_phase4.py --part pages    (one part -> reports/phase4_parts/pages.json)
+                    uv run python -I scripts/validate_phase4.py --combine       (all part files -> phase4_validation.json)
+Parts: core, pages, simulator, invalid, switch_off, boundary. Each result is printed as soon as it is known and the
+output file is rewritten after every check, so a run that is stopped (e.g. for low memory) keeps what it finished.
 """
 import csv, json, subprocess, sys
 from pathlib import Path
@@ -24,8 +28,29 @@ TOL = 1e-12
 checks = []
 
 
+OUT = {"path": None, "part": "all"}   # where partial results go (set in main)
+
+
+def write_out(complete):
+    failed = [c["check"] for c in checks if c["status"] == "fail"]
+    out = {"built_by": "scripts/validate_phase4.py", "method": "docs/methodology.md", "part": OUT["part"],
+           "complete": complete, "gate_passed": complete and not failed,
+           "summary": {"checks": len(checks), "pass": len(checks) - len(failed), "fail": len(failed)},
+           "grid": GRID, "failed": failed, "checks": checks}
+    OUT["path"].parent.mkdir(parents=True, exist_ok=True)
+    OUT["path"].write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8", newline="\n")
+    return out
+
+
 def check(name, ok, evidence):
     checks.append({"check": name, "status": "pass" if ok else "fail", "evidence": evidence})
+    print(f"  [{checks[-1]['status'].upper():4}] {name}", flush=True)
+    if OUT["path"]:
+        write_out(False)
+
+
+def progress(msg):
+    print(f"    ... {msg}", flush=True)
 
 
 def dax(q):
@@ -319,8 +344,9 @@ PRESET = ("LP", "NNPP", 100, "APC", None, 100)
 def coalition_pages_check():
     configs = [PRESET] + ALL_2V1 + ALL_2V2
     state_bad, nat_bad, f_bad = [], [], []
-    for i in range(0, len(configs), 40):
-        batch = configs[i:i + 40]
+    for i in range(0, len(configs), 10):   # 10 pairings per state query (40 pushed the engine past 3 GB)
+        batch = configs[i:i + 10]
+        progress(f"coalition pages: pairings {i}-{i + len(batch) - 1} of {len(configs)}")
         parts = []
         for j, c in enumerate(batch):
             parts.append(f'CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_pcode]), "cfg", {i + j}, '
@@ -362,8 +388,8 @@ def coalition_pages_check():
                              '"sent", [Head to head sentence], "nameA", [Side A name], "nameB", [Side B name]), '
                              f'{", ".join(cfg_filters(c))}, TREATAS({{{n}}}, param_rule[Value]))')
         nat_rows = []
-        for k in range(0, len(parts), 16):   # 8 pairings x 2 rules per query (80 at once ran out of engine memory)
-            nat_rows += dax_file("EVALUATE UNION(" + ", ".join(parts[k:k + 16]) + ")")
+        for k in range(0, len(parts), 4):   # 2 pairings x 2 rules per query (80 at once ran out of engine memory)
+            nat_rows += dax_file("EVALUATE UNION(" + ", ".join(parts[k:k + 4]) + ")")
         for r in nat_rows:
             c = batch[r["cfg"] - i]
             ref = coal_national(*c, r["N"])
@@ -417,7 +443,10 @@ def coalition_simulator_check():
                  '"verdict", [Verdict], "result", [Result sentence], "decide", [Deciding state sentence], '
                  f'"inforce", [Assumptions in force]), {", ".join(on + cfg_filters(SIM_CONFIGS[k]))}, '
                  f'TREATAS({{{n}}}, param_rule[Value]))' for j, k in enumerate(names) for n in (24, 25)]
-        nat = dax_file("EVALUATE UNION(" + ", ".join(parts) + ")")
+        progress(f"simulator, switch On: setting '{label}'")
+        nat = []
+        for k in range(0, len(parts), 2):   # 2 rows per query (8 at once ran out of engine memory)
+            nat += dax_file("EVALUATE UNION(" + ", ".join(parts[k:k + 2]) + ")")
         refs = {}
         for r in nat:
             k = names[r["cfg"]]
@@ -529,9 +558,75 @@ def coalition_boundary_search():
                             if any(-80 <= target - m0 <= 80 for target in (50, 40)):
                                 hits.append({"lead": al, "partner": ap, "follow": fa, "state": s, "W": int(W),
                                              "turnout": int(ks[i]), "p1_x200": m0})
-    check("exact-boundary search, switch On: no reachable setting (every pairing, follow rates, Side B partner, turnout, "
-          "swing) puts the coalition exactly on 25% or 20% in any state", not hits,
-          {"combinations_turnout_level": combos, "swing_steps_each": 161, "exact_hits": hits[:10], "hit_count": len(hits)})
+    # 2026-11-18: exact hits exist (6), so the model compares with a margin of 1E-12 (decision log). Two checks replace
+    # "no hits": (1) every reachable share that is NOT exactly on a line is further from it than 100 x the margin;
+    # (2) at every exact hit the model shows the exact-line answer (label, order, colour; 0 votes needed at 25%).
+    gap = smallest_gap()
+    check("margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition "
+          "setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin",
+          gap["gap"] > 100 * MARGIN, {**gap, "margin": MARGIN, "combinations_turnout_level": combos})
+    bad, tested = [], []
+    for h in hits:
+        al, ap, fa, s, W, k, m0 = h["lead"], h["partner"], h["follow"], h["state"], h["W"], h["turnout"], h["p1_x200"]
+        others = [x for x in PARTIES if x not in (al, ap)]
+        WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
+        sideb = [(bp, fb) for bp in others for fb in range(0, 101, 5) if WA - (100 - fb) * VOTES[(s, bp)] == W]
+        bp, fb = sideb[0] if sideb else (None, 100)
+        bl = next(x for x in others if x != bp)
+        for target in (50, 40):
+            sw = target - m0   # half-points of total swing; put it all on the national slider when it fits
+            if not -40 <= sw <= 40:
+                continue
+            want = ("Secured", 1, "#0072B2") if target == 50 else ("Within reach", 2, "#D55E00")
+            f = cfg_filters((al, ap, fa, bl, bp, fb)) + ['TREATAS({"On"}, coal_switch[Value])', f'TREATAS({{{k}}}, param_turnout[Value])',
+                 f'TREATAS({{{sw / 2}}}, param_swing_national[Value])', f'TREATAS({{"{s}"}}, dim_state[state_pcode])']
+            g = dax_file(f'EVALUATE CALCULATETABLE(ROW("label", [Scenario label], "order", [Scenario label order], '
+                         f'"colour", [Scenario label colour], "need", [Votes needed]), {", ".join(f)})')[0]
+            row = {"setting": [al, ap, fa, bl, bp, fb, s, k, sw / 2], "line": target / 200, "model": g}
+            tested.append(row)
+            if (g["label"], g["order"], g["colour"]) != want or (target == 50 and g["need"] != 0):
+                bad.append(row)
+    check("exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model "
+          "shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%)",
+          bool(tested) and not bad, {"hit_count": len(hits), "tested": tested, "wrong": bad})
+
+
+MARGIN = 1E-12   # build_pbip.py Q / F
+
+
+def smallest_gap():
+    """Exact: p1 x 200 = num / den (whole numbers), total swing s in half-points (-80..80), so the distance of the
+    capped-free share from a line T is |num/den + s - T| / 200; its smallest non-zero value over every setting."""
+    import numpy as np
+    ks = np.arange(-50, 51, dtype=np.int64)
+    best = {"gap": 1.0, "where": None}
+
+    def scan(C, W, tag):
+        num = 200 * C * (100 + ks); den = 100 * W + C * ks
+        ok = den > 0
+        num, den, kk = num[ok], den[ok], ks[ok]
+        r, q = num % den, num // den
+        for T in (50, 40):
+            for s_needed, gapnum in ((T - q, r), (T - q - 1, den - r)):
+                m = (r != 0) & (np.abs(s_needed) <= 80)
+                if m.any():
+                    g = gapnum[m] / den[m] / 200.0
+                    i = int(np.argmin(g))
+                    if g[i] < best["gap"]:
+                        best.update(gap=float(g[i]), where={"case": tag, "turnout": int(kk[m][i]), "line": T / 200})
+    for al in PARTIES:
+        for s in VALID:
+            scan(100 * VOTES[(s, al)], 100 * VALID[s], ["single", al, s])
+            for ap in PARTIES:
+                if ap == al:
+                    continue
+                others = [x for x in PARTIES if x not in (al, ap)]
+                for fa in range(0, 101, 5):
+                    C = 100 * VOTES[(s, al)] + fa * VOTES[(s, ap)]
+                    WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
+                    for W in {WA} | {WA - (100 - fb) * VOTES[(s, bp)] for bp in others for fb in range(0, 101, 5)}:
+                        scan(C, W, ["coalition", al, ap, fa, s, int(W)])
+    return best
 
 
 def coalition_checks():
@@ -542,7 +637,48 @@ def coalition_checks():
     coalition_boundary_search()
 
 
+PARTS = {"core": lambda: core_checks(), "pages": coalition_pages_check, "simulator": coalition_simulator_check,
+         "invalid": coalition_invalid_check, "switch_off": coalition_switch_off_check, "boundary": coalition_boundary_search}
+PART_DIR = REP / "phase4_parts"
+
+
 def main():
+    args = sys.argv[1:]
+    if args[:1] == ["--combine"]:
+        return combine()
+    part = args[1] if args[:1] == ["--part"] and len(args) > 1 else "all"
+    if part != "all" and part not in PARTS:
+        sys.exit(f"unknown part {part!r}; choose from {', '.join(PARTS)}")
+    OUT["part"] = part
+    OUT["path"] = REP / "phase4_validation.json" if part == "all" else PART_DIR / f"{part}.json"
+    for f in (PARTS.values() if part == "all" else [PARTS[part]]):
+        f()
+    out = write_out(True)
+    label = "gate" if part == "all" else "part " + part
+    print(f"\n  {label} {'PASSED' if not out['failed'] else 'FAILED'}: {out['summary']}")
+    return 1 if out["failed"] else 0
+
+
+def combine():
+    """Join the part files (each must be complete) into reports/phase4_validation.json, in the full-run order."""
+    missing, parts = [], []
+    for name in PARTS:
+        f = PART_DIR / f"{name}.json"
+        d = json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
+        if not d or not d.get("complete"):
+            missing.append(name)
+        else:
+            parts.append(d)
+    if missing:
+        sys.exit(f"cannot combine: part(s) missing or incomplete: {', '.join(missing)}")
+    checks[:] = [c for d in parts for c in d["checks"]]
+    OUT["part"], OUT["path"] = "all (combined from reports/phase4_parts/)", REP / "phase4_validation.json"
+    out = write_out(True)
+    print(f"  combined {len(parts)} parts: gate {'PASSED' if out['gate_passed'] else 'FAILED'}: {out['summary']}")
+    return 0 if out["gate_passed"] else 1
+
+
+def core_checks():
     for label, st in GRID.items():
         # per unit x candidate
         rows = dax(f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_pcode], dim_party[party], '
@@ -651,19 +787,7 @@ def main():
             ' "others_share", CALCULATE([Scenario share], dim_party[party] = "OTHERS", dim_state[state_pcode] = "NG001"))')[0]
     check("no candidate / OTHERS -> blank scenario", all(v is None for v in b.values()), b)
 
-    # coalitions (docs/methodology.md "Coalitions", added 2026-11-16): pages, simulator switch On, invalid choices,
-    # switch Off = today's engine, exact-boundary search
-    coalition_checks()
-
-    failed = [c["check"] for c in checks if c["status"] == "fail"]
-    out = {"built_by": "scripts/validate_phase4.py", "method": "docs/methodology.md", "gate_passed": not failed,
-           "summary": {"checks": len(checks), "pass": len(checks) - len(failed), "fail": len(failed)},
-           "grid": GRID, "failed": failed, "checks": checks}
-    (REP / "phase4_validation.json").write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8", newline="\n")
-    for c in checks:
-        print(f"  [{c['status'].upper():4}] {c['check']}")
-    print(f"\n  gate {'PASSED' if not failed else 'FAILED'}: {out['summary']}")
-    return 1 if failed else 0
+    # coalitions (docs/methodology.md "Coalitions", added 2026-11-16) run as their own parts (see PARTS)
 
 
 if __name__ == "__main__":

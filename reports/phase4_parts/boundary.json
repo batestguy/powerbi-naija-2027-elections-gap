@@ -1,0 +1,588 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "part": "boundary",
+  "complete": true,
+  "gate_passed": true,
+  "summary": {
+    "checks": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin",
+      "status": "pass",
+      "evidence": {
+        "gap": 2.0555092689887968e-10,
+        "where": {
+          "case": [
+            "coalition",
+            "PDP",
+            "NNPP",
+            85,
+            "NG025",
+            109544850
+          ],
+          "turnout": -1,
+          "line": 0.25
+        },
+        "margin": 1e-12,
+        "combinations_turnout_level": 38610684
+      }
+    },
+    {
+      "check": "exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%)",
+      "status": "pass",
+      "evidence": {
+        "hit_count": 6,
+        "tested": [
+          {
+            "setting": [
+              "APC",
+              "NNPP",
+              35,
+              "PDP",
+              "LP",
+              25,
+              "NG014",
+              25,
+              20.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "APC",
+              "NNPP",
+              35,
+              "PDP",
+              "LP",
+              25,
+              "NG014",
+              25,
+              15.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 6756
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -42,
+              15.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -42,
+              10.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 26498
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -22,
+              12.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -22,
+              7.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 27411
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -28,
+              5.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -28,
+              0.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 4595
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -4,
+              0.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -4,
+              -5.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 4902
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              12,
+              -3.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              12,
+              -8.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 5106
+            }
+          }
+        ],
+        "wrong": []
+      }
+    }
+  ]
+}

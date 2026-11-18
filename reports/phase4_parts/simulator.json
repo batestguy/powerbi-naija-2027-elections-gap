@@ -1,0 +1,346 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "part": "simulator",
+  "complete": true,
+  "gate_passed": true,
+  "summary": {
+    "checks": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "simulator with the coalition switch On: per-state shares (capped and uncapped), votes needed / to spare, counts, cap count, tipping point, rivals, most votes, verdict, result / deciding-state / settings sentences = exact reference (9 slider settings incl. extremes and odd values x 4 coalitions incl. 2 v 2, N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0,
+        "preset_neutral_N24": {
+          "per": "...",
+          "sec": "19",
+          "wr": "0",
+          "out": "18",
+          "cap": "0",
+          "with": "37",
+          "need": "5",
+          "clears": "No",
+          "tip": "NG031",
+          "nat": "7598220",
+          "share": "1266370/4005133",
+          "lead": "APC",
+          "lead_votes": "8794726",
+          "lead_25": "29",
+          "most": "No",
+          "verdict": "Loses: APC wins outright",
+          "result": "NDC (Obi + Kwankwaso) loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+          "decide": "Oyo is the deciding state. NDC (Obi + Kwankwaso) is 12.3 points short of a quarter of the vote there: about 99,167 more votes would need to switch from other candidates to NDC (Obi + Kwankwaso).",
+          "inforce": "No changes: this is the 2023 result. 24 states needed to win."
+        }
+      }
+    }
+  ]
+}

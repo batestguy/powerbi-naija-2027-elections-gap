@@ -1,0 +1,434 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "part": "invalid",
+  "complete": true,
+  "gate_passed": true,
+  "summary": {
+    "checks": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank figures on both coalition pages and in the simulator with the switch On, and a message saying what to change",
+      "status": "pass",
+      "evidence": {
+        "failed": [],
+        "seen": {
+          "Side A lead = partner (LP, LP)": {
+            "msgA": "Side A's lead and partner are the same party: choose two different parties.",
+            "msgB": "Bola Tinubu (APC) alone, with all of their 2023 votes.",
+            "stM": null,
+            "natA": null,
+            "shA": null,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Side A's lead and partner are the same party: choose two different parties. Fix it on Head to head."
+          },
+          "no Side A lead chosen": {
+            "msgA": "Choose Side A's lead party (top of the ticket).",
+            "msgB": "Bola Tinubu (APC) alone, with all of their 2023 votes.",
+            "stM": null,
+            "natA": null,
+            "shA": null,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Choose Side A's lead party (top of the ticket). Fix it on Head to head."
+          },
+          "Side B lead already on Side A": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "NNPP is already on Side A: choose another party for Side B.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: NNPP is already on Side A: choose another party for Side B. Fix it on Head to head."
+          },
+          "Side B partner already on Side A": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "LP is already on Side A: choose another partner for Side B, or Nobody.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: LP is already on Side A: choose another partner for Side B, or Nobody. Fix it on Head to head."
+          },
+          "Side B partner = Side B lead": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "Side B's main party and partner are the same: choose two different parties, or Nobody.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Side B's main party and partner are the same: choose two different parties, or Nobody. Fix it on Head to head."
+          },
+          "no Side B lead chosen": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "Choose Side B's main party.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Choose Side B's main party. Fix it on Head to head."
+          }
+        }
+      }
+    }
+  ]
+}

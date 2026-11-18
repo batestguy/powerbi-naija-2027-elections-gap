@@ -1,10 +1,12 @@
 {
   "built_by": "scripts/validate_phase4.py",
   "method": "docs/methodology.md",
+  "part": "all (combined from reports/phase4_parts/)",
+  "complete": true,
   "gate_passed": true,
   "summary": {
-    "checks": 81,
-    "pass": 81,
+    "checks": 89,
+    "pass": 89,
     "fail": 0
   },
   "grid": {
@@ -1443,6 +1445,589 @@
         "none": null,
         "others": null,
         "others_share": null
+      }
+    },
+    {
+      "check": "coalition pages, per state: whole-number votes and valid totals, shares, status, who leads and 25% flags = exact reference (193 pairings x follow rates: preset, every 2 v 1 at 0/35/100%, every 2 v 2 at 5 follow-rate pairs; 7141 state rows)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0
+      }
+    },
+    {
+      "check": "coalition pages, national: states at 25%+ (coalition, lead alone, both sides), votes, shares, states led, leading rival, most votes, verdict and sentence = exact reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0,
+        "preset_N24": {
+          "stM": "19",
+          "leadSt": "16",
+          "natA": "7598220",
+          "shAM": "1266370/4005133",
+          "shAh": "1266370/4005133",
+          "shBh": "4397363/12015399",
+          "natB": "8794726",
+          "stA": "19",
+          "stB": "29",
+          "ledA": "14",
+          "ledB": "11",
+          "rival": "APC",
+          "rx100": "879472600",
+          "rst": "29",
+          "most": "No",
+          "verdict": "Loses: APC wins outright",
+          "sent": "NDC (Obi + Kwankwaso) loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+          "nameA": "NDC (Obi + Kwankwaso)",
+          "nameB": "Bola Tinubu (APC)"
+        }
+      }
+    },
+    {
+      "check": "follow 100%: coalition = lead + partner exactly and valid total unchanged; follow 0: coalition = lead and valid total = 2023 valid - partner's votes (every state, every pairing at those rates)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": []
+      }
+    },
+    {
+      "check": "simulator with the coalition switch On: per-state shares (capped and uncapped), votes needed / to spare, counts, cap count, tipping point, rivals, most votes, verdict, result / deciding-state / settings sentences = exact reference (9 slider settings incl. extremes and odd values x 4 coalitions incl. 2 v 2, N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0,
+        "preset_neutral_N24": {
+          "per": "...",
+          "sec": "19",
+          "wr": "0",
+          "out": "18",
+          "cap": "0",
+          "with": "37",
+          "need": "5",
+          "clears": "No",
+          "tip": "NG031",
+          "nat": "7598220",
+          "share": "1266370/4005133",
+          "lead": "APC",
+          "lead_votes": "8794726",
+          "lead_25": "29",
+          "most": "No",
+          "verdict": "Loses: APC wins outright",
+          "result": "NDC (Obi + Kwankwaso) loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+          "decide": "Oyo is the deciding state. NDC (Obi + Kwankwaso) is 12.3 points short of a quarter of the vote there: about 99,167 more votes would need to switch from other candidates to NDC (Obi + Kwankwaso).",
+          "inforce": "No changes: this is the 2023 result. 24 states needed to win."
+        }
+      }
+    },
+    {
+      "check": "invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank figures on both coalition pages and in the simulator with the switch On, and a message saying what to change",
+      "status": "pass",
+      "evidence": {
+        "failed": [],
+        "seen": {
+          "Side A lead = partner (LP, LP)": {
+            "msgA": "Side A's lead and partner are the same party: choose two different parties.",
+            "msgB": "Bola Tinubu (APC) alone, with all of their 2023 votes.",
+            "stM": null,
+            "natA": null,
+            "shA": null,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Side A's lead and partner are the same party: choose two different parties. Fix it on Head to head."
+          },
+          "no Side A lead chosen": {
+            "msgA": "Choose Side A's lead party (top of the ticket).",
+            "msgB": "Bola Tinubu (APC) alone, with all of their 2023 votes.",
+            "stM": null,
+            "natA": null,
+            "shA": null,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Choose Side A's lead party (top of the ticket). Fix it on Head to head."
+          },
+          "Side B lead already on Side A": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "NNPP is already on Side A: choose another party for Side B.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: NNPP is already on Side A: choose another party for Side B. Fix it on Head to head."
+          },
+          "Side B partner already on Side A": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "LP is already on Side A: choose another partner for Side B, or Nobody.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: LP is already on Side A: choose another partner for Side B, or Nobody. Fix it on Head to head."
+          },
+          "Side B partner = Side B lead": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "Side B's main party and partner are the same: choose two different parties, or Nobody.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Side B's main party and partner are the same: choose two different parties, or Nobody. Fix it on Head to head."
+          },
+          "no Side B lead chosen": {
+            "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
+            "msgB": "Choose Side B's main party.",
+            "stM": 19,
+            "natA": 7598220,
+            "shA": 0.31618675334876517,
+            "stA": null,
+            "natB": null,
+            "verdict": null,
+            "sent": null,
+            "ledA": null,
+            "sim_sec": null,
+            "sim_verdict": null,
+            "sim_result": null,
+            "sim_share": null,
+            "sim_rival": null,
+            "sim_msg": "On, but not complete: Choose Side B's main party. Fix it on Head to head."
+          }
+        }
+      }
+    },
+    {
+      "check": "switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate (turnout +10, national +4, SE -6, NW +3)",
+      "status": "pass",
+      "evidence": {
+        "no_coalition": {
+          "APC": {
+            "party": "APC",
+            "sec": 31,
+            "tip": "NG003",
+            "nat": 10754732.308000002,
+            "lead": "PDP",
+            "lead_votes": 6357048.090759811,
+            "lead25": 17,
+            "verdict": "Outright win",
+            "result": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 31 states (24 needed).",
+            "decide": "Akwa Ibom is the deciding state. Bola Tinubu is 9.9 points above a quarter of the vote there: about 56,740 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.4317388791432881
+          },
+          "PDP": {
+            "party": "PDP",
+            "sec": 26,
+            "tip": "NG032",
+            "nat": 8747349.554,
+            "lead": "APC",
+            "lead_votes": 8106899.864384705,
+            "lead25": 24,
+            "verdict": "Outright win",
+            "result": "Atiku Abubakar wins outright: the most votes nationwide and a quarter of the vote in 26 states (24 needed).",
+            "decide": "Plateau is the deciding state. Atiku Abubakar is 3.1 points above a quarter of the vote there: about 34,553 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.3537248219820657
+          },
+          "LP": {
+            "party": "LP",
+            "sec": 18,
+            "tip": "NG029",
+            "nat": 7753021.794000002,
+            "lead": "APC",
+            "lead_votes": 8281462.230789578,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.31463971092706966
+          },
+          "NNPP": {
+            "party": "NNPP",
+            "sec": 1,
+            "tip": "NG031",
+            "nat": 2719367.059999999,
+            "lead": "APC",
+            "lead_votes": 8300390.482297223,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.1124613140738098
+          }
+        },
+        "switch_off": {
+          "APC": {
+            "party": "APC",
+            "sec": 31,
+            "tip": "NG003",
+            "nat": 10754732.308000002,
+            "lead": "PDP",
+            "lead_votes": 6357048.090759811,
+            "lead25": 17,
+            "verdict": "Outright win",
+            "result": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 31 states (24 needed).",
+            "decide": "Akwa Ibom is the deciding state. Bola Tinubu is 9.9 points above a quarter of the vote there: about 56,740 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.4317388791432881
+          },
+          "PDP": {
+            "party": "PDP",
+            "sec": 26,
+            "tip": "NG032",
+            "nat": 8747349.554,
+            "lead": "APC",
+            "lead_votes": 8106899.864384705,
+            "lead25": 24,
+            "verdict": "Outright win",
+            "result": "Atiku Abubakar wins outright: the most votes nationwide and a quarter of the vote in 26 states (24 needed).",
+            "decide": "Plateau is the deciding state. Atiku Abubakar is 3.1 points above a quarter of the vote there: about 34,553 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.3537248219820657
+          },
+          "LP": {
+            "party": "LP",
+            "sec": 18,
+            "tip": "NG029",
+            "nat": 7753021.794000002,
+            "lead": "APC",
+            "lead_votes": 8281462.230789578,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.31463971092706966
+          },
+          "NNPP": {
+            "party": "NNPP",
+            "sec": 1,
+            "tip": "NG031",
+            "nat": 2719367.059999999,
+            "lead": "APC",
+            "lead_votes": 8300390.482297223,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.1124613140738098
+          }
+        }
+      }
+    },
+    {
+      "check": "margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin",
+      "status": "pass",
+      "evidence": {
+        "gap": 2.0555092689887968e-10,
+        "where": {
+          "case": [
+            "coalition",
+            "PDP",
+            "NNPP",
+            85,
+            "NG025",
+            109544850
+          ],
+          "turnout": -1,
+          "line": 0.25
+        },
+        "margin": 1e-12,
+        "combinations_turnout_level": 38610684
+      }
+    },
+    {
+      "check": "exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%)",
+      "status": "pass",
+      "evidence": {
+        "hit_count": 6,
+        "tested": [
+          {
+            "setting": [
+              "APC",
+              "NNPP",
+              35,
+              "PDP",
+              "LP",
+              25,
+              "NG014",
+              25,
+              20.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "APC",
+              "NNPP",
+              35,
+              "PDP",
+              "LP",
+              25,
+              "NG014",
+              25,
+              15.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 6756
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -42,
+              15.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -42,
+              10.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 26498
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -22,
+              12.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              "NG027",
+              -22,
+              7.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 27411
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -28,
+              5.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -28,
+              0.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 4595
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -4,
+              0.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              -4,
+              -5.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 4902
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              12,
+              -3.0
+            ],
+            "line": 0.25,
+            "model": {
+              "label": "Secured",
+              "order": 1,
+              "colour": "#0072B2",
+              "need": 0
+            }
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              "NG006",
+              12,
+              -8.0
+            ],
+            "line": 0.2,
+            "model": {
+              "label": "Within reach",
+              "order": 2,
+              "colour": "#D55E00",
+              "need": 5106
+            }
+          }
+        ],
+        "wrong": []
       }
     }
   ]

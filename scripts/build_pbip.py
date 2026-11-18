@@ -124,7 +124,18 @@ CALC_TABLES = {**{t: (src, "Value", dt, fmt, False) for t, (src, _, fmt, dt) in 
                "scenario": ('{ "Scenario measures - see docs/methodology.md" }', "Value", "string", None, True)}
 OK = f'VAR c = {SEL} RETURN NOT ISBLANK ( c ) && c <> "OTHERS"'   # a single real candidate is selected
 ON = "[Coalition switch on]"   # simulator coalition switch (default Off = today's engine exactly)
+# DAX may evaluate BOTH branches of IF ( [Coalition switch on], on, off ) eagerly. With the switch On, the unused
+# Off branch then runs its rival measures in On mode per state (~5.5 s for 'Leading rival units at 25%', measured
+# 2026-11-18). OFFB pins the Off branch to switch Off, the only state in which its result is used: same values, ~0.5 s.
+def OFFB(x):
+    return f'CALCULATE ( {x}, coal_switch[Value] = "Off" )'
+
+
 SHARE = "[Scenario share]"
+# Lines at 25% and 20% are compared with a margin (decision log 2026-11-18): floating-point error put an exact 20%
+# just below the line ("Out of reach"). The smallest non-zero gap between any reachable candidate/coalition share
+# and a line is 2.06E-10 (validate_phase4.py boundary part), so 1E-12 only ever moves a share that is exactly on it.
+Q, F = "( 0.25 - 1E-12 )", "( 0.20 - 1E-12 )"   # "at least 25%" / "at least 20%"
 NATIONAL = "REMOVEFILTERS ( dim_state ), REMOVEFILTERS ( dim_zone )"   # all 37 units, whatever the page filters
 # the three other main candidates, each with national scenario votes = sum over units of 2023 votes x Rival scale
 RIVALS = ('VAR c = SELECTEDVALUE ( dim_party[party] ) '
@@ -161,45 +172,59 @@ ON_TAB = (SIDES + "VAR fa = [Follow A] VAR fb = [Follow B] VAR t = [Supporter tu
           'VAR t4 = ADDCOLUMNS ( t3, "@sc", IF ( [@p1] < 1, DIVIDE ( 1 - [@p2], 1 - [@p1] ), 0 ) ) '
           'VAR nb = SUMX ( t4, [@vb] * [@sc] ) VAR nu = IF ( uu <> "", SUMX ( t4, [@vu] * [@sc] ) ) '
           'VAR rx = IF ( uu = "" || nb > nu || ( nb = nu && bl < uu ), bl, uu ) ')
+# Engine inputs read ONCE, straight from the vote tables (rewrite 2026-11-18, docs/HANDOFF.md): every slider and
+# picker is a variable, then plain arithmetic. Replaces a chain of ~10 nested measure calls per state (Candidate is
+# valid -> Head to head is valid -> Side A is valid -> ...; Engine votes -> Side A x100 -> ...), which made each state
+# cost many context transitions and evaluated both switch branches. Same operations, same order, same values:
+# ok = the selection is valid; cv = votes v (Off) or c (On); tv = valid votes V (Off) or V' (On).
+ENGINE_IN = ('VAR swon = SELECTEDVALUE ( coal_switch[Value], "Off" ) = "On" '
+             "VAR al = SELECTEDVALUE ( coal_a_lead[party] ) VAR ap = SELECTEDVALUE ( coal_a_partner[party] ) "
+             "VAR bl = SELECTEDVALUE ( coal_b_lead[party] ) VAR bp = SELECTEDVALUE ( coal_b_partner[party] ) "
+             "VAR fa = SELECTEDVALUE ( param_follow_a[Value], 100 ) VAR fb = SELECTEDVALUE ( param_follow_b[Value], 100 ) "
+             "VAR okh = NOT ISBLANK ( al ) && NOT ISBLANK ( ap ) && al <> ap && NOT ISBLANK ( bl ) && NOT ISBLANK ( bp ) "
+             '&& bl <> al && bl <> ap && ( bp = "NONE" || ( bp <> bl && bp <> al && bp <> ap ) ) '
+             f'VAR c0 = {SEL} VAR ok = IF ( swon, okh, NOT ISBLANK ( c0 ) && c0 <> "OTHERS" ) '
+             f"VAR cv = IF ( swon, IF ( okh, ( 100 * {VOTES('al')} + fa * {VOTES('ap')} + 0 ) / 100 ), [Candidate votes] ) "
+             f"VAR tv = IF ( swon, IF ( okh, ( 100 * [Valid votes] - ( 100 - fa ) * {VOTES('ap')} + 0 "
+             f'- IF ( bp <> "NONE", ( 100 - fb ) * {VOTES("bp")}, 0 ) ) / 100 ), [Valid votes] ) '
+             "VAR t = SELECTEDVALUE ( param_turnout[Value], 0 ) / 100 ")
+ENGINE_OK = 'IF ( ok && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, '
+ZONE_SW = ("SWITCH ( SELECTEDVALUE ( dim_state[zone_code] ), "
+           + ", ".join(f'"{z}", SELECTEDVALUE ( param_swing_{z}[Value], 0 )' for z in ZONES) + " )")
 MEASURES["scenario"] = [
     # inputs
     ("Supporter turnout", "SELECTEDVALUE ( param_turnout[Value], 0 ) / 100", "0%"),
     ("National swing", "SELECTEDVALUE ( param_swing_national[Value], 0 )", "+0.0;-0.0;0.0"),
-    ("Zone swing", "SWITCH ( SELECTEDVALUE ( dim_state[zone_code] ), "
-                   + ", ".join(f'"{z}", SELECTEDVALUE ( param_swing_{z}[Value], 0 )' for z in ZONES) + " )",
-     "+0.0;-0.0;0.0"),
+    ("Zone swing", ZONE_SW, "+0.0;-0.0;0.0"),
     ("Units needed (rule)", "SELECTEDVALUE ( param_rule[Value], 24 )", "0"),
     # switch On: the "candidate" is Side A's coalition (docs/methodology.md "Coalitions"); Off: unchanged
-    ("Candidate is valid", f"IF ( {ON}, [Head to head is valid], {OK} )", None),
+    ("Candidate is valid", ENGINE_IN + "RETURN ok", None),
     ("Candidate selected", OK, None),   # the candidate picker alone (identity header), whatever the switch
     # base votes for steps 1-3: the candidate's 2023 votes v and valid votes V (Off), or c and V' (On)
-    ("Engine votes", f"IF ( {ON}, IF ( [Head to head is valid], [Side A x100] / 100 ), [Candidate votes] )", "#,0"),
-    ("Engine valid votes", f"IF ( {ON}, IF ( [Head to head is valid], [Valid x100 (head to head)] / 100 ), [Valid votes] )", "#,0"),
+    ("Engine votes", ENGINE_IN + "RETURN cv", "#,0"),
+    ("Engine valid votes", ENGINE_IN + "RETURN tv", "#,0"),
     ("Engine candidate name", f"IF ( {ON}, [Side A name], SELECTEDVALUE ( dim_party[candidate] ) )", None),
     # per unit (one state in context), steps 1-3 of the note
     # DAX names are case-insensitive: candidate votes = cv, valid votes = tv (never v / V)
-    ("Scenario valid votes", "VAR cv = [Engine votes] VAR tv = [Engine valid votes] RETURN IF ( [Candidate is valid] && "
-                             "HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) && tv > 0, tv + cv * [Supporter turnout] )",
-     "#,0"),
-    ("Scenario share uncapped", "VAR cv = [Engine votes] VAR tv = [Engine valid votes] VAR t = [Supporter turnout] "
-                                "RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) "
-                                "&& tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) + ( [National swing] + [Zone swing] ) / 100 )",
-     "0.00%"),
+    ("Scenario valid votes", ENGINE_IN + "RETURN " + ENGINE_OK + "tv + cv * t )", "#,0"),
+    ("Scenario share uncapped", ENGINE_IN + "RETURN " + ENGINE_OK + "DIVIDE ( cv * ( 1 + t ), tv + cv * t ) + "
+                                "( SELECTEDVALUE ( param_swing_national[Value], 0 ) + " + ZONE_SW + " ) / 100 )", "0.00%"),
     ("Scenario share", "VAR u = [Scenario share uncapped] RETURN IF ( NOT ISBLANK ( u ), MIN ( 1, MAX ( 0, u ) ) )", "0.00%"),
     ("Scenario votes", f"{SHARE} * [Scenario valid votes]", "#,0"),
-    ("Scenario label", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "Secured", '
-                       'p >= 0.20, "Within reach", "Out of reach" )', None),
-    ("Scenario label order", f"VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, 1, p >= 0.20, 2, 3 )",
+    ("Scenario label", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= {Q}, "Secured", '
+                       f'p >= {F}, "Within reach", "Out of reach" )', None),
+    ("Scenario label order", f"VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= {Q}, 1, p >= {F}, 2, 3 )",
      "0"),
     ("Points needed", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), MAX ( 0, 0.25 - p ) * 100 )", "0.0"),
     ("Votes needed", "VAR p = [Scenario share] RETURN IF ( NOT ISBLANK ( p ), "
-                     "ROUNDUP ( MAX ( 0, 0.25 * [Scenario valid votes] - [Scenario votes] ), 0 ) )", "#,0"),
+                     f"IF ( p >= {Q}, 0, "   # secured -> 0 (never 1 from a rounding hair); else as before
+                     "ROUNDUP ( MAX ( 0, 0.25 * [Scenario valid votes] - [Scenario votes] ), 0 ) ) )", "#,0"),
     # national counts (iterate the 37 units)
-    ("Units secured", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), {SHARE} >= 0.25 ) ) + 0 )", "0"),
+    ("Units secured", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), {SHARE} >= {Q} ) ) + 0 )", "0"),
     ("Units within reach", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
-                           f"{SHARE} >= 0.20 && {SHARE} < 0.25 ) ) + 0 )", "0"),
+                           f"VAR p = {SHARE} RETURN p >= {F} && p < {Q} ) ) + 0 )", "0"),
     ("Units out of reach", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
-                           f"NOT ISBLANK ( {SHARE} ) && {SHARE} < 0.20 ) ) + 0 )", "0"),
+                           f"VAR p = {SHARE} RETURN NOT ISBLANK ( p ) && p < {F} ) ) + 0 )", "0"),
     ("Units with a scenario", f"IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
                               f"NOT ISBLANK ( {SHARE} ) ) ) + 0 )", "0"),
     ("Units at a cap", "IF ( [Candidate is valid], COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), "
@@ -223,9 +248,7 @@ MEASURES["scenario"] = [
     ("Tipping-point gap (points)", "VAR p = [Tipping-point share] RETURN IF ( NOT ISBLANK ( p ), ( 0.25 - p ) * 100 )",
      "+0.0;-0.0;0.0"),
     # ---- rivals and verdict (user decision 2026-11-14: other candidates scale with their 2023 shares) ----
-    ("Scenario share after turnout", "VAR cv = [Engine votes] VAR tv = [Engine valid votes] VAR t = [Supporter turnout] "
-                                     "RETURN IF ( [Candidate is valid] && HASONEVALUE ( dim_state[state_pcode] ) && NOT ISBLANK ( cv ) "
-                                     "&& tv > 0, DIVIDE ( cv * ( 1 + t ), tv + cv * t ) )", "0.00%"),
+    ("Scenario share after turnout", ENGINE_IN + "RETURN " + ENGINE_OK + "DIVIDE ( cv * ( 1 + t ), tv + cv * t ) )", "0.00%"),
     # every other candidate's votes in the unit are multiplied by this factor: (1 - p2) / (1 - p1)
     ("Rival scale", "VAR p1 = [Scenario share after turnout] VAR p2 = [Scenario share] RETURN IF ( NOT ISBLANK ( p2 ), "
                     "IF ( p1 < 1, DIVIDE ( 1 - p2, 1 - p1 ), 0 ) )", "0.0000"),
@@ -237,18 +260,18 @@ MEASURES["scenario"] = [
     # Off branch = the 2026-11-14 measure verbatim; On branch = rival entities (Side B as one, unused main parties)
     ("Leading rival", f"IF ( {ON}, IF ( [Candidate is valid], " + ON_TAB
                       + 'RETURN IF ( rx = bl && bp <> "NONE", bl & "+" & bp, rx ) ), '
-                      "IF ( [Candidate is valid], " + RIVALS + "VAR top1 = TOPN ( 1, tab, [@v], DESC, [Value], ASC ) "
-                      "RETURN MAXX ( top1, [Value] ) ) )", None),
+                      + OFFB("IF ( [Candidate is valid], " + RIVALS + "VAR top1 = TOPN ( 1, tab, [@v], DESC, [Value], ASC ) "
+                             "RETURN MAXX ( top1, [Value] ) )") + " )", None),
     # the leading rival entity's own party code (Side B = its lead's code); equals [Leading rival] when Off
-    ("Leading rival code", f"IF ( {ON}, IF ( [Candidate is valid], " + ON_TAB + "RETURN rx ), [Leading rival] )", None),
+    ("Leading rival code", f"IF ( {ON}, IF ( [Candidate is valid], " + ON_TAB + "RETURN rx ), " + OFFB("[Leading rival]") + " )", None),
     ("Leading rival votes", f"IF ( {ON}, IF ( [Candidate is valid], " + ON_TAB + "RETURN IF ( rx = bl, nb, nu ) ), "
-                            "IF ( [Candidate is valid], " + RIVALS + "RETURN MAXX ( tab, [@v] ) ) )", "#,0"),
+                            + OFFB("IF ( [Candidate is valid], " + RIVALS + "RETURN MAXX ( tab, [@v] ) )") + " )", "#,0"),
     ("Leading rival units at 25%", f"IF ( {ON}, IF ( [Candidate is valid], " + ON_TAB
                                    + "RETURN COUNTROWS ( FILTER ( t4, IF ( rx = bl, [@vb], [@vu] ) * [@sc] >= 0.25 * [@V1] ) ) + 0 ), "
-                                   "VAR r = [Leading rival] RETURN IF ( NOT ISBLANK ( r ), CALCULATE ( COUNTROWS ( FILTER ( "
-                                   "VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), "
-                                   "fact_result_2023[party] = r ) * [Rival scale] >= 0.25 * [Scenario valid votes] ) ), "
-                                   f"{NATIONAL} ) + 0 ) )", "0"),
+                                   + OFFB("VAR r = [Leading rival] RETURN IF ( NOT ISBLANK ( r ), CALCULATE ( COUNTROWS ( FILTER ( "
+                                          "VALUES ( dim_state[state_pcode] ), CALCULATE ( SUM ( fact_result_2023[votes] ), "
+                                          "fact_result_2023[party] = r ) * [Rival scale] >= 0.25 * [Scenario valid votes] ) ), "
+                                          f"{NATIONAL} ) + 0 )") + " )", "0"),
     ("Has most votes", 'VAR a = [Scenario national votes] VAR b = [Leading rival votes] RETURN IF ( NOT ISBLANK ( a ), '
                        'IF ( a > b, "Yes", IF ( a = b, "Tied", "No" ) ) )', None),
     ("Verdict", 'VAR m = [Has most votes] VAR c = [Clears the rule] VAR r = [Leading rival] '
@@ -260,8 +283,8 @@ MEASURES["scenario"] = [
                 '"No outright winner: run-off (" & r & " has most votes)" )', None),
     # ---- display helpers for the report pages (Phase 5) ----
     ("Points from 25%", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), ( p - 0.25 ) * 100 )", "+0.0;-0.0;0.0"),
-    ("Scenario label colour", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= 0.25, "#0072B2", '
-                              'p >= 0.20, "#D55E00", "#767676" )', None),
+    ("Scenario label colour", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= {Q}, "#0072B2", '
+                              f'p >= {F}, "#D55E00", "#767676" )', None),
     ("Baseline label colour", 'VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), '
                               'ISBLANK ( cv ) || ISBLANK ( tv ) || tv = 0, BLANK (), 4 * cv >= tv, "#0072B2", '
                               '5 * cv >= tv, "#D55E00", "#767676" )', None),
@@ -295,15 +318,25 @@ MEASURES["scenario"] = [
     # floating-point error when the margin is a whole number (e.g. exactly 96 votes); it never changes a true fraction.
     ("Votes to spare", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), "
                        "ROUNDDOWN ( MAX ( 0, [Scenario votes] - 0.25 * [Scenario valid votes] ) + 1E-6, 0 ) )", "#,0"),
-    ("Deciding state sentence", 'VAR k = [Tipping-point P-code] RETURN IF ( NOT ISBLANK ( k ), '
-                                'VAR c = [Engine candidate name] VAR g = [Tipping-point gap (points)] '
-                                f'VAR need = CALCULATE ( [Votes needed], {NATIONAL}, dim_state[state_pcode] = k ) '
-                                f'VAR spare = CALCULATE ( [Votes to spare], {NATIONAL}, dim_state[state_pcode] = k ) '
-                                'RETURN [Tipping-point unit] & " is the deciding state. " & IF ( g <= 0, '
+    # One pass (2026-11-18): rank the states once and read the deciding state's own row (share p, total V1), instead of
+    # [Tipping-point P-code] then CALCULATE ( [Votes needed], state = k ), which the engine evaluated for every state
+    # (~9 s with the switch On). Same steps as Tipping-point P-code / gap, Votes needed and Votes to spare.
+    ("Deciding state sentence", "IF ( [Candidate is valid], VAR n = [Units needed (rule)] VAR c = [Engine candidate name] "
+                                "VAR tb = CALCULATETABLE ( FILTER ( ADDCOLUMNS ( VALUES ( dim_state[state_pcode] ), "
+                                f'"@p", {SHARE}, "@V", [Scenario valid votes] ), NOT ISBLANK ( [@p] ) ), {NATIONAL} ) '
+                                "VAR row1 = TOPN ( 1, TOPN ( n, tb, [@p], DESC, dim_state[state_pcode], ASC ), [@p], ASC, "
+                                "dim_state[state_pcode], DESC ) "
+                                "VAR k = MAXX ( row1, dim_state[state_pcode] ) VAR p = MAXX ( row1, [@p] ) VAR V1 = MAXX ( row1, [@V] ) "
+                                "VAR v2 = p * V1 VAR g = ( 0.25 - p ) * 100 "
+                                f"VAR need = IF ( p >= {Q}, 0, ROUNDUP ( MAX ( 0, 0.25 * V1 - v2 ), 0 ) ) "
+                                "VAR spare = ROUNDDOWN ( MAX ( 0, v2 - 0.25 * V1 ) + 1E-6, 0 ) "
+                                "RETURN IF ( COUNTROWS ( tb ) >= n && NOT ISBLANK ( k ), "
+                                'LOOKUPVALUE ( dim_state[state_name], dim_state[state_pcode], k ) & " is the deciding state. " & '
+                                'IF ( g <= 1E-10, '
                                 'c & " is " & FORMAT ( -g, "0.0" ) & " points above a quarter of the vote there: about " '
                                 '& FORMAT ( spare, "#,0" ) & " votes could switch to other candidates before the state is lost.", '
                                 'c & " is " & FORMAT ( g, "0.0" ) & " points short of a quarter of the vote there: about " '
-                                '& FORMAT ( need, "#,0" ) & " more votes would need to switch from other candidates to " & c & "." ) )',
+                                '& FORMAT ( need, "#,0" ) & " more votes would need to switch from other candidates to " & c & "." ) ) )',
      None),
     # 2023 baseline only (whole-number test, as 'States at 25% or more'): the narrowest state won and the narrowest miss.
     # 4 x votes - valid votes is a whole number, so margins of a quarter are exact: spare = rounded down, needed = rounded up.
@@ -497,6 +530,17 @@ H2H_RIVALS = (SIDES + 'VAR tab = ADDCOLUMNS ( FILTER ( { "APC", "PDP", "LP", "NN
               + VOTES("r") + ' ), ' + NATIONAL + ' ) ) ')
 
 
+# Head to head verdict / sentence, steps shared once: rival code rq (ties by code), its x100 votes b, most votes m,
+# rival display r ("APC+NNPP" for a two-party Side B), rival states at 25% rc. Opens IF ( [Head to head is valid], ...
+H2H_ONE = ("IF ( [Head to head is valid], " + H2H_RIVALS
+           + "VAR rq = MAXX ( TOPN ( 1, tab, [@v], DESC, [Value], ASC ), [Value] ) VAR b = MAXX ( tab, [@v] ) "
+           f"VAR a = CALCULATE ( {VA}, {NATIONAL} ) "
+           'VAR m = IF ( a > b, "Yes", IF ( a = b, "Tied", "No" ) ) VAR n = [Units needed (rule)] '
+           'VAR r = IF ( rq = bl && bp <> "NONE", rq & "+" & bp, rq ) '
+           "VAR rc = IF ( NOT ISBLANK ( rq ), "
+           + f"CALCULATE ( COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), 4 * IF ( rq = bl, [Side B x100], 100 * {VOTES('rq')} ) >= {WH} ) ), {NATIONAL} ) + 0"
+           + " ) >= n ")
+
 def _states(cond):
     return f"CALCULATE ( COUNTROWS ( FILTER ( VALUES ( dim_state[state_pcode] ), {cond} ) ), {NATIONAL} ) + 0"
 
@@ -634,17 +678,17 @@ def _coalition_measures():
         ("Head to head most votes", f'IF ( [Head to head is valid], VAR a = CALCULATE ( {VA}, {NATIONAL} ) '
                                     'VAR b = [Head to head rival x100] RETURN IF ( a > b, "Yes", IF ( a = b, "Tied", "No" ) ) )',
          None),
-        ("Head to head verdict", 'VAR m = [Head to head most votes] VAR n = [Units needed (rule)] '
-                                 'VAR c = [Side A states at 25% (head to head)] >= n VAR r = [Head to head rival] '
-                                 'VAR rc = [Head to head rival states at 25%] >= n RETURN SWITCH ( TRUE (), ISBLANK ( m ), '
+        # verdict and sentence: the rival table is built ONCE here, not via the rival measures above (each rebuilt it;
+        # ~1.3-1.5 s per call, measured 2026-11-18). Same steps as Head to head rival code / x100 / states at 25%.
+        ("Head to head verdict", H2H_ONE + 'VAR c = [Side A states at 25% (head to head)] >= n '
+                                 'RETURN SWITCH ( TRUE (), ISBLANK ( m ), '
                                  'BLANK (), m = "Yes" && c, "Outright win", '
                                  'm = "Yes", "No outright winner: run-off (most votes, but not 25% in enough states)", '
                                  'm = "Tied", "Tie on votes: no outright winner", '
                                  'rc, "Loses: " & r & " wins outright", '
-                                 '"No outright winner: run-off (" & r & " has most votes)" )', None),
-        ("Head to head sentence", 'VAR m = [Head to head most votes] VAR n = [Units needed (rule)] '
-                                  'VAR k = [Side A states at 25% (head to head)] VAR nm = [Side A name] '
-                                  'VAR rl = [Head to head rival name] VAR rc = [Head to head rival states at 25%] >= n '
+                                 '"No outright winner: run-off (" & r & " has most votes)" ) )', None),
+        ("Head to head sentence", H2H_ONE + 'VAR k = [Side A states at 25% (head to head)] VAR nm = [Side A name] '
+                                  'VAR rl = IF ( rq = bl, [Side B name], ' + CNAME("rq") + ' & " (" & rq & ")" ) '
                                   'RETURN SWITCH ( TRUE (), ISBLANK ( m ), BLANK (), '
                                   'm = "Yes" && k >= n, nm & " wins outright: the most votes nationwide and a quarter of '
                                   'the vote in " & k & " states (" & n & " needed).", '
@@ -654,7 +698,7 @@ def _coalition_measures():
                                   'rc, nm & " loses: " & rl & " has the most votes and a quarter of the vote in enough '
                                   'states.", '
                                   '"No outright winner: " & rl & " has the most votes but not a quarter of the vote in '
-                                  'enough states. This would go to a run-off." )', None),
+                                  'enough states. This would go to a run-off." ) )', None),
         # ---- simulator: the leading rival entity's name with the switch On; what the switch is doing ----
         ("Leading rival name", SIDES + "VAR r = [Leading rival code] RETURN IF ( NOT ISBLANK ( r ), " + lead_lbl + " )",
          None),
@@ -677,6 +721,34 @@ def _coalition_measures():
 
 
 MEASURES["scenario"] += _coalition_measures()
+
+
+def _one_pass_verdicts():
+    """Switch On: Verdict and Result sentence read every input from ONE per-state table (ON_TAB), instead of calling
+    Has most votes / Clears the rule / Leading rival / ... which each rebuilt it (~3-4 s per call, measured 2026-11-18).
+    Same steps as [Scenario share], [Scenario valid votes], [Scenario national votes], [Units secured (national)] and
+    the rival measures. The Off branch is the previous measure verbatim, pinned to switch Off (see OFFB)."""
+    pack = (ON_TAB + 'VAR rv = IF ( rx = bl, nb, nu ) '
+            'VAR rk = COUNTROWS ( FILTER ( t4, IF ( rx = bl, [@vb], [@vu] ) * [@sc] >= 0.25 * [@V1] ) ) + 0 '
+            'VAR r = IF ( rx = bl && bp <> "NONE", bl & "+" & bp, rx ) '
+            # [Scenario share] is blank where the valid total is not positive; those states are skipped
+            'VAR t5 = FILTER ( t4, [@tv] > 0 ) VAR a = SUMX ( t5, [@p2] * [@V1] ) '
+            f'VAR k = COUNTROWS ( FILTER ( t5, [@p2] >= {Q} ) ) + 0 VAR n = [Units needed (rule)] '
+            'VAR m = IF ( NOT ISBLANK ( a ), IF ( a > rv, "Yes", IF ( a = rv, "Tied", "No" ) ) ) '
+            'VAR c = IF ( k >= n, "Yes", "No" ) VAR rc = rk >= n ')
+    on_extra = {"Verdict": "",
+                "Result sentence": 'VAR nm = [Engine candidate name] VAR rl = IF ( rx = bl, [Side B name], '
+                                   + CNAME("rx") + ' & " (" & rx & ")" ) '}
+    out = []
+    for name, expr, fmt in MEASURES["scenario"]:
+        if name in on_extra:
+            ret = expr[expr.index("RETURN SWITCH ( TRUE (), ISBLANK ( m )"):]
+            expr = (f"IF ( {ON}, IF ( [Candidate is valid], " + pack + on_extra[name] + ret + " ), " + OFFB(expr) + " )")
+        out.append((name, expr, fmt))
+    MEASURES["scenario"] = out
+
+
+_one_pass_verdicts()
 COAL_PHOTOS = ("Side A lead photo", "Side A partner photo", "Side B lead photo", "Side B partner photo")
 
 

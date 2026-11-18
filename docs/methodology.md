@@ -77,7 +77,13 @@ use all 37 units, whatever zone or state is selected on the page. The unit count
 reach*, *at a cap*) follow the page's filter, so they can answer "how many units does the candidate hold in the North
 West?". **Exactly 25%:** shares are compared as decimals here (the baseline count uses whole numbers). A search of every
 reachable slider combination (2,406,628 in exact fractions, `reports/phase4_validation.json`) found no unit landing
-exactly on 25% or 20%, so the two methods agree everywhere.
+exactly on 25% or 20%, so the two methods agree everywhere. **Margin (2026-11-18):** with the coalition switch On,
+6 reachable settings do land exactly on 25% or 20%, and one showed the wrong label (a true 20% stored as just under
+it). The model therefore treats a share within 10⁻¹² below a line as on it (`≥ 0.25 − 10⁻¹²`, `≥ 0.20 − 10⁻¹²`; a
+secured unit always has 0 votes needed). The smallest non-zero distance between any reachable share and a line is
+2.06 × 10⁻¹⁰, more than 100 times the margin, so the margin changes only shares that are exactly on a line
+(`validate_phase4.py --part boundary`). Rival "25% in a state" counts are not covered by this proof and still
+compare without a margin.
 
 ## Rivals and the verdict (added 2026-11-14, user decision)
 
@@ -193,8 +199,8 @@ Replace the candidate's 2023 votes `v` by `c` and `V` by `V'` (both sides, as on
 3. `v2 = p2 × V1`.
 
 Labels, counts, caps, tipping point, votes needed / to spare and the sentences then follow the sections above
-unchanged (decimal comparison, as for the simulator today; an exact search of every reachable setting for boundary
-hits is in `validate_phase4.py`). **Rivals**: Side B as one entity with votes `b`, and each unused main party with its
+unchanged (decimal comparison with the 10⁻¹² margin above; the exact search of every reachable setting for boundary
+hits and the margin proof are in `validate_phase4.py --part boundary`). **Rivals**: Side B as one entity with votes `b`, and each unused main party with its
 2023 votes, all multiplied by `(1 − p2) / (1 − p1)` (0 if `p1 = 1`); OTHERS scales the same way but is never a rival
 winner. Leading rival = the rival entity with the most national votes, ties by code. Verdict as above. The candidate
 picked at the top of the page is ignored while the switch is On.

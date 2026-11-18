@@ -1,0 +1,361 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "part": "pages",
+  "complete": true,
+  "gate_passed": true,
+  "summary": {
+    "checks": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "coalition pages, per state: whole-number votes and valid totals, shares, status, who leads and 25% flags = exact reference (193 pairings x follow rates: preset, every 2 v 1 at 0/35/100%, every 2 v 2 at 5 follow-rate pairs; 7141 state rows)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0
+      }
+    },
+    {
+      "check": "coalition pages, national: states at 25%+ (coalition, lead alone, both sides), votes, shares, states led, leading rival, most votes, verdict and sentence = exact reference (N = 24 and 25)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": [],
+        "count": 0,
+        "preset_N24": {
+          "stM": "19",
+          "leadSt": "16",
+          "natA": "7598220",
+          "shAM": "1266370/4005133",
+          "shAh": "1266370/4005133",
+          "shBh": "4397363/12015399",
+          "natB": "8794726",
+          "stA": "19",
+          "stB": "29",
+          "ledA": "14",
+          "ledB": "11",
+          "rival": "APC",
+          "rx100": "879472600",
+          "rst": "29",
+          "most": "No",
+          "verdict": "Loses: APC wins outright",
+          "sent": "NDC (Obi + Kwankwaso) loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+          "nameA": "NDC (Obi + Kwankwaso)",
+          "nameB": "Bola Tinubu (APC)"
+        }
+      }
+    },
+    {
+      "check": "follow 100%: coalition = lead + partner exactly and valid total unchanged; follow 0: coalition = lead and valid total = 2023 valid - partner's votes (every state, every pairing at those rates)",
+      "status": "pass",
+      "evidence": {
+        "mismatches": []
+      }
+    }
+  ]
+}

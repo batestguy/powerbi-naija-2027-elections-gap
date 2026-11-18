@@ -1,0 +1,439 @@
+{
+  "built_by": "scripts/validate_phase4.py",
+  "method": "docs/methodology.md",
+  "part": "switch_off",
+  "complete": true,
+  "gate_passed": true,
+  "summary": {
+    "checks": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  "grid": {
+    "neutral": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national +5": {
+      "t": 0,
+      "S": 5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national -5, SE +10": {
+      "t": 0,
+      "S": -5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 10,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporters +20%, national +2": {
+      "t": 20,
+      "S": 2,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "every slider at minimum": {
+      "t": -50,
+      "S": -20,
+      "Z": {
+        "NC": -20,
+        "NE": -20,
+        "NW": -20,
+        "SE": -20,
+        "SS": -20,
+        "SW": -20
+      }
+    },
+    "every slider at maximum": {
+      "t": 50,
+      "S": 20,
+      "Z": {
+        "NC": 20,
+        "NE": 20,
+        "NW": 20,
+        "SE": 20,
+        "SS": 20,
+        "SW": 20
+      }
+    },
+    "mixed": {
+      "t": -10,
+      "S": 1.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2,
+        "NW": -4.5,
+        "SE": 12,
+        "SS": 6,
+        "SW": -1
+      }
+    },
+    "odd: supporters -37%, national +7.5, mixed zones": {
+      "t": -37,
+      "S": 7.5,
+      "Z": {
+        "NC": 3,
+        "NE": -2.5,
+        "NW": 0,
+        "SE": 1,
+        "SS": -4.5,
+        "SW": 6
+      }
+    },
+    "odd: supporters +13%, national -3.5": {
+      "t": 13,
+      "S": -3.5,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0.5,
+        "SE": -6.5,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at -50": {
+      "t": -50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "supporter turnout alone at +50": {
+      "t": 50,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at -20": {
+      "t": 0,
+      "S": -20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "national swing alone at +20": {
+      "t": 0,
+      "S": 20,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": -20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NC alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 20,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": -20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 20,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": -20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone NW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 20,
+        "SE": 0,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": -20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SE alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 20,
+        "SS": 0,
+        "SW": 0
+      }
+    },
+    "zone SS alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": -20,
+        "SW": 0
+      }
+    },
+    "zone SS alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 20,
+        "SW": 0
+      }
+    },
+    "zone SW alone at -20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": -20
+      }
+    },
+    "zone SW alone at +20": {
+      "t": 0,
+      "S": 0,
+      "Z": {
+        "NC": 0,
+        "NE": 0,
+        "NW": 0,
+        "SE": 0,
+        "SS": 0,
+        "SW": 20
+      }
+    }
+  },
+  "failed": [],
+  "checks": [
+    {
+      "check": "switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate (turnout +10, national +4, SE -6, NW +3)",
+      "status": "pass",
+      "evidence": {
+        "no_coalition": {
+          "APC": {
+            "party": "APC",
+            "sec": 31,
+            "tip": "NG003",
+            "nat": 10754732.308000002,
+            "lead": "PDP",
+            "lead_votes": 6357048.090759811,
+            "lead25": 17,
+            "verdict": "Outright win",
+            "result": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 31 states (24 needed).",
+            "decide": "Akwa Ibom is the deciding state. Bola Tinubu is 9.9 points above a quarter of the vote there: about 56,740 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.4317388791432881
+          },
+          "PDP": {
+            "party": "PDP",
+            "sec": 26,
+            "tip": "NG032",
+            "nat": 8747349.554,
+            "lead": "APC",
+            "lead_votes": 8106899.864384705,
+            "lead25": 24,
+            "verdict": "Outright win",
+            "result": "Atiku Abubakar wins outright: the most votes nationwide and a quarter of the vote in 26 states (24 needed).",
+            "decide": "Plateau is the deciding state. Atiku Abubakar is 3.1 points above a quarter of the vote there: about 34,553 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.3537248219820657
+          },
+          "LP": {
+            "party": "LP",
+            "sec": 18,
+            "tip": "NG029",
+            "nat": 7753021.794000002,
+            "lead": "APC",
+            "lead_votes": 8281462.230789578,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.31463971092706966
+          },
+          "NNPP": {
+            "party": "NNPP",
+            "sec": 1,
+            "tip": "NG031",
+            "nat": 2719367.059999999,
+            "lead": "APC",
+            "lead_votes": 8300390.482297223,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.1124613140738098
+          }
+        },
+        "switch_off": {
+          "APC": {
+            "party": "APC",
+            "sec": 31,
+            "tip": "NG003",
+            "nat": 10754732.308000002,
+            "lead": "PDP",
+            "lead_votes": 6357048.090759811,
+            "lead25": 17,
+            "verdict": "Outright win",
+            "result": "Bola Tinubu wins outright: the most votes nationwide and a quarter of the vote in 31 states (24 needed).",
+            "decide": "Akwa Ibom is the deciding state. Bola Tinubu is 9.9 points above a quarter of the vote there: about 56,740 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.4317388791432881
+          },
+          "PDP": {
+            "party": "PDP",
+            "sec": 26,
+            "tip": "NG032",
+            "nat": 8747349.554,
+            "lead": "APC",
+            "lead_votes": 8106899.864384705,
+            "lead25": 24,
+            "verdict": "Outright win",
+            "result": "Atiku Abubakar wins outright: the most votes nationwide and a quarter of the vote in 26 states (24 needed).",
+            "decide": "Plateau is the deciding state. Atiku Abubakar is 3.1 points above a quarter of the vote there: about 34,553 votes could switch to other candidates before the state is lost.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.3537248219820657
+          },
+          "LP": {
+            "party": "LP",
+            "sec": 18,
+            "tip": "NG029",
+            "nat": 7753021.794000002,
+            "lead": "APC",
+            "lead_votes": 8281462.230789578,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.31463971092706966
+          },
+          "NNPP": {
+            "party": "NNPP",
+            "sec": 1,
+            "tip": "NG031",
+            "nat": 2719367.059999999,
+            "lead": "APC",
+            "lead_votes": 8300390.482297223,
+            "lead25": 26,
+            "verdict": "Loses: APC wins outright",
+            "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
+            "share": 0.1124613140738098
+          }
+        }
+      }
+    }
+  ]
+}
