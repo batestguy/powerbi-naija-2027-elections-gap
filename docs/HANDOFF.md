@@ -9,7 +9,7 @@ Updated: 2026-11-18. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | built; speed fixed, boundary bug fixed, engine rewritten 2026-11-18; Phase 4 checks 89/89; Phase 6 + review + commit next | 1c72aa8 + uncommitted |
+| 5c Merge parties + head to head | built; speed fixed, boundary bug fixed, engine rewritten 2026-11-18; Phase 4 89/89, Phase 6 18/18, reviewed (ship with fixes) | a485ed9 + review commit |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Redesign round (user requests 2026-11-14)
@@ -45,10 +45,12 @@ Verified this session:
    Head to head result sentence slightly clipped at the bottom of its box; Merge table's "Change (points)"
    column cut off at the right (needs a scroll). Not yet captured: the simulator with the switch On (needs a
    build variant).
-3. Reviewer pass on the coalition method and on today's engine rewrite (fresh eyes; the reference functions were
-   written by the same author). Started 2026-11-18 ~08:55 in the background, read-only; findings go to
-   `reports/review_2026-11-18.md` — read it, fix what is blocking, re-run the affected checks.
-4. Commit + push (nothing from 2026-11-18 is committed yet).
+3. Reviewer pass — **done 2026-11-18**: `reports/review_2026-11-18.md`. Verdict ship with fixes; no blocking
+   finding, no wrong numbers. **Next: the six SHOULD-FIX items there** (timing evidence into `reports/`;
+   build stamp on Phase 4 parts / reuse; assert every exact hit is tested; deciding-state sentence at an
+   exact line; speed-gate noise noted). Then a cross-family review before anything is published.
+4. All 2026-11-18 work is committed and pushed (e01a5e7, eba9aea, dd9f888, a485ed9, and the review commit).
+   Also next: the two layout nits (item 2), a simulator screenshot with the switch On.
 5. Open, not started: rival "at 25% in a state" counts still compare without a margin — the margin proof covers only
    the candidate / coalition share. Decide whether to extend the proof to rival shares.
 
