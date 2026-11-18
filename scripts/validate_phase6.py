@@ -40,6 +40,7 @@ checks = []
 
 def check(name, ok, evidence, status=None):
     checks.append({"check": name, "status": status or ("pass" if ok else "fail"), "evidence": evidence})
+    print(f"  [{checks[-1]['status'].upper():4}] {name}", flush=True)   # as it lands (a stopped run still shows progress)
 
 
 def engine(*args):
@@ -77,10 +78,31 @@ def pages():
     return out
 
 
-def rerun(script, *extra):
+def rerun(script, *extra, timeout=1800):
     r = subprocess.run(["uv", "run", "python", "-I", str(ROOT / "scripts" / script), *extra],
-                       capture_output=True, text=True, encoding="utf-8", cwd=ROOT, timeout=1800)
+                       capture_output=True, text=True, encoding="utf-8", cwd=ROOT, timeout=timeout)
     return r.returncode, (r.stdout.strip().splitlines() or [""])[-1]
+
+
+def phase4_on_current_build():
+    """The full Phase 4 run takes ~45 min (longer than one subprocess timeout, and heavy on this machine's memory).
+    If reports/phase4_validation.json passed, is complete, and is newer than every model file, the check script and the
+    staging data, it already describes this build; otherwise run the parts one by one and combine (2026-11-18)."""
+    res = REP / "phase4_validation.json"
+    inputs = [*(ROOT / "pbip" / "NaijaElectionsGap.SemanticModel" / "definition").rglob("*.tmdl"),
+              ROOT / "scripts" / "validate_phase4.py", *STG.glob("*.csv")]
+    newest = max(inputs, key=lambda f: f.stat().st_mtime)
+    d = json.loads(res.read_text(encoding="utf-8")) if res.exists() else {}
+    if d.get("gate_passed") and d.get("complete", True) and res.stat().st_mtime > newest.stat().st_mtime:
+        return 0, {"how": "existing result is newer than the build", "result_written": time.ctime(res.stat().st_mtime),
+                   "newest_input": str(newest.relative_to(ROOT)), "newest_input_written": time.ctime(newest.stat().st_mtime),
+                   "summary": d.get("summary")}
+    parts = {}
+    for part in ("core", "invalid", "switch_off", "boundary", "simulator", "pages"):
+        parts[part] = rerun("validate_phase4.py", "--part", part, timeout=3600)
+        print(f"    ... validate_phase4.py --part {part}: exit {parts[part][0]}", flush=True)
+    code, last = rerun("validate_phase4.py", "--combine")
+    return (code if all(c == 0 for c, _ in parts.values()) else 1), {"how": "re-run in parts", "parts": parts, "combine": last}
 
 
 # ---- independent exact reference for the plain-words measures (fractions; no floating point) ----
@@ -353,9 +375,10 @@ def main():
           not caches and engine("-Action", "Refresh")["status"] == "ok", {"cache_files": caches})
 
     # 1. earlier gates still pass on this build
-    for script, extra in (("validate_phase3.py", ("--no-refresh",)), ("validate_phase4.py", ())):
-        code, last = rerun(script, *extra)
-        check(f"{script} passes on the current build", code == 0, {"exit_code": code, "summary": last})
+    code, last = rerun("validate_phase3.py", "--no-refresh")
+    check("validate_phase3.py passes on the current build", code == 0, {"exit_code": code, "summary": last})
+    code, ev = phase4_on_current_build()
+    check("validate_phase4.py passes on the current build", code == 0, ev)
 
     # 2. national totals: model vs every independent copy
     model = {r["party"]: r["votes"] for r in dax('EVALUATE SUMMARIZECOLUMNS(dim_party[party], "votes", [Candidate votes])')}
@@ -563,8 +586,6 @@ def main():
                               "non-specialist completes the core task unaided"],
            "failed": failed, "checks": checks}
     (REP / "phase6_validation.json").write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8", newline="\n")
-    for c in checks:
-        print(f"  [{c['status'].upper():4}] {c['check']}")
     print(f"\n  gate {'PASSED' if not failed else 'FAILED'}: {out['summary']}")
     return 1 if failed else 0
 

@@ -1,10 +1,10 @@
 {
   "built_by": "scripts/validate_phase6.py",
-  "gate_passed": true,
+  "gate_passed": false,
   "summary": {
-    "checks": 16,
-    "pass": 16,
-    "fail": 0
+    "checks": 18,
+    "pass": 17,
+    "fail": 1
   },
   "not_scriptable": [
     "tooltips render as designed (needs hover)",
@@ -12,7 +12,9 @@
     "release .pbix on a clean Windows profile (Phase 7 builds the .pbix)",
     "non-specialist completes the core task unaided"
   ],
-  "failed": [],
+  "failed": [
+    "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)"
+  ],
   "checks": [
     {
       "check": "refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs",
@@ -33,8 +35,15 @@
       "check": "validate_phase4.py passes on the current build",
       "status": "pass",
       "evidence": {
-        "exit_code": 0,
-        "summary": "  gate PASSED: {'checks': 81, 'pass': 81, 'fail': 0}"
+        "how": "existing result is newer than the build",
+        "result_written": "Wed Nov 18 07:57:41 2026",
+        "newest_input": "pbip\\NaijaElectionsGap.SemanticModel\\definition\\relationships.tmdl",
+        "newest_input_written": "Wed Nov 18 07:15:33 2026",
+        "summary": {
+          "checks": 89,
+          "pass": 89,
+          "fail": 0
+        }
       }
     },
     {
@@ -175,7 +184,12 @@
           "tab_order_unique": true
         },
         "What-if simulator": {
-          "visuals": 35,
+          "visuals": 43,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Head to head": {
+          "visuals": 25,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
@@ -186,6 +200,11 @@
         },
         "How to read this": {
           "visuals": 3,
+          "missing_alt_text": [],
+          "tab_order_unique": true
+        },
+        "Merge two parties": {
+          "visuals": 15,
           "missing_alt_text": [],
           "tab_order_unique": true
         },
@@ -408,7 +427,7 @@
             "photo_chars": 5727,
             "logo_chars": 15726,
             "badge": "PDP",
-            "identity": "2023: PDP. Now: ADC (Premium Times, 27 May 2026)",
+            "identity": "2023: PDP. Now: ADC (Premium Times, 27 May 2026). ADC ticket under court challenge (Pulse, 5 Nov 2026)",
             "bg": "#E69F00",
             "fg": "#1F1F1F",
             "contrast": 7.32,
@@ -432,7 +451,7 @@
             "photo_chars": 7923,
             "logo_chars": 13538,
             "badge": "NNPP",
-            "identity": "2023: NNPP. Now: NDC (Vanguard, 30 May 2026)",
+            "identity": "2023: NNPP. Now: NDC, running mate to Peter Obi (Vanguard, 30 May 2026)",
             "bg": "#CC79A7",
             "fg": "#1F1F1F",
             "contrast": 5.38,
@@ -470,7 +489,7 @@
       }
     },
     {
-      "check": "photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one per visible page, decorative alt text, last in tab order (before its caption)",
+      "check": "photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one per visible page except the two coalition pages (none, by design: no room beside their pickers), decorative alt text, last in tab order (before its caption)",
       "status": "pass",
       "evidence": {
         "files": {
@@ -539,6 +558,11 @@
             "photo_last_but_caption": true,
             "alt_starts_decorative": true
           },
+          "Head to head": {
+            "photos": 0,
+            "photo_last_but_caption": false,
+            "alt_starts_decorative": true
+          },
           "Spread map": {
             "photos": 1,
             "photo_last_but_caption": true,
@@ -549,24 +573,200 @@
             "photo_last_but_caption": true,
             "alt_starts_decorative": true
           },
+          "Merge two parties": {
+            "photos": 0,
+            "photo_last_but_caption": false,
+            "alt_starts_decorative": true
+          },
           "Candidate overview": {
             "photos": 1,
             "photo_last_but_caption": true,
             "alt_starts_decorative": true
           }
+        },
+        "pages_without_photo_by_design": [
+          "Head to head",
+          "Merge two parties"
+        ]
+      }
+    },
+    {
+      "check": "coalition names: every real row has publisher, URL and date; model name table = CSV; real ticket's date on the pages = CSV",
+      "status": "pass",
+      "evidence": {
+        "real_rows": [
+          {
+            "lead": "LP",
+            "partner": "NNPP",
+            "display_name": "NDC (Obi + Kwankwaso)",
+            "source_publisher": "Nigeria Democratic Congress (NDC)",
+            "source_url": "https://ndcnigeria.com/news/ndc-special-convention-affirms-peter-obi-kwankwaso-ticket-for-2027-c548f05b",
+            "as_of": "2026-05-31"
+          }
+        ],
+        "real_without_source": [],
+        "model_equals_csv": true,
+        "all_12_ordered_pairs": true,
+        "bad_status_or_name": [],
+        "real_date_in_page_text": {
+          "NDC (Obi + Kwankwaso)": true
         }
       }
     },
     {
-      "check": "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)",
+      "check": "coalition pickers, follow sliders and switch saved at the preset (Obi (LP) + Kwankwaso (NNPP), 100%, vs Tinubu (APC) alone; switch Off), in matching sync groups on the coalition pages and the simulator",
       "status": "pass",
       "evidence": {
-        "seconds_net_of_call_overhead": {
-          "Path to 24 table": 0.0,
-          "Simulator cards": 1.733,
-          "Spread map": 0.0
+        "found": {
+          "coal_a_partner": [
+            {
+              "page": "Merge two parties",
+              "value": "'Rabiu Kwankwaso (NNPP)'",
+              "sync": "coal_a_partner",
+              "hidden": false
+            },
+            {
+              "page": "Head to head",
+              "value": "'Rabiu Kwankwaso (NNPP)'",
+              "sync": "coal_a_partner",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "'Rabiu Kwankwaso (NNPP)'",
+              "sync": "coal_a_partner",
+              "hidden": true
+            }
+          ],
+          "coal_a_lead": [
+            {
+              "page": "Merge two parties",
+              "value": "'Peter Obi (LP)'",
+              "sync": "coal_a_lead",
+              "hidden": false
+            },
+            {
+              "page": "Head to head",
+              "value": "'Peter Obi (LP)'",
+              "sync": "coal_a_lead",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "'Peter Obi (LP)'",
+              "sync": "coal_a_lead",
+              "hidden": true
+            }
+          ],
+          "param_follow_a": [
+            {
+              "page": "Merge two parties",
+              "value": "100L",
+              "sync": "param_follow_a",
+              "hidden": false
+            },
+            {
+              "page": "Head to head",
+              "value": "100L",
+              "sync": "param_follow_a",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "100L",
+              "sync": "param_follow_a",
+              "hidden": true
+            }
+          ],
+          "coal_b_lead": [
+            {
+              "page": "Head to head",
+              "value": "'Bola Tinubu (APC)'",
+              "sync": "coal_b_lead",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "'Bola Tinubu (APC)'",
+              "sync": "coal_b_lead",
+              "hidden": true
+            }
+          ],
+          "param_follow_b": [
+            {
+              "page": "Head to head",
+              "value": "100L",
+              "sync": "param_follow_b",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "100L",
+              "sync": "param_follow_b",
+              "hidden": true
+            }
+          ],
+          "coal_b_partner": [
+            {
+              "page": "Head to head",
+              "value": "'Nobody: one party alone'",
+              "sync": "coal_b_partner",
+              "hidden": false
+            },
+            {
+              "page": "What-if simulator",
+              "value": "'Nobody: one party alone'",
+              "sync": "coal_b_partner",
+              "hidden": true
+            }
+          ],
+          "coal_switch": [
+            {
+              "page": "What-if simulator",
+              "value": "'Off'",
+              "sync": "coal_switch",
+              "hidden": false
+            }
+          ]
         },
-        "call_overhead_s": 9.793
+        "mismatches": [],
+        "counts": {
+          "coal_a_lead": 3,
+          "coal_a_partner": 3,
+          "coal_b_lead": 2,
+          "coal_b_partner": 2,
+          "coal_switch": 1,
+          "param_follow_a": 3,
+          "param_follow_b": 2
+        },
+        "expected_counts": {
+          "coal_a_lead": 3,
+          "coal_a_partner": 3,
+          "coal_b_lead": 2,
+          "coal_b_partner": 2,
+          "coal_switch": 1,
+          "param_follow_a": 3,
+          "param_follow_b": 2
+        },
+        "simulator_follow_saved": {
+          "param_follow_a": "100L",
+          "param_follow_b": "100L"
+        },
+        "pickers_visible_on_simulator": []
+      }
+    },
+    {
+      "check": "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)",
+      "status": "fail",
+      "evidence": {
+        "seconds_net_of_call_overhead": {
+          "Path to 24 table": 0.257,
+          "Simulator cards": 0.561,
+          "Spread map": 0.178,
+          "Simulator cards (coalition On, 2 v 2)": 2.232,
+          "Head to head table + cards": 1.351
+        },
+        "call_overhead_s": 5.356
       }
     }
   ]
