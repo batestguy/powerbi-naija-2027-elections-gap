@@ -39,9 +39,15 @@ Verified this session:
 **Next, in order:**
 1. `validate_phase6.py` — **done 2026-11-18: 18/18** (speed check now one query per visual, user decision;
    decision log). Phase 4 result is reused when newer than the build (a full re-run takes ~45 min).
-2. Screenshots of the two coalition pages and the simulator with the switch On.
+2. Screenshots — **done 2026-11-18**: all 12 pages, `reports/screenshots/coalition_2026-11-18/` (switch Off, preset
+   NDC v APC on the coalition pages; numbers match the checks: 19 states, 7,598,220 votes). First capture of
+   Merge two parties came out faded mid-load; re-taken with `--settle 9000`. Small layout fixes found:
+   Head to head result sentence slightly clipped at the bottom of its box; Merge table's "Change (points)"
+   column cut off at the right (needs a scroll). Not yet captured: the simulator with the switch On (needs a
+   build variant).
 3. Reviewer pass on the coalition method and on today's engine rewrite (fresh eyes; the reference functions were
-   written by the same author).
+   written by the same author). Started 2026-11-18 ~08:55 in the background, read-only; findings go to
+   `reports/review_2026-11-18.md` — read it, fix what is blocking, re-run the affected checks.
 4. Commit + push (nothing from 2026-11-18 is committed yet).
 5. Open, not started: rival "at 25% in a state" counts still compare without a margin — the margin proof covers only
    the candidate / coalition share. Decide whether to extend the proof to rival shares.
