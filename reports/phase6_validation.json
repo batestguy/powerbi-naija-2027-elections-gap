@@ -1,10 +1,10 @@
 {
   "built_by": "scripts/validate_phase6.py",
-  "gate_passed": false,
+  "gate_passed": true,
   "summary": {
     "checks": 18,
-    "pass": 17,
-    "fail": 1
+    "pass": 18,
+    "fail": 0
   },
   "not_scriptable": [
     "tooltips render as designed (needs hover)",
@@ -12,9 +12,7 @@
     "release .pbix on a clean Windows profile (Phase 7 builds the .pbix)",
     "non-specialist completes the core task unaided"
   ],
-  "failed": [
-    "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)"
-  ],
+  "failed": [],
   "checks": [
     {
       "check": "refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs",
@@ -756,17 +754,29 @@
       }
     },
     {
-      "check": "engine time per heavy page query under 2.0 s (non-neutral sliders; rendering not included)",
-      "status": "fail",
+      "check": "engine time per heavy page query (one query per visual, as Desktop sends them) under 2.0 s (non-neutral sliders; rendering not included)",
+      "status": "pass",
       "evidence": {
         "seconds_net_of_call_overhead": {
-          "Path to 24 table": 0.257,
-          "Simulator cards": 0.561,
-          "Spread map": 0.178,
-          "Simulator cards (coalition On, 2 v 2)": 2.232,
-          "Head to head table + cards": 1.351
+          "Path to 24 table": 0.0,
+          "Spread map": 0.0,
+          "Head to head table + cards": 1.621,
+          "Simulator tile map": 0.0,
+          "Simulator tile map (coalition On, 2 v 2)": 0.151,
+          "Simulator headline card": 0.0,
+          "Simulator headline card (coalition On, 2 v 2)": 0.767,
+          "Simulator counts card": 0.0,
+          "Simulator counts card (coalition On, 2 v 2)": 0.0,
+          "Simulator result sentence": 0.0,
+          "Simulator result sentence (coalition On, 2 v 2)": 0.352,
+          "Simulator deciding state sentence": 0.0,
+          "Simulator deciding state sentence (coalition On, 2 v 2)": 0.0,
+          "Simulator settings sentence": 0.0,
+          "Simulator settings sentence (coalition On, 2 v 2)": 0.0,
+          "Simulator coalition sentence": 0.0,
+          "Simulator coalition sentence (coalition On, 2 v 2)": 0.036
         },
-        "call_overhead_s": 5.356
+        "call_overhead_s": 7.883
       }
     }
   ]

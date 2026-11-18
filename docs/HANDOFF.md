@@ -37,11 +37,8 @@ Verified this session:
 
 ### 2026-11-18: speed fixed, boundary bug fixed, engine rewritten — all Phase 4 checks pass (89/89)
 **Next, in order:**
-1. `validate_phase6.py` — ran 2026-11-18: 17/18. Phase 4 result is now reused when newer than the build
-   (a full re-run takes ~45 min, over the 30-min subprocess limit); results print as they land. **Open: the speed
-   check fails** for "Simulator cards (coalition On, 2 v 2)" (2.0–2.8 s warm vs 2.0 s limit; the check runs all 10
-   cards as one query, Desktop runs one query per card). Decision needed: keep optimising, or time each card
-   separately as Desktop does (a change to the check → decision log). Attempts and numbers: `registers/qa-log.md`.
+1. `validate_phase6.py` — **done 2026-11-18: 18/18** (speed check now one query per visual, user decision;
+   decision log). Phase 4 result is reused when newer than the build (a full re-run takes ~45 min).
 2. Screenshots of the two coalition pages and the simulator with the switch On.
 3. Reviewer pass on the coalition method and on today's engine rewrite (fresh eyes; the reference functions were
    written by the same author).

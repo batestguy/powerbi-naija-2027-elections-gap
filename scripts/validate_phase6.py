@@ -555,27 +555,38 @@ def main():
     queries = {
         "Path to 24 table": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_name], "r", [Unit rank], "s", [Scenario share], '
                             f'"l", [Scenario label], "v", [Votes needed], "c", [Path column colour]), {busy})',
-        "Simulator cards": f'EVALUATE CALCULATETABLE(ROW("v", [Verdict], "m", [Has most votes], "rv", [Leading rival], '
-                           f'"tu", [Tipping-point unit], "tg", [Tipping-point gap (points)], "sec", [Units secured (national)], '
-                           f'"need", [Units still needed], "ns", [Scenario national share], "cap", [Units at a cap]), {busy})',
         "Spread map": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_pcode], "s", [Scenario share], '
                       f'"d", [Points from 25%]), {busy})',
-        # coalitions (2026-11-16): simulator cards with the switch On (2 v 2), and the Head to head page's heaviest parts
-        "Simulator cards (coalition On, 2 v 2)": f'EVALUATE CALCULATETABLE(ROW("v", [Verdict], "m", [Has most votes], '
-                           f'"rv", [Leading rival], "tu", [Tipping-point unit], "tg", [Tipping-point gap (points)], '
-                           f'"sec", [Units secured (national)], "need", [Units still needed], "ns", [Scenario national share], '
-                           f'"cap", [Units at a cap], "r", [Result sentence]), {busy}, {COAL_ON}, {COAL_2V2})',
         "Head to head table + cards": f'EVALUATE CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_name]), "a", '
                            f'[Side A share (head to head)], "b", [Side B share (head to head)], "w", [Who leads (head to head)], '
                            f'"a25", [Side A at 25% (head to head)], "b25", [Side B at 25% (head to head)], "s", '
                            f'[Head to head sentence], "la", [States led by Side A], "c", [Head to head leader colour]), {COAL_2V2})',
     }
+    # Simulator page: one query per VISUAL, with exactly the measures that visual shows (read from the report files
+    # 2026-11-18), as Desktop sends them (user decision 2026-11-18, decision log). Until then the check timed ten
+    # measures as ONE query, two of which (Verdict, Tipping-point gap) are not on the page (2.0-2.8 s, switch On).
+    sim_visuals = {
+        "tile map": 'SUMMARIZECOLUMNS(dim_state[tile_row], dim_state[tile_col], "c", [Tile code], "f", [Tile fill], '
+                    '"t", [Tile text colour])',
+        "headline card": 'ROW("m", [Has most votes], "rv", [Leading rival], "ns", [Scenario national share], '
+                         '"a", [Party accent colour])',
+        "counts card": 'ROW("sec", [Units secured (national)], "need", [Units still needed], "cap", [Units at a cap], '
+                       '"a", [Party accent colour])',
+        "result sentence": 'ROW("r", [Result sentence], "a", [Party accent colour])',
+        "deciding state sentence": 'ROW("d", [Deciding state sentence], "a", [Party accent colour])',
+        "settings sentence": 'ROW("s", [Assumptions in force], "a", [Party accent colour])',
+        "coalition sentence": 'ROW("s", [Simulator coalition sentence])',
+    }
+    for k, v in sim_visuals.items():
+        queries[f"Simulator {k}"] = f"EVALUATE CALCULATETABLE({v}, {busy})"
+        queries[f"Simulator {k} (coalition On, 2 v 2)"] = f"EVALUATE CALCULATETABLE({v}, {busy}, {COAL_ON}, {COAL_2V2})"
 
     def timed(q):
         t = time.perf_counter(); dax(q); return time.perf_counter() - t
     base = statistics.median(timed('EVALUATE ROW("x", 1)') for _ in range(3))
     lat = {k: round(max(0.0, statistics.median(timed(q) for _ in range(3)) - base), 3) for k, q in queries.items()}
-    check(f"engine time per heavy page query under {LATENCY_LIMIT_S} s (non-neutral sliders; rendering not included)",
+    check(f"engine time per heavy page query (one query per visual, as Desktop sends them) under "
+          f"{LATENCY_LIMIT_S} s (non-neutral sliders; rendering not included)",
           all(v < LATENCY_LIMIT_S for v in lat.values()), {"seconds_net_of_call_overhead": lat, "call_overhead_s": round(base, 3)})
 
     failed = [c["check"] for c in checks if c["status"] == "fail"]
