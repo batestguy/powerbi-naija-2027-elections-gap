@@ -332,8 +332,8 @@ MEASURES["scenario"] = [
                                 "VAR spare = ROUNDDOWN ( MAX ( 0, v2 - 0.25 * V1 ) + 1E-6, 0 ) "
                                 "RETURN IF ( COUNTROWS ( tb ) >= n && NOT ISBLANK ( k ), "
                                 'LOOKUPVALUE ( dim_state[state_name], dim_state[state_pcode], k ) & " is the deciding state. " & '
-                                'IF ( g <= 1E-10, '
-                                'c & " is " & FORMAT ( -g, "0.0" ) & " points above a quarter of the vote there: about " '
+                                f'IF ( p >= {Q}, '
+                                'c & " is " & FORMAT ( MAX ( 0, -g ), "0.0" ) & " points above a quarter of the vote there: about " '
                                 '& FORMAT ( spare, "#,0" ) & " votes could switch to other candidates before the state is lost.", '
                                 'c & " is " & FORMAT ( g, "0.0" ) & " points short of a quarter of the vote there: about " '
                                 '& FORMAT ( need, "#,0" ) & " more votes would need to switch from other candidates to " & c & "." ) ) )',

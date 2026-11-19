@@ -1,6 +1,6 @@
 # Handoff — where the project is
 
-Updated: 2026-11-18. Update this file in every stage commit.
+Updated: 2026-11-19. Update this file in every stage commit.
 
 ## Phase status (see `docs/PLAN.md`)
 | Phase | State | Last commit |
@@ -9,7 +9,7 @@ Updated: 2026-11-18. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | built; speed fixed, boundary bug fixed, engine rewritten 2026-11-18; Phase 4 89/89, Phase 6 18/18, reviewed (ship with fixes) | a485ed9 + review commit |
+| 5c Merge parties + head to head | built; speed fixed, boundary bug fixed, engine rewritten 2026-11-18; review fixes 2026-11-19; Phase 4 90/90, Phase 6 18/18 | a485ed9 + review commit |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Redesign round (user requests 2026-11-14)
@@ -34,6 +34,25 @@ Verified this session:
 - Bug fixed: the switch-On rival code used a DAX variable named `lead`, which this Desktop rejects ("The syntax for 'lead' is incorrect"); every measure built on `ON_TAB` (Leading rival, its votes, its states at 25%, Has most votes, Verdict, Result sentence) failed, even with the switch Off. Renamed to `rx`. After the fix (switch Off, APC): Result sentence = "Bola Tinubu wins outright: … 29 states (24 needed)", Verdict = "Outright win", Leading rival = PDP.
 - `validate_phase3.py` pass (07:40).
 - Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
+
+### 2026-11-19: review fixes done (items 2-6 of `reports/review_2026-11-18.md`; follow-up at its end)
+- Desktop's save of 2026-11-18 09:25 had overwritten the generated report files and left a `cache.abf`; rebuilt from
+  `build_pbip.py` (identical to the commit apart from line endings), restored the two Desktop-only files, deleted the cache.
+- Deciding-state sentence: branch from `p >= Q`, gap printed as `MAX ( 0, -g )`; new boundary check (sentence at every
+  exact 25% hit made deciding; 5 placed and equal to the reference, 1 proven never deciding). Phase 4 is now 90 checks.
+- Exact-hit check fails unless all reachable (hit, line) pairs are tested (12 of 12).
+- Build stamp on Phase 4 parts / combined result (`scripts/build_stamp.py`); combine and Phase 6 reuse refuse a mismatch.
+  Proven once: Phase 6 re-run reused the Phase 4 result ("existing result has the current build stamp").
+- Speed gate timed inside one engine connection, cache cleared, gate on median cold (`pbi_engine.ps1 -Action Time`).
+  Slowest: Head to head table + cards 1.585 s cold, 1.259 s warm. `scripts/time_engine.py` → `reports/engine_timings.json`.
+- Results: Phase 4 parts core 81/81 (839 s), invalid 1/1 (72 s), switch_off 1/1 (30 s), simulator 1/1 (732 s),
+  pages 3/3 (3,017 s), boundary 3/3 (~260 s); combined 90/90. Phase 6 18/18 (633 s).
+- Not explained: the pages part took 3,017 s (1,354 s on 2026-11-18) and core / simulator were also slower. The engine was
+  busy throughout (not stalled); the only model change was the deciding-state sentence. Re-time before treating as real.
+
+**Next, in order:** the two layout nits (Head to head sentence clipped; Merge table's "Change (points)" column cut off);
+a simulator screenshot with the switch On; decide whether the margin should cover rival shares (review NIT); a
+cross-family review before anything is published; then Phase 7.
 
 ### 2026-11-18: speed fixed, boundary bug fixed, engine rewritten — all Phase 4 checks pass (89/89)
 **Next, in order:**
@@ -67,7 +86,9 @@ now reads every slider and picker once (`ENGINE_IN`) and does the arithmetic str
 ~10 nested measure calls per state. `Deciding state sentence` ranks states once and reads the deciding state's row
 (it was re-evaluating Votes needed / to spare for every state). `Units within reach / out of reach` compute each
 state's share once. Research basis: SQLBI on eager vs strict IF evaluation and on context transitions in iterators.
-Measured (preset NDC v APC, switch On, cache cleared):
+Measured (preset NDC v APC, switch On, cache cleared). **The "Before" column and the memory figures came from session
+scripts that are no longer in the repo: not reproducible.** Current timings: `reports/engine_timings.json`
+(`scripts/time_engine.py`, 2026-11-19; these queries differ, so compare with care):
 
 | Request | Before | After |
 |---|---|---|

@@ -8,17 +8,23 @@
 
   Refresh: sends a TMSL full refresh of the database (same effect as Home > Refresh).
   Query:   runs one DAX query and writes the rows as JSON (stdout, or -Out file).
+  Time:    runs one DAX query -Repeat times inside this one connection (no PowerShell start-up in the numbers). Each
+           round clears the database cache first, then times a cold run and a warm run (every row read). Writes
+           {cold_s, warm_s, rows, engine_mb} as JSON. Engine time only: Desktop's rendering is not included.
+  Stamp:   writes a hash of the live model's measure names and expressions (used to tie saved check results to the
+           model Desktop has loaded).
 
 .EXAMPLE
   powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_engine.ps1 -Action Refresh
   powershell -NoProfile -ExecutionPolicy Bypass -File scripts/pbi_engine.ps1 -Action Query -Dax "EVALUATE dim_party"
 #>
 param(
-  [Parameter(Mandatory = $true)][ValidateSet('Refresh', 'Query', 'Info')][string]$Action,
+  [Parameter(Mandatory = $true)][ValidateSet('Refresh', 'Query', 'Info', 'Time', 'Stamp')][string]$Action,
   [string]$Dax,
   [string]$DaxFile,
   [string]$Out,
   [int]$DesktopPid = 0,
+  [int]$Repeat = 3,
   [int]$TimeoutSec = 300,
   [int]$DialogWaitSec = 180
 )
@@ -97,6 +103,39 @@ try {
       $r.Close()
       $json = ConvertTo-Json -InputObject @($rows) -Depth 4
       if ($Out) { Set-Content -Path $Out -Value $json -Encoding UTF8 } else { $json }
+    }
+    'Time' {
+      if ($DaxFile) { $Dax = Get-Content -Raw $DaxFile }
+      if (-not $Dax) { throw 'Time needs -Dax or -DaxFile.' }
+      $conn.ChangeDatabase($db)
+      $clear = "<ClearCache xmlns=`"http://schemas.microsoft.com/analysisservices/2003/engine`"><Object><DatabaseID>$db</DatabaseID></Object></ClearCache>"
+      $run = {
+        $cmd.CommandText = $Dax
+        $sw = [Diagnostics.Stopwatch]::StartNew()
+        $r = $cmd.ExecuteReader(); $n = 0
+        while ($r.Read()) { for ($i = 0; $i -lt $r.FieldCount; $i++) { [void]$r.GetValue($i) }; $n++ }
+        $r.Close(); $sw.Stop()
+        @($sw.Elapsed.TotalSeconds, $n)
+      }
+      $cold = @(); $warm = @(); $rows = 0
+      for ($k = 0; $k -lt $Repeat; $k++) {
+        $cmd.CommandText = $clear; [void]$cmd.ExecuteNonQuery()
+        $c = & $run; $w = & $run
+        $cold += [math]::Round($c[0], 4); $warm += [math]::Round($w[0], 4); $rows = $c[1]
+      }
+      $mb = [math]::Round((Get-Process -Id $engine.ProcessId).WorkingSet64 / 1MB)
+      [pscustomobject]@{ cold_s = $cold; warm_s = $warm; rows = $rows; engine_mb = $mb } | ConvertTo-Json -Compress
+    }
+    'Stamp' {
+      $conn.ChangeDatabase($db)
+      $cmd.CommandText = 'SELECT [Name], [Expression] FROM $SYSTEM.TMSCHEMA_MEASURES'
+      $r = $cmd.ExecuteReader(); $m = @()
+      while ($r.Read()) { $m += ($r.GetString(0) + [char]31 + ($r.GetValue(1) -replace "`r`n", "`n")) }
+      $r.Close()
+      $text = (($m | Sort-Object -CaseSensitive) -join [char]30)
+      $sha = [Security.Cryptography.SHA256]::Create()
+      $h = -join ($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes($text)) | ForEach-Object { $_.ToString('x2') })
+      [pscustomobject]@{ measures = $m.Count; measures_sha256 = $h } | ConvertTo-Json -Compress
     }
   }
 }

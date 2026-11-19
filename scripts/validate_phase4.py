@@ -15,11 +15,15 @@ Usage (repo root):  uv run python -I scripts/validate_phase4.py                 
                     uv run python -I scripts/validate_phase4.py --combine       (all part files -> phase4_validation.json)
 Parts: core, pages, simulator, invalid, switch_off, boundary. Each result is printed as soon as it is known and the
 output file is rewritten after every check, so a run that is stopped (e.g. for low memory) keeps what it finished.
+Every output carries a build stamp (scripts/build_stamp.py); --combine refuses parts from different builds or from a
+build other than the current one (review 2026-11-18).
 """
 import csv, json, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))   # -I leaves the script folder off the path
+from build_stamp import build_stamp, same_build  # noqa: E402
 STG, REP = ROOT / "data" / "staging", ROOT / "reports"
 PS = ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(ROOT / "scripts" / "pbi_engine.ps1")]
 PARTIES = ["APC", "PDP", "LP", "NNPP"]
@@ -28,7 +32,7 @@ TOL = 1e-12
 checks = []
 
 
-OUT = {"path": None, "part": "all"}   # where partial results go (set in main)
+OUT = {"path": None, "part": "all", "stamp": None, "parts": None}   # where partial results go (set in main)
 
 
 def write_out(complete):
@@ -36,6 +40,7 @@ def write_out(complete):
     out = {"built_by": "scripts/validate_phase4.py", "method": "docs/methodology.md", "part": OUT["part"],
            "complete": complete, "gate_passed": complete and not failed,
            "summary": {"checks": len(checks), "pass": len(checks) - len(failed), "fail": len(failed)},
+           "build_stamp": OUT["stamp"], **({"parts": OUT["parts"]} if OUT["parts"] else {}),
            "grid": GRID, "failed": failed, "checks": checks}
     OUT["path"].parent.mkdir(parents=True, exist_ok=True)
     OUT["path"].write_text(json.dumps(out, indent=2, default=str) + "\n", encoding="utf-8", newline="\n")
@@ -565,7 +570,8 @@ def coalition_boundary_search():
     check("margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition "
           "setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin",
           gap["gap"] > 100 * MARGIN, {**gap, "margin": MARGIN, "combinations_turnout_level": combos})
-    bad, tested = [], []
+    bad, tested, expected = [], [], 0
+    sent_bad, sent_tested, sent_unplaced = [], [], []
     for h in hits:
         al, ap, fa, s, W, k, m0 = h["lead"], h["partner"], h["follow"], h["state"], h["W"], h["turnout"], h["p1_x200"]
         others = [x for x in PARTIES if x not in (al, ap)]
@@ -573,22 +579,85 @@ def coalition_boundary_search():
         sideb = [(bp, fb) for bp in others for fb in range(0, 101, 5) if WA - (100 - fb) * VOTES[(s, bp)] == W]
         bp, fb = sideb[0] if sideb else (None, 100)
         bl = next(x for x in others if x != bp)
+        cfg = (al, ap, fa, bl, bp, fb)
         for target in (50, 40):
-            sw = target - m0   # half-points of total swing; put it all on the national slider when it fits
-            if not -40 <= sw <= 40:
+            sw = target - m0   # half-points of total swing: national first, the rest on the state's own zone
+            if not -80 <= sw <= 80:
                 continue
+            expected += 1
+            nat = max(-40, min(40, sw)) / 2
+            zon = sw / 2 - nat
             want = ("Secured", 1, "#0072B2") if target == 50 else ("Within reach", 2, "#D55E00")
-            f = cfg_filters((al, ap, fa, bl, bp, fb)) + ['TREATAS({"On"}, coal_switch[Value])', f'TREATAS({{{k}}}, param_turnout[Value])',
-                 f'TREATAS({{{sw / 2}}}, param_swing_national[Value])', f'TREATAS({{"{s}"}}, dim_state[state_pcode])']
+            f = cfg_filters(cfg) + ['TREATAS({"On"}, coal_switch[Value])', f'TREATAS({{{k}}}, param_turnout[Value])',
+                 f'TREATAS({{{nat}}}, param_swing_national[Value])', f'TREATAS({{{zon}}}, param_swing_{ZONE[s]}[Value])',
+                 f'TREATAS({{"{s}"}}, dim_state[state_pcode])']
             g = dax_file(f'EVALUATE CALCULATETABLE(ROW("label", [Scenario label], "order", [Scenario label order], '
                          f'"colour", [Scenario label colour], "need", [Votes needed]), {", ".join(f)})')[0]
-            row = {"setting": [al, ap, fa, bl, bp, fb, s, k, sw / 2], "line": target / 200, "model": g}
+            row = {"setting": [*cfg, s, k, nat, ZONE[s], zon], "line": target / 200, "model": g}
             tested.append(row)
             if (g["label"], g["order"], g["colour"]) != want or (target == 50 and g["need"] != 0):
                 bad.append(row)
+            if target == 50:   # deciding-state sentence with this state exactly on 25% AND deciding (review item 6)
+                placed, why = place_deciding(cfg, s, k, sw)
+                if not placed:
+                    sent_unplaced.append({"setting": row["setting"], "never_deciding": why})
+                    continue
+                n, st = placed
+                ref = coal_sim(cfg, st, n)
+                zf = [f'TREATAS({{{st["Z"][z]}}}, param_swing_{z}[Value])' for z in ZONES]
+                ff = cfg_filters(cfg) + ['TREATAS({"On"}, coal_switch[Value])', f'TREATAS({{{k}}}, param_turnout[Value])',
+                      f'TREATAS({{{st["S"]}}}, param_swing_national[Value])', *zf, f'TREATAS({{{n}}}, param_rule[Value])']
+                got = dax_file(f'EVALUATE CALCULATETABLE(ROW("d", [Deciding state sentence]), {", ".join(ff)})')[0]["d"]
+                srow = {"setting": [*cfg, k, st, n], "state": s, "model": got, "reference": ref["decide"]}
+                sent_tested.append(srow)
+                if got != ref["decide"] or "-0.0" in (got or "") or " 0.0 points above" not in (got or ""):
+                    sent_bad.append(srow)
     check("exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model "
-          "shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%)",
-          bool(tested) and not bad, {"hit_count": len(hits), "tested": tested, "wrong": bad})
+          "shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%); none skipped",
+          len(tested) == expected > 0 and not bad,
+          {"hit_count": len(hits), "expected": expected, "tested_count": len(tested), "tested": tested, "wrong": bad})
+    check("deciding-state sentence at every exact 25% hit, with that state made the deciding one (other zones' sliders): "
+          "'0.0 points above' and every word = reference; a hit is left out only when an exhaustive search proves that "
+          "state can never be the deciding one there",
+          len(sent_tested) > 0 and len(sent_tested) + len(sent_unplaced) == sum(r["line"] == 0.25 for r in tested)
+          and not sent_bad and all(u["never_deciding"]["states_ahead_min"] > 24 or u["never_deciding"]["states_ahead_max"] < 23
+                                   for u in sent_unplaced),
+          {"tested": sent_tested, "wrong": sent_bad, "never_deciding_proven": sent_unplaced})
+
+
+def place_deciding(cfg, s, k, sw):
+    """A slider setting where state s sits exactly on 25% (its total swing is sw half-points) and is the deciding
+    state for rule N = 24 or 25: split sw between national and s's zone, then pick each other zone's slider (every
+    0.5 step, -20..20) so that exactly N - 1 states rank ahead of s (exact reference shares; ties by P-code, as the
+    model). Returns ((N, setting), None) or (None, range of counts ahead reachable) - the search is exhaustive (every
+    split and every zone step, and a zone's count ahead depends only on its own slider), so None proves no slider
+    setting makes s the deciding state while it is exactly on 25%."""
+    own, rest = ZONE[s], [z for z in ZONES if z != ZONE[s]]
+    per, t = coal_per_state(*cfg), Fr(k, 100)
+    p1 = {x: Fr(per[x]["C"], 100) * (1 + t) / (Fr(per[x]["W"], 100) + Fr(per[x]["C"], 100) * t) for x in VALID}
+    q = Fr(1, 4)
+
+    def ahead(x, half_points):   # does state x rank ahead of s at this total swing (half-points)?
+        px = min(Fr(1), max(Fr(0), p1[x] + Fr(half_points, 200)))
+        return px > q or (px == q and x < s)
+    lo, hi = 99, -1
+    for nat2 in sorted(range(-40, 41), key=abs):
+        zon2 = sw - nat2
+        if not -40 <= zon2 <= 40:
+            continue
+        base = sum(ahead(x, sw) for x in VALID if ZONE[x] == own and x != s)
+        reach = {0: {}}   # count ahead -> zone slider choices (half-points) giving it
+        for z in rest:
+            opts = {}
+            for v in range(-40, 41):
+                opts.setdefault(sum(ahead(x, nat2 + v) for x in VALID if ZONE[x] == z), v)
+            reach = {c + oc: {**ch, z: ov} for c, ch in reach.items() for oc, ov in opts.items()}
+        lo, hi = min(lo, base + min(reach)), max(hi, base + max(reach))
+        for n in (24, 25):
+            ch = reach.get(n - 1 - base)
+            if ch is not None:
+                return (n, {"t": k, "S": nat2 / 2, "Z": {own: zon2 / 2, **{z: v / 2 for z, v in ch.items()}}}), None
+    return None, {"states_ahead_min": lo, "states_ahead_max": hi, "needed": [23, 24]}
 
 
 MARGIN = 1E-12   # build_pbip.py Q / F
@@ -651,6 +720,9 @@ def main():
         sys.exit(f"unknown part {part!r}; choose from {', '.join(PARTS)}")
     OUT["part"] = part
     OUT["path"] = REP / "phase4_validation.json" if part == "all" else PART_DIR / f"{part}.json"
+    OUT["stamp"] = build_stamp()
+    if part == "all":
+        OUT["parts"] = list(PARTS)
     for f in (PARTS.values() if part == "all" else [PARTS[part]]):
         f()
     out = write_out(True)
@@ -671,8 +743,14 @@ def combine():
             parts.append(d)
     if missing:
         sys.exit(f"cannot combine: part(s) missing or incomplete: {', '.join(missing)}")
+    now = build_stamp()
+    stale = [d["part"] for d in parts if not same_build(d.get("build_stamp"), now)]
+    if stale:
+        sys.exit(f"cannot combine: part(s) not run on the current build (files or live model changed since): "
+                 f"{', '.join(stale)}; re-run them")
     checks[:] = [c for d in parts for c in d["checks"]]
     OUT["part"], OUT["path"] = "all (combined from reports/phase4_parts/)", REP / "phase4_validation.json"
+    OUT["stamp"], OUT["parts"] = now, {d["part"]: d["summary"]["checks"] for d in parts}
     out = write_out(True)
     print(f"  combined {len(parts)} parts: gate {'PASSED' if out['gate_passed'] else 'FAILED'}: {out['summary']}")
     return 0 if out["gate_passed"] else 1

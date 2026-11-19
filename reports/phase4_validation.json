@@ -5,9 +5,25 @@
   "complete": true,
   "gate_passed": true,
   "summary": {
-    "checks": 89,
-    "pass": 89,
+    "checks": 90,
+    "pass": 90,
     "fail": 0
+  },
+  "build_stamp": {
+    "files_sha256": "abe80dda233f4f6150dbda3cfcce5f5e7f0718108a395bc529a1f6b8bebd654f",
+    "files": 47,
+    "live_model": {
+      "measures": 151,
+      "measures_sha256": "0bbdf799f605cce9e029cf7c30a39a15b13b52f2c2381b35c5fd3bb12459ecf8"
+    }
+  },
+  "parts": {
+    "core": 81,
+    "pages": 3,
+    "simulator": 1,
+    "invalid": 1,
+    "switch_off": 1,
+    "boundary": 3
   },
   "grid": {
     "neutral": {
@@ -1781,10 +1797,12 @@
       }
     },
     {
-      "check": "exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%)",
+      "check": "exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%); none skipped",
       "status": "pass",
       "evidence": {
         "hit_count": 6,
+        "expected": 12,
+        "tested_count": 12,
         "tested": [
           {
             "setting": [
@@ -1796,7 +1814,9 @@
               25,
               "NG014",
               25,
-              20.0
+              20.0,
+              "SE",
+              0.0
             ],
             "line": 0.25,
             "model": {
@@ -1816,7 +1836,9 @@
               25,
               "NG014",
               25,
-              15.0
+              15.0,
+              "SE",
+              0.0
             ],
             "line": 0.2,
             "model": {
@@ -1836,7 +1858,9 @@
               30,
               "NG027",
               -42,
-              15.0
+              15.0,
+              "NC",
+              0.0
             ],
             "line": 0.25,
             "model": {
@@ -1856,7 +1880,9 @@
               30,
               "NG027",
               -42,
-              10.0
+              10.0,
+              "NC",
+              0.0
             ],
             "line": 0.2,
             "model": {
@@ -1876,7 +1902,9 @@
               30,
               "NG027",
               -22,
-              12.0
+              12.0,
+              "NC",
+              0.0
             ],
             "line": 0.25,
             "model": {
@@ -1896,7 +1924,9 @@
               30,
               "NG027",
               -22,
-              7.0
+              7.0,
+              "NC",
+              0.0
             ],
             "line": 0.2,
             "model": {
@@ -1916,7 +1946,9 @@
               40,
               "NG006",
               -28,
-              5.0
+              5.0,
+              "SS",
+              0.0
             ],
             "line": 0.25,
             "model": {
@@ -1936,6 +1968,8 @@
               40,
               "NG006",
               -28,
+              0.0,
+              "SS",
               0.0
             ],
             "line": 0.2,
@@ -1956,6 +1990,8 @@
               40,
               "NG006",
               -4,
+              0.0,
+              "SS",
               0.0
             ],
             "line": 0.25,
@@ -1976,7 +2012,9 @@
               40,
               "NG006",
               -4,
-              -5.0
+              -5.0,
+              "SS",
+              0.0
             ],
             "line": 0.2,
             "model": {
@@ -1996,7 +2034,9 @@
               40,
               "NG006",
               12,
-              -3.0
+              -3.0,
+              "SS",
+              0.0
             ],
             "line": 0.25,
             "model": {
@@ -2016,7 +2056,9 @@
               40,
               "NG006",
               12,
-              -8.0
+              -8.0,
+              "SS",
+              0.0
             ],
             "line": 0.2,
             "model": {
@@ -2028,6 +2070,175 @@
           }
         ],
         "wrong": []
+      }
+    },
+    {
+      "check": "deciding-state sentence at every exact 25% hit, with that state made the deciding one (other zones' sliders): '0.0 points above' and every word = reference; a hit is left out only when an exhaustive search proves that state can never be the deciding one there",
+      "status": "pass",
+      "evidence": {
+        "tested": [
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              -42,
+              {
+                "t": -42,
+                "S": 0.0,
+                "Z": {
+                  "NC": 15.0,
+                  "NE": 18.5,
+                  "NW": 20.0,
+                  "SE": -20.0,
+                  "SS": 2.0,
+                  "SW": -20.0
+                }
+              },
+              24
+            ],
+            "state": "NG027",
+            "model": "Niger is the deciding state. NDC (Obi + Kwankwaso) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost.",
+            "reference": "Niger is the deciding state. NDC (Obi + Kwankwaso) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost."
+          },
+          {
+            "setting": [
+              "LP",
+              "NNPP",
+              50,
+              "APC",
+              "PDP",
+              30,
+              -22,
+              {
+                "t": -22,
+                "S": 0.0,
+                "Z": {
+                  "NC": 12.0,
+                  "NE": 16.5,
+                  "NW": 18.5,
+                  "SE": -20.0,
+                  "SS": -3.5,
+                  "SW": -20.0
+                }
+              },
+              24
+            ],
+            "state": "NG027",
+            "model": "Niger is the deciding state. NDC (Obi + Kwankwaso) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost.",
+            "reference": "Niger is the deciding state. NDC (Obi + Kwankwaso) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost."
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              -28,
+              {
+                "t": -28,
+                "S": 0.0,
+                "Z": {
+                  "SS": 5.0,
+                  "NC": 18.0,
+                  "NE": 19.5,
+                  "NW": 18.0,
+                  "SE": -20.0,
+                  "SW": -20.0
+                }
+              },
+              24
+            ],
+            "state": "NG006",
+            "model": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost.",
+            "reference": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost."
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              -4,
+              {
+                "t": -4,
+                "S": 0.0,
+                "Z": {
+                  "SS": 0.0,
+                  "NC": 16.0,
+                  "NE": 18.0,
+                  "NW": 16.0,
+                  "SE": -20.0,
+                  "SW": -20.0
+                }
+              },
+              24
+            ],
+            "state": "NG006",
+            "model": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost.",
+            "reference": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost."
+          },
+          {
+            "setting": [
+              "NNPP",
+              "LP",
+              50,
+              "APC",
+              "PDP",
+              40,
+              12,
+              {
+                "t": 12,
+                "S": 0.0,
+                "Z": {
+                  "SS": -3.0,
+                  "NC": 19.5,
+                  "NE": 17.0,
+                  "NW": 9.5,
+                  "SE": -20.0,
+                  "SW": -20.0
+                }
+              },
+              24
+            ],
+            "state": "NG006",
+            "model": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost.",
+            "reference": "Bayelsa is the deciding state. NNPP + LP (what-if) is 0.0 points above a quarter of the vote there: about 0 votes could switch to other candidates before the state is lost."
+          }
+        ],
+        "wrong": [],
+        "never_deciding_proven": [
+          {
+            "setting": [
+              "APC",
+              "NNPP",
+              35,
+              "PDP",
+              "LP",
+              25,
+              "NG014",
+              25,
+              20.0,
+              "SE",
+              0.0
+            ],
+            "never_deciding": {
+              "states_ahead_min": 28,
+              "states_ahead_max": 35,
+              "needed": [
+                23,
+                24
+              ]
+            }
+          }
+        ]
       }
     }
   ]

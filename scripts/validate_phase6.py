@@ -29,12 +29,14 @@ from fractions import Fraction
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))   # -I leaves the script folder off the path
+from build_stamp import build_stamp, same_build  # noqa: E402
 STG, REF, REP = ROOT / "data" / "staging", ROOT / "data" / "reference", ROOT / "reports"
 RPT = ROOT / "pbip" / "NaijaElectionsGap.Report"
 PS = ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(ROOT / "scripts" / "pbi_engine.ps1")]
 PARTIES = ["APC", "PDP", "LP", "NNPP"]
 NATIONAL_TOLERANCE_VOTES = 20     # stated tolerance per candidate vs each independent copy of the national total
-LATENCY_LIMIT_S = 2.0             # engine time per page query; rendering is extra and not measured here
+LATENCY_LIMIT_S = 2.0             # engine time per page query, empty cache (median of 3); rendering not measured
 checks = []
 
 
@@ -84,21 +86,23 @@ def rerun(script, *extra, timeout=1800):
     return r.returncode, (r.stdout.strip().splitlines() or [""])[-1]
 
 
+PHASE4_PARTS = ["core", "invalid", "switch_off", "boundary", "simulator", "pages"]
+
+
 def phase4_on_current_build():
     """The full Phase 4 run takes ~45 min (longer than one subprocess timeout, and heavy on this machine's memory).
-    If reports/phase4_validation.json passed, is complete, and is newer than every model file, the check script and the
-    staging data, it already describes this build; otherwise run the parts one by one and combine (2026-11-18)."""
+    Reuse reports/phase4_validation.json only if it passed, is complete, holds all six parts with check counts that add
+    up, and its build stamp (model files, staging + reference tables, check and engine scripts, live model measures;
+    scripts/build_stamp.py) equals the current one. Otherwise run the parts one by one and combine (review 2026-11-18)."""
     res = REP / "phase4_validation.json"
-    inputs = [*(ROOT / "pbip" / "NaijaElectionsGap.SemanticModel" / "definition").rglob("*.tmdl"),
-              ROOT / "scripts" / "validate_phase4.py", *STG.glob("*.csv")]
-    newest = max(inputs, key=lambda f: f.stat().st_mtime)
     d = json.loads(res.read_text(encoding="utf-8")) if res.exists() else {}
-    if d.get("gate_passed") and d.get("complete", True) and res.stat().st_mtime > newest.stat().st_mtime:
-        return 0, {"how": "existing result is newer than the build", "result_written": time.ctime(res.stat().st_mtime),
-                   "newest_input": str(newest.relative_to(ROOT)), "newest_input_written": time.ctime(newest.stat().st_mtime),
-                   "summary": d.get("summary")}
+    now = build_stamp()
+    parts_ok = isinstance(d.get("parts"), dict) and sorted(d["parts"]) == sorted(PHASE4_PARTS) and         sum(d["parts"].values()) == (d.get("summary") or {}).get("checks")
+    if d.get("gate_passed") and d.get("complete") and parts_ok and same_build(d.get("build_stamp"), now):
+        return 0, {"how": "existing result has the current build stamp", "result_written": time.ctime(res.stat().st_mtime),
+                   "build_stamp": now, "parts": d["parts"], "summary": d.get("summary")}
     parts = {}
-    for part in ("core", "invalid", "switch_off", "boundary", "simulator", "pages"):
+    for part in PHASE4_PARTS:
         parts[part] = rerun("validate_phase4.py", "--part", part, timeout=3600)
         print(f"    ... validate_phase4.py --part {part}: exit {parts[part][0]}", flush=True)
     code, last = rerun("validate_phase4.py", "--combine")
@@ -549,7 +553,8 @@ def main():
           "Tinubu (APC) alone; switch Off), in matching sync groups on the coalition pages and the simulator",
           *coalition_preset_check(pg, follow))
 
-    # 7. engine time for the heaviest queries at a non-neutral setting (median of 3, minus a trivial-query baseline)
+    # 7. engine time for the heaviest queries at a non-neutral setting: timed inside one engine connection (no PowerShell
+    # start-up), cache cleared before each of 3 rounds; gate on the median cold time (review 2026-11-18, item 3)
     busy = ("param_swing_national[Value] = 4, param_swing_SE[Value] = -6, param_swing_NW[Value] = 3, "
             "param_turnout[Value] = 10, param_rule[Value] = 25, dim_party[party] = \"LP\"")
     queries = {
@@ -582,12 +587,20 @@ def main():
         queries[f"Simulator {k} (coalition On, 2 v 2)"] = f"EVALUATE CALCULATETABLE({v}, {busy}, {COAL_ON}, {COAL_2V2})"
 
     def timed(q):
-        t = time.perf_counter(); dax(q); return time.perf_counter() - t
-    base = statistics.median(timed('EVALUATE ROW("x", 1)') for _ in range(3))
-    lat = {k: round(max(0.0, statistics.median(timed(q) for _ in range(3)) - base), 3) for k, q in queries.items()}
+        with tempfile.NamedTemporaryFile("w", suffix=".dax", delete=False, encoding="utf-8") as f:
+            f.write(q)
+        try:
+            return engine("-Action", "Time", "-Repeat", "3", "-DaxFile", f.name)
+        finally:
+            Path(f.name).unlink(missing_ok=True)
+    raw = {k: timed(q) for k, q in queries.items()}
+    cold = {k: round(statistics.median(v["cold_s"]), 3) for k, v in raw.items()}
+    warm = {k: round(statistics.median(v["warm_s"]), 3) for k, v in raw.items()}
     check(f"engine time per heavy page query (one query per visual, as Desktop sends them) under "
-          f"{LATENCY_LIMIT_S} s (non-neutral sliders; rendering not included)",
-          all(v < LATENCY_LIMIT_S for v in lat.values()), {"seconds_net_of_call_overhead": lat, "call_overhead_s": round(base, 3)})
+          f"{LATENCY_LIMIT_S} s with an empty cache (non-neutral sliders; rendering not included)",
+          all(v < LATENCY_LIMIT_S for v in cold.values()),
+          {"median_cold_s": cold, "median_warm_s": warm, "runs": raw, "slowest_cold": max(cold, key=cold.get),
+           "how": "pbi_engine.ps1 -Action Time: cache cleared, cold run, warm run; x3; inside one connection"})
 
     failed = [c["check"] for c in checks if c["status"] == "fail"]
     out = {"built_by": "scripts/validate_phase6.py", "gate_passed": not failed,
