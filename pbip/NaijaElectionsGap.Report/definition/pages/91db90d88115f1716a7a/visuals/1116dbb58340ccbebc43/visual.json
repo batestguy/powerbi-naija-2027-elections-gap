@@ -47,7 +47,7 @@
               },
               "queryRef": "scenario.Side A lead share",
               "nativeQueryRef": "Side A lead share",
-              "displayName": "Lead alone"
+              "displayName": "Lead"
             },
             {
               "field": {
@@ -77,7 +77,7 @@
               },
               "queryRef": "scenario.Side A change (points)",
               "nativeQueryRef": "Side A change (points)",
-              "displayName": "Change (points)"
+              "displayName": "Change"
             },
             {
               "field": {
@@ -140,6 +140,13 @@
                   "Value": "true"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
             }
           }
         }
@@ -151,6 +158,39 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
                 }
               }
             }
@@ -172,7 +212,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Every state: the lead alone and the coalition'"
+                  "Value": "'Every state: the lead alone and the coalition (change in points)'"
                 }
               }
             }

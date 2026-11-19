@@ -141,7 +141,7 @@ def reference(party, t_pct, S, Z, n):
                 f"about {per[k]['spare']:,} votes could switch to other candidates before the state is lost.")
     else:
         sent = (f"{st[k]['state_name']} is the deciding state. {cand} is {g1} points short of a quarter of the vote there: "
-                f"about {per[k]['need']:,} more votes would need to switch from other candidates to {cand}.")
+                f"about {per[k]['need']:,} more votes would need to switch to them from other candidates.")
     return per, sent
 
 

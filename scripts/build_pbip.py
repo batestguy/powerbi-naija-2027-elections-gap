@@ -282,7 +282,7 @@ MEASURES["scenario"] = [
                 'rc, "Loses: " & r & " wins outright", '
                 '"No outright winner: run-off (" & r & " has most votes)" )', None),
     # ---- display helpers for the report pages (Phase 5) ----
-    ("Points from 25%", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), ( p - 0.25 ) * 100 )", "+0.0;-0.0;0.0"),
+    ("Points from 25%", f"VAR p = {SHARE} RETURN IF ( NOT ISBLANK ( p ), IF ( ABS ( p - 0.25 ) < 1E-12, 0, ( p - 0.25 ) * 100 ) )", "+0.0;-0.0;0.0"),   # exact 25% stored a hair off shows 0.0, not -0.0
     ("Scenario label colour", f'VAR p = {SHARE} RETURN SWITCH ( TRUE (), ISBLANK ( p ), BLANK (), p >= {Q}, "#0072B2", '
                               f'p >= {F}, "#D55E00", "#767676" )', None),
     ("Baseline label colour", 'VAR cv = [Candidate votes] VAR tv = [Valid votes] RETURN SWITCH ( TRUE (), '
@@ -336,7 +336,7 @@ MEASURES["scenario"] = [
                                 'c & " is " & FORMAT ( MAX ( 0, -g ), "0.0" ) & " points above a quarter of the vote there: about " '
                                 '& FORMAT ( spare, "#,0" ) & " votes could switch to other candidates before the state is lost.", '
                                 'c & " is " & FORMAT ( g, "0.0" ) & " points short of a quarter of the vote there: about " '
-                                '& FORMAT ( need, "#,0" ) & " more votes would need to switch from other candidates to " & c & "." ) ) )',
+                                '& FORMAT ( need, "#,0" ) & " more votes would need to switch to them from other candidates." ) ) )',
      None),
     # 2023 baseline only (whole-number test, as 'States at 25% or more'): the narrowest state won and the narrowest miss.
     # 4 x votes - valid votes is a whole number, so margins of a quarter are exact: spare = rounded down, needed = rounded up.
@@ -703,12 +703,10 @@ def _coalition_measures():
         ("Leading rival name", SIDES + "VAR r = [Leading rival code] RETURN IF ( NOT ISBLANK ( r ), " + lead_lbl + " )",
          None),
         ("Simulator coalition sentence", SIDES + f'RETURN IF ( {ON}, IF ( [Head to head is valid], "On: " & [Side A name] '
-                                         '& ", " & [Follow A] & "% of partner voters follow, vs " & [Side B name] '
-                                         '& IF ( bp <> "NONE", " (" & [Follow B] & "% follow)" ) & ". Candidate picker not '
-                                         'used.", "On, but not complete: " & IF ( [Side A is valid], '
+                                         '& ", " & [Follow A] & "% follow, vs " & [Side B name] '
+                                         '& IF ( bp <> "NONE", " (" & [Follow B] & "% follow)" ) & ".", "On, but not complete: " & IF ( [Side A is valid], '
                                          '[Side B message], [Side A message] ) & " Fix it on Head to head." ), '
-                                         '"Off: uses the candidate picked at the top. Pick a coalition on Head to head, '
-                                         'then switch On." )', None),
+                                         '"Off: uses the candidate at the top. Coalitions: see Head to head." )', None),
     ]
     # side portraits (the same free-licence crops as the candidate photo)
     cands = {c["party"]: c for c in json.loads((PBIP / "assets" / "photos" / "candidates_manifest.json")

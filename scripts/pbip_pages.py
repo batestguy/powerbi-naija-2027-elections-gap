@@ -288,7 +288,7 @@ def choice_slicer(name, x, y, w, h, table, header, preset, sync, alt, column="ch
     return c
 
 
-def bar_chart(name, x, y, w, h, value, colour, title, alt, tooltips=()):
+def bar_chart(name, x, y, w, h, value, colour, title, alt, tooltips=(), axis_pt=8):
     """37 states ranked by share (desc), bars coloured by a measure returning a hex colour, fixed bold 25% line."""
     v = {"visualType": "clusteredColumnChart",   # upright columns: all 37 states fit across the width, no scrolling
          "query": {"queryState": {
@@ -301,7 +301,7 @@ def bar_chart(name, x, y, w, h, value, colour, title, alt, tooltips=()):
                             "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}}],
              # 37 labels would overlap: exact shares are in the tooltip and in the tables on the page
              "labels": [{"properties": {"show": lit("false")}}],
-             "categoryAxis": [{"properties": {"fontSize": lit("8D"), "showAxisTitle": lit("false"),
+             "categoryAxis": [{"properties": {"fontSize": lit(f"{axis_pt}D"), "showAxisTitle": lit("false"),
                                               "preferredCategoryWidth": lit("8D"), "innerPadding": lit("15L")}}],
              "valueAxis": [{"properties": {"start": lit("0D"), "showAxisTitle": lit("false")}}],
              "y1AxisReferenceLine": [{"properties": {"show": lit("true"), "value": lit("0.25D"), "style": s("solid"),
@@ -317,7 +317,7 @@ def bar_chart(name, x, y, w, h, value, colour, title, alt, tooltips=()):
     return container(name, x, y, w, h, v)
 
 
-def matrix(name, x, y, w, h, rows, values, title, alt, sort=None):
+def matrix(name, x, y, w, h, rows, values, title, alt, sort=None, row_wrap=False, font_pt=None):
     q = {"queryState": {"Rows": {"projections": [proj("Column", t, c, d) for t, c, d in rows]},
                         "Values": {"projections": [proj("Measure", t, m, d) for t, m, d in values]}}}
     if sort:
@@ -327,6 +327,12 @@ def matrix(name, x, y, w, h, rows, values, title, alt, sort=None):
                                                        "wordWrap": lit("true")}}],
                      "subTotals": [{"properties": {"rowSubtotals": lit("false")}}]},
          "visualContainerObjects": vco(title, alt)}
+    if row_wrap:   # long state names wrap onto two lines instead of widening the State column
+        v["objects"]["rowHeaders"] = [{"properties": {"wordWrap": lit("true")}}]
+    if font_pt:    # one size smaller where a table must share the page width with a 37-column chart
+        f = {"fontSize": lit(f"{font_pt}D")}
+        for k in ("columnHeaders", "rowHeaders", "values"):
+            v["objects"].setdefault(k, [{"properties": {}}])[0]["properties"].update(f)
     return container(name, x, y, w, h, v)
 
 
@@ -683,7 +689,7 @@ def page_sim(pid):
                          "share to 0% or 100%.", value_pt=13, label_pt=9))
     v.append(sentence(sid(pid, "decide"), rx, 302, rw, 92, "Deciding state sentence", "The deciding state, in votes",
                       "Sentence: the deciding state under your what-if, how far the candidate is above or below a quarter "
-                      "of the vote there, in points and in votes.", value_pt=10))
+                      "of the vote there, in points and in votes.", value_pt=9))
     v.append(sentence(sid(pid, "inforce"), rx, 398, rw, 60, "Assumptions in force", "Your what-if, in words",
                       "Sentence listing every slider that is not at 0, and the number of states needed.", value_pt=10))
     mw = 300
@@ -799,12 +805,12 @@ def page_merge(pid):
                      alt="What this page assumes: follow rate is an assumption; non-followers stay home; 2023 votes "
                          "recombined, not a forecast; which names are real."))
     v.append(matrix(sid(pid, "table"), 850, 196, 410, 516, [("dim_state", "state_name", "State")],
-                    [("scenario", "Side A lead share", "Lead alone"), ("scenario", "Side A share (merge)", "Coalition"),
-                     ("scenario", "Side A change (points)", "Change (points)"),
+                    [("scenario", "Side A lead share", "Lead"), ("scenario", "Side A share (merge)", "Coalition"),
+                     ("scenario", "Side A change (points)", "Change"),
                      ("scenario", "Side A status (merge)", "Status")],
-                    "Every state: the lead alone and the coalition",
+                    "Every state: the lead alone and the coalition (change in points)",
                     "Table of all 37 states: the lead party's 2023 share alone, the coalition's share, the change in "
-                    "points and the coalition's status.", sort=("scenario", "Side A share (merge)")))
+                    "points and the coalition's status.", sort=("scenario", "Side A share (merge)"), row_wrap=True, font_pt=9))
     return "Merge two parties", v
 
 
@@ -820,27 +826,27 @@ def page_h2h(pid):
               "No swing or turnout change. Abuja counts as a state, so there are 37. 24 states needed.", 10, False, MUTED)],
              alt="Subtitle: what the two sides are.")]
     v += side_controls(pid, "A", 20, 84) + side_controls(pid, "B", 650, 84)
-    v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 58, "Side A message", None,
+    v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 50, "Side A message", None,
                       "Side A in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
                       border=BLUE))
-    v.append(sentence(sid(pid, "msg_b"), 650, 196, 610, 58, "Side B message", None,
+    v.append(sentence(sid(pid, "msg_b"), 650, 196, 610, 50, "Side B message", None,
                       "Side B in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
                       border=ORANGE))
-    v.append(cards(sid(pid, "nat_a"), 20, 258, 610, 66,
+    v.append(cards(sid(pid, "nat_a"), 20, 250, 610, 66,
                    [("scenario", "Side A national votes (head to head)", "Side A votes"),
                     ("scenario", "Side A national share (head to head)", "Side A share"),
                     ("scenario", "Side A states at 25% (head to head)", "Side A: states at 25%+"),
                     ("scenario", "States led by Side A", "States Side A leads")],
                    None, "Side A nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
                          "where Side A has the most votes.", value_pt=13, label_pt=9, accent=False, border=BLUE))
-    v.append(cards(sid(pid, "nat_b"), 650, 258, 610, 66,
+    v.append(cards(sid(pid, "nat_b"), 650, 250, 610, 66,
                    [("scenario", "Side B national votes", "Side B votes"),
                     ("scenario", "Side B national share (head to head)", "Side B share"),
                     ("scenario", "Side B states at 25% (head to head)", "Side B: states at 25%+"),
                     ("scenario", "States led by Side B", "States Side B leads")],
                    None, "Side B nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
                          "where Side B has the most votes.", value_pt=13, label_pt=9, accent=False, border=ORANGE))
-    v.append(sentence(sid(pid, "verdict"), 20, 328, 1240, 58, "Head to head sentence", "Result (Side A's view; 24 states "
+    v.append(sentence(sid(pid, "verdict"), 20, 320, 1240, 66, "Head to head sentence", "Result (Side A's view; 24 states "
                       "needed)", "Result as a sentence: whether Side A wins outright, loses, or it goes to a run-off.",
                       value_pt=10, accent=False, border=MUTED))
     v.append(tile_matrix(sid(pid, "tiles"), 20, 390, 330, 258, "Who leads each state",

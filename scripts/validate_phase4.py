@@ -320,7 +320,7 @@ def coal_sim(c, st, n):
     decide = (f"{SNAME[tip]} is the deciding state. {nm} is {g1} points above a quarter of the vote there: about "
               f"{rows[tip]['spare']:,} votes could switch to other candidates before the state is lost." if gap <= 0 else
               f"{SNAME[tip]} is the deciding state. {nm} is {g1} points short of a quarter of the vote there: about "
-              f"{rows[tip]['need']:,} more votes would need to switch from other candidates to {nm}.")
+              f"{rows[tip]['need']:,} more votes would need to switch to them from other candidates.")
     zname = {"NC": "North Central and Abuja", "NE": "North East", "NW": "North West", "SE": "South East",
              "SS": "South South", "SW": "South West"}
     parts = ([f"{st['S']:+.1f} points everywhere"] if st["S"] else []) + \
@@ -616,6 +616,13 @@ def coalition_boundary_search():
           "shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%); none skipped",
           len(tested) == expected > 0 and not bad,
           {"hit_count": len(hits), "expected": expected, "tested_count": len(tested), "tested": tested, "wrong": bad})
+    rg = rival_smallest_gap()
+    # Rival counts compare with no margin (decision log 2026-11-19): safe when no reachable rival share is exactly on
+    # 25% and none lies within floating-point error of it. Double-precision error over these few steps is far below
+    # 1E-14; required: smallest gap > 100 x 1E-14 (same 1E-12 as the label margin).
+    check("rival shares need no margin: no reachable rival share (switch Off and On, every pairing, follow rate, Side B, "
+          "turnout and swing step) is exactly on 25%, and the smallest distance from it is more than 100 x 1E-14",
+          not rg["exact_hits"] and rg["gap"] > 100 * 1E-14, {**rg, "required_gap": 100 * 1E-14})
     check("deciding-state sentence at every exact 25% hit, with that state made the deciding one (other zones' sliders): "
           "'0.0 points above' and every word = reference; a hit is left out only when an exhaustive search proves that "
           "state can never be the deciding one there",
@@ -696,6 +703,83 @@ def smallest_gap():
                     for W in {WA} | {WA - (100 - fb) * VOTES[(s, bp)] for bp in others for fb in range(0, 101, 5)}:
                         scan(C, W, ["coalition", al, ap, fa, s, int(W)])
     return best
+
+
+def rival_smallest_gap():
+    """Rival shares (review 2026-11-18 NIT; margin added 2026-11-19). With C, W, R the candidate side's votes, the
+    valid total and a rival's votes (all x100), turnout k and total swing s half-points, a rival's share after the
+    rescale is q = R (1 - p2) / (W - C), because V1 (1 - p1) = W - C. Unclamped: q = 100 R / D - R s / (200 (W - C)),
+    D = 100 W + C k; clamped at 0%: q = R / (W - C); at 100%: q = 0. Finds the smallest non-zero |q - 1/4| over every
+    reachable setting (switch Off: each candidate v each other main candidate; switch On: every pairing, follow rate,
+    Side B and rival), and counts settings exactly on 25%. Floats locate the candidates; every gap under 1E-7 is
+    recomputed in exact fractions."""
+    import numpy as np
+    ks = np.arange(-50, 51, dtype=np.float64)
+    best = {"gap": 1.0, "where": None}
+    exact_hits = []
+    small = 0
+
+    def exact(C, W, R, k, sv, clamp0):
+        q = Fr(R, W - C) if clamp0 else Fr(100 * R, 100 * W + C * k) - Fr(R * sv, 200 * (W - C))
+        return abs(q - Fr(1, 4))
+
+    def scan(C, W, R, tag):
+        nonlocal small
+        if W - C <= 0 or R <= 0:
+            return
+        D = 100.0 * W + C * ks
+        okd = D > 0
+        p1x200 = np.where(okd, 200.0 * C * (100 + ks) / np.where(okd, D, 1), np.nan)
+        sstar = np.where(okd, 50.0 * (W - C) * (400.0 * R - D) / (np.where(okd, D, 1) * R), np.nan)
+        for sv in (np.floor(sstar), np.ceil(sstar)):
+            u = p1x200 + sv   # p2 x 200 before the clamp
+            m = okd & (np.abs(sv) <= 80) & (u > 0) & (u < 200)
+            g = np.abs(sv - sstar) * R / (200.0 * (W - C))
+            for i in np.nonzero(m & (g < 1e-7))[0]:
+                small += 1
+                e = exact(C, W, R, int(ks[i]), int(sv[i]), False)
+                where = {"case": tag, "turnout": int(ks[i]), "swing_half_points": int(sv[i])}
+                if e == 0:
+                    exact_hits.append(where)
+                elif e < best["gap"]:
+                    best.update(gap=float(e), where=where)
+            gm = np.where(m, g, np.inf)
+            i = int(np.argmin(gm))
+            if gm[i] >= 1e-7 and gm[i] < best["gap"]:
+                best.update(gap=float(gm[i]), where={"case": tag, "turnout": int(ks[i]), "swing_half_points": int(sv[i]),
+                                                      "approx": True})
+        # clamped at 0% (reachable when p1 <= 40%): q does not depend on s
+        reach0 = okd & (p1x200 <= 80)
+        if reach0.any():
+            e = exact(C, W, R, 0, 0, True)
+            if e == 0:
+                exact_hits.append({"case": tag, "clamped_at": 0})
+            elif e < best["gap"]:
+                best.update(gap=float(e), where={"case": tag, "clamped_at": 0})
+
+    for s in VALID:
+        for al in PARTIES:   # switch Off
+            for r in PARTIES:
+                if r != al:
+                    scan(100 * VOTES[(s, al)], 100 * VALID[s], 100 * VOTES[(s, r)], ["single", al, r, s])
+        for al in PARTIES:   # switch On
+            for ap in PARTIES:
+                if ap == al:
+                    continue
+                others = [x for x in PARTIES if x not in (al, ap)]
+                for fa in range(0, 101, 5):
+                    C = 100 * VOTES[(s, al)] + fa * VOTES[(s, ap)]
+                    WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
+                    for bl in others:
+                        bp_opts = [(None, 100)] + [(bp, fb) for bp in others if bp != bl for fb in range(0, 101, 5)]
+                        for bp, fb in bp_opts:
+                            W = WA - ((100 - fb) * VOTES[(s, bp)] if bp else 0)
+                            B = 100 * VOTES[(s, bl)] + (fb * VOTES[(s, bp)] if bp else 0)
+                            scan(C, W, B, ["coalition", al, ap, fa, bl, bp, fb, s, "Side B"])
+                            for x in PARTIES:
+                                if x not in (al, ap, bl, bp):
+                                    scan(C, W, 100 * VOTES[(s, x)], ["coalition", al, ap, fa, bl, bp, fb, s, x])
+    return {**best, "exact_hits": exact_hits, "candidates_rechecked_exactly": small}
 
 
 def coalition_checks():

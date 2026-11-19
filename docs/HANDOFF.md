@@ -9,7 +9,7 @@ Updated: 2026-11-19. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | built; speed fixed, boundary bug fixed, engine rewritten 2026-11-18; review fixes 2026-11-19; Phase 4 90/90, Phase 6 18/18 | a485ed9 + review commit |
+| 5c Merge parties + head to head | built; review fixes 2026-11-19 (Phase 4 90/90, Phase 6 18/18 on 09bfb38); layout + small model changes after that: **checks NOT re-run** | a485ed9 + review commit |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Redesign round (user requests 2026-11-14)
@@ -35,6 +35,29 @@ Verified this session:
 - `validate_phase3.py` pass (07:40).
 - Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
 
+### 2026-11-19 (later): layout fixes, rival proof, simulator text — **full checks not yet run on this build**
+**Start here next session:** close other programs (memory), `scripts/pbi_reopen.ps1 -Force`, then
+`validate_phase4.py --part boundary|core|invalid|switch_off|simulator|pages` one at a time, `--combine`,
+`validate_phase6.py`, `time_engine.py`. A run on 2026-11-19 03:3x was stopped by the tool for low memory (1.4 GB free)
+during the boundary part (its first two checks had passed); its partial file was discarded. The committed
+`reports/phase4_*.json` / `phase6_validation.json` describe 09bfb38, not this build; the build stamp makes combine and
+reuse refuse them, so they cannot be mistaken for current.
+
+Changed since 09bfb38:
+- Model: `Points from 25%` shows 0 within 1E-12 of 25% (no "-0.0"); deciding-state sentence now ends "…would need to
+  switch to them from other candidates." (both references in `validate_phase4.py` / `validate_phase6.py` updated to
+  match); simulator coalition note shortened ("On: <A>, 100% follow, vs <B>." / "Off: uses the candidate at the top.
+  Coalitions: see Head to head.").
+- New check (boundary part): rival shares need no margin. Run offline 2026-11-19: no reachable rival share exactly on
+  25%; smallest gap 3.1E-11 (55 s). A rival margin was tried and reverted (decision log).
+- Layout: Head to head result box no longer clipped; Merge page chart 820 px shows all 37 states and the table shows
+  all four columns (9 pt, wrapped names, heading "Lead"); simulator deciding-state text 9 pt. Text in these card boxes
+  shows at most two lines whatever the box height. Screenshots checked by eye: `reports/screenshots/layout_2026-11-19/`
+  (switch Off), `reports/screenshots/simulator_switch_on_2026-11-19/` (built with `PBIP_COALITION_ON=1`; the repo is
+  built without it). Not checked by eye: the Merge table with "Out of reach" rows in view (rows below the fold).
+- Open question 22 (user): simulator header still shows the picked candidate when the coalition switch is On.
+  Recommended: one added line "Coalition On: results are for <name>".
+
 ### 2026-11-19: review fixes done (items 2-6 of `reports/review_2026-11-18.md`; follow-up at its end)
 - Desktop's save of 2026-11-18 09:25 had overwritten the generated report files and left a `cache.abf`; rebuilt from
   `build_pbip.py` (identical to the commit apart from line endings), restored the two Desktop-only files, deleted the cache.
@@ -50,9 +73,8 @@ Verified this session:
 - Not explained: the pages part took 3,017 s (1,354 s on 2026-11-18) and core / simulator were also slower. The engine was
   busy throughout (not stalled); the only model change was the deciding-state sentence. Re-time before treating as real.
 
-**Next, in order:** the two layout nits (Head to head sentence clipped; Merge table's "Change (points)" column cut off);
-a simulator screenshot with the switch On; decide whether the margin should cover rival shares (review NIT); a
-cross-family review before anything is published; then Phase 7.
+**Next, in order (superseded by the section above):** full checks on the new build; open question 22; a cross-family
+review before anything is published; then Phase 7.
 
 ### 2026-11-18: speed fixed, boundary bug fixed, engine rewritten — all Phase 4 checks pass (89/89)
 **Next, in order:**

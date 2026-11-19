@@ -82,8 +82,11 @@ exactly on 25% or 20%, so the two methods agree everywhere. **Margin (2026-11-18
 it). The model therefore treats a share within 10⁻¹² below a line as on it (`≥ 0.25 − 10⁻¹²`, `≥ 0.20 − 10⁻¹²`; a
 secured unit always has 0 votes needed). The smallest non-zero distance between any reachable share and a line is
 2.06 × 10⁻¹⁰, more than 100 times the margin, so the margin changes only shares that are exactly on a line
-(`validate_phase4.py --part boundary`). Rival "25% in a state" counts are not covered by this proof and still
-compare without a margin.
+(`validate_phase4.py --part boundary`). **Rivals (2026-11-19):** rival "25% in a state" counts compare without a
+margin, and a second exact search shows they need none: a rival's share after the rescale is `R (1 − p2) / (W − C)`
+(since `V1 (1 − p1) = W − C`); over every reachable setting (switch Off and On, every pairing, follow rate, Side B,
+turnout and swing step) no rival lands exactly on 25%, and the closest is 3.1 × 10⁻¹¹ from it, far above
+floating-point error (about 10⁻¹⁵). A 10⁻¹² margin would have left only 31 times headroom, so none is used.
 
 ## Rivals and the verdict (added 2026-11-14, user decision)
 
