@@ -12,6 +12,13 @@ Updated: 2026-11-19. Update this file in every stage commit.
 | 5c Merge parties + head to head | built; review fixes 2026-11-19 (Phase 4 90/90, Phase 6 18/18 on 09bfb38); layout + small model changes after that: **checks NOT re-run** | a485ed9 + review commit |
 | 7 Release + docs, 8 Case study | todo | — |
 
+## Overall progress (estimate, 2026-11-19)
+About 75–80% of the whole project by effort (a judgement, not a measurement). Built: data, model, scenario engine,
+12 report pages incl. redesign and coalitions, scripted QA. Left before release: the open question 22 line, full
+checks on the final build, a cross-family review, person checks (hover, keyboard, screen reader, non-specialist test).
+Not started: Phase 7 (release `.pbix`, clean-profile test, docs, walkthrough video) and Phase 8 (one-page case study:
+question, sources, key decisions, trade-offs, what next; links to release, video, decision log, open questions).
+
 ## Redesign round (user requests 2026-11-14)
 1. Hover shows state names, not P-codes.
 2. Plain wording on all pages ("states" not "units", "the deciding state", "Result"); gaps stated in votes, not points.
