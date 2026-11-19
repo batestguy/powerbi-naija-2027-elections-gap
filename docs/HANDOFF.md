@@ -55,8 +55,9 @@ Changed since 09bfb38:
   shows at most two lines whatever the box height. Screenshots checked by eye: `reports/screenshots/layout_2026-11-19/`
   (switch Off), `reports/screenshots/simulator_switch_on_2026-11-19/` (built with `PBIP_COALITION_ON=1`; the repo is
   built without it). Not checked by eye: the Merge table with "Out of reach" rows in view (rows below the fold).
-- Open question 22 (user): simulator header still shows the picked candidate when the coalition switch is On.
-  Recommended: one added line "Coalition On: results are for <name>".
+- Open question 22 decided by the user 2026-11-19: when the simulator's coalition switch is On, add one line under the
+  header, "Coalition On: results are for <name>" (header itself unchanged). **Build it next session, before the full
+  checks**, so the checks run once on the final build.
 
 ### 2026-11-19: review fixes done (items 2-6 of `reports/review_2026-11-18.md`; follow-up at its end)
 - Desktop's save of 2026-11-18 09:25 had overwritten the generated report files and left a `cache.abf`; rebuilt from
