@@ -10,11 +10,11 @@
     "fail": 0
   },
   "build_stamp": {
-    "files_sha256": "abe80dda233f4f6150dbda3cfcce5f5e7f0718108a395bc529a1f6b8bebd654f",
+    "files_sha256": "f02839a4022e7af83ba9d8e2cb3352140c2ac70b7131aa75c16b4340d98ff651",
     "files": 47,
     "live_model": {
-      "measures": 151,
-      "measures_sha256": "0bbdf799f605cce9e029cf7c30a39a15b13b52f2c2381b35c5fd3bb12459ecf8"
+      "measures": 152,
+      "measures_sha256": "b751c5e8dd20c0878515bfa15fb77f484c7ec481dfaaad0742be9d16b98ede45"
     }
   },
   "grid": {
@@ -343,7 +343,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: Side A's lead and partner are the same party: choose two different parties. Fix it on Head to head."
+            "sim_msg": "On, but not complete: Side A's lead and partner are the same party: choose two different parties. Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           },
           "no Side A lead chosen": {
             "msgA": "Choose Side A's lead party (top of the ticket).",
@@ -361,7 +362,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: Choose Side A's lead party (top of the ticket). Fix it on Head to head."
+            "sim_msg": "On, but not complete: Choose Side A's lead party (top of the ticket). Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           },
           "Side B lead already on Side A": {
             "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
@@ -379,7 +381,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: NNPP is already on Side A: choose another party for Side B. Fix it on Head to head."
+            "sim_msg": "On, but not complete: NNPP is already on Side A: choose another party for Side B. Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           },
           "Side B partner already on Side A": {
             "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
@@ -397,7 +400,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: LP is already on Side A: choose another partner for Side B, or Nobody. Fix it on Head to head."
+            "sim_msg": "On, but not complete: LP is already on Side A: choose another partner for Side B, or Nobody. Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           },
           "Side B partner = Side B lead": {
             "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
@@ -415,7 +419,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: Side B's main party and partner are the same: choose two different parties, or Nobody. Fix it on Head to head."
+            "sim_msg": "On, but not complete: Side B's main party and partner are the same: choose two different parties, or Nobody. Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           },
           "no Side B lead chosen": {
             "msgA": "NDC (Obi + Kwankwaso): Peter Obi (LP) leads, Rabiu Kwankwaso (NNPP) is the partner. A real joint ticket (Nigeria Democratic Congress, 31 May 2026). 100% of Rabiu Kwankwaso's 2023 voters follow; the rest stay home.",
@@ -433,7 +438,8 @@
             "sim_result": null,
             "sim_share": null,
             "sim_rival": null,
-            "sim_msg": "On, but not complete: Choose Side B's main party. Fix it on Head to head."
+            "sim_msg": "On, but not complete: Choose Side B's main party. Fix it on Head to head.",
+            "sim_hdr": "Coalition On, but not complete: fix it on Head to head."
           }
         }
       }

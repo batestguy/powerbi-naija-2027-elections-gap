@@ -1,0 +1,35 @@
+=== boundary 02:17:09
+  [PASS] margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin
+  [PASS] exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%); none skipped
+  [PASS] rival shares need no margin: no reachable rival share (switch Off and On, every pairing, follow rate, Side B, turnout and swing step) is exactly on 25%, and the smallest distance from it is more than 100 x 1E-14
+  [PASS] deciding-state sentence at every exact 25% hit, with that state made the deciding one (other zones' sliders): '0.0 points above' and every word = reference; a hit is left out only when an exhaustive search proves that state can never be the deciding one there
+
+  part boundary PASSED: {'checks': 4, 'pass': 4, 'fail': 0}
+=== core 02:20:36
+  [PASS] neutral sliders: units secured = baseline 25% count = 29 / 21 / 16 / 1
+  [PASS] neutral sliders: every unit's scenario share = baseline share exactly
+  [PASS] units secured never falls as national swing rises (-20 to +20, 81 steps)
+  [PASS] exact-boundary search: no reachable slider combination puts a unit exactly on 25% or 20%
+  [PASS] zone filter on the page: rule, units still needed and tipping point stay national; zone count follows the filter
+  [PASS] no candidate / OTHERS -> blank scenario
+
+  part core PASSED: {'checks': 81, 'pass': 81, 'fail': 0}
+=== invalid 02:29:55
+  [PASS] invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank figures on both coalition pages and in the simulator with the switch On, and a message saying what to change
+
+  part invalid PASSED: {'checks': 1, 'pass': 1, 'fail': 0}
+=== switch_off 02:30:46
+  [PASS] switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate (turnout +10, national +4, SE -6, NW +3)
+  [PASS] line under the simulator header: empty with the switch Off; names the coalition (Side A) with the switch On
+
+  part switch_off PASSED: {'checks': 2, 'pass': 2, 'fail': 0}
+=== simulator 02:31:12
+    ... simulator, switch On: setting 'supporters +20%, national -2'
+    ... simulator, switch On: setting 'odd: supporters -37%, national +7.5, mixed zones'
+    ... simulator, switch On: setting 'odd: supporters +13%, national -3.5, NW +0.5, SE -6.5'
+    ... simulator, switch On: setting 'mixed'
+    ... simulator, switch On: setting 'national -20 alone'
+  [PASS] simulator with the coalition switch On: per-state shares (capped and uncapped), votes needed / to spare, counts, cap count, tipping point, rivals, most votes, verdict, result / deciding-state / settings sentences = exact reference (9 slider settings incl. extremes and odd values x 4 coalitions incl. 2 v 2, N = 24 and 25)
+
+  part simulator PASSED: {'checks': 1, 'pass': 1, 'fail': 0}
+=== pages 02:38:12

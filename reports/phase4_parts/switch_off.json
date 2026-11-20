@@ -5,16 +5,16 @@
   "complete": true,
   "gate_passed": true,
   "summary": {
-    "checks": 1,
-    "pass": 1,
+    "checks": 2,
+    "pass": 2,
     "fail": 0
   },
   "build_stamp": {
-    "files_sha256": "abe80dda233f4f6150dbda3cfcce5f5e7f0718108a395bc529a1f6b8bebd654f",
+    "files_sha256": "f02839a4022e7af83ba9d8e2cb3352140c2ac70b7131aa75c16b4340d98ff651",
     "files": 47,
     "live_model": {
-      "measures": 151,
-      "measures_sha256": "0bbdf799f605cce9e029cf7c30a39a15b13b52f2c2381b35c5fd3bb12459ecf8"
+      "measures": 152,
+      "measures_sha256": "b751c5e8dd20c0878515bfa15fb77f484c7ec481dfaaad0742be9d16b98ede45"
     }
   },
   "grid": {
@@ -364,7 +364,7 @@
             "lead25": 26,
             "verdict": "Loses: APC wins outright",
             "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
-            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch to them from other candidates.",
             "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
             "share": 0.31463971092706966
           },
@@ -378,7 +378,7 @@
             "lead25": 26,
             "verdict": "Loses: APC wins outright",
             "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
-            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch to them from other candidates.",
             "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
             "share": 0.1124613140738098
           }
@@ -422,7 +422,7 @@
             "lead25": 26,
             "verdict": "Loses: APC wins outright",
             "result": "Peter Obi loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
-            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch from other candidates to Peter Obi.",
+            "decide": "Ondo is the deciding state. Peter Obi is 11.7 points short of a quarter of the vote there: about 65,240 more votes would need to switch to them from other candidates.",
             "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
             "share": 0.31463971092706966
           },
@@ -436,11 +436,23 @@
             "lead25": 26,
             "verdict": "Loses: APC wins outright",
             "result": "Rabiu Kwankwaso loses: Bola Tinubu (APC) has the most votes and a quarter of the vote in enough states.",
-            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch from other candidates to Rabiu Kwankwaso.",
+            "decide": "Oyo is the deciding state. Rabiu Kwankwaso is 20.4 points short of a quarter of the vote there: about 165,574 more votes would need to switch to them from other candidates.",
             "inforce": "+4.0 points everywhere; +3.0 in the North West, -6.0 in the South East; +10% turnout among the candidate's 2023 voters. 24 states needed to win.",
             "share": 0.1124613140738098
           }
         }
+      }
+    },
+    {
+      "check": "line under the simulator header: empty with the switch Off; names the coalition (Side A) with the switch On",
+      "status": "pass",
+      "evidence": {
+        "seen": {
+          "off": "",
+          "on": "Coalition On: results are for PDP + LP (what-if), not the candidate above.",
+          "nm": "PDP + LP (what-if)"
+        },
+        "want_on": "Coalition On: results are for PDP + LP (what-if), not the candidate above."
       }
     }
   ]

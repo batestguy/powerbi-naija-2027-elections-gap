@@ -1,6 +1,6 @@
 # Handoff — where the project is
 
-Updated: 2026-11-19. Update this file in every stage commit.
+Updated: 2026-11-20. Update this file in every stage commit.
 
 ## Phase status (see `docs/PLAN.md`)
 | Phase | State | Last commit |
@@ -9,7 +9,7 @@ Updated: 2026-11-19. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | built; review fixes 2026-11-19 (Phase 4 90/90, Phase 6 18/18 on 09bfb38); layout + small model changes after that: **checks NOT re-run** | a485ed9 + review commit |
+| 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build: Phase 4 92/92, Phase 6 17/18 (speed gate: Head to head 2.008 s vs 2.0 s) | 2cef198 |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Overall progress (estimate, 2026-11-19)
@@ -41,6 +41,26 @@ Verified this session:
 - Bug fixed: the switch-On rival code used a DAX variable named `lead`, which this Desktop rejects ("The syntax for 'lead' is incorrect"); every measure built on `ON_TAB` (Leading rival, its votes, its states at 25%, Has most votes, Verdict, Result sentence) failed, even with the switch Off. Renamed to `rx`. After the fix (switch Off, APC): Result sentence = "Bola Tinubu wins outright: … 29 states (24 needed)", Verdict = "Outright win", Leading rival = PDP.
 - `validate_phase3.py` pass (07:40).
 - Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
+
+### 2026-11-20: open question 22 built; full checks run on the final build
+- Built: "Simulator header line" measure + a line under the simulator header (empty when the switch is Off; "Coalition
+  On: results are for <Side A name>, not the candidate above." when On; "Coalition On, but not complete: fix it on Head
+  to head." when the coalition is invalid). Results column re-spaced (moved down, gaps 2 px; tile grid 238 px). Box
+  heights matter: Result < 92 px, settings < 60 px, deciding < 90 px or card rows < 56 px cut text (found by
+  screenshots). Screenshots: `reports/screenshots/q22_2026-11-20/` (switch Off) and `q22_switch_on_2026-11-20/`
+  (built with `PBIP_COALITION_ON=1`). New checks: switch_off part (line empty Off / names Side A On), invalid part
+  (line says "not complete"), Phase 6 speed query for the line.
+- A Desktop save of 2026-11-19 04:09 had again overwritten generated files (+ cultures, diagramLayout, cache.abf);
+  rebuilt from the generator, restored the two Desktop-only files, deleted the cache.
+- **Phase 4: 92/92, gate passed** (boundary 4, core 81, invalid 1, switch_off 2, simulator 1, pages 3 in 26 min).
+- **Phase 6: 17/18, gate FAILED on speed only**: "Head to head table + cards" 2.008 s cold (limit 2.0 s; 1.585 s on
+  2026-11-19); every other query <= 1.25 s. Not caused by this change (that page was not touched). `time_engine.py`
+  right after: Head to head verdict + sentence 1.78 s cold (2.13 s on 2026-11-19), so the page sits at the limit and
+  run-to-run noise decides pass/fail. **Next: make the Head to head query faster (it is the slowest by far), then re-run
+  Phase 6.** Do not re-run until it passes by luck.
+- Run notes: the first Phase 6 attempt died with no output (log redirect lost it); the second stopped because Desktop
+  had 3 dialogs open (not seen; cause unknown). Desktop was killed and reopened; third run as above. Logs:
+  `reports/run_logs/`.
 
 ### 2026-11-19 (later): layout fixes, rival proof, simulator text — **full checks not yet run on this build**
 **Start here next session:** close other programs (memory), `scripts/pbi_reopen.ps1 -Force`, then

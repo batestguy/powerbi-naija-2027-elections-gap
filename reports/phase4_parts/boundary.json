@@ -5,16 +5,16 @@
   "complete": true,
   "gate_passed": true,
   "summary": {
-    "checks": 3,
-    "pass": 3,
+    "checks": 4,
+    "pass": 4,
     "fail": 0
   },
   "build_stamp": {
-    "files_sha256": "abe80dda233f4f6150dbda3cfcce5f5e7f0718108a395bc529a1f6b8bebd654f",
+    "files_sha256": "f02839a4022e7af83ba9d8e2cb3352140c2ac70b7131aa75c16b4340d98ff651",
     "files": 47,
     "live_model": {
-      "measures": 151,
-      "measures_sha256": "0bbdf799f605cce9e029cf7c30a39a15b13b52f2c2381b35c5fd3bb12459ecf8"
+      "measures": 152,
+      "measures_sha256": "b751c5e8dd20c0878515bfa15fb77f484c7ec481dfaaad0742be9d16b98ede45"
     }
   },
   "grid": {
@@ -616,6 +616,31 @@
           }
         ],
         "wrong": []
+      }
+    },
+    {
+      "check": "rival shares need no margin: no reachable rival share (switch Off and On, every pairing, follow rate, Side B, turnout and swing step) is exactly on 25%, and the smallest distance from it is more than 100 x 1E-14",
+      "status": "pass",
+      "evidence": {
+        "gap": 3.097951569115388e-11,
+        "where": {
+          "case": [
+            "coalition",
+            "NNPP",
+            "PDP",
+            85,
+            "LP",
+            "APC",
+            15,
+            "NG021",
+            "Side B"
+          ],
+          "turnout": -7,
+          "swing_half_points": -24
+        },
+        "exact_hits": [],
+        "candidates_rechecked_exactly": 1200,
+        "required_gap": 1e-12
       }
     },
     {
