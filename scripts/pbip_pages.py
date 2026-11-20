@@ -1057,7 +1057,10 @@ SOURCES = [
 
 def page_sources(pid):
     cw = RIGHT_X - 30 - 40           # photo on the right
-    paras = [("Data sources", 18, True, INK), (" ", 6, False, INK)]
+    paras = [("Data sources", 18, True, INK),
+             ("Full method, code and registers: github.com/batestguy/powerbi-naija-2027-elections-gap (method: "
+              "docs/methodology.md). What the report does not claim: How to read this and Technical notes.", 9, False, MUTED),
+             (" ", 6, False, INK)]
     for t in SOURCES:
         paras += [(t, 9, False, INK), (" ", 4, False, INK)]
     paras.append(("Sources, access dates, licences and transforms are listed in registers/sources.md and in the data "
@@ -1074,7 +1077,7 @@ def page_sources(pid):
                     "endorsement implied. :: Licence as stated on each file page: " + " ; ".join(
                         f"{l['party']} {l['file_page'].replace('https://', '')} ({l['licence_as_stated'].lower()})"
                         for l in LOGO_LIST), 9, False, INK))
-    credits.append(("Party now (news reports checked 14 Nov 2026; not an official INEC list, and it can change before 2027)", 10, True, INK))
+    credits.append(("Party now (news reports checked 14 Nov 2026, re-checked 20 Nov 2026; not an official INEC list, and it can change before 2027)", 10, True, INK))
     for r in PARTY_NOW:
         extra = (f" Role: {r['role']}." if r.get("role") else "") + (
             f" {r['note']} ({r['note_source_publisher']}, {r['note_date']}, {r['note_source_url'].replace('https://', '')})."

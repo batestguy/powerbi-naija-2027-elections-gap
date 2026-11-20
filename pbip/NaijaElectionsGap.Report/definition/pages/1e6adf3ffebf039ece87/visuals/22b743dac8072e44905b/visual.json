@@ -32,6 +32,19 @@
               {
                 "textRuns": [
                   {
+                    "value": "Full method, code and registers: github.com/batestguy/powerbi-naija-2027-elections-gap (method: docs/methodology.md). What the report does not claim: How to read this and Technical notes.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#505050"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
                     "value": " ",
                     "textStyle": {
                       "fontFamily": "Segoe UI",

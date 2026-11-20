@@ -15,3 +15,9 @@ __pycache__/
 .venv/
 *.pyc
 .env
+
+# Mundx-derived ratios: local only (no licence to redistribute; open question 15, user decision 2026-11-20)
+reports/mundx_state_accuracy.csv
+
+# Release assets (pbix, data vintage zip): uploaded to GitHub Releases, not committed
+release/

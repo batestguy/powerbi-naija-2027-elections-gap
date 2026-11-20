@@ -14,7 +14,7 @@ Raw snapshots: `data/raw/<source>/<date>/` (local only; manifests with URL, acce
 | `fact_turnout_2023.csv` | state | 37 | `total_valid` = reconciled four parties + OTHERS. Registered voters from the 37 state pages. Reported totals from Wikipedia and AGADA kept alongside. |
 | `national_totals_reported.csv` | source | 5 | Total rows of each copy plus INEC's declaration. |
 | `crosscheck_sources.csv` | state × measure | 222 | Every copy's value per cell. |
-| `mundx_state_rollup.csv` | state | 37 | Local only, never published (no licence). Accuracy ratios: `reports/mundx_state_accuracy.csv`. |
+| `mundx_state_rollup.csv` | state | 37 | Local only, never published (no licence). Accuracy ratios: `reports/mundx_state_accuracy.csv` (local only, not in git since 2026-11-20). |
 
 ## Why the state results are reconciled
 

@@ -1,6 +1,7 @@
 """Phase 2 exit checks. Reads data/staging/*, pbip/assets/*, reports/unmatched_keys.csv and writes
 reports/phase2_validation.json (one entry per check: pass/fail + evidence) and
-reports/mundx_state_accuracy.csv (ratios only - Mundx absolute figures are not redistributed).
+reports/mundx_state_accuracy.csv (ratios only; local only, not in git: ratios x the public votes would rebuild Mundx's
+figures - open question 15, user decision 2026-11-20).
 
 Exits 1 if any *gate* check fails. Checks marked "info" record a finding but do not gate.
 
