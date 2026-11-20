@@ -10,7 +10,8 @@ Updated: 2026-11-20. Update this file in every stage commit.
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
 | 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build 2026-11-20: Phase 4 92/92, Phase 6 18/18 (after the Head to head speed query was split per visual) | see git log |
-| 7 Release + docs, 8 Case study | todo | — |
+| 7 Release + docs | in progress: draft release v1.0.0 on GitHub (pbix + data vintage 2026-11-20 + SHA256SUMS); README, LICENSE (MIT) done; video, clean-profile test, publishing: open | 0dcb55b |
+| 8 Case study | todo | — |
 
 ## Overall progress (estimate, 2026-11-19)
 About 75–80% of the whole project by effort (a judgement, not a measurement). Built: data, model, scenario engine,
@@ -41,6 +42,20 @@ Verified this session:
 - Bug fixed: the switch-On rival code used a DAX variable named `lead`, which this Desktop rejects ("The syntax for 'lead' is incorrect"); every measure built on `ON_TAB` (Leading rival, its votes, its states at 25%, Has most votes, Verdict, Result sentence) failed, even with the switch Off. Renamed to `rx`. After the fix (switch Off, APC): Result sentence = "Bola Tinubu wins outright: … 29 states (24 needed)", Verdict = "Outright win", Leading rival = PDP.
 - `validate_phase3.py` pass (07:40).
 - Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
+
+### 2026-11-20 (later): Phase 7 release work started
+- User decisions: Mundx ratios file out of git (Q15 closed; still in old history); code licence MIT; `.pbix` made by
+  scripted Save As (UI Automation + mouse clicks on Desktop's File > Save as > Browse this device, type .pbix).
+- Party-now re-check (Q16): no change (ADC appeal pending, INEC still lists Atiku; NDC registration restored Sept 2026).
+- Data sources page: repo link at the top; "re-checked 20 Nov 2026". Not re-run through Phase 6 (text-only change).
+- `scripts/build_release.py --vintage <label>` → `release/naija-elections-data-<label>.zip` (staging minus Mundx,
+  reference CSVs, SHA256SUMS, VINTAGE.md) + `release/SHA256SUMS`; refuses to overwrite a vintage. `release/` is gitignored.
+- **Draft** GitHub release v1.0.0 (target 0dcb55b): `NaijaElectionsGap.pbix` (1,108,713 bytes, sha256 ddbe6e52…),
+  `naija-elections-data-2026-11-20.zip` (sha256 22b155b0…), `SHA256SUMS`. Notes: `release/NOTES.md` (local).
+  Desktop is now on the `.pbix` (Save As switches the open file); reopen the PBIP with `scripts/pbi_reopen.ps1`.
+- **Left for Phase 7:** walkthrough video (user records; add link to the release notes), open the `.pbix` on a clean
+  Windows profile (person), cross-family review + person checks, then publish the draft (user decision).
+  Then Phase 8 (one-page case study).
 
 ### 2026-11-20: open question 22 built; full checks run on the final build
 - Built: "Simulator header line" measure + a line under the simulator header (empty when the switch is Off; "Coalition
