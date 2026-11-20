@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "24 or 25? ",
+                    "value": "25 or 24? ",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "The constitution says two-thirds of the states; courts have not said whether that is 24 or 25 once Abuja counts.",
+                    "value": "The constitution says two-thirds of the states. The 2023 courts treated Abuja like a 37th state but did not say whether that means 25 or 24; we use 25 (two-thirds of 37, rounded up).",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -48,7 +48,7 @@
                     }
                   },
                   {
-                    "value": "the 24th (or 25th) strongest state.",
+                    "value": "the 25th strongest state.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -151,7 +151,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Notes: states needed (24 or 25), the deciding state, and extra votes needed, in plain words.'"
+                  "Value": "'Notes: states needed (25, or 24 on another reading), the deciding state, and extra votes needed, in plain words.'"
                 }
               }
             }

@@ -22,7 +22,7 @@ It is a **what-if tool, not a forecast**. It does not estimate how likely any sc
 | Supporter turnout: how much more (or less) the candidate's 2023 voters turn out than everyone else | `t` | −50% to +50%, step 1 | 0 |
 | National swing to the candidate, in percentage points of the vote | `S` | −20 to +20, step 0.5 | 0 |
 | Zone swing, one slider per geopolitical zone (NC, NE, NW, SE, SS, SW), added to the national swing | `Z_zone` | −20 to +20, step 0.5 | 0 |
-| Rule: number of units needed | `N` | 24 (two-thirds of the 36 states; the FCT counts as one of the 37 units) or 25 (two-thirds of 37, rounded up) | 24 |
+| Rule: number of units needed | `N` | 25 (two-thirds of 37, rounded up; the FCT counts as one of the 37 units) or 24 (two-thirds of the 36 states) | 25 (user decision 2026-11-20; was 24) |
 
 The FCT belongs to the North Central zone for the zone slider (`data/staging/dim_state.csv`).
 Sliders are shown in percent and points; in the formulas below `t` is a fraction (slider ÷ 100).
@@ -120,7 +120,7 @@ At neutral settings this reproduces 2023: APC 8,794,726, leading rival PDP 6,984
 5. **The baseline carries the data gaps** in `docs/data-profile.md`: valid votes are 4,858 above INEC's national total
    (unlocated, in the OTHERS column), Kano APC is a constraint-based choice, and APC's 29 rests on 96 votes in
    Adamawa. Small swings near 25% are within that uncertainty.
-6. **The rule reading** (24 of 37, FCT counted as a unit) is our reading of s.134; 25 of 37 is offered as a
+6. **The rule reading** (25 of 37, FCT counted as a unit; default since 2026-11-20, was 24) is our reading of s.134; 24 of 37 is offered as a
    sensitivity (decision log 2026-11-13; open question 1).
 7. **2027 registered voters are not used.** Shares do not depend on the size of the register.
 8. **Rivals move together.** When the candidate gains, every rival loses in proportion to its size in that unit;
@@ -188,7 +188,7 @@ Because `F` is a whole percentage, multiplying by 100 makes every quantity a who
 Same s.134 reading as "Rivals and the verdict", with **Side A as the candidate**. Rival entities = Side B (one entity,
 identified by its lead's code; shown as "lead+partner" if it has a partner, e.g. "PDP+APC") and each main party not used
 on either side. OTHERS is never a rival winner. Leading rival = the rival entity with the most national votes (ties by
-code). `N` = the rule slider's value (24 when the page has no rule slider, as on both coalition pages).
+code). `N` = the rule slider's value (25 when the page has no rule slider, as on both coalition pages and Path to 25; 24 before 2026-11-20).
 Outright win / run-off / tie / loses — the same five outcomes and the same tests as above, using whole-number counts
 of states at 25%+ for Side A and for the leading rival. The Merge page has no verdict (it compares the coalition with
 its lead alone).

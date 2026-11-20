@@ -5,7 +5,7 @@
     "x": 40,
     "y": 20,
     "z": 0,
-    "height": 280,
+    "height": 312,
     "width": 1000,
     "tabOrder": 0
   },
@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Full method, code and registers: github.com/batestguy/powerbi-naija-2027-elections-gap (method: docs/methodology.md). What the report does not claim: How to read this and Technical notes.",
+                    "value": "Full method, code and registers: github.com/batestguy/powerbi-naija-2027-elections-gap (method: docs/methodology.md; every source, access date, licence and transform: registers/sources.md and the data manifests). What the report does not claim: How to read this and Technical notes.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -82,7 +82,7 @@
                     "value": " ",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "4pt",
+                      "fontSize": "2pt",
                       "color": "#1F1F1F"
                     }
                   }
@@ -116,7 +116,7 @@
                     "value": " ",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "4pt",
+                      "fontSize": "2pt",
                       "color": "#1F1F1F"
                     }
                   }
@@ -150,7 +150,7 @@
                     "value": " ",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "4pt",
+                      "fontSize": "2pt",
                       "color": "#1F1F1F"
                     }
                   }
@@ -184,21 +184,8 @@
                     "value": " ",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "4pt",
+                      "fontSize": "2pt",
                       "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Sources, access dates, licences and transforms are listed in registers/sources.md and in the data manifests (data/raw/*/manifest.json, data/staging/manifest.json) in the project repository.",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#505050"
                     }
                   }
                 ],

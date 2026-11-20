@@ -1,7 +1,7 @@
 table param_rule
 	lineageTag: 7bc4f017-4327-2337-c8cd-08280210d0a3
 
-	measure 'param_rule value' = SELECTEDVALUE ( param_rule[Value], 24 )
+	measure 'param_rule value' = SELECTEDVALUE ( param_rule[Value], 25 )
 		formatString: 0
 		lineageTag: 43fc8830-a0c0-c251-de56-c6c5d065dc45
 

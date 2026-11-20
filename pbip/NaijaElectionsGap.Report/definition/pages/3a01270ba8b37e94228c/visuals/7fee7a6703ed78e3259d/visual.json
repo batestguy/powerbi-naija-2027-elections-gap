@@ -73,7 +73,7 @@
               },
               "queryRef": "scenario.Clears the rule",
               "nativeQueryRef": "Clears the rule",
-              "displayName": "Meets the 25% rule?"
+              "displayName": "Meets the rule?"
             },
             {
               "field": {

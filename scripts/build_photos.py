@@ -35,7 +35,7 @@ MAX_BYTES, MAX_TOTAL = 240_000, 2_000_000
 PHOTOS = [
     ("overview", "File:2023 Elections in Nigeria 15.jpg", "Candidate overview", 0.45,
      "labelled ballot boxes (Presidential, Senatorial, House of Representatives) on a polling-unit table"),
-    ("path", "File:2023 Elections in Nigeria 03.jpg", "Path to 24", 0.40,
+    ("path", "File:2023 Elections in Nigeria 03.jpg", "Path to 25", 0.40,
      "voters checking their names on the register posted on a wall"),
     ("map", "File:Area shot of polling units.jpg", "Spread map", 0.62,
      "voters gathered at polling units in an open yard"),

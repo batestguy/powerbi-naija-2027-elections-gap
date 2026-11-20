@@ -21,3 +21,6 @@ reports/mundx_state_accuracy.csv
 
 # Release assets (pbix, data vintage zip): uploaded to GitHub Releases, not committed
 release/
+
+# run logs with local paths in tracebacks
+reports/*.log

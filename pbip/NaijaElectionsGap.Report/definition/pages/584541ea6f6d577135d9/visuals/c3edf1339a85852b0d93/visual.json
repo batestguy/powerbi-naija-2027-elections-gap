@@ -3,7 +3,7 @@
   "name": "c3edf1339a85852b0d93",
   "position": {
     "x": 20,
-    "y": 250,
+    "y": 270,
     "z": 18,
     "height": 66,
     "width": 610,
@@ -58,7 +58,7 @@
               },
               "queryRef": "scenario.Side A states at 25% (head to head)",
               "nativeQueryRef": "Side A states at 25% (head to head)",
-              "displayName": "Side A: states at 25%+"
+              "displayName": "States at 25%+"
             },
             {
               "field": {
@@ -73,7 +73,7 @@
               },
               "queryRef": "scenario.States led by Side A",
               "nativeQueryRef": "States led by Side A",
-              "displayName": "States Side A leads"
+              "displayName": "States led"
             }
           ]
         }

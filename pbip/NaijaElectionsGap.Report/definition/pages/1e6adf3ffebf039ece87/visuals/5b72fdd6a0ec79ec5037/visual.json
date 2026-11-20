@@ -3,9 +3,9 @@
   "name": "5b72fdd6a0ec79ec5037",
   "position": {
     "x": 40,
-    "y": 302,
+    "y": 334,
     "z": 1,
-    "height": 410,
+    "height": 378,
     "width": 1000,
     "tabOrder": 1
   },
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Photo credits (Wikimedia Commons, accessed 14 Nov 2026; cropped and resized, shared under the same licence: CC BY-SA 4.0 = creativecommons.org/licenses/by-sa/4.0, CC BY 4.0 = creativecommons.org/licenses/by/4.0)",
+                    "value": "Photo credits (Wikimedia Commons, accessed 14 Nov 2026; cropped and resized, shared under the same licence; licence texts at creativecommons.org/licenses)",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Candidate overview: ",
+                    "value": "Page photos (commons.wikimedia.org/wiki/<file>): ",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -40,217 +40,7 @@
                     }
                   },
                   {
-                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_15.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Path to 24: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_03.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Spread map: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Ibukun Emiola, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Area_shot_of_polling_units.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "What-if simulator: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_26.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "How to read this: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Iyusuf615, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Voters_queue_to_cast_their_vote_at_Pantami,_Gombe.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Technical notes: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Iyusuf615, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:NYSC_member_counting_votes_during_2023_presidential_election_in_Gombe.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Data sources: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Yemi festus, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:2023_Elections_in_Nigeria_12.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Portrait, Bola Tinubu: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Nosa Asemota, CC BY-SA 4.0, commons.wikimedia.org/wiki/File:Bola_Tinubu_portrait_(cropped).jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Portrait, Atiku Abubakar: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Etauso, CC0, commons.wikimedia.org/wiki/File:Atiku_Abubakar_2023.jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Portrait, Peter Obi: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "Dgr8Josh, CC BY 4.0, commons.wikimedia.org/wiki/File:H.E._Peter_Obi_(cropped).jpg",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  }
-                ],
-                "horizontalTextAlignment": "left"
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "Portrait, Rabiu Kwankwaso: ",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI Semibold",
-                      "fontSize": "9pt",
-                      "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": "VOA, Public domain, commons.wikimedia.org/wiki/File:Rabiu_Kwankwaso_(cropped).jpg",
+                    "value": "Candidate overview: Yemi festus, CC BY-SA 4.0, File:2023_Elections_in_Nigeria_15.jpg; Path to 25: Yemi festus, CC BY-SA 4.0, File:2023_Elections_in_Nigeria_03.jpg; Spread map: Ibukun Emiola, CC BY-SA 4.0, File:Area_shot_of_polling_units.jpg; What-if simulator: Yemi festus, CC BY-SA 4.0, File:2023_Elections_in_Nigeria_26.jpg; How to read this: Iyusuf615, CC BY-SA 4.0, File:Voters_queue_to_cast_their_vote_at_Pantami,_Gombe.jpg; Technical notes: Iyusuf615, CC BY-SA 4.0, File:NYSC_member_counting_votes_during_2023_presidential_election_in_Gombe.jpg; Data sources: Yemi festus, CC BY-SA 4.0, File:2023_Elections_in_Nigeria_12.jpg. Portraits: Bola Tinubu: Nosa Asemota, CC BY-SA 4.0, File:Bola_Tinubu_portrait_(cropped).jpg; Atiku Abubakar: Etauso, CC0, File:Atiku_Abubakar_2023.jpg; Peter Obi: Dgr8Josh, CC BY 4.0, File:H.E._Peter_Obi_(cropped).jpg; Rabiu Kwankwaso: VOA, Public domain, File:Rabiu_Kwankwaso_(cropped).jpg.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -271,7 +61,7 @@
                     }
                   },
                   {
-                    "value": "Licence as stated on each file page: APC en.wikipedia.org/wiki/File:All_Progressives_Congress_logo.png (fair use) ; PDP en.wikipedia.org/wiki/File:Logo_of_the_Peoples_Democratic_Party_(Nigeria).png (fair use) ; LP en.wikipedia.org/wiki/File:Labour_Party_(Nigeria)_logo.png (fair use) ; NNPP en.wikipedia.org/wiki/File:Logo_of_the_New_Nigeria_People%27s_Party.png (fair use) ; ADC en.wikipedia.org/wiki/File:African_Democratic_Congress_logo.png (fair use) ; NDC commons.wikimedia.org/wiki/File:Nigeria_Democratic_Party_Logo.jpg (cc0)",
+                    "value": "From Wikipedia / Wikimedia Commons file pages (listed in registers/sources.md), licence as stated there: APC fair use; PDP fair use; LP fair use; NNPP fair use; ADC fair use; NDC cc0",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",

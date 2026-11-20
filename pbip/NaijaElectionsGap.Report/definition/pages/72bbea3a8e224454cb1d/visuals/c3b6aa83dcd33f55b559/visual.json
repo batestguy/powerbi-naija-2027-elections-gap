@@ -53,7 +53,7 @@
                     }
                   },
                   {
-                    "value": "To win outright, a presidential candidate needs the most votes nationwide and at least a quarter (25%) of the votes in at least two-thirds of the states. Abuja (the Federal Capital Territory) counts as a state here, so there are 37. We use 24 states as the default; 25 is offered as a stricter reading. This is our reading of section 134 of the Constitution, checked against an unofficial copy.",
+                    "value": "To win outright, a presidential candidate needs the most votes nationwide and at least a quarter (25%) of the votes in at least two-thirds of the states. Abuja (the Federal Capital Territory) counts as a state here, so there are 37. The 2023 election courts treated Abuja like a 37th state but did not say whether that means 25 or 24 states. We use 25 (two-thirds of 37, rounded up); 24 (two-thirds of the 36 states) is offered on the simulator. This is our reading of section 134 of the Constitution, checked against an unofficial copy.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -121,7 +121,7 @@
                     }
                   },
                   {
-                    "value": "A change in vote share adds the same number of points in every state of a zone. Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 votes. No new candidates or boundary changes, and no merged parties unless you switch the coalition On. It is a what-if tool, not a forecast: it says nothing about how likely any what-if is.",
+                    "value": "A change in vote share adds the same number of points in every state of a zone. Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 votes. The voters are the 2023 voters: nobody who registered since 2023 is included. No new candidates or boundary changes, and no merged parties unless you switch the coalition On. It is a what-if tool, not a forecast: it says nothing about how likely any what-if is.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -189,7 +189,7 @@
                     }
                   },
                   {
-                    "value": "\"Won\" (or \"Secured\") = a quarter of the vote or more in a state; \"Within reach\" = 20% to just under a quarter; \"Out of reach\" = under 20%. \"The deciding state\" = the weakest state the candidate needs to reach 24 (or 25). Exact definitions and formulas are on the Technical notes page.",
+                    "value": "\"Won\" (or \"Secured\") = a quarter of the vote or more in a state; \"Within reach\" = 20% to just under a quarter; \"Out of reach\" = under 20%. \"The deciding state\" = the weakest state the candidate needs to reach 25 (or 24). Exact definitions and formulas are on the Technical notes page.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -223,7 +223,7 @@
                     }
                   },
                   {
-                    "value": "It is not an electoral authority and not INEC's figures. It has no local-government detail. Small changes near a quarter of the vote are within the data's uncertainty: for example, Bola Tinubu's 29 states in 2023 rest on 96 votes in Adamawa.",
+                    "value": "It is not an electoral authority and not INEC's figures. It has no local-government detail. Small changes near a quarter of the vote are within the data's uncertainty: for example, Bola Tinubu's 29 states in 2023 include Adamawa, where he was only 96 votes above a quarter.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",

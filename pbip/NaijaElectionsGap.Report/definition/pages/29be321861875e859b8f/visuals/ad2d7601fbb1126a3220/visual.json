@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "How we pick the deciding state",
+                    "value": "Merging two parties",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "11pt",
@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Rank all 37 by new share, highest first (ties: by state code, A to Z).",
+                    "value": "f = share of the partner’s 2023 voters who follow (0% to 100%).",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -45,7 +45,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Deciding state = the state in position N",
+                    "value": "Coalition votes = lead’s votes + f × partner’s votes",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -58,7 +58,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Gap = 25% − new share (in points)",
+                    "value": "Valid votes = 2023 valid votes − (1 − f) × partner’s votes",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -71,7 +71,20 @@
               {
                 "textRuns": [
                   {
-                    "value": "A negative gap means the state is above a quarter.",
+                    "value": "Those who do not follow stay home. Side B with a partner: the same for its partner. Tested in whole numbers: 4 × coalition votes ≥ valid votes.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#1F1F1F"
+                    }
+                  }
+                ],
+                "horizontalTextAlignment": "left"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Switch On: the simulator uses coalition votes and these valid votes in Step 1; Side B moves as one rival.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -335,7 +348,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Technical notes, column 3: How we pick the deciding state; Votes needed to reach a quarter; State codes.'"
+                  "Value": "'Technical notes, column 3: Merging two parties; Votes needed to reach a quarter; State codes.'"
                 }
               }
             }

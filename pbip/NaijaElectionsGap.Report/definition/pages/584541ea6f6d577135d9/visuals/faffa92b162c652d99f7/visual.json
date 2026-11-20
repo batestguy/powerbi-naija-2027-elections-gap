@@ -85,7 +85,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Partner (or Nobody)'"
+                  "Value": "'Partner'"
                 }
               }
             }

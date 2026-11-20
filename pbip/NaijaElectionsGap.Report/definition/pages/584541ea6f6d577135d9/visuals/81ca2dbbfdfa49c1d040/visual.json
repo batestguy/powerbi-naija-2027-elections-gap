@@ -3,9 +3,9 @@
   "name": "81ca2dbbfdfa49c1d040",
   "position": {
     "x": 360,
-    "y": 390,
+    "y": 394,
     "z": 23,
-    "height": 322,
+    "height": 318,
     "width": 620,
     "tabOrder": 23
   },
@@ -47,7 +47,7 @@
               },
               "queryRef": "scenario.Side A share (head to head)",
               "nativeQueryRef": "Side A share (head to head)",
-              "displayName": "Side A share"
+              "displayName": "A share"
             },
             {
               "field": {
@@ -62,7 +62,7 @@
               },
               "queryRef": "scenario.Side B share (head to head)",
               "nativeQueryRef": "Side B share (head to head)",
-              "displayName": "Side B share"
+              "displayName": "B share"
             },
             {
               "field": {
@@ -92,7 +92,7 @@
               },
               "queryRef": "scenario.Side A at 25% (head to head)",
               "nativeQueryRef": "Side A at 25% (head to head)",
-              "displayName": "Side A a quarter?"
+              "displayName": "A 25%+?"
             },
             {
               "field": {
@@ -107,7 +107,7 @@
               },
               "queryRef": "scenario.Side B at 25% (head to head)",
               "nativeQueryRef": "Side B at 25% (head to head)",
-              "displayName": "Side B a quarter?"
+              "displayName": "B 25%+?"
             }
           ]
         }

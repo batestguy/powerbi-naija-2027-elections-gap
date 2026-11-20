@@ -45,7 +45,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Worked out for each of the 37: the 36 states and Abuja (the method note calls each one a “unit”).",
+                    "value": "Worked out for each of the 37: the 36 states and Abuja.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -136,7 +136,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "States needed (N) = 24 or 25",
+                    "value": "States needed (N) = 25 or 24",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
@@ -149,7 +149,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "24 = two-thirds of the 36 states (Abuja counts as one of the 37); 25 = two-thirds of 37, rounded up. Default 24.",
+                    "value": "25 = two-thirds of 37, rounded up (Abuja counts as one of the 37); 24 = two-thirds of the 36 states. Default 25.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
@@ -227,7 +227,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Same change across a zone; rivals move together; 24 or 25 is our reading; 2023 data gaps (4,858 votes not placed in any state; Kano APC chosen from disputed copies).",
+                    "value": "Every state in a zone gets the same change. Rival candidates move together. 25 or 24 is our reading of the rule. 2023 data gaps: 4,858 votes are not placed in any state, and Kano APC was chosen between disputed copies.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",

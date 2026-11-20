@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Path to 24: the states that count",
+                    "value": "Path to 25: the states that count",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "18pt",
@@ -101,7 +101,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Path to 24: the states that count'"
+                  "Value": "'Path to 25: the states that count'"
                 }
               }
             }

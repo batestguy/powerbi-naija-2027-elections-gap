@@ -503,7 +503,7 @@ def header(pid, title, subtitle, w=600):
 SRC = ("2023 result per state, from five copies of INEC's declaration (not INEC's own state sheets). Abuja (the "
        "Federal Capital Territory) counts as a state here, so there are 37.")
 RULE_NOTE = ("States needed to win (24 or 25): the constitution says a quarter of the vote in two-thirds of the states. "
-             "Courts have not said whether that means 24 or 25 once Abuja counts as a state; 24 is used unless you choose 25.")
+             "Courts have not said whether that means 24 or 25 once Abuja counts as a state; 25 is used unless you choose 24.")
 
 
 def page_overview(pid):
@@ -536,7 +536,7 @@ def page_overview(pid):
     v.append(textbox(sid(pid, "notes"), nx + 8, 604, nw - 8, 108, [
         ("How sure are these margins? :: The vote counts include 4,858 votes that nobody can place in a state (in the "
          "minor candidates' column). A margin smaller than that could change with better data.", 9, False, INK),
-        ("Kano: :: one figure is disputed, Bola Tinubu's votes there (we use 506,412; three of four copies print "
+        ("Kano: :: one figure is disputed, Bola Tinubu's votes there (we use 506,412; three of the four independent copies print "
          "517,341). Either figure gives the same answer for every candidate: who has a quarter in Kano does not change. "
          "Formulas and terms: see the Technical notes page.", 9, False, INK)],
         alt="Notes: how sure the margins are, the Kano figure, and where the formulas are."))
@@ -547,14 +547,14 @@ def page_overview(pid):
 def page_path(pid):
     cx = LEFT_X + PW + 20            # photo on the left
     cw = W - 20 - cx
-    v = header(pid, "Path to 24: the states that count",
+    v = header(pid, "Path to 25: the states that count",
                "2023 result. To try a different 2027, use the What-if simulator page. Abuja (the Federal Capital "
                "Territory) counts as a state here, so there are 37.")
     v.append(cards(sid(pid, "kpis"), cx, 86, cw, 80,
                    [("scenario", "Units secured (national)", "States won (of 37)"),
                     ("scenario", "Units needed (rule)", "States needed to win"),
                     ("scenario", "Units still needed", "More states needed"),
-                    ("scenario", "Clears the rule", "Meets the 25% rule?"),
+                    ("scenario", "Clears the rule", "Meets the rule?"),
                     ("scenario", "Tipping-point unit", "The deciding state")],
                    None, "Counts for the rule: states won out of 37, states needed to win, more states needed, whether "
                          "the rule is met, and the deciding state.", label_pt=10))
@@ -581,14 +581,14 @@ def page_path(pid):
                     "Table of all 37 states with rank, status, share of the vote, points short of a quarter and extra "
                     "votes needed to reach a quarter.", sort=("scenario", "Scenario share")))
     v.append(textbox(sid(pid, "notes"), cx + 812, 518, cw - 812, 194, [
-        ("24 or 25? :: The constitution says two-thirds of the states; courts have not said whether that is 24 or 25 "
-         "once Abuja counts.", 9, False, INK),
-        ("The deciding state: :: the 24th (or 25th) strongest state.", 9, False, INK),
+        ("25 or 24? :: The constitution says two-thirds of the states. The 2023 courts treated Abuja like a 37th state "
+         "but did not say whether that means 25 or 24; we use 25 (two-thirds of 37, rounded up).", 9, False, INK),
+        ("The deciding state: :: the 25th strongest state.", 9, False, INK),
         ("Extra votes needed: :: votes switching from other candidates, state total unchanged. See Technical notes.",
          9, False, INK)],
-        alt="Notes: states needed (24 or 25), the deciding state, and extra votes needed, in plain words."))
+        alt="Notes: states needed (25, or 24 on another reading), the deciding state, and extra votes needed, in plain words."))
     v += photo(pid, "path", LEFT_X)
-    return "Path to 24", v
+    return "Path to 25", v
 
 
 def page_map(pid):
@@ -649,7 +649,7 @@ def page_sim(pid):
                ("zone_SE", "param_swing_SE", (zq.format("South East"), "points"), False),
                ("zone_SS", "param_swing_SS", (zq.format("South South"), "points"), False),
                ("zone_SW", "param_swing_SW", (zq.format("South West"), "points"), False),
-               ("rule", "param_rule", ("How many states must they win?", "24 or 25"), True)]
+               ("rule", "param_rule", ("How many states must they win?", "25 or 24"), True)]
     sx = LEFT_X + PW + 12
     for i, (key, table, (question, hint), integer) in enumerate(sliders):
         x, y = sx + (i % 2) * 206, 86 + (i // 2) * 125
@@ -658,7 +658,7 @@ def page_sim(pid):
                          [([(question, INK, True), (f" ({hint})", MUTED, False)], 9, False, INK)],
                          alt=f"Slider label: {label}"))
         v.append(param_slicer(sid(pid, key), x, y + 40, 200, 82, table, label,
-                              24 if table == "param_rule" else defaults.get(table, 0), integer))
+                              25 if table == "param_rule" else defaults.get(table, 0), integer))
     # Coalition switch (user decision 2026-11-16) where the 24-or-25 note was (that note stays on Path to 24, How to
     # read this and Technical notes). Default Off = today's engine; PBIP_COALITION_ON=1 builds a test variant set to On.
     cx0, cy0 = sx + 206, 86 + 4 * 125
@@ -740,7 +740,7 @@ def side_controls(pid, side, x0, y0, hidden=False, heading=None):
     lo = side.lower()
     lead, partner = PRESET[side]
     tl, tp, tf = f"coal_{lo}_lead", f"coal_{lo}_partner", f"param_follow_{lo}"
-    pl = "Partner (or Nobody)" if side == "B" else "Partner party"
+    pl = "Partner" if side == "B" else "Partner party"
     q = "Partner voters who follow (%)"
     sl = [choice_slicer(sid(pid, side, "lead"), x0 + 60, y0 + 22, 150, 76, tl, "Lead party", lead, tl,
                         f"Side {side} lead party picker: the party at the top of the ticket. Starts at {lead}.",
@@ -764,7 +764,7 @@ def side_controls(pid, side, x0, y0, hidden=False, heading=None):
             candidate_photo(sid(pid, side, "partner_photo"), x0 + 216, y0 + 24, 56, 66, f"Side {side} partner photo",
                             f"Photo of Side {side}'s partner (free-licence portrait; credit on the Data sources page)."),
             sl[1],
-            textbox(sid(pid, side, "follow_label"), x0 + 434, y0 + 20, 176, 32,
+            textbox(sid(pid, side, "follow_label"), x0 + 434, y0 + 16, 176, 38,
                     [([(q, INK, True), (" (an assumption)", MUTED, False)], 9, False, INK)], alt=f"Slider label: {q}"),
             sl[2]]
 
@@ -789,14 +789,14 @@ def page_merge(pid):
               "follow; the rest stay home. Abuja counts as a state, so there are 37.", 10, False, MUTED)],
              alt="Subtitle: how the coalition's votes are made.")]
     v += side_controls(pid, "A", 650, 4, heading="The coalition (Side A)")
-    v.append(sentence(sid(pid, "msg"), 20, 116, 620, 74, "Side A message", "The coalition",
+    v.append(sentence(sid(pid, "msg"), 20, 116, 620, 74, "Side A message", None,
                       "Who is in the coalition, whether it is a real ticket, and how many partner voters follow; or what to "
-                      "change if the choice is not complete.", value_pt=10, accent=False, border=BLUE))
+                      "change if the choice is not complete.", value_pt=9, accent=False, border=BLUE))
     v.append(cards(sid(pid, "kpis"), 650, 116, 610, 74,
-                   [("scenario", "Side A states at 25% (merge)", "Coalition: states won (of 37)"),
-                    ("scenario", "Side A lead states at 25%", "Lead alone, 2023: states won"),
-                    ("scenario", "Side A national votes", "Coalition votes"),
-                    ("scenario", "Side A national share (merge)", "Coalition share of the vote")],
+                   [("scenario", "Side A states at 25% (merge)", "States won"),
+                    ("scenario", "Side A lead states at 25%", "Lead alone"),
+                    ("scenario", "Side A national votes", "Votes"),
+                    ("scenario", "Side A national share (merge)", "Share")],
                    None, "Headline figures: states where the coalition has a quarter of the vote or more (of 37), the same "
                          "count for the lead party alone in 2023, the coalition's votes and its share nationwide.",
                    value_pt=14, label_pt=9, accent=False, border=BLUE))
@@ -832,56 +832,59 @@ def page_h2h(pid):
                  alt="Head to head: two sides, 2023 votes recombined"),
          textbox(sid(pid, "subtitle"), 20, 44, 1240, 36, [
              ("Side A is a coalition of two parties; Side B is one party or another coalition. Each party can be used once. "
-              "No swing or turnout change. Abuja counts as a state, so there are 37. 24 states needed.", 10, False, MUTED)],
+              "No swing or turnout change. Abuja counts as a state, so there are 37. 25 states needed.", 10, False, MUTED)],
              alt="Subtitle: what the two sides are.")]
     v += side_controls(pid, "A", 20, 84) + side_controls(pid, "B", 650, 84)
-    v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 50, "Side A message", None,
+    # review 2026-11-20: message boxes 70 px (two lines; 56 showed one), result 66 px, tile grid 226 px (it had spare
+    # room), key 74 px (66 cut its third line), so nothing is cut
+    v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 70, "Side A message", None,
                       "Side A in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
                       border=BLUE))
-    v.append(sentence(sid(pid, "msg_b"), 650, 196, 610, 50, "Side B message", None,
+    v.append(sentence(sid(pid, "msg_b"), 650, 196, 610, 70, "Side B message", None,
                       "Side B in words, or what to change if the choice is not complete.", value_pt=9, accent=False,
                       border=ORANGE))
-    v.append(cards(sid(pid, "nat_a"), 20, 250, 610, 66,
+    v.append(cards(sid(pid, "nat_a"), 20, 270, 610, 66,
                    [("scenario", "Side A national votes (head to head)", "Side A votes"),
                     ("scenario", "Side A national share (head to head)", "Side A share"),
-                    ("scenario", "Side A states at 25% (head to head)", "Side A: states at 25%+"),
-                    ("scenario", "States led by Side A", "States Side A leads")],
+                    ("scenario", "Side A states at 25% (head to head)", "States at 25%+"),
+                    ("scenario", "States led by Side A", "States led")],
                    None, "Side A nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
                          "where Side A has the most votes.", value_pt=13, label_pt=9, accent=False, border=BLUE))
-    v.append(cards(sid(pid, "nat_b"), 650, 250, 610, 66,
+    v.append(cards(sid(pid, "nat_b"), 650, 270, 610, 66,
                    [("scenario", "Side B national votes", "Side B votes"),
                     ("scenario", "Side B national share (head to head)", "Side B share"),
-                    ("scenario", "Side B states at 25% (head to head)", "Side B: states at 25%+"),
-                    ("scenario", "States led by Side B", "States Side B leads")],
+                    ("scenario", "Side B states at 25% (head to head)", "States at 25%+"),
+                    ("scenario", "States led by Side B", "States led")],
                    None, "Side B nationwide: votes, share of the vote, states with a quarter of the vote or more, states "
                          "where Side B has the most votes.", value_pt=13, label_pt=9, accent=False, border=ORANGE))
-    v.append(sentence(sid(pid, "verdict"), 20, 320, 1240, 66, "Head to head sentence", "Result (Side A's view; 24 states "
-                      "needed)", "Result as a sentence: whether Side A wins outright, loses, or it goes to a run-off.",
+    v.append(sentence(sid(pid, "verdict"), 20, 340, 1240, 50, "Head to head sentence", None,
+                      "Result as a sentence, from Side A's view (25 states needed): whether Side A wins outright, loses, or "
+                      "it goes to a run-off.",
                       value_pt=10, accent=False, border=MUTED))
-    v.append(tile_matrix(sid(pid, "tiles"), 20, 390, 330, 258, "Who leads each state",
+    v.append(tile_matrix(sid(pid, "tiles"), 20, 394, 330, 244, "Who leads each state",
                          "Tile grid, one square per state with its two-letter code inside: blue where Side A has the most "
                          "votes, vermillion where Side B does, grey where another party leads or it is a tie. The table "
-                         "beside it gives the same in words.", value_pt=10, pad=3, code="Head to head tile code",
+                         "beside it gives the same in words.", value_pt=9, pad=2, code="Head to head tile code",
                          fill="Head to head leader colour", text="Head to head leader text colour", tip=H2H_TIP))
-    v.append(key_box(sid(pid, "key"), 28, 652, 322, 60, H2H_KEY,
+    v.append(key_box(sid(pid, "key"), 28, 640, 322, 72, H2H_KEY,
                      "Colour key: blue = Side A leads; vermillion = Side B leads; grey = another party leads, or a tie.",
                      stacked=True))
-    v.append(matrix(sid(pid, "table"), 360, 390, 620, 322, [("dim_state", "state_name", "State")],
-                    [("scenario", "Side A share (head to head)", "Side A share"),
-                     ("scenario", "Side B share (head to head)", "Side B share"),
+    v.append(matrix(sid(pid, "table"), 360, 394, 620, 318, [("dim_state", "state_name", "State")],
+                    [("scenario", "Side A share (head to head)", "A share"),
+                     ("scenario", "Side B share (head to head)", "B share"),
                      ("scenario", "Who leads (head to head)", "Who leads"),
-                     ("scenario", "Side A at 25% (head to head)", "Side A a quarter?"),
-                     ("scenario", "Side B at 25% (head to head)", "Side B a quarter?")],
+                     ("scenario", "Side A at 25% (head to head)", "A 25%+?"),
+                     ("scenario", "Side B at 25% (head to head)", "B 25%+?")],
                     "Every state: both sides",
                     "Table of all 37 states: each side's share of the vote, who leads, and whether each side has a quarter "
                     "of the vote.", sort=("scenario", "Side A share (head to head)")))
-    v.append(textbox(sid(pid, "notes"), 990, 390, 270, 322, [
+    v.append(textbox(sid(pid, "notes"), 990, 394, 270, 318, [
         ("Assumptions. :: How many partner voters follow is an assumption; no published figure exists. Those who do not "
          "follow stay home.", 9, False, INK),
         ("Recombined 2023 votes, :: not a 2027 forecast. Parties on neither side keep their 2023 votes; the 14 minor "
          "candidates are never counted as a leader.", 9, False, INK),
-        ("Real or what-if: :: only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. Try it under 2027 what-ifs: "
-         "What-if simulator, switch \"Use the coalition\" On.", 9, False, INK)],
+        ("Real or what-if: :: only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. To try it with 2027 swings, open "
+         "the What-if simulator and set \"Use the coalition?\" to On.", 9, False, INK)],
         alt="Notes: the assumptions behind this page and how to use the coalition in the simulator."))
     return "Head to head", v
 
@@ -903,15 +906,17 @@ HOW = [
     ("How to read this report", 18, True, INK),
     ("The rule. :: To win outright, a presidential candidate needs the most votes nationwide and at least a quarter (25%) "
      "of the votes in at least two-thirds of the states. Abuja (the Federal Capital Territory) counts as a state here, so "
-     "there are 37. We use 24 states as the default; 25 is offered as a stricter reading. This is our reading of section "
-     "134 of the Constitution, checked against an unofficial copy.", 10, False, INK),
+     "there are 37. The 2023 election courts treated Abuja like a 37th state but did not say whether that means 25 or "
+     "24 states. We use 25 (two-thirds of 37, rounded up); 24 (two-thirds of the 36 states) is offered on the simulator. "
+     "This is our reading of section 134 of the Constitution, checked against an unofficial copy.", 10, False, INK),
     ("What the numbers are. :: The 2023 result in each state, put together from five copies of INEC's declaration, because "
      "INEC's own state sheet is not public. PDP and NNPP state totals add up to INEC's national declaration with no "
      "adjustment; for APC and Labour they match because three disputed figures were chosen to make them match. The minor "
      "candidates' column is 4,858 votes too high nationally, and nobody can yet say where.", 10, False, INK),
     ("What the simulator assumes. :: A change in vote share adds the same number of points in every state of a zone. "
      "Turnout changes only the candidate's own 2023 voters. Other candidates gain or lose in proportion to their 2023 "
-     "votes. No new candidates or boundary changes, and no merged parties unless you switch the coalition On. It is a "
+     "votes. The voters are the 2023 voters: nobody who registered since 2023 is included. No new candidates or "
+     "boundary changes, and no merged parties unless you switch the coalition On. It is a "
      "what-if tool, not a forecast: it says nothing about how likely any what-if is.", 10, False, INK),
     ("Merging parties. :: Two pages add 2023 votes together. \"Merge two parties\" joins a lead party and a partner; "
      "\"Head to head\" sets that coalition against one party or another coalition. You choose how many of the partner's "
@@ -920,10 +925,10 @@ HOW = [
      "to the coalition instead of the candidate. Only \"NDC (Obi + Kwankwaso)\" is a real ticket.", 10, False, INK),
     ("Words used. :: \"Won\" (or \"Secured\") = a quarter of the vote or more in a state; \"Within reach\" = 20% to just "
      "under a quarter; \"Out of reach\" = under 20%. \"The deciding state\" = the weakest state the candidate needs to "
-     "reach 24 (or 25). Exact definitions and formulas are on the Technical notes page.", 10, False, INK),
+     "reach 25 (or 24). Exact definitions and formulas are on the Technical notes page.", 10, False, INK),
     ("What it does not claim. :: It is not an electoral authority and not INEC's figures. It has no local-government "
      "detail. Small changes near a quarter of the vote are within the data's uncertainty: for example, Bola Tinubu's 29 "
-     "states in 2023 rest on 96 votes in Adamawa.", 10, False, INK),
+     "states in 2023 include Adamawa, where he was only 96 votes above a quarter.", 10, False, INK),
 ]
 
 
@@ -944,21 +949,22 @@ def page_how(pid):
 TECH = [
     [("How we count a state as won", [
         ("f", "Share = candidate’s votes ÷ valid votes"),
-        ("t", "Worked out for each of the 37: the 36 states and Abuja (the method note calls each one a “unit”)."),
+        ("t", "Worked out for each of the 37: the 36 states and Abuja."),
         ("f", "Won (“Secured”): share ≥ 25%"),
         ("f", "Within reach: 20% ≤ share < 25%"),
         ("f", "Out of reach: share < 20%"),
         ("t", "The 2023 pages test whole numbers: 4 × candidate’s votes ≥ valid votes.")]),
      ("How many states are needed", [
-        ("f", "States needed (N) = 24 or 25"),
-        ("t", "24 = two-thirds of the 36 states (Abuja counts as one of the 37); 25 = two-thirds of 37, rounded up. "
-              "Default 24."),
+        ("f", "States needed (N) = 25 or 24"),
+        ("t", "25 = two-thirds of 37, rounded up (Abuja counts as one of the 37); 24 = two-thirds of the 36 states. "
+              "Default 25."),
         ("f", "Meets the rule: states won ≥ N"),
         ("f", "More states needed = N − states won"),
         ("t", "never below 0. These always use all 37, whatever else is selected.")]),
      ("Where the numbers could be off", [
-        ("t", "Same change across a zone; rivals move together; 24 or 25 is our reading; 2023 data gaps (4,858 votes "
-              "not placed in any state; Kano APC chosen from disputed copies).")]),
+        ("t", "Every state in a zone gets the same change. Rival candidates move together. 25 or 24 is our reading "
+              "of the rule. 2023 data gaps: 4,858 votes are not placed in any state, and Kano APC was chosen between "
+              "disputed copies.")]),
      ("Who wins: the result", [
         ("t", "Our reading of section 134:"),
         ("f", "Most votes + meets the rule → Outright win"),
@@ -988,18 +994,18 @@ TECH = [
         ("f", "× (100% − new share) ÷ (100% − share after turnout)"),
         ("t", "0 if the share after turnout is 100%. The state’s total stays the same."),
         ("t", "Closest rival = the other main candidate (APC, PDP, LP, NNPP) with the most votes nationwide.")]),
-     ("Merging two parties", [
+     ("How we pick the deciding state", [
+        ("t", "Rank all 37 by new share, highest first (ties: by state code, A to Z)."),
+        ("f", "Deciding state = the state in position N"),
+        ("f", "Gap = 25% − new share (in points)"),
+        ("t", "A negative gap means the state is above a quarter.")])],
+    [("Merging two parties", [
         ("t", "f = share of the partner’s 2023 voters who follow (0% to 100%)."),
         ("f", "Coalition votes = lead’s votes + f × partner’s votes"),
         ("f", "Valid votes = 2023 valid votes − (1 − f) × partner’s votes"),
         ("t", "Those who do not follow stay home. Side B with a partner: the same for its partner. Tested in whole "
               "numbers: 4 × coalition votes ≥ valid votes."),
-        ("t", "Switch On: the simulator uses coalition votes and these valid votes in Step 1; Side B moves as one rival.")])],
-    [("How we pick the deciding state", [
-        ("t", "Rank all 37 by new share, highest first (ties: by state code, A to Z)."),
-        ("f", "Deciding state = the state in position N"),
-        ("f", "Gap = 25% − new share (in points)"),
-        ("t", "A negative gap means the state is above a quarter.")]),
+        ("t", "Switch On: the simulator uses coalition votes and these valid votes in Step 1; Side B moves as one rival.")]),
      ("Votes needed to reach a quarter", [
         ("f", "Points short = 25% − new share"),
         ("t", "never below 0."),
@@ -1055,27 +1061,32 @@ SOURCES = [
 ]
 
 
+PAGE_NAME = {"path": "Path to 25"}   # the photo manifest still says "Path to 24" (built before the rename)
+
+
 def page_sources(pid):
     cw = RIGHT_X - 30 - 40           # photo on the right
     paras = [("Data sources", 18, True, INK),
              ("Full method, code and registers: github.com/batestguy/powerbi-naija-2027-elections-gap (method: "
-              "docs/methodology.md). What the report does not claim: How to read this and Technical notes.", 9, False, MUTED),
+              "docs/methodology.md; every source, access date, licence and transform: registers/sources.md and the data "
+              "manifests). What the report does not claim: How to read this and Technical notes.", 9, False, MUTED),
              (" ", 6, False, INK)]
     for t in SOURCES:
-        paras += [(t, 9, False, INK), (" ", 4, False, INK)]
-    paras.append(("Sources, access dates, licences and transforms are listed in registers/sources.md and in the data "
-                  "manifests (data/raw/*/manifest.json, data/staging/manifest.json) in the project repository.", 9, False, MUTED))
-    v = [textbox(sid(pid, "body"), 40, 20, cw, 280, paras, alt="Data sources")]
+        paras += [(t, 9, False, INK), (" ", 2, False, INK)]
+    v = [textbox(sid(pid, "body"), 40, 20, cw, 312, paras, alt="Data sources")]
     credits = [("Photo credits (Wikimedia Commons, accessed 14 Nov 2026; cropped and resized, shared under the same "
-                "licence: CC BY-SA 4.0 = creativecommons.org/licenses/by-sa/4.0, CC BY 4.0 = "
-                "creativecommons.org/licenses/by/4.0)", 9, True, INK)]
-    for ph in PHOTOS.values():
-        credits.append((f"{ph['page']}: :: {ph['author']}, {ph['licence']}, {ph['file_page'].replace('https://', '')}", 9, False, INK))
-    for c in CANDS.values():
-        credits.append((f"Portrait, {c['candidate']}: :: {c['author']}, {c['licence']}, {c['file_page'].replace('https://', '')}", 9, False, INK))
+                "licence; licence texts at creativecommons.org/licenses)", 9, True, INK)]
+    def _file(u):
+        return u.replace("https://", "").replace("commons.wikimedia.org/wiki/", "")
+    credits.append(("Page photos (commons.wikimedia.org/wiki/<file>): :: " + "; ".join(
+        f"{PAGE_NAME.get(k, ph['page'])}: {ph['author']}, {ph['licence']}, {_file(ph['file_page'])}"
+        for k, ph in PHOTOS.items()) + ". Portraits: " + "; ".join(
+        f"{c['candidate']}: {c['author']}, {c['licence']}, {_file(c['file_page'])}" for c in CANDS.values()) + ".",
+        9, False, INK))
     credits.append(("Party logos are trademarks of their respective parties, shown for identification only; no "
-                    "endorsement implied. :: Licence as stated on each file page: " + " ; ".join(
-                        f"{l['party']} {l['file_page'].replace('https://', '')} ({l['licence_as_stated'].lower()})"
+                    "endorsement implied. :: From Wikipedia / Wikimedia Commons file pages (listed in registers/sources.md), "
+                    "licence as stated there: " + "; ".join(
+                        f"{l['party']} {l['licence_as_stated'].lower()}"
                         for l in LOGO_LIST), 9, False, INK))
     credits.append(("Party now (news reports checked 14 Nov 2026, re-checked 20 Nov 2026; not an official INEC list, and it can change before 2027)", 10, True, INK))
     for r in PARTY_NOW:
@@ -1090,7 +1101,7 @@ def page_sources(pid):
         f"{r['source_url'].replace('https://', '')})" for r in real)
         + ". Every other pairing is hypothetical, named \"X + Y (what-if)\" (data/reference/coalition_names.csv).",
         9, False, INK))
-    v.append(textbox(sid(pid, "credits"), 40, 302, cw, 410, credits,
+    v.append(textbox(sid(pid, "credits"), 40, 334, cw, 378, credits,
                      alt="Credits: each page photo and candidate portrait with photographer, licence and file page; the "
                          "news reports used for each candidate's party now."))
     v += photo(pid, "sources", RIGHT_X)

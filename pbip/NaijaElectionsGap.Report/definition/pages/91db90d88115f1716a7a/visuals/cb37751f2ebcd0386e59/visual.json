@@ -28,7 +28,7 @@
               },
               "queryRef": "scenario.Side A states at 25% (merge)",
               "nativeQueryRef": "Side A states at 25% (merge)",
-              "displayName": "Coalition: states won (of 37)"
+              "displayName": "States won"
             },
             {
               "field": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "scenario.Side A lead states at 25%",
               "nativeQueryRef": "Side A lead states at 25%",
-              "displayName": "Lead alone, 2023: states won"
+              "displayName": "Lead alone"
             },
             {
               "field": {
@@ -58,7 +58,7 @@
               },
               "queryRef": "scenario.Side A national votes",
               "nativeQueryRef": "Side A national votes",
-              "displayName": "Coalition votes"
+              "displayName": "Votes"
             },
             {
               "field": {
@@ -73,7 +73,7 @@
               },
               "queryRef": "scenario.Side A national share (merge)",
               "nativeQueryRef": "Side A national share (merge)",
-              "displayName": "Coalition share of the vote"
+              "displayName": "Share"
             }
           ]
         }

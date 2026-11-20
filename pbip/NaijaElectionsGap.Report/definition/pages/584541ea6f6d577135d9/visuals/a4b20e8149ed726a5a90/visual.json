@@ -3,9 +3,9 @@
   "name": "a4b20e8149ed726a5a90",
   "position": {
     "x": 20,
-    "y": 320,
+    "y": 340,
     "z": 20,
-    "height": 66,
+    "height": 50,
     "width": 1240,
     "tabOrder": 20
   },
@@ -99,32 +99,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Result (Side A''s view; 24 states needed)'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#505050'"
-                    }
-                  }
+                  "Value": "false"
                 }
               }
             }
@@ -137,7 +112,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Result as a sentence: whether Side A wins outright, loses, or it goes to a run-off.'"
+                  "Value": "'Result as a sentence, from Side A''s view (25 states needed): whether Side A wins outright, loses, or it goes to a run-off.'"
                 }
               }
             }

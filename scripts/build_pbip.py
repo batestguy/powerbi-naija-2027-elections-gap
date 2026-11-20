@@ -115,7 +115,7 @@ PARAMS = {  # table: (DAX series, default, format, dataType)
     "param_turnout": ("GENERATESERIES ( -50, 50, 1 )", 0, "0", "int64"),
     "param_swing_national": ("GENERATESERIES ( -20, 20, 0.5 )", 0, "0.0", "double"),
     **{f"param_swing_{z}": ("GENERATESERIES ( -20, 20, 0.5 )", 0, "0.0", "double") for z in ZONES},
-    "param_rule": ("GENERATESERIES ( 24, 25, 1 )", 24, "0", "int64"),
+    "param_rule": ("GENERATESERIES ( 24, 25, 1 )", 25, "0", "int64"),   # default 25: user decision 2026-11-20
     # coalition follow rates (user decision 2026-11-16): % of a partner's 2023 voters who follow, default 100
     "param_follow_a": ("GENERATESERIES ( 0, 100, 5 )", 100, "0", "int64"),
     "param_follow_b": ("GENERATESERIES ( 0, 100, 5 )", 100, "0", "int64"),
@@ -196,7 +196,7 @@ MEASURES["scenario"] = [
     ("Supporter turnout", "SELECTEDVALUE ( param_turnout[Value], 0 ) / 100", "0%"),
     ("National swing", "SELECTEDVALUE ( param_swing_national[Value], 0 )", "+0.0;-0.0;0.0"),
     ("Zone swing", ZONE_SW, "+0.0;-0.0;0.0"),
-    ("Units needed (rule)", "SELECTEDVALUE ( param_rule[Value], 24 )", "0"),
+    ("Units needed (rule)", "SELECTEDVALUE ( param_rule[Value], 25 )", "0"),
     # switch On: the "candidate" is Side A's coalition (docs/methodology.md "Coalitions"); Off: unchanged
     ("Candidate is valid", ENGINE_IN + "RETURN ok", None),
     ("Candidate selected", OK, None),   # the candidate picker alone (identity header), whatever the switch
@@ -558,7 +558,7 @@ def _coalition_measures():
                   '[Side A name] & ": " & ' + CNAME("al") + ' & " (" & al & ") leads, " & ' + CNAME("ap")
                   + ' & " (" & ap & ") is the partner. " & IF ( [Side A is real], "A real joint ticket (" & [Side A source] '
                   '& ").", "A what-if pairing: no such joint ticket exists." ) & " " & [Follow A] & "% of " & '
-                  + CNAME("ap") + ' & "\'s 2023 voters follow; the rest stay home." )')
+                  + CNAME("ap") + ' & "\'s 2023 voters follow." )')
     side_b_msg = (SIDES + 'RETURN SWITCH ( TRUE (), '
                   'ISBLANK ( bl ), "Choose Side B\'s main party.", '
                   'ISBLANK ( bp ), "Choose Side B\'s partner, or Nobody.", '
@@ -571,7 +571,7 @@ def _coalition_measures():
                   '[Side B name] & ": " & ' + CNAME("bl") + ' & " (" & bl & ") leads, " & ' + CNAME("bp")
                   + ' & " (" & bp & ") is the partner. " & IF ( [Side B is real], "A real joint ticket (" & [Side B source] '
                   '& ").", "A what-if pairing: no such joint ticket exists." ) & " " & [Follow B] & "% of " & '
-                  + CNAME("bp") + ' & "\'s 2023 voters follow; the rest stay home." )')
+                  + CNAME("bp") + ' & "\'s 2023 voters follow." )')
     led = lambda k: _states('[Head to head leader code] = "' + k + '"')
     m = [
         # ---- inputs ----
@@ -714,13 +714,16 @@ def _coalition_measures():
                                   '[Side A name] & ", not the candidate above.", "Coalition On, but not complete: '
                                   'fix it on Head to head." ), "" )', None),
     ]
-    # side portraits (the same free-licence crops as the candidate photo)
+    # side portraits (the same free-licence crops as the candidate photo); "Nobody" gets a transparent 1-pixel image
+    # instead of Desktop's broken-image icon (review 2026-11-20)
+    BLANK_PNG = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAA"
+                 "SUVORK5CYII=")
     cands = {c["party"]: c for c in json.loads((PBIP / "assets" / "photos" / "candidates_manifest.json")
                                                  .read_text(encoding="utf-8"))["candidates"]}
     for nm, ref in (("Side A lead photo", "[Side A lead]"), ("Side A partner photo", "[Side A partner]"),
                     ("Side B lead photo", "[Side B lead]"), ("Side B partner photo", "[Side B partner]")):
         m.append((nm, f"VAR x = {ref} RETURN IF ( NOT ISBLANK ( x ), SWITCH ( x, "
-                  + ", ".join(f'"{p}", "{cands[p]["data_uri"]}"' for p in MAIN) + " ) )", None))
+                  + ", ".join(f'"{p}", "{cands[p]["data_uri"]}"' for p in MAIN) + f', "{BLANK_PNG}" ) )', None))
     return m
 
 
@@ -919,6 +922,8 @@ def build_report():
     rep = json.loads(rep_path.read_text(encoding="utf-8"))
     rep["resourcePackages"] = [p for p in rep["resourcePackages"] if p["name"] != "RegisteredResources"]
     rep["resourcePackages"].append({"name": "RegisteredResources", "type": "RegisteredResources", "items": items})
+    # readers never need the empty Filters pane (review 2026-11-20)
+    rep.setdefault("objects", {})["outspacePane"] = [{"properties": {"visible": {"expr": {"Literal": {"Value": "false"}}}}}]
     wjson(rep_path, rep)
 
     card = {"$schema": VC_SCHEMA, "name": stable_id(pid, "card"),

@@ -365,7 +365,7 @@ def page_numbers_check():
     narrow_votes = int(spare[narrow])            # rounded down, as the "Votes to spare" measure
     text = " ".join(json.dumps(v) for p in pages().values() for v in p["visuals"])
     want = {"others gap": f"{others_gap:,}", "Kano used": f"{kano_used:,}", "Kano alternative": f"{kano_alt:,}",
-            "Tinubu states": f"{tin_states} states in 2023 rest on {narrow_votes} votes in {names[narrow]}"}
+            "Tinubu states": f"{tin_states} states in 2023 include {names[narrow]}, where he was only {narrow_votes} votes above a quarter"}
     found = {k: s in text for k, s in want.items()}
     ok = all(found.values()) and kano_same
     return ok, {"expected_text": want, "found_in_report": found, "kano_quarter_same_under_either_figure": kano_same,
@@ -414,7 +414,7 @@ def main():
               and not v["model_keys_not_in_map"] and not v["map_names_not_in_model"] and not v["model_names_not_in_map"]
               and not v["pcode_name_pairs_differ"] for v in geo.values()) and len(keys) == 37, geo)
 
-    # 6a. slider defaults saved in the report are neutral (0, rule 24)
+    # 6a. slider defaults saved in the report are neutral (0, rule 25: user decision 2026-11-20)
     pg = pages()
     saved = {}
     for v in pg["What-if simulator"]["visuals"]:
@@ -428,8 +428,8 @@ def main():
         except (KeyError, IndexError, TypeError):
             continue
     follow = {t: saved.pop(t) for t in [t for t in saved if t.startswith("param_follow_")]}   # coalition (hidden, synced)
-    neutral = all((val in ("24L", "24D") if t == "param_rule" else val in ("0L", "0D")) for t, val in saved.items())
-    check("simulator sliders saved at neutral values (all swings 0, turnout 0, rule 24)", neutral and len(saved) == 9, saved)
+    neutral = all((val in ("25L", "25D") if t == "param_rule" else val in ("0L", "0D")) for t, val in saved.items())
+    check("simulator sliders saved at neutral values (all swings 0, turnout 0, rule 25)", neutral and len(saved) == 9, saved)
 
     # 4. overview figures = simulator figures at those saved values
     flt = ", ".join(f"{t}[Value] = {val.rstrip('LD')}" for t, val in saved.items())
@@ -558,7 +558,7 @@ def main():
     busy = ("param_swing_national[Value] = 4, param_swing_SE[Value] = -6, param_swing_NW[Value] = 3, "
             "param_turnout[Value] = 10, param_rule[Value] = 25, dim_party[party] = \"LP\"")
     queries = {
-        "Path to 24 table": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_name], "r", [Unit rank], "s", [Scenario share], '
+        "Path to 25 table": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_name], "r", [Unit rank], "s", [Scenario share], '
                             f'"l", [Scenario label], "v", [Votes needed], "c", [Path column colour]), {busy})',
         "Spread map": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_pcode], "s", [Scenario share], '
                       f'"d", [Points from 25%]), {busy})',

@@ -3,9 +3,9 @@
   "name": "27ad73a2fcd8f8b73fa4",
   "position": {
     "x": 990,
-    "y": 390,
+    "y": 394,
     "z": 24,
-    "height": 322,
+    "height": 318,
     "width": 270,
     "tabOrder": 24
   },
@@ -69,7 +69,7 @@
                     }
                   },
                   {
-                    "value": "only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. Try it under 2027 what-ifs: What-if simulator, switch \"Use the coalition\" On.",
+                    "value": "only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. To try it with 2027 swings, open the What-if simulator and set \"Use the coalition?\" to On.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",
