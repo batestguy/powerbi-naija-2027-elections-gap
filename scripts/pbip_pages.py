@@ -674,31 +674,40 @@ def page_sim(pid):
                       "whom.", value_pt=8, accent=False, border=MUTED))
     rx = sx + 412 + 10
     rw = W - 20 - rx
-    v.append(sentence(sid(pid, "verdict"), rx, 86, rw, 92, "Result sentence", "Result",
+    # open question 22 (user decision 2026-11-19): a line under the header, empty unless the coalition switch is On;
+    # the results column moves down and its gaps shrink to 2 px (screenshots 2026-11-20: a shorter Result box cut it to one line,
+    # 52 px card rows clipped, a 22 px line showed no text); the room comes from the tile grid's empty bottom. No
+    # background, so the empty line shows nothing with the switch Off.
+    hl = sentence(sid(pid, "coal_header"), 628, 78, W - 20 - 628, 30, "Simulator header line", None,
+                  "Line under the header: with the coalition switch On, says which coalition the results are for. "
+                  "Empty when the switch is Off.", value_pt=9, accent=False)
+    hl["visual"]["visualContainerObjects"]["background"] = [{"properties": {"show": lit("false")}}]
+    v.append(hl)
+    v.append(sentence(sid(pid, "verdict"), rx, 110, rw, 92, "Result sentence", "Result",
                       "Result of your what-if as a sentence: who wins outright, or whether it goes to a run-off.",
                       value_pt=10))
-    v.append(cards(sid(pid, "who"), rx, 182, rw, 56,
+    v.append(cards(sid(pid, "who"), rx, 204, rw, 56,
                    [("scenario", "Has most votes", "Most votes nationwide?"), ("scenario", "Leading rival", "Closest rival (party)"),
                     ("scenario", "Scenario national share", "Share of the vote nationwide")],
                    None, "Whether the candidate has the most votes nationwide, the closest rival's party and the candidate's "
                          "share of the vote nationwide.", value_pt=13, label_pt=9))
-    v.append(cards(sid(pid, "counts"), rx, 242, rw, 56,
+    v.append(cards(sid(pid, "counts"), rx, 262, rw, 56,
                    [("scenario", "Units secured (national)", "States won (of 37)"), ("scenario", "Units still needed", "More states needed"),
                     ("scenario", "Units at a cap", "States that hit 0% or 100%")],
                    None, "Your what-if: states won out of 37, more states needed, and states where a slider pushed the "
                          "share to 0% or 100%.", value_pt=13, label_pt=9))
-    v.append(sentence(sid(pid, "decide"), rx, 302, rw, 92, "Deciding state sentence", "The deciding state, in votes",
+    v.append(sentence(sid(pid, "decide"), rx, 320, rw, 90, "Deciding state sentence", "The deciding state, in votes",
                       "Sentence: the deciding state under your what-if, how far the candidate is above or below a quarter "
                       "of the vote there, in points and in votes.", value_pt=9))
-    v.append(sentence(sid(pid, "inforce"), rx, 398, rw, 60, "Assumptions in force", "Your what-if, in words",
+    v.append(sentence(sid(pid, "inforce"), rx, 412, rw, 60, "Assumptions in force", "Your what-if, in words",
                       "Sentence listing every slider that is not at 0, and the number of states needed.", value_pt=10))
     mw = 300
-    v.append(tile_matrix(sid(pid, "tiles"), rx, 462, mw, 250, "Each state under your what-if",
+    v.append(tile_matrix(sid(pid, "tiles"), rx, 474, mw, 238, "Each state under your what-if",
                          "Tile grid, one square per state with its two-letter code inside, recoloured by your what-if: "
                          "blue above a quarter of the vote, vermillion below. The codes and full state names are listed on "
                          "the Spread map and Technical notes pages."))
     kx, kw = rx + mw + 6, rw - mw - 6
-    v.append(textbox(sid(pid, "key"), kx + 8, 466, kw - 8, 246, [
+    v.append(textbox(sid(pid, "key"), kx + 8, 478, kw - 8, 234, [
         ("Colour key (codes: see Spread map)", 9, True, INK)] + [(key_runs([it]), 9, False, INK) for it in MAP_KEY] + [
         ("Try these: :: \"everywhere\" +3 (a small gain); North West \u221210 (a big loss in one region); turnout "
          "\u221220 (supporters stay at home). Set everything back to 0 to see 2023 again.", 9, False, INK),

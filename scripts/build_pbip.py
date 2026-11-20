@@ -707,6 +707,12 @@ def _coalition_measures():
                                          '& IF ( bp <> "NONE", " (" & [Follow B] & "% follow)" ) & ".", "On, but not complete: " & IF ( [Side A is valid], '
                                          '[Side B message], [Side A message] ) & " Fix it on Head to head." ), '
                                          '"Off: uses the candidate at the top. Coalitions: see Head to head." )', None),
+        # open question 22 (user decision 2026-11-19, option c): one line under the simulator header when the switch is
+        # On, because the header still shows the candidate picked at the top. "" (not BLANK) when Off: a classic card
+        # shows "(Blank)" for BLANK.
+        ("Simulator header line", f'IF ( {ON}, IF ( [Head to head is valid], "Coalition On: results are for " & '
+                                  '[Side A name] & ", not the candidate above.", "Coalition On, but not complete: '
+                                  'fix it on Head to head." ), "" )', None),
     ]
     # side portraits (the same free-licence crops as the candidate photo)
     cands = {c["party"]: c for c in json.loads((PBIP / "assets" / "photos" / "candidates_manifest.json")

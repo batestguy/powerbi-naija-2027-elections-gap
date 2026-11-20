@@ -505,14 +505,15 @@ def coalition_invalid_check():
                      '"sim_result", CALCULATE([Result sentence], coal_switch[Value] = "On"), '
                      '"sim_share", CALCULATE([Scenario share], coal_switch[Value] = "On", dim_state[state_pcode] = "NG001"), '
                      '"sim_rival", CALCULATE([Leading rival], coal_switch[Value] = "On"), '
-                     '"sim_msg", CALCULATE([Simulator coalition sentence], coal_switch[Value] = "On")), '
+                     '"sim_msg", CALCULATE([Simulator coalition sentence], coal_switch[Value] = "On"), '
+                     '"sim_hdr", CALCULATE([Simulator header line], coal_switch[Value] = "On")), '
                      f'{f}, TREATAS({{"APC"}}, dim_party[party]))')[0]
         seen[name] = r
         blank_keys = ["stA", "natB", "verdict", "sent", "ledA", "sim_sec", "sim_verdict", "sim_result", "sim_share", "sim_rival"]
         if a_bad:
             blank_keys += ["stM", "natA", "shA"]
         msg = r["msgA"] if a_bad else r["msgB"]
-        if any(r[k] is not None for k in blank_keys) or word not in (msg or "") or "not complete" not in (r["sim_msg"] or ""):
+        if any(r[k] is not None for k in blank_keys) or word not in (msg or "") or "not complete" not in (r["sim_msg"] or "")                 or "not complete" not in (r["sim_hdr"] or ""):
             bad.append(name)
     check("invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank "
           "figures on both coalition pages and in the simulator with the switch On, and a message saying what to change",
@@ -533,6 +534,14 @@ def coalition_switch_off_check():
     b = {r["party"]: r for r in off if r["party"] in PARTIES}
     check("switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate "
           "(turnout +10, national +4, SE -6, NW +3)", a == b and len(a) == 4, {"no_coalition": a, "switch_off": b})
+    # open question 22: the line under the simulator header names the coalition with the switch On, is empty when Off
+    cf = ", ".join(cfg_filters(("PDP", "LP", 35, "APC", "NNPP", 70)))
+    h = dax_file(f'EVALUATE CALCULATETABLE(ROW("off", CALCULATE([Simulator header line], coal_switch[Value] = "Off"), '
+                 f'"on", CALCULATE([Simulator header line], coal_switch[Value] = "On"), "nm", [Side A name]), {cf}, '
+                 'TREATAS({"APC"}, dim_party[party]))')[0]
+    want = f"Coalition On: results are for {h['nm']}, not the candidate above."
+    check("line under the simulator header: empty with the switch Off; names the coalition (Side A) with the switch On",
+          h["off"] in ("", None) and h["on"] == want and bool(h["nm"]), {"seen": h, "want_on": want})
 
 
 def coalition_boundary_search():

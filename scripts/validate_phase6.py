@@ -581,6 +581,7 @@ def main():
         "deciding state sentence": 'ROW("d", [Deciding state sentence], "a", [Party accent colour])',
         "settings sentence": 'ROW("s", [Assumptions in force], "a", [Party accent colour])',
         "coalition sentence": 'ROW("s", [Simulator coalition sentence])',
+        "header line": 'ROW("s", [Simulator header line])',
     }
     for k, v in sim_visuals.items():
         queries[f"Simulator {k}"] = f"EVALUATE CALCULATETABLE({v}, {busy})"
