@@ -1,232 +1,232 @@
 {
   "built_by": "scripts/time_engine.py",
-  "run_at": "2026-11-20 03:33:33",
+  "run_at": "2026-11-20 05:43:04",
   "setting": "coal_a_lead[party] = \"LP\", coal_a_partner[party] = \"NNPP\", coal_b_lead[party] = \"APC\", coal_b_partner[party] = \"NONE\", param_follow_a[Value] = 100, param_follow_b[Value] = 100; switch On / Off",
   "build_stamp": {
-    "files_sha256": "f02839a4022e7af83ba9d8e2cb3352140c2ac70b7131aa75c16b4340d98ff651",
+    "files_sha256": "85e10641dc9139d6ba7dd8043334c4e308691d65ab7597303f0a591da6f08c21",
     "files": 47,
     "live_model": {
       "measures": 152,
-      "measures_sha256": "b751c5e8dd20c0878515bfa15fb77f484c7ec481dfaaad0742be9d16b98ede45"
+      "measures_sha256": "077c64a6cc913e01ef3d71a30c6bce219c9077f386c8b3d4ecafb74b2cea9f1b"
     }
   },
   "results": {
     "switch On: Deciding state sentence": {
-      "median_cold_s": 0.63,
-      "median_warm_s": 0.325,
+      "median_cold_s": 0.203,
+      "median_warm_s": 0.104,
       "runs": {
         "cold_s": [
-          0.597,
-          0.6344,
-          0.6304
+          0.2034,
+          0.2829,
+          0.2008
         ],
         "warm_s": [
-          0.3434,
-          0.3247,
-          0.2771
+          0.104,
+          0.1275,
+          0.0943
         ],
         "rows": 1,
-        "engine_mb": 730
+        "engine_mb": 246
       }
     },
     "switch On: Verdict": {
-      "median_cold_s": 0.511,
-      "median_warm_s": 0.183,
+      "median_cold_s": 0.159,
+      "median_warm_s": 0.059,
       "runs": {
         "cold_s": [
-          0.7823,
-          0.4806,
-          0.5114
+          0.1686,
+          0.1589,
+          0.1543
         ],
         "warm_s": [
-          0.2945,
-          0.1828,
-          0.18
+          0.0592,
+          0.0606,
+          0.0546
         ],
         "rows": 1,
-        "engine_mb": 731
+        "engine_mb": 245
       }
     },
     "switch On: Result sentence": {
-      "median_cold_s": 0.609,
-      "median_warm_s": 0.288,
+      "median_cold_s": 0.206,
+      "median_warm_s": 0.104,
       "runs": {
         "cold_s": [
-          0.6461,
-          0.5966,
-          0.6091
+          0.2143,
+          0.206,
+          0.1992
         ],
         "warm_s": [
-          0.2883,
-          0.3101,
-          0.2635
+          0.1037,
+          0.1046,
+          0.1036
         ],
         "rows": 1,
-        "engine_mb": 730
+        "engine_mb": 245
       }
     },
     "switch On: Leading rival units at 25%": {
-      "median_cold_s": 0.444,
-      "median_warm_s": 0.16,
+      "median_cold_s": 0.158,
+      "median_warm_s": 0.047,
       "runs": {
         "cold_s": [
-          0.6707,
-          0.4436,
-          0.4205
+          0.162,
+          0.1576,
+          0.1546
         ],
         "warm_s": [
-          0.1266,
-          0.1741,
-          0.1602
+          0.047,
+          0.045,
+          0.0469
         ],
         "rows": 1,
-        "engine_mb": 730
+        "engine_mb": 246
       }
     },
     "switch On: Head to head verdict + sentence": {
-      "median_cold_s": 1.799,
-      "median_warm_s": 1.454,
+      "median_cold_s": 0.62,
+      "median_warm_s": 0.504,
       "runs": {
         "cold_s": [
-          1.7987,
-          1.7643,
-          1.9958
+          0.62,
+          0.6097,
+          0.6343
         ],
         "warm_s": [
-          1.4541,
-          1.4374,
-          1.653
+          0.503,
+          0.5399,
+          0.5042
         ],
         "rows": 1,
-        "engine_mb": 738
+        "engine_mb": 252
       }
     },
     "switch On: per-state engine, 37 states": {
-      "median_cold_s": 1.141,
-      "median_warm_s": 0.627,
+      "median_cold_s": 0.337,
+      "median_warm_s": 0.23,
       "runs": {
         "cold_s": [
-          1.2139,
-          1.1408,
-          0.9786
+          0.3372,
+          0.3272,
+          0.348
         ],
         "warm_s": [
-          0.6269,
-          0.6243,
-          0.6655
+          0.2237,
+          0.23,
+          0.2341
         ],
         "rows": 37,
-        "engine_mb": 739
+        "engine_mb": 253
       }
     },
     "switch Off: Deciding state sentence": {
-      "median_cold_s": 0.309,
-      "median_warm_s": 0.009,
+      "median_cold_s": 0.104,
+      "median_warm_s": 0.003,
       "runs": {
         "cold_s": [
-          0.4753,
-          0.2953,
-          0.3094
+          0.108,
+          0.1036,
+          0.1033
         ],
         "warm_s": [
-          0.0088,
-          0.0319,
-          0.0082
+          0.0034,
+          0.0037,
+          0.0033
         ],
         "rows": 1,
-        "engine_mb": 741
+        "engine_mb": 254
       }
     },
     "switch Off: Verdict": {
-      "median_cold_s": 0.385,
-      "median_warm_s": 0.013,
+      "median_cold_s": 0.109,
+      "median_warm_s": 0.004,
       "runs": {
         "cold_s": [
-          0.3895,
-          0.3712,
-          0.3854
+          0.112,
+          0.1017,
+          0.1087
         ],
         "warm_s": [
-          0.0132,
-          0.0443,
-          0.0098
+          0.004,
+          0.004,
+          0.0036
         ],
         "rows": 1,
-        "engine_mb": 735
+        "engine_mb": 251
       }
     },
     "switch Off: Result sentence": {
-      "median_cold_s": 0.306,
-      "median_warm_s": 0.01,
+      "median_cold_s": 0.106,
+      "median_warm_s": 0.004,
       "runs": {
         "cold_s": [
-          0.3228,
-          0.3025,
-          0.306
+          0.1116,
+          0.1057,
+          0.0987
         ],
         "warm_s": [
-          0.0088,
-          0.0369,
-          0.0104
+          0.0039,
+          0.0036,
+          0.0043
         ],
         "rows": 1,
-        "engine_mb": 734
+        "engine_mb": 252
       }
     },
     "switch Off: Leading rival units at 25%": {
-      "median_cold_s": 0.301,
-      "median_warm_s": 0.01,
+      "median_cold_s": 0.117,
+      "median_warm_s": 0.004,
       "runs": {
         "cold_s": [
-          0.3028,
-          0.3006,
-          0.2687
+          0.1033,
+          0.1168,
+          0.1233
         ],
         "warm_s": [
-          0.0099,
-          0.0329,
-          0.0097
+          0.0045,
+          0.0038,
+          0.0038
         ],
         "rows": 1,
-        "engine_mb": 734
+        "engine_mb": 252
       }
     },
     "switch Off: Head to head verdict + sentence": {
-      "median_cold_s": 1.784,
-      "median_warm_s": 1.458,
+      "median_cold_s": 0.629,
+      "median_warm_s": 0.51,
       "runs": {
         "cold_s": [
-          1.8034,
-          1.7148,
-          1.7836
+          0.6039,
+          0.6291,
+          0.6368
         ],
         "warm_s": [
-          1.4585,
-          1.4691,
-          1.4213
+          0.4991,
+          0.5259,
+          0.51
         ],
         "rows": 1,
-        "engine_mb": 740
+        "engine_mb": 253
       }
     },
     "switch Off: per-state engine, 37 states": {
-      "median_cold_s": 0.32,
-      "median_warm_s": 0.019,
+      "median_cold_s": 0.106,
+      "median_warm_s": 0.005,
       "runs": {
         "cold_s": [
-          0.499,
-          0.3196,
-          0.3055
+          0.1027,
+          0.1056,
+          0.1255
         ],
         "warm_s": [
-          0.0188,
-          0.0214,
-          0.0174
+          0.005,
+          0.0053,
+          0.0106
         ],
         "rows": 0,
-        "engine_mb": 740
+        "engine_mb": 253
       }
     }
   },
-  "engine_mb_after": 740
+  "engine_mb_after": 253
 }

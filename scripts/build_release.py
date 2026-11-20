@@ -61,6 +61,14 @@ Source, access date, licence and transform of every table: `registers/sources.md
 
 Left out on purpose: {", ".join(left_out) or "none"} (Mundx data: no licence to redistribute).
 
+## Licence and attribution
+The tables are facts (vote counts, registered voters, zones, codes) compiled from the sources listed in
+`registers/sources.md`; each source keeps its own terms (e.g. Wikipedia tables CC BY-SA 4.0; news pages and the
+AGADA-BI table state no licence). Credit those sources when you reuse the data. One of the five result copies
+(Vanguard) was fetched once with a browser identity after the site refused a scripted request; its terms were not
+checked. The report file also embeds Wikimedia Commons photos (CC BY-SA 4.0 / CC BY 4.0 / CC0 / public domain;
+credits on its Data sources page) and party logos (trademarks, identification only).
+
 | File | Rows (CSV, excl. header; comment lines count) |
 |---|---|
 {rows}

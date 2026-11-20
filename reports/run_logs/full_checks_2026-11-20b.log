@@ -1,0 +1,177 @@
+=== boundary 04:43:26
+  [PASS] margin proof: the smallest non-zero distance between any reachable share (single candidate and every coalition setting, every turnout and swing step) and the 25% or 20% line is more than 100 x the 1E-12 margin
+  [PASS] exact hits, switch On: at every reachable setting that puts the coalition exactly on 25% or 20%, the model shows the at-the-line answer (Secured / Within reach, order, colour; 0 votes needed at 25%); none skipped
+  [PASS] rival shares need no margin: no reachable rival share (switch Off and On, every pairing, follow rate, Side B, turnout and swing step) is exactly on 25%, and the smallest distance from it is more than 100 x 1E-14
+  [PASS] deciding-state sentence at every exact 25% hit, with that state made the deciding one (other zones' sliders): '0.0 points above' and every word = reference; a hit is left out only when an exhaustive search proves that state can never be the deciding one there
+
+  part boundary PASSED: {'checks': 4, 'pass': 4, 'fail': 0}
+=== core 04:49:21
+  [PASS] [neutral] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [neutral] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [neutral] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [national +5] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [national +5] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [national +5] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [national -5, SE +10] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [national -5, SE +10] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [national -5, SE +10] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [supporters +20%, national +2] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [supporters +20%, national +2] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [supporters +20%, national +2] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [every slider at minimum] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [every slider at minimum] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [every slider at minimum] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [every slider at maximum] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [every slider at maximum] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [every slider at maximum] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [mixed] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [mixed] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [mixed] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [odd: supporters -37%, national +7.5, mixed zones] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [odd: supporters -37%, national +7.5, mixed zones] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [odd: supporters -37%, national +7.5, mixed zones] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [odd: supporters +13%, national -3.5] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [odd: supporters +13%, national -3.5] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [odd: supporters +13%, national -3.5] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [supporter turnout alone at -50] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [supporter turnout alone at -50] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [supporter turnout alone at -50] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [supporter turnout alone at +50] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [supporter turnout alone at +50] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [supporter turnout alone at +50] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [national swing alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [national swing alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [national swing alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [national swing alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [national swing alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [national swing alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NC alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NC alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NC alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NC alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NC alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NC alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NE alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NE alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NE alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NE alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NE alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NE alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NW alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NW alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NW alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone NW alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone NW alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone NW alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SE alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SE alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SE alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SE alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SE alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SE alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SS alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SS alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SS alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SS alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SS alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SS alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SW alone at -20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SW alone at -20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SW alone at -20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] [zone SW alone at +20] 148 unit shares = reference implementation, all within 0-1
+  [PASS] [zone SW alone at +20] counts, labels, cap count, rule and tipping point = reference (N = 24 and 25)
+  [PASS] [zone SW alone at +20] rivals, most votes and verdict = reference (N = 24 and 25)
+  [PASS] neutral sliders: units secured = baseline 25% count = 29 / 21 / 16 / 1
+  [PASS] neutral sliders: every unit's scenario share = baseline share exactly
+  [PASS] units secured never falls as national swing rises (-20 to +20, 81 steps)
+  [PASS] exact-boundary search: no reachable slider combination puts a unit exactly on 25% or 20%
+  [PASS] zone filter on the page: rule, units still needed and tipping point stay national; zone count follows the filter
+  [PASS] no candidate / OTHERS -> blank scenario
+
+  part core PASSED: {'checks': 81, 'pass': 81, 'fail': 0}
+=== invalid 05:01:17
+  [PASS] invalid coalition choices (lead = partner, a party on both sides, partner = lead, nothing chosen) -> blank figures on both coalition pages and in the simulator with the switch On, and a message saying what to change
+
+  part invalid PASSED: {'checks': 1, 'pass': 1, 'fail': 0}
+=== switch_off 05:02:28
+  [PASS] switch Off with a coalition picked = no coalition at all: every engine measure identical for every candidate (turnout +10, national +4, SE -6, NW +3)
+  [PASS] line under the simulator header: empty with the switch Off; names the coalition (Side A) with the switch On
+
+  part switch_off PASSED: {'checks': 2, 'pass': 2, 'fail': 0}
+=== simulator 05:02:56
+    ... simulator, switch On: setting 'neutral'
+    ... simulator, switch On: setting 'every slider at minimum'
+    ... simulator, switch On: setting 'every slider at maximum'
+    ... simulator, switch On: setting 'national +5'
+    ... simulator, switch On: setting 'supporters +20%, national -2'
+    ... simulator, switch On: setting 'odd: supporters -37%, national +7.5, mixed zones'
+    ... simulator, switch On: setting 'odd: supporters +13%, national -3.5, NW +0.5, SE -6.5'
+    ... simulator, switch On: setting 'mixed'
+    ... simulator, switch On: setting 'national -20 alone'
+  [PASS] simulator with the coalition switch On: per-state shares (capped and uncapped), votes needed / to spare, counts, cap count, tipping point, rivals, most votes, verdict, result / deciding-state / settings sentences = exact reference (9 slider settings incl. extremes and odd values x 4 coalitions incl. 2 v 2, N = 24 and 25)
+
+  part simulator PASSED: {'checks': 1, 'pass': 1, 'fail': 0}
+=== pages 05:11:13
+    ... coalition pages: pairings 0-9 of 193
+    ... coalition pages: pairings 10-19 of 193
+    ... coalition pages: pairings 20-29 of 193
+    ... coalition pages: pairings 30-39 of 193
+    ... coalition pages: pairings 40-49 of 193
+    ... coalition pages: pairings 50-59 of 193
+    ... coalition pages: pairings 60-69 of 193
+    ... coalition pages: pairings 70-79 of 193
+    ... coalition pages: pairings 80-89 of 193
+    ... coalition pages: pairings 90-99 of 193
+    ... coalition pages: pairings 100-109 of 193
+    ... coalition pages: pairings 110-119 of 193
+    ... coalition pages: pairings 120-129 of 193
+    ... coalition pages: pairings 130-139 of 193
+    ... coalition pages: pairings 140-149 of 193
+    ... coalition pages: pairings 150-159 of 193
+    ... coalition pages: pairings 160-169 of 193
+    ... coalition pages: pairings 170-179 of 193
+    ... coalition pages: pairings 180-189 of 193
+    ... coalition pages: pairings 190-192 of 193
+  [PASS] coalition pages, per state: whole-number votes and valid totals, shares, status, who leads and 25% flags = exact reference (193 pairings x follow rates: preset, every 2 v 1 at 0/35/100%, every 2 v 2 at 5 follow-rate pairs; 7141 state rows)
+  [PASS] coalition pages, national: states at 25%+ (coalition, lead alone, both sides), votes, shares, states led, leading rival, most votes, verdict and sentence = exact reference (N = 24 and 25)
+  [PASS] follow 100%: coalition = lead + partner exactly and valid total unchanged; follow 0: coalition = lead and valid total = 2023 valid - partner's votes (every state, every pairing at those rates)
+
+  part pages PASSED: {'checks': 3, 'pass': 3, 'fail': 0}
+=== combine 05:33:16
+  combined 6 parts: gate PASSED: {'checks': 92, 'pass': 92, 'fail': 0}
+=== phase6 05:33:21
+  [PASS] refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs
+  [PASS] validate_phase3.py passes on the current build
+  [PASS] validate_phase4.py passes on the current build
+  [PASS] national candidate totals = each independent copy within 20 votes
+  [PASS] embedded map files = built files, and every map key and name matches the model (both maps, 0 unmatched)
+  [PASS] simulator sliders saved at neutral values (all swings 0, turnout 0, rule 25)
+  [PASS] overview = simulator at saved slider values: 37 unit shares and labels, national share, units at 25%
+  [PASS] every visual on visible pages has alt text and a unique tab position
+  [PASS] every map (incl. the hidden check page) is located by state name; no P-code in any map field (hover shows names; rendering of the hover itself not checked)
+  [PASS] state codes: 37 unique two-letter ISO 3166-2:NG codes in the model, each = the sourced reference file; every state has a tile position
+  [PASS] sentences and votes needed / to spare = independent exact computation from staging
+  [PASS] result sentence and settings sentence = Phase 4 reference for every candidate at several settings
+  [PASS] candidate identity: portrait = built file, party now = dated source file, party-colour text contrast >= 4.5:1
+  [PASS] fixed 2023 numbers in page text (4,858; Kano figures; 29 states / Adamawa margin) = staging, and the Kano dispute changes no candidate's quarter there
+  [PASS] photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one per visible page except the two coalition pages (none, by design: no room beside their pickers), decorative alt text, last in tab order (before its caption)
+  [PASS] coalition names: every real row has publisher, URL and date; model name table = CSV; real ticket's date on the pages = CSV
+  [PASS] coalition pickers, follow sliders and switch saved at the preset (Obi (LP) + Kwankwaso (NNPP), 100%, vs Tinubu (APC) alone; switch Off), in matching sync groups on the coalition pages and the simulator
+  [PASS] engine time per heavy page query (one query per visual, as Desktop sends them) under 2.0 s with an empty cache (non-neutral sliders; rendering not included)
+
+  gate PASSED: {'checks': 18, 'pass': 18, 'fail': 0}
+phase6 exit 0
+=== timings 05:43:04
+  switch On  Deciding state sentence            cold  0.203 s   warm  0.104 s   engine 246 MB
+  switch On  Verdict                            cold  0.159 s   warm  0.059 s   engine 245 MB
+  switch On  Result sentence                    cold  0.206 s   warm  0.104 s   engine 245 MB
+  switch On  Leading rival units at 25%         cold  0.158 s   warm  0.047 s   engine 246 MB
+  switch On  Head to head verdict + sentence    cold  0.620 s   warm  0.504 s   engine 252 MB
+  switch On  per-state engine, 37 states        cold  0.337 s   warm  0.230 s   engine 253 MB
+  switch Off Deciding state sentence            cold  0.104 s   warm  0.003 s   engine 254 MB
+  switch Off Verdict                            cold  0.109 s   warm  0.004 s   engine 251 MB
+  switch Off Result sentence                    cold  0.106 s   warm  0.004 s   engine 252 MB
+  switch Off Leading rival units at 25%         cold  0.117 s   warm  0.004 s   engine 252 MB
+  switch Off Head to head verdict + sentence    cold  0.629 s   warm  0.510 s   engine 253 MB
+  switch Off per-state engine, 37 states        cold  0.106 s   warm  0.005 s   engine 253 MB
+=== done 05:44:28
