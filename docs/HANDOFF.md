@@ -218,6 +218,11 @@ Superseded notes from 2026-11-16 (kept for the record):
 - Research done (preliminary): `docs/coalition-research.md`, `reports/coalition_2011_2015_preliminary.csv`. Real case: Obi + Kwankwaso on one NDC ticket since 2026-05-31. Atiku's ADC ticket under court challenge.
 - Decisions recorded in `registers/decision-log.md`; open questions 19–21.
 
+## 2026-11-20 (later): Phase 8 case study drafted
+`docs/case-study.md`: question, sources, decisions, trade-offs, 2023 baseline, limits, what next, links to the
+registers. Numbers taken from `reports/phase6_validation.json` and `reports/result_reconciliation.csv`. Still to add:
+the video link, and the release link once published.
+
 ## Open items needing a person
 - Hover tooltips, keyboard-only path, screen reader (Narrator) in Desktop.
 - Non-specialist completes the core task unaided (Phase 5 exit test).

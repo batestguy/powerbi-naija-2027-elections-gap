@@ -10,7 +10,7 @@ means 24 or 25 states; the report uses 25 (two-thirds of 37, rounded up) and let
 
 **Status:** built; scripted checks pass; person checks (keyboard, screen reader, a non-specialist test) and the
 walkthrough video are pending. First release in preparation (see [Releases](../../releases)). Where the project
-stands: [`docs/HANDOFF.md`](docs/HANDOFF.md). Plan and exit checks: [`docs/PLAN.md`](docs/PLAN.md).
+stands: [`docs/HANDOFF.md`](docs/HANDOFF.md). Plan and exit checks: [`docs/PLAN.md`](docs/PLAN.md). One-page case study: [`docs/case-study.md`](docs/case-study.md).
 
 ## Open it
 Needs Power BI Desktop (free, Windows; built and tested with the Microsoft Store edition, November 2026).
