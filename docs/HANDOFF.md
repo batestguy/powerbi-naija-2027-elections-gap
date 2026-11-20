@@ -10,7 +10,7 @@ Updated: 2026-11-20. Update this file in every stage commit.
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
 | 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build 2026-11-20: Phase 4 92/92, Phase 6 18/18 (after the Head to head speed query was split per visual) | see git log |
-| 7 Release + docs | in progress: draft release v1.0.0 on GitHub (pbix + data vintage 2026-11-20 + SHA256SUMS); README, LICENSE (MIT) done; video, clean-profile test, publishing: open | 0dcb55b |
+| 7 Release + docs | in progress: draft release v1.0.0 on GitHub (pbix + data vintage 2026-11-20 + SHA256SUMS); README, LICENSE (MIT), independent review + fixes done; video, person checks, publishing: open | b8c662f |
 | 8 Case study | todo | — |
 
 ## Overall progress (estimate, 2026-11-19)
@@ -42,6 +42,24 @@ Verified this session:
 - Bug fixed: the switch-On rival code used a DAX variable named `lead`, which this Desktop rejects ("The syntax for 'lead' is incorrect"); every measure built on `ON_TAB` (Leading rival, its votes, its states at 25%, Has most votes, Verdict, Result sentence) failed, even with the switch Off. Renamed to `rx`. After the fix (switch Off, APC): Result sentence = "Bola Tinubu wins outright: … 29 states (24 needed)", Verdict = "Outright win", Leading rival = PDP.
 - `validate_phase3.py` pass (07:40).
 - Coalition checks run on their own: **switch Off = no coalition** pass; **invalid choices → blanks + message** pass.
+
+### 2026-11-20 (latest): independent review done, fixes made, draft release refreshed
+- Review: same-family reviewer (fresh context) + own research; findings checked by hand. Verdict "publish after
+  fixes"; all BLOCKING / SHOULD-FIX items fixed or decided (decision log 2026-11-20). Research: the 2023 tribunal and
+  Supreme Court treated the FCT as a 37th state with no special status but named no number of states.
+- **User decisions:** default rule **25** (was 24; "Path to 24" page is now "Path to 25"; deciding state now Gombe);
+  Vanguard kept with the fetch method stated (Q13 closed); party logos kept (risk accepted).
+- Fixes: Adamawa sentence; Data sources / Technical notes / coalition pages fit without cut text; labels shortened;
+  "no new voters since 2023" limit; Filters pane hidden; blank image for "Nobody"; README (preview image, status,
+  requirements, rebuild steps, citation, honest verification wording); `reports/phase6_run.log` (had a local path)
+  removed from git; VINTAGE.md and release notes gain licence/attribution lines.
+- **Checks on the final build: Phase 4 92/92, Phase 6 18/18** (`reports/run_logs/full_checks_2026-11-20b.log`).
+  Slowest engine time 0.63 s cold.
+- `.pbix` re-saved by scripted Save As (sha256 8cf22219…, 1,108,969 bytes) and checked as saved: Tinubu, sliders 0,
+  rule 25, switch Off, filter pane hidden; Result "29 states (25 needed)". Data vintage rebuilt (sha256 5cd8035f…;
+  the earlier zip was never published). Draft release v1.0.0 updated (target b8c662f), notes `release/NOTES.md`.
+- **Left:** walkthrough video (user), person checks + clean-profile test, then publish the draft (user decision);
+  Phase 8 one-page case study.
 
 ### 2026-11-20 (later): Phase 7 release work started
 - User decisions: Mundx ratios file out of git (Q15 closed; still in old history); code licence MIT; `.pbix` made by
