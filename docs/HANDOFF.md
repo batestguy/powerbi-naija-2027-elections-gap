@@ -9,7 +9,7 @@ Updated: 2026-11-20. Update this file in every stage commit.
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
 | 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
-| 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build: Phase 4 92/92, Phase 6 17/18 (speed gate: Head to head 2.008 s vs 2.0 s) | 2cef198 |
+| 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build 2026-11-20: Phase 4 92/92, Phase 6 18/18 (after the Head to head speed query was split per visual) | see git log |
 | 7 Release + docs, 8 Case study | todo | — |
 
 ## Overall progress (estimate, 2026-11-19)
@@ -56,8 +56,14 @@ Verified this session:
 - **Phase 6: 17/18, gate FAILED on speed only**: "Head to head table + cards" 2.008 s cold (limit 2.0 s; 1.585 s on
   2026-11-19); every other query <= 1.25 s. Not caused by this change (that page was not touched). `time_engine.py`
   right after: Head to head verdict + sentence 1.78 s cold (2.13 s on 2026-11-19), so the page sits at the limit and
-  run-to-run noise decides pass/fail. **Next: make the Head to head query faster (it is the slowest by far), then re-run
-  Phase 6.** Do not re-run until it passes by luck.
+  run-to-run noise decides pass/fail.
+- **Fixed (same day): the speed query was mis-shaped**, not the page. It put the page-wide sentence and "States led
+  by Side A" on each of the 37 state rows (worked out 37 times); the page asks for each once. Now one query per
+  visual, as for the simulator (decision log). **Phase 6 re-run: 18/18, gate passed.** Slowest cold: simulator result
+  sentence with the coalition On 1.542 s (1.133 s in the run before: noise; the machine was in use), Head to head
+  sentence 0.95 s, state table 0.90 s. The simulator coalition-On sentence is now the closest to the 2 s limit.
+- **Next:** cross-family review of the coalition + Q22 work, person checks (hover, keyboard, screen reader,
+  non-specialist test), then Phase 7 (release `.pbix`, clean-profile test, docs, walkthrough video) and Phase 8.
 - Run notes: the first Phase 6 attempt died with no output (log redirect lost it); the second stopped because Desktop
   had 3 dialogs open (not seen; cause unknown). Desktop was killed and reopened; third run as above. Logs:
   `reports/run_logs/`.

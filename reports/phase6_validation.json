@@ -1,10 +1,10 @@
 {
   "built_by": "scripts/validate_phase6.py",
-  "gate_passed": false,
+  "gate_passed": true,
   "summary": {
     "checks": 18,
-    "pass": 17,
-    "fail": 1
+    "pass": 18,
+    "fail": 0
   },
   "not_scriptable": [
     "tooltips render as designed (needs hover)",
@@ -12,9 +12,7 @@
     "release .pbix on a clean Windows profile (Phase 7 builds the .pbix)",
     "non-specialist completes the core task unaided"
   ],
-  "failed": [
-    "engine time per heavy page query (one query per visual, as Desktop sends them) under 2.0 s with an empty cache (non-neutral sliders; rendering not included)"
-  ],
+  "failed": [],
   "checks": [
     {
       "check": "refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs",
@@ -771,319 +769,383 @@
     },
     {
       "check": "engine time per heavy page query (one query per visual, as Desktop sends them) under 2.0 s with an empty cache (non-neutral sliders; rendering not included)",
-      "status": "fail",
+      "status": "pass",
       "evidence": {
         "median_cold_s": {
-          "Path to 24 table": 0.689,
-          "Spread map": 0.355,
-          "Head to head table + cards": 2.008,
-          "Simulator tile map": 0.446,
-          "Simulator tile map (coalition On, 2 v 2)": 0.67,
-          "Simulator headline card": 0.588,
-          "Simulator headline card (coalition On, 2 v 2)": 1.249,
-          "Simulator counts card": 0.404,
-          "Simulator counts card (coalition On, 2 v 2)": 0.767,
-          "Simulator result sentence": 0.834,
-          "Simulator result sentence (coalition On, 2 v 2)": 1.133,
-          "Simulator deciding state sentence": 0.37,
-          "Simulator deciding state sentence (coalition On, 2 v 2)": 0.614,
-          "Simulator settings sentence": 0.298,
-          "Simulator settings sentence (coalition On, 2 v 2)": 0.354,
-          "Simulator coalition sentence": 0.267,
-          "Simulator coalition sentence (coalition On, 2 v 2)": 0.75,
-          "Simulator header line": 0.261,
-          "Simulator header line (coalition On, 2 v 2)": 0.329
+          "Path to 24 table": 0.726,
+          "Spread map": 0.353,
+          "Head to head state table": 0.904,
+          "Head to head tile map": 0.601,
+          "Head to head result sentence": 0.95,
+          "Head to head Side A cards": 0.724,
+          "Head to head Side B cards": 0.712,
+          "Simulator tile map": 0.436,
+          "Simulator tile map (coalition On, 2 v 2)": 0.638,
+          "Simulator headline card": 0.605,
+          "Simulator headline card (coalition On, 2 v 2)": 1.349,
+          "Simulator counts card": 0.474,
+          "Simulator counts card (coalition On, 2 v 2)": 0.721,
+          "Simulator result sentence": 0.869,
+          "Simulator result sentence (coalition On, 2 v 2)": 1.542,
+          "Simulator deciding state sentence": 0.444,
+          "Simulator deciding state sentence (coalition On, 2 v 2)": 0.746,
+          "Simulator settings sentence": 0.478,
+          "Simulator settings sentence (coalition On, 2 v 2)": 0.334,
+          "Simulator coalition sentence": 0.273,
+          "Simulator coalition sentence (coalition On, 2 v 2)": 0.758,
+          "Simulator header line": 0.307,
+          "Simulator header line (coalition On, 2 v 2)": 0.331
         },
         "median_warm_s": {
-          "Path to 24 table": 0.426,
-          "Spread map": 0.087,
-          "Head to head table + cards": 1.684,
-          "Simulator tile map": 0.156,
-          "Simulator tile map (coalition On, 2 v 2)": 0.38,
-          "Simulator headline card": 0.325,
-          "Simulator headline card (coalition On, 2 v 2)": 0.982,
+          "Path to 24 table": 0.404,
+          "Spread map": 0.081,
+          "Head to head state table": 0.63,
+          "Head to head tile map": 0.324,
+          "Head to head result sentence": 0.673,
+          "Head to head Side A cards": 0.459,
+          "Head to head Side B cards": 0.439,
+          "Simulator tile map": 0.163,
+          "Simulator tile map (coalition On, 2 v 2)": 0.366,
+          "Simulator headline card": 0.331,
+          "Simulator headline card (coalition On, 2 v 2)": 1.045,
           "Simulator counts card": 0.159,
-          "Simulator counts card (coalition On, 2 v 2)": 0.488,
-          "Simulator result sentence": 0.587,
-          "Simulator result sentence (coalition On, 2 v 2)": 0.857,
-          "Simulator deciding state sentence": 0.134,
-          "Simulator deciding state sentence (coalition On, 2 v 2)": 0.335,
-          "Simulator settings sentence": 0.037,
-          "Simulator settings sentence (coalition On, 2 v 2)": 0.075,
-          "Simulator coalition sentence": 0.015,
-          "Simulator coalition sentence (coalition On, 2 v 2)": 0.493,
-          "Simulator header line": 0.011,
-          "Simulator header line (coalition On, 2 v 2)": 0.085
+          "Simulator counts card (coalition On, 2 v 2)": 0.329,
+          "Simulator result sentence": 0.578,
+          "Simulator result sentence (coalition On, 2 v 2)": 0.921,
+          "Simulator deciding state sentence": 0.125,
+          "Simulator deciding state sentence (coalition On, 2 v 2)": 0.367,
+          "Simulator settings sentence": 0.052,
+          "Simulator settings sentence (coalition On, 2 v 2)": 0.081,
+          "Simulator coalition sentence": 0.008,
+          "Simulator coalition sentence (coalition On, 2 v 2)": 0.495,
+          "Simulator header line": 0.01,
+          "Simulator header line (coalition On, 2 v 2)": 0.068
         },
         "runs": {
           "Path to 24 table": {
             "cold_s": [
-              0.6592,
-              0.7101,
-              0.6886
+              0.6679,
+              0.7255,
+              0.7827
             ],
             "warm_s": [
-              0.4053,
-              0.437,
-              0.4264
+              0.4018,
+              0.4038,
+              0.4205
             ],
             "rows": 37,
-            "engine_mb": 724
+            "engine_mb": 504
           },
           "Spread map": {
             "cold_s": [
-              0.3628,
-              0.3548,
-              0.3485
+              0.3427,
+              0.353,
+              0.3543
             ],
             "warm_s": [
-              0.0871,
-              0.0848,
-              0.0874
+              0.0808,
+              0.0805,
+              0.0818
             ],
             "rows": 37,
-            "engine_mb": 724
+            "engine_mb": 505
           },
-          "Head to head table + cards": {
+          "Head to head state table": {
             "cold_s": [
-              2.008,
-              2.0092,
-              1.9985
+              0.856,
+              0.904,
+              1.0277
             ],
             "warm_s": [
-              1.6404,
-              1.7341,
-              1.6843
+              0.6302,
+              0.6062,
+              0.6676
             ],
             "rows": 37,
-            "engine_mb": 760
+            "engine_mb": 509
+          },
+          "Head to head tile map": {
+            "cold_s": [
+              0.6628,
+              0.5907,
+              0.6008
+            ],
+            "warm_s": [
+              0.3161,
+              0.3333,
+              0.3236
+            ],
+            "rows": 37,
+            "engine_mb": 510
+          },
+          "Head to head result sentence": {
+            "cold_s": [
+              0.9325,
+              0.9543,
+              0.9495
+            ],
+            "warm_s": [
+              0.6729,
+              0.6627,
+              0.6932
+            ],
+            "rows": 1,
+            "engine_mb": 517
+          },
+          "Head to head Side A cards": {
+            "cold_s": [
+              0.7139,
+              0.7244,
+              0.7621
+            ],
+            "warm_s": [
+              0.4491,
+              0.4909,
+              0.4592
+            ],
+            "rows": 1,
+            "engine_mb": 517
+          },
+          "Head to head Side B cards": {
+            "cold_s": [
+              0.7118,
+              0.74,
+              0.7006
+            ],
+            "warm_s": [
+              0.4287,
+              0.4825,
+              0.4391
+            ],
+            "rows": 1,
+            "engine_mb": 517
           },
           "Simulator tile map": {
             "cold_s": [
-              0.4508,
-              0.4462,
-              0.4165
+              0.4562,
+              0.4248,
+              0.4364
             ],
             "warm_s": [
-              0.1649,
-              0.1513,
-              0.1564
+              0.1882,
+              0.1629,
+              0.1569
             ],
             "rows": 37,
-            "engine_mb": 761
+            "engine_mb": 515
           },
           "Simulator tile map (coalition On, 2 v 2)": {
             "cold_s": [
-              0.7914,
-              0.6304,
-              0.6699
+              0.6233,
+              0.6378,
+              0.6468
             ],
             "warm_s": [
-              0.3802,
-              0.3703,
-              0.4096
+              0.3547,
+              0.3783,
+              0.3665
             ],
             "rows": 37,
-            "engine_mb": 762
+            "engine_mb": 516
           },
           "Simulator headline card": {
             "cold_s": [
-              0.5879,
-              0.5619,
-              0.5984
+              0.6482,
+              0.5821,
+              0.6045
             ],
             "warm_s": [
-              0.3141,
-              0.3252,
-              0.3318
+              0.3339,
+              0.3314,
+              0.3018
             ],
             "rows": 1,
-            "engine_mb": 751
+            "engine_mb": 513
           },
           "Simulator headline card (coalition On, 2 v 2)": {
             "cold_s": [
-              1.2491,
-              1.2417,
-              1.2707
+              1.3495,
+              1.3024,
+              1.3692
             ],
             "warm_s": [
-              0.9534,
-              0.9815,
-              1.0028
+              1.0233,
+              1.0452,
+              1.0654
             ],
             "rows": 1,
-            "engine_mb": 746
+            "engine_mb": 514
           },
           "Simulator counts card": {
             "cold_s": [
-              0.434,
-              0.4037,
-              0.4019
+              0.474,
+              0.4743,
+              0.5035
             ],
             "warm_s": [
-              0.1619,
-              0.1572,
-              0.1585
+              0.1591,
+              0.1785,
+              0.1554
             ],
             "rows": 1,
-            "engine_mb": 745
+            "engine_mb": 513
           },
           "Simulator counts card (coalition On, 2 v 2)": {
             "cold_s": [
-              0.8153,
-              0.7672,
-              0.7501
+              0.784,
+              0.7206,
+              0.5019
             ],
             "warm_s": [
-              0.4811,
-              0.4969,
-              0.4877
+              0.3147,
+              0.3511,
+              0.329
             ],
             "rows": 1,
-            "engine_mb": 746
+            "engine_mb": 513
           },
           "Simulator result sentence": {
             "cold_s": [
-              0.8325,
-              0.8406,
-              0.8339
+              0.8692,
+              0.8794,
+              0.8557
             ],
             "warm_s": [
-              0.5525,
-              0.5865,
-              0.6253
+              0.5744,
+              0.5782,
+              0.6086
             ],
             "rows": 1,
-            "engine_mb": 746
+            "engine_mb": 514
           },
           "Simulator result sentence (coalition On, 2 v 2)": {
             "cold_s": [
-              1.1176,
-              1.1325,
-              1.1895
+              1.6817,
+              1.1741,
+              1.5423
             ],
             "warm_s": [
-              0.8379,
-              0.8572,
-              0.8575
+              1.04,
+              0.9211,
+              0.8956
             ],
             "rows": 1,
-            "engine_mb": 747
+            "engine_mb": 513
           },
           "Simulator deciding state sentence": {
             "cold_s": [
-              0.3696,
-              0.3617,
-              0.432
+              0.4482,
+              0.4442,
+              0.3738
             ],
             "warm_s": [
-              0.1338,
-              0.1171,
-              0.1486
+              0.1252,
+              0.1502,
+              0.0995
             ],
             "rows": 1,
-            "engine_mb": 745
+            "engine_mb": 512
           },
           "Simulator deciding state sentence (coalition On, 2 v 2)": {
             "cold_s": [
-              0.6143,
-              0.5954,
-              0.6214
+              1.0725,
+              0.696,
+              0.7463
             ],
             "warm_s": [
-              0.3289,
-              0.335,
-              0.3349
+              0.3674,
+              0.3799,
+              0.3555
             ],
             "rows": 1,
-            "engine_mb": 747
+            "engine_mb": 513
           },
           "Simulator settings sentence": {
             "cold_s": [
-              0.2987,
-              0.2967,
-              0.2985
+              0.5915,
+              0.4783,
+              0.4549
             ],
             "warm_s": [
-              0.0374,
-              0.0582,
-              0.0351
+              0.0517,
+              0.0785,
+              0.0489
             ],
             "rows": 1,
-            "engine_mb": 745
+            "engine_mb": 256
           },
           "Simulator settings sentence (coalition On, 2 v 2)": {
             "cold_s": [
-              0.3545,
-              0.3627,
-              0.3433
+              0.3485,
+              0.3335,
+              0.3312
             ],
             "warm_s": [
-              0.0733,
-              0.1314,
-              0.0751
+              0.0737,
+              0.0937,
+              0.0806
             ],
             "rows": 1,
-            "engine_mb": 746
+            "engine_mb": 257
           },
           "Simulator coalition sentence": {
             "cold_s": [
-              0.2674,
-              0.2537,
-              0.3715
+              0.2794,
+              0.2728,
+              0.2622
             ],
             "warm_s": [
-              0.0071,
-              0.0335,
-              0.0146
+              0.0077,
+              0.029,
+              0.0069
             ],
             "rows": 1,
-            "engine_mb": 741
+            "engine_mb": 254
           },
           "Simulator coalition sentence (coalition On, 2 v 2)": {
             "cold_s": [
-              0.7183,
-              0.7501,
-              0.7983
+              0.758,
+              0.7288,
+              0.7611
             ],
             "warm_s": [
-              0.4523,
-              0.4931,
-              0.5775
+              0.4586,
+              0.5662,
+              0.4955
             ],
             "rows": 1,
-            "engine_mb": 743
+            "engine_mb": 254
           },
           "Simulator header line": {
             "cold_s": [
-              0.2593,
-              0.2703,
-              0.2605
+              0.2742,
+              0.3196,
+              0.3071
             ],
             "warm_s": [
-              0.0079,
-              0.0315,
-              0.0108
+              0.0075,
+              0.0659,
+              0.0101
             ],
             "rows": 1,
-            "engine_mb": 742
+            "engine_mb": 254
           },
           "Simulator header line (coalition On, 2 v 2)": {
             "cold_s": [
-              0.3285,
-              0.3352,
-              0.3227
+              0.3307,
+              0.3129,
+              0.3345
             ],
             "warm_s": [
-              0.0944,
-              0.0849,
-              0.0657
+              0.0623,
+              0.0852,
+              0.0681
             ],
             "rows": 1,
-            "engine_mb": 743
+            "engine_mb": 254
           }
         },
-        "slowest_cold": "Head to head table + cards",
+        "slowest_cold": "Simulator result sentence (coalition On, 2 v 2)",
         "how": "pbi_engine.ps1 -Action Time: cache cleared, cold run, warm run; x3; inside one connection"
       }
     }

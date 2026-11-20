@@ -562,11 +562,24 @@ def main():
                             f'"l", [Scenario label], "v", [Votes needed], "c", [Path column colour]), {busy})',
         "Spread map": f'EVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(dim_state[state_pcode], "s", [Scenario share], '
                       f'"d", [Points from 25%]), {busy})',
-        "Head to head table + cards": f'EVALUATE CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_name]), "a", '
-                           f'[Side A share (head to head)], "b", [Side B share (head to head)], "w", [Who leads (head to head)], '
-                           f'"a25", [Side A at 25% (head to head)], "b25", [Side B at 25% (head to head)], "s", '
-                           f'[Head to head sentence], "la", [States led by Side A], "c", [Head to head leader colour]), {COAL_2V2})',
     }
+    # Head to head page: one query per VISUAL with exactly that visual's measures (read from the report files
+    # 2026-11-20), as for the simulator below. Until then one query put the page-level sentence and "States led by Side
+    # A" on every one of the 37 state rows, so they were worked out 37 times (2.008 s cold on 2026-11-20).
+    h2h_visuals = {
+        "state table": 'SUMMARIZECOLUMNS(dim_state[state_name], "a", [Side A share (head to head)], "b", '
+                       '[Side B share (head to head)], "w", [Who leads (head to head)], "a25", [Side A at 25% (head to head)], '
+                       '"b25", [Side B at 25% (head to head)])',
+        "tile map": 'SUMMARIZECOLUMNS(dim_state[tile_row], dim_state[tile_col], "c", [Head to head tile code], '
+                    '"f", [Head to head leader colour], "t", [Head to head leader text colour])',
+        "result sentence": 'ROW("s", [Head to head sentence])',
+        "Side A cards": 'ROW("v", [Side A national votes (head to head)], "s", [Side A national share (head to head)], '
+                        '"k", [Side A states at 25% (head to head)], "l", [States led by Side A])',
+        "Side B cards": 'ROW("v", [Side B national votes], "s", [Side B national share (head to head)], '
+                        '"k", [Side B states at 25% (head to head)], "l", [States led by Side B])',
+    }
+    for k, v in h2h_visuals.items():
+        queries[f"Head to head {k}"] = f"EVALUATE CALCULATETABLE({v}, {COAL_2V2})"
     # Simulator page: one query per VISUAL, with exactly the measures that visual shows (read from the report files
     # 2026-11-18), as Desktop sends them (user decision 2026-11-18, decision log). Until then the check timed ten
     # measures as ONE query, two of which (Verdict, Tipping-point gap) are not on the page (2.0-2.8 s, switch On).
