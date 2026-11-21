@@ -51,7 +51,7 @@ Abubakar reached 21, Peter Obi 16 and Rabiu Kwankwaso 1 (`reports/phase6_validat
 A what-if tool, not a forecast or an electoral authority. The voters are the 2023 voters. Kano APC (506,412 vs
 517,341) was chosen by consistency with the national total, not an official sheet; either figure gives the same
 quarter results in Kano. The scripted checks are a re-implementation by the same author, so they mainly catch slips.
-Keyboard, screen-reader and non-specialist tests are still to be done by a person.
+A screen-reader check was done by the author; keyboard-only and non-specialist tests are still to be done.
 
 ## What next, with more time or better data
 - INEC's Form EC8D state sheets, through a Freedom of Information request, to replace the five-copy reconciliation.

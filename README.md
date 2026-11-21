@@ -19,7 +19,7 @@ follow rate and a 2 v 2 head to head. Music: *Darkness* by The Police.
 
 ![What-if simulator page](docs/img/simulator.png)
 
-**Status:** built; scripted checks pass. Still to do: person checks (keyboard, screen reader, a non-specialist test). First release in preparation (see [Releases](../../releases)). Where the project stands:
+**Status:** released as [v1.0.0](../../releases/tag/v1.0.0) (21 Nov 2026). Scripted checks pass; a screen-reader check was done by the author. Still to do: keyboard-only and non-specialist tests, and opening the `.pbix` on a clean Windows profile. Where the project stands:
 [`docs/HANDOFF.md`](docs/HANDOFF.md). Plan and exit checks: [`docs/PLAN.md`](docs/PLAN.md). One-page case study:
 [`docs/case-study.md`](docs/case-study.md).
 
@@ -145,8 +145,8 @@ Scripts query the live model and compare it with a separate re-implementation of
   fixed numbers in the page text, and speed (each visual's query on the heavy pages under 2 seconds; slowest 0.63 s).
 
 All pass on the release build (`reports/phase4_validation.json`, `reports/phase6_validation.json`). The
-re-implementation was written by the same author, so it mainly catches slips. Not yet done: hover cards, keyboard and
-screen-reader use, and a test with a non-specialist.
+re-implementation was written by the same author, so it mainly catches slips. Hover cards were checked by hand and on the demo video, and a
+screen-reader check was done by the author (21 Nov 2026). Not yet done: keyboard-only use and a test with a non-specialist.
 
 Decisions and their reasons: [`registers/decision-log.md`](registers/decision-log.md). Open questions:
 [`registers/open-questions.md`](registers/open-questions.md).

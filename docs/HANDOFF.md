@@ -230,7 +230,8 @@ tile maps showed the default "Row / Column / Code" tooltip, not the state card. 
 need page `type: "Tooltip"` + unique binding names; hover cards now the new card with blanks hidden), QA 18/18
 re-run, release `.pbix` re-saved by UI automation and replaced on the draft release. Re-recording the video then found
 the simulator's rule slider never applied 24: now a 25/24 dropdown (QA 18/18 again), release `.pbix` re-saved, video
-re-recorded (3:41) with square hovers, turnout and rule 24.
+re-recorded (3:41) with square hovers, turnout and rule 24. Screen reader checked by the author; **v1.0.0 published**
+(user decision, 21 Nov 2026). Open: keyboard-only and non-specialist tests, clean-profile test.
 
 ## Open items needing a person
 - Hover tooltips, keyboard-only path, screen reader (Narrator) in Desktop.
