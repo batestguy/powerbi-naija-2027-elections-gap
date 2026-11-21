@@ -5,12 +5,17 @@
     "x": 222,
     "y": 626,
     "z": 24,
-    "height": 82,
+    "height": 48,
     "width": 200,
     "tabOrder": 24
   },
   "visual": {
     "visualType": "slicer",
+    "syncGroup": {
+      "groupName": "param_rule",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "query": {
       "queryState": {
         "Values": {
@@ -40,27 +45,27 @@
             "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "'Single'"
-                }
-              }
-            },
-            "numericStart": {
-              "expr": {
-                "Literal": {
-                  "Value": "25D"
+                  "Value": "'Dropdown'"
                 }
               }
             }
           }
         }
       ],
-      "slider": [
+      "selection": [
         {
           "properties": {
-            "show": {
+            "strictSingleSelect": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "selectAllCheckboxEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -95,7 +100,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "p",
+                    "Name": "d",
                     "Entity": "param_rule",
                     "Type": 0
                   }
@@ -103,23 +108,28 @@
                 "Where": [
                   {
                     "Condition": {
-                      "Comparison": {
-                        "ComparisonKind": 0,
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "p"
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "d"
+                                }
+                              },
+                              "Property": "Value"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "25L"
                               }
-                            },
-                            "Property": "Value"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "25L"
-                          }
-                        }
+                            }
+                          ]
+                        ]
                       }
                     }
                   }
@@ -150,7 +160,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Slider: How many states must they win? (25 or 24). Starts at 25.'"
+                  "Value": "'Dropdown: How many states must they win? (25 or 24). Starts at 25.'"
                 }
               }
             }

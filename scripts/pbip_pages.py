@@ -280,7 +280,8 @@ def choice_slicer(name, x, y, w, h, table, header, preset, sync, alt, column="ch
                          "Version": 2, "From": [{"Name": "d", "Entity": table, "Type": 0}],
                          "Where": [{"Condition": {"In": {
                              "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": column}}],
-                             "Values": [[{"Literal": {"Value": "'" + preset.replace("'", "''") + "'"}}]]}}}]}}}}]},
+                             "Values": [[{"Literal": {"Value": f"{preset}L" if isinstance(preset, int)
+                                                      else "'" + preset.replace("'", "''") + "'"}}]]}}}]}}}}]},
          "visualContainerObjects": vco(None, alt)}
     c = container(name, x, y, w, h, v)
     if hidden:
@@ -657,8 +658,13 @@ def page_sim(pid):
         v.append(textbox(sid(pid, key, "label"), x + 4, y, 196, 40,
                          [([(question, INK, True), (f" ({hint})", MUTED, False)], 9, False, INK)],
                          alt=f"Slider label: {label}"))
-        v.append(param_slicer(sid(pid, key), x, y + 40, 200, 82, table, label,
-                              25 if table == "param_rule" else defaults.get(table, 0), integer))
+        if table == "param_rule":
+            # A slider over only two values (24, 25) did nothing in Desktop: typing 24 or dragging left the result at
+            # "25 needed" (found recording the demo, 2026-11-21). A two-choice dropdown sets the value exactly.
+            v.append(choice_slicer(sid(pid, key), x, y + 40, 200, 48, table, label, 25, table,
+                                   f"Dropdown: {label}. Starts at 25.", column="Value", show_header=False))
+            continue
+        v.append(param_slicer(sid(pid, key), x, y + 40, 200, 82, table, label, defaults.get(table, 0), integer))
     # Coalition switch (user decision 2026-11-16) where the 24-or-25 note was (that note stays on Path to 24, How to
     # read this and Technical notes). Default Off = today's engine; PBIP_COALITION_ON=1 builds a test variant set to On.
     cx0, cy0 = sx + 206, 86 + 4 * 125

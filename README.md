@@ -13,9 +13,9 @@ report uses 25 (two-thirds of 37, rounded up) and lets you switch to 24.
 
 [![Demo video: every page, hover, slider and coalition, recorded live in Power BI Desktop](docs/demo/cover.jpg)](docs/demo/naija_demo.mp4)
 
-▶ **[Watch the 3:14 demo](docs/demo/naija_demo.mp4)**: every page, with real hovers, the candidate picker, the
-sliders, the coalition switch and a 2 v 2 head to head, recorded live in Power BI Desktop. Music: *Darkness* by The
-Police.
+▶ **[Watch the 3:41 demo](docs/demo/naija_demo.mp4)**: every page, recorded live in Power BI Desktop: hovers on the
+charts, maps and squares, the candidate picker, swing and turnout sliders, the 25-or-24 rule, the coalition switch, the
+follow rate and a 2 v 2 head to head. Music: *Darkness* by The Police.
 
 ![What-if simulator page](docs/img/simulator.png)
 

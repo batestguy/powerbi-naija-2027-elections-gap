@@ -424,7 +424,10 @@ def main():
         try:
             cond = q["objects"]["general"][0]["properties"]["filter"]["filter"]["Where"][0]["Condition"]
             tbl = q["query"]["queryState"]["Values"]["projections"][0]["field"]["Column"]["Expression"]["SourceRef"]["Entity"]
-            saved[tbl] = cond["Comparison"]["Right"]["Literal"]["Value"]
+            if not tbl.startswith("param_"):    # coalition switch and pickers are checked in 6b
+                continue
+            saved[tbl] = (cond["In"]["Values"][0][0]["Literal"]["Value"] if "In" in cond      # rule: 25/24 dropdown
+                          else cond["Comparison"]["Right"]["Literal"]["Value"])
         except (KeyError, IndexError, TypeError):
             continue
     follow = {t: saved.pop(t) for t in [t for t in saved if t.startswith("param_follow_")]}   # coalition (hidden, synced)

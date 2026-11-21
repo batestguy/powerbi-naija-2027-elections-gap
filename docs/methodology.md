@@ -188,7 +188,7 @@ Because `F` is a whole percentage, multiplying by 100 makes every quantity a who
 Same s.134 reading as "Rivals and the verdict", with **Side A as the candidate**. Rival entities = Side B (one entity,
 identified by its lead's code; shown as "lead+partner" if it has a partner, e.g. "PDP+APC") and each main party not used
 on either side. OTHERS is never a rival winner. Leading rival = the rival entity with the most national votes (ties by
-code). `N` = the rule slider's value (25 when the page has no rule slider, as on both coalition pages and Path to 25; 24 before 2026-11-20).
+code). `N` = the rule choice on the simulator (a 25/24 dropdown since 2026-11-21; it was a slider that Desktop did not apply) (25 when the page has no rule choice, as on both coalition pages and Path to 25; 24 before 2026-11-20).
 Outright win / run-off / tie / loses — the same five outcomes and the same tests as above, using whole-number counts
 of states at 25%+ for Side A and for the leading rival. The Merge page has no verdict (it compares the coalition with
 its lead alone).
