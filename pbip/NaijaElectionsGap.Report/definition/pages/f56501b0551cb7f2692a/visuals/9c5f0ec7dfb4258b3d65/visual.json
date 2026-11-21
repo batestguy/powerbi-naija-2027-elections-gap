@@ -1,20 +1,50 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "7225f8bf56ee5725aa0f",
+  "name": "9c5f0ec7dfb4258b3d65",
   "position": {
-    "x": 208,
+    "x": 8,
     "y": 52,
-    "z": 3,
+    "z": 1,
     "height": 90,
-    "width": 104,
-    "tabOrder": 3
+    "width": 304,
+    "tabOrder": 1
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Values": {
+        "Data": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "scenario"
+                    }
+                  },
+                  "Property": "Side A share (head to head)"
+                }
+              },
+              "queryRef": "scenario.Side A share (head to head)",
+              "nativeQueryRef": "Side A share (head to head)",
+              "displayName": "Side A"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "scenario"
+                    }
+                  },
+                  "Property": "Side B share (head to head)"
+                }
+              },
+              "queryRef": "scenario.Side B share (head to head)",
+              "nativeQueryRef": "Side B share (head to head)",
+              "displayName": "Side B"
+            },
             {
               "field": {
                 "Measure": {
@@ -27,45 +57,77 @@
                 }
               },
               "queryRef": "scenario.Who leads (head to head)",
-              "nativeQueryRef": "Who leads (head to head)"
+              "nativeQueryRef": "Who leads (head to head)",
+              "displayName": "Who leads"
             }
           ]
         }
       }
     },
     "objects": {
-      "labels": [
+      "value": [
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "12D"
                 }
               }
             },
-            "fontFamily": {
+            "showBlankAs": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1F1F1F'"
-                    }
-                  }
+                  "Value": "' '"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "categoryLabels": [
+      "label": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
         {
           "properties": {
             "show": {
@@ -78,66 +140,13 @@
           }
         }
       ],
-      "wordWrap": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Who leads'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#505050'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Who has the most votes in this state.'"
+                  "Value": "'Side A''s share, Side B''s share and who has the most votes in this state.'"
                 }
               }
             }

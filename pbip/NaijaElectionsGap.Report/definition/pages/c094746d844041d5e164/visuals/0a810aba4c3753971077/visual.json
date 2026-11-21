@@ -10,10 +10,10 @@
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Values": {
+        "Data": {
           "projections": [
             {
               "field": {
@@ -27,16 +27,31 @@
                 }
               },
               "queryRef": "scenario.State name",
-              "nativeQueryRef": "State name"
+              "nativeQueryRef": "State name",
+              "displayName": "State"
             }
           ]
         }
       }
     },
     "objects": {
-      "labels": [
+      "value": [
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {
@@ -44,30 +59,36 @@
                 }
               }
             },
-            "fontFamily": {
+            "showBlankAs": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1F1F1F'"
-                    }
-                  }
+                  "Value": "' '"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "categoryLabels": [
+      "label": [
         {
           "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
             "show": {
               "expr": {
                 "Literal": {
@@ -75,19 +96,9 @@
                 }
               }
             }
-          }
-        }
-      ],
-      "wordWrap": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ]

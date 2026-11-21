@@ -1,20 +1,35 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "58904c82f711e689995d",
+  "name": "fd37517e2adc0ba0fc13",
   "position": {
-    "x": 162,
+    "x": 8,
     "y": 52,
-    "z": 2,
+    "z": 1,
     "height": 90,
-    "width": 150,
-    "tabOrder": 2
+    "width": 304,
+    "tabOrder": 1
   },
   "visual": {
-    "visualType": "card",
+    "visualType": "cardVisual",
     "query": {
       "queryState": {
-        "Values": {
+        "Data": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "scenario"
+                    }
+                  },
+                  "Property": "Scenario share"
+                }
+              },
+              "queryRef": "scenario.Scenario share",
+              "nativeQueryRef": "Scenario share",
+              "displayName": "Share of the vote"
+            },
             {
               "field": {
                 "Measure": {
@@ -27,45 +42,77 @@
                 }
               },
               "queryRef": "scenario.Scenario label",
-              "nativeQueryRef": "Scenario label"
+              "nativeQueryRef": "Scenario label",
+              "displayName": "Status"
             }
           ]
         }
       }
     },
     "objects": {
-      "labels": [
+      "value": [
         {
           "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "14D"
                 }
               }
             },
-            "fontFamily": {
+            "showBlankAs": {
               "expr": {
                 "Literal": {
-                  "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1F1F1F'"
-                    }
-                  }
+                  "Value": "' '"
                 }
               }
             }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
-      "categoryLabels": [
+      "label": [
+        {
+          "properties": {
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
         {
           "properties": {
             "show": {
@@ -78,66 +125,13 @@
           }
         }
       ],
-      "wordWrap": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Status'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#505050'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Whether the state is won, within reach or out of reach under the current settings.'"
+                  "Value": "'The candidate''s share of the vote in this state under the current settings, and whether the state is won, within reach or out of reach.'"
                 }
               }
             }

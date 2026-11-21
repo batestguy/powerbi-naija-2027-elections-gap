@@ -8,38 +8,19 @@
   "visualInteractions": [
     {
       "source": "0a810aba4c3753971077",
-      "target": "30c9287c4bdedd28f20a",
+      "target": "fd37517e2adc0ba0fc13",
       "type": "NoFilter"
     },
     {
-      "source": "0a810aba4c3753971077",
-      "target": "58904c82f711e689995d",
-      "type": "NoFilter"
-    },
-    {
-      "source": "30c9287c4bdedd28f20a",
+      "source": "fd37517e2adc0ba0fc13",
       "target": "0a810aba4c3753971077",
-      "type": "NoFilter"
-    },
-    {
-      "source": "30c9287c4bdedd28f20a",
-      "target": "58904c82f711e689995d",
-      "type": "NoFilter"
-    },
-    {
-      "source": "58904c82f711e689995d",
-      "target": "0a810aba4c3753971077",
-      "type": "NoFilter"
-    },
-    {
-      "source": "58904c82f711e689995d",
-      "target": "30c9287c4bdedd28f20a",
       "type": "NoFilter"
     }
   ],
   "visibility": "HiddenInViewMode",
+  "type": "Tooltip",
   "pageBinding": {
-    "name": "Pod",
+    "name": "tooltip_c094746d844041d5e164",
     "type": "Tooltip",
     "parameters": []
   }

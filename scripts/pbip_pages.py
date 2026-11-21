@@ -889,17 +889,26 @@ def page_h2h(pid):
     return "Head to head", v
 
 
+def tip_cards(name, x, y, w, h, measures, alt, value_pt, show_label=True):
+    """Hover-page card (new card visual): a blank value shows as nothing, so hovering an empty square of a tile map
+    shows an empty card instead of "(Blank)" (the classic card has no such option; demo recording 2026-11-21)."""
+    c = cards(name, x, y, w, h, measures, None, alt, value_pt=value_pt, label_pt=9, accent=False)
+    o = c["visual"]["objects"]
+    o["value"][0]["properties"]["showBlankAs"] = s(" ")
+    if not show_label:
+        o["label"][0]["properties"]["show"] = lit("false")
+    return c
+
+
 def page_h2htip(pid):
     """Hover card for the head-to-head tile map: the state's name, both sides' shares and who leads."""
     return "Head to head state (tooltip)", [
-        classic_card(sid(pid, "name"), 8, 6, TIP_W - 16, 44, "State name", None, "Name of the state under the pointer.", 14,
-                     accent=False),
-        classic_card(sid(pid, "a"), 8, 52, 96, 90, "Side A share (head to head)", "Side A", "Side A's share in this state.",
-                     12, accent=False),
-        classic_card(sid(pid, "b"), 108, 52, 96, 90, "Side B share (head to head)", "Side B", "Side B's share in this state.",
-                     12, accent=False),
-        classic_card(sid(pid, "lead"), 208, 52, TIP_W - 216, 90, "Who leads (head to head)", "Who leads",
-                     "Who has the most votes in this state.", 10, accent=False)]
+        tip_cards(sid(pid, "name"), 8, 6, TIP_W - 16, 44, [("scenario", "State name", "State")],
+                  "Name of the state under the pointer.", 14, show_label=False),
+        tip_cards(sid(pid, "sides"), 8, 52, TIP_W - 16, 90,
+                  [("scenario", "Side A share (head to head)", "Side A"), ("scenario", "Side B share (head to head)", "Side B"),
+                   ("scenario", "Who leads (head to head)", "Who leads")],
+                  "Side A's share, Side B's share and who has the most votes in this state.", 12)]
 
 
 HOW = [
@@ -1114,13 +1123,12 @@ TIP_W, TIP_H = 320, 150
 def page_tiletip(pid):
     """Hover card for the tile maps (a matrix has no tooltip fields): the state's full name, its share and status
     under the current settings. Hidden tooltip page; the hovered tile's row and column filter it to one state."""
-    v = [classic_card(sid(pid, "name"), 8, 6, TIP_W - 16, 44, "State name", None, "Name of the state under the pointer.", 14,
-                      accent=False),
-         classic_card(sid(pid, "share"), 8, 52, 150, 90, "Scenario share", "Share of the vote",
-                      "The candidate's share of the vote in this state under the current settings.", 14, accent=False),
-         classic_card(sid(pid, "label"), 162, 52, TIP_W - 170, 90, "Scenario label", "Status",
-                      "Whether the state is won, within reach or out of reach under the current settings.", 12,
-                      accent=False)]
+    v = [tip_cards(sid(pid, "name"), 8, 6, TIP_W - 16, 44, [("scenario", "State name", "State")],
+                   "Name of the state under the pointer.", 14, show_label=False),
+         tip_cards(sid(pid, "figures"), 8, 52, TIP_W - 16, 90,
+                   [("scenario", "Scenario share", "Share of the vote"), ("scenario", "Scenario label", "Status")],
+                   "The candidate's share of the vote in this state under the current settings, and whether the state is "
+                   "won, within reach or out of reach.", 14)]
     return "State on hover (tooltip)", v
 
 
@@ -1175,8 +1183,11 @@ def write_page(pages_dir, pid, display, visuals, write_json, hidden=False, toolt
     if hidden:
         page["visibility"] = "HiddenInViewMode"
     if tooltip:
-        page.update({"displayOption": "ActualSize", "width": TIP_W, "height": TIP_H,
-                     "pageBinding": {"name": "Pod", "type": "Tooltip", "parameters": []}})
+        # page "type": "Tooltip" is what makes Desktop offer the page as a hover card (page schema 2.1.0); the binding
+        # name must be unique across the report. Without both, hovering a tile showed the default Row/Column/Code box
+        # (found while recording the demo, 2026-11-21).
+        page.update({"displayOption": "ActualSize", "width": TIP_W, "height": TIP_H, "type": "Tooltip",
+                     "pageBinding": {"name": f"tooltip_{pid}", "type": "Tooltip", "parameters": []}})
     write_json(d / "page.json", page)
     for i, v in enumerate(visuals):
         v["position"]["tabOrder"] = i

@@ -226,8 +226,9 @@ the video link, and the release link once published.
 ## 2026-11-21: demo video recorded
 `docs/demo/naija_demo.mp4` (3:14; music *Darkness* by The Police, user's choice), recorded by driving Desktop with the
 mouse on a copy of the release `.pbix`; linked from README, case study and release notes. Found: hover on the two
-tile maps shows the default "Row / Column / Code" tooltip, not the state card (qa-log 2026-11-21). Fix next, then
-rebuild the release `.pbix`.
+tile maps showed the default "Row / Column / Code" tooltip, not the state card. **Fixed** the same day (tooltip pages
+need page `type: "Tooltip"` + unique binding names; hover cards now the new card with blanks hidden), QA 18/18
+re-run, release `.pbix` re-saved by UI automation and replaced on the draft release (sha256 ff7ce6fa...).
 
 ## Open items needing a person
 - Hover tooltips, keyboard-only path, screen reader (Narrator) in Desktop.
