@@ -1,0 +1,20 @@
+  [PASS] refresh from a clean cache: no saved data cache on disk, model refreshed from the source CSVs
+  [PASS] validate_phase3.py passes on the current build
+  [PASS] validate_phase4.py passes on the current build
+  [PASS] national candidate totals = each independent copy within 20 votes
+  [PASS] embedded map files = built files, and every map key and name matches the model (both maps, 0 unmatched)
+  [PASS] simulator sliders saved at neutral values (all swings 0, turnout 0, rule 25)
+  [PASS] overview = simulator at saved slider values: 37 unit shares and labels, national share, units at 25%
+  [PASS] every visual on visible pages has alt text and a unique tab position
+  [PASS] every map (incl. the hidden check page) is located by state name; no P-code in any map field (hover shows names; rendering of the hover itself not checked)
+  [PASS] state codes: 37 unique two-letter ISO 3166-2:NG codes in the model, each = the sourced reference file; every state has a tile position
+  [PASS] sentences and votes needed / to spare = independent exact computation from staging
+  [PASS] result sentence and settings sentence = Phase 4 reference for every candidate at several settings
+  [PASS] candidate identity: portrait = built file, party now = dated source file, party-colour text contrast >= 4.5:1
+  [PASS] fixed 2023 numbers in page text (4,858; Kano figures; 29 states / Adamawa margin) = staging, and the Kano dispute changes no candidate's quarter there
+  [PASS] photos: embedded = built (sha256), licence CC0/CC BY/CC BY-SA/PD, <= 250 KB each and <= 2 MB total; one per visible page except the two coalition pages (none, by design: no room beside their pickers), decorative alt text, last in tab order (before its caption)
+  [PASS] coalition names: every real row has publisher, URL and date; model name table = CSV; real ticket's date on the pages = CSV
+  [PASS] coalition pickers, follow sliders and switch saved at the preset (Obi (LP) + Kwankwaso (NNPP), 100%, vs Tinubu (APC) alone; switch Off), in matching sync groups on the coalition pages and the simulator
+  [PASS] engine time per heavy page query (one query per visual, as Desktop sends them) under 2.0 s with an empty cache (non-neutral sliders; rendering not included)
+
+  gate PASSED: {'checks': 18, 'pass': 18, 'fail': 0}
