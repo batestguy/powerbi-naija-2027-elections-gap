@@ -11,10 +11,15 @@ count of states at a quarter change.
 The 2023 election courts treated Abuja like a 37th state but did not say whether that means 24 or 25 states. The
 report uses 25 (two-thirds of 37, rounded up) and lets you switch to 24.
 
+[![Demo video: every page, hover, slider and coalition, recorded live in Power BI Desktop](docs/demo/cover.jpg)](docs/demo/naija_demo.mp4)
+
+▶ **[Watch the 3:14 demo](docs/demo/naija_demo.mp4)**: every page, with real hovers, the candidate picker, the
+sliders, the coalition switch and a 2 v 2 head to head, recorded live in Power BI Desktop. Music: *Darkness* by The
+Police.
+
 ![What-if simulator page](docs/img/simulator.png)
 
-**Status:** built; scripted checks pass. Still to do: person checks (keyboard, screen reader, a non-specialist test) and
-the walkthrough video. First release in preparation (see [Releases](../../releases)). Where the project stands:
+**Status:** built; scripted checks pass. Still to do: person checks (keyboard, screen reader, a non-specialist test). First release in preparation (see [Releases](../../releases)). Where the project stands:
 [`docs/HANDOFF.md`](docs/HANDOFF.md). Plan and exit checks: [`docs/PLAN.md`](docs/PLAN.md). One-page case study:
 [`docs/case-study.md`](docs/case-study.md).
 
@@ -91,7 +96,7 @@ Needs Power BI Desktop (free, Windows). Built and tested with the Microsoft Stor
   elsewhere, unzip the release's data vintage and point the `DataFolder` parameter (Transform data > Edit parameters)
   at its `staging` folder.
 - **From source:** open `pbip/NaijaElectionsGap.pbip` (Power BI project).
-- **No Windows?** The screenshots above and the walkthrough video (link to come) show every page.
+- **No Windows?** The screenshots above and the [demo video](docs/demo/naija_demo.mp4) show every page.
 
 ## Tools used
 | Tool | Version | What it does here |

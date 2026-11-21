@@ -2,7 +2,7 @@
 
 **Deliverable:** a free Power BI Desktop what-if report, built from scripts so anyone can rebuild it. **Release:**
 [v1.0.0](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases) (`.pbix` + frozen data vintage
-2026-11-20). **Walkthrough video:** link to be added.
+2026-11-20). **Walkthrough video:** [`docs/demo/naija_demo.mp4`](demo/naija_demo.mp4) (3:14).
 
 ## The question
 To win outright, a Nigerian presidential candidate needs the most votes nationwide **and** at least a quarter of the

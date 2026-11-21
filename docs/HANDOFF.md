@@ -223,6 +223,12 @@ Superseded notes from 2026-11-16 (kept for the record):
 registers. Numbers taken from `reports/phase6_validation.json` and `reports/result_reconciliation.csv`. Still to add:
 the video link, and the release link once published.
 
+## 2026-11-21: demo video recorded
+`docs/demo/naija_demo.mp4` (3:14; music *Darkness* by The Police, user's choice), recorded by driving Desktop with the
+mouse on a copy of the release `.pbix`; linked from README, case study and release notes. Found: hover on the two
+tile maps shows the default "Row / Column / Code" tooltip, not the state card (qa-log 2026-11-21). Fix next, then
+rebuild the release `.pbix`.
+
 ## Open items needing a person
 - Hover tooltips, keyboard-only path, screen reader (Narrator) in Desktop.
 - Non-specialist completes the core task unaided (Phase 5 exit test).

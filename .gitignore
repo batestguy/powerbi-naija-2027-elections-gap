@@ -24,3 +24,5 @@ release/
 
 # run logs with local paths in tracebacks
 reports/*.log
+# local music source for the demo video (not redistributed)
+*.aac
