@@ -19,9 +19,9 @@ Status key: `todo` · `doing` · `done` · `blocked`
 | 3 | Model design (thin slice first) | done | One state works end-to-end in Desktop; then full model diagram + rationale |
 | 4 | Scenario engine | done | Methodology note reproduces results by hand; extreme-slider tests pass |
 | 5 | Report pages | done (person test pending) | A non-specialist completes the core task unaided |
-| 6 | QA | doing (scripted 18/18 on the release build b8c662f; person checks open) | `registers/qa-log.md` all pass, or each failure has a resolution |
-| 7 | Release + docs | in progress (draft release v1.0.0; video, clean-profile test, publish open) | Release `.pbix` opens on a clean profile; video linked; methodology and limits reachable from inside the report |
-| 8 | Case study | drafted (`docs/case-study.md`; video link to add) | One-page case study + release + video links |
+| 6 | QA | done for v1.0.0 (scripted 18/18 2026-11-21; screen reader by the user); keyboard + non-specialist tests open | `registers/qa-log.md` all pass, or each failure has a resolution |
+| 7 | Release + docs | done: v1.0.0 published 2026-11-21, video linked (clean-profile test open) | Release `.pbix` opens on a clean profile; video linked; methodology and limits reachable from inside the report |
+| 8 | Case study | done (`docs/case-study.md`) | One-page case study + release + video links |
 
 ---
 

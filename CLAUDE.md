@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## State of the project
-Phases 0–6 built; see `docs/HANDOFF.md` for the current stage. `details.txt` is the original agent brief: treat it as directional — adapt where evidence points elsewhere and log why.
+Phases 0–8 done; v1.0.0 published 2026-11-21. Start with the "START HERE" section of `docs/HANDOFF.md`. `details.txt` is the original agent brief: treat it as directional — adapt where evidence points elsewhere and log why.
 
 ## What this is
 A free-tier Power BI report: a candidate's 2023 baseline across Nigeria's 774 LGAs (37 states incl. FCT), 2027 scenarios via swing + turnout sliders, and a live "States Secured" count against the 25%-in-24-states (two-thirds of states) rule. Four pages: Candidate Overview, LGA Vulnerability Map, Scenario Simulator, State-by-State Path — plus "How to read this" and "Data Sources" pages. It is a scenario/communication tool, not an electoral authority.

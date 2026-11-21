@@ -1,17 +1,50 @@
 # Handoff — where the project is
 
-Updated: 2026-11-20. Update this file in every stage commit.
+Updated: 2026-11-21. Update this file in every stage commit.
+
+## START HERE (2026-11-21, after v1.0.0 was published)
+**Released:** v1.0.0 is public: https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/tag/v1.0.0
+(published 2026-11-21 04:17 UTC, user decision; target commit 1a90eb8). Assets: `NaijaElectionsGap.pbix` (1,106,455
+bytes, sha256 c34043e8...), `naija-elections-data-2026-11-20.zip` (sha256 5cd8035f...), `SHA256SUMS`. An anonymous
+download was checked and its sha256 matches. Release notes source: `release/NOTES.md` (release/ is gitignored).
+
+**Last checks on the release build:** Phase 6 QA 18/18 (2026-11-21, `reports/phase6_validation.json`, slowest
+0.649 s); Phase 4 92/92 (2026-11-20, reused by build stamp; the model has not changed since). Screen reader checked by
+the user (qa-log 2026-11-21). Hover cards checked by hand and on the video.
+
+**Fixed on 2026-11-21 (found while recording the demo):**
+1. Tile-map hover cards showed the default "Row / Column / Code" box: tooltip pages now carry page `type: "Tooltip"` and
+   unique `pageBinding` names; the hover cards use the new card visual with blanks shown as nothing.
+2. The simulator's 25-or-24 rule slider never applied 24 in Desktop: it is now a 25/24 dropdown.
+   `validate_phase6.py` reads the dropdown. Phase 4 could not see this because it sets the rule in DAX.
+
+**Demo video:** `docs/demo/naija_demo.mp4` (3:41, 1344x808, about 12 MB, linked from README, case study and release
+notes). Music: *Darkness* by The Police (user's choice; copyright takedown risk accepted; the local `.aac` in the repo
+root is gitignored and not redistributed). It was recorded by driving Desktop with the real mouse. The scripts were
+throwaway and live only in the session scratchpad (`ui.ps1`, `record2.ps1`, `post.py`). To re-record, rebuild them:
+open a copy of the release `.pbix`, collapse the Data, Visualizations and Filters panes, then capture with ffmpeg
+gdigrab (region 1344x808 at the canvas plus page tabs). Log a caption mark per action, then add a cover card, green
+caption pills (bottom right, shown 1.2 s before each mark), an end card and the music.
+
+**Open (person tasks):** a keyboard-only test, a non-specialist test, and opening the `.pbix` on a clean Windows
+profile. A fix found by any of these ships as v1.0.1: re-save the `.pbix` via UI automation (File > Save as > Browse
+this device > type "Power BI file (*.pbix)" > path), upload with `gh release upload --clobber`, and refresh
+`release/SHA256SUMS`. The data vintage stays frozen.
+
+**Optional:** an outside (non-Claude) reviewer; ask Mundx for permission (LGA layer); an INEC FOI request for the
+EC8D state sheets.
+
 
 ## Phase status (see `docs/PLAN.md`)
 | Phase | State | Last commit |
 |---|---|---|
 | 0–4 Environment, sources, data, model, scenario engine | done | 44ca968 |
 | 5 Report pages | done; non-specialist test still needs a person | 9813cbc |
-| 6 QA | scripted checks 15/15 pass after redesign (`scripts/validate_phase6.py`); manual checks open | 8f6e407 |
+| 6 QA | scripted 18/18 on the release build (2026-11-21); screen reader checked by the user; keyboard + non-specialist tests open | 1a90eb8 |
 | 5b Redesign (user review round) | done; reviewed; "Try these" buttons not built (open question 18) | 619c068 |
 | 5c Merge parties + head to head | built; open question 22 line built 2026-11-20; full checks on the final build 2026-11-20: Phase 4 92/92, Phase 6 18/18 (after the Head to head speed query was split per visual) | see git log |
-| 7 Release + docs | in progress: draft release v1.0.0 on GitHub (pbix + data vintage 2026-11-20 + SHA256SUMS); README, LICENSE (MIT), independent review + fixes done; video, person checks, publishing: open | b8c662f |
-| 8 Case study | todo | — |
+| 7 Release + docs | **done: v1.0.0 published 2026-11-21**; demo video linked; clean-profile test still open | 1a90eb8 |
+| 8 Case study | done: `docs/case-study.md` (links release, video, registers) | e212fb4 |
 
 ## Overall progress (estimate, 2026-11-19)
 About 75–80% of the whole project by effort (a judgement, not a measurement). Built: data, model, scenario engine,
