@@ -8,7 +8,7 @@ Updated: 2026-11-25. Update this file in every stage commit.
 
 **Public HTML download:** `downloads/NaijaElectionsGap.html` is the silent build, published as `NaijaElectionsGap.html` alongside the v1.0.0 assets. Rebuild the tracked copy with `--output downloads/NaijaElectionsGap.html` and use the same flag with `--check` to compare bytes.
 
-**Local soundtrack:** Add `--kush-soundtrack "Let's Live Together by Kush- Listen on Audiomack.m4a"` when building or checking the music edition. Sound starts off. The toggle plays and pauses the loop across report tabs, and Data sources carries the recording credit. Brave passed offline playback, loop, keyboard toggle, and simulated phone touch checks. The command without the soundtrack flag builds the silent edition.
+**Soundtrack download:** The owner confirmed permission to redistribute the recording. `NaijaElectionsGap-with-music.html` is a separate v1.0.0 release asset. Add `--kush-soundtrack "Let's Live Together by Kush- Listen on Audiomack.m4a"` when building or checking this edition. Sound starts off. The toggle plays and pauses the loop across report tabs, and Data sources carries the recording credit. Brave passed offline playback, loop, keyboard toggle, and simulated phone touch checks. The command without the soundtrack flag builds the silent edition.
 
 **Released:** v1.0.0 is public: https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/tag/v1.0.0
 (published 2026-11-21 04:17 UTC, user decision; target commit 1a90eb8). Assets: `NaijaElectionsGap.pbix` (1,106,455
