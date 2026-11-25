@@ -92,20 +92,21 @@ for Obi alone.
 
 ### Offline HTML in a browser
 
-The single-file HTML edition has all nine report tabs, maps, and working what-if and coalition controls. Open
-`release/NaijaElectionsGap.html` in Brave, Chrome, or Edge after building it. It runs offline and requires no Power BI
-installation or account. On a phone, landscape gives you more room. The desktop layout scrolls sideways on narrow screens.
+**[Download NaijaElectionsGap.html](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.0.0/NaijaElectionsGap.html)** (1.5 MB).
+Open the file in Brave, Chrome, or Edge. It has all nine report tabs, maps, and working what-if and coalition controls.
+It runs offline and requires no Power BI installation or account. On a phone, landscape gives you more room. The desktop
+layout scrolls sideways on narrow screens.
 
-To build it, download the [frozen 2023 data ZIP](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.0.0/naija-elections-data-2026-11-20.zip)
+To rebuild it, download the [frozen 2023 data ZIP](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.0.0/naija-elections-data-2026-11-20.zip)
 from the v1.0.0 release and place it in `release/` without extracting it. From the repository root, run with Python 3.12:
 
 ```sh
 python -I scripts/build_offline_elections.py --data-vintage release/naija-elections-data-2026-11-20.zip
 ```
 
-**Optional local soundtrack.** If you have a local copy of the recording, add `--kush-soundtrack "path/to/track.m4a"`
-to the build command. The **Sound off** button starts the loop, and **Sound on** pauses it. The song continues across
-tabs. The audio file and the music edition are local assets. The Data sources tab credits “Let’s Live Together” by
+**Optional local soundtrack.** The public download is silent. If you have a local copy of the recording, add
+`--kush-soundtrack "path/to/track.m4a"` to the build command. The **Sound off** button starts the loop, and **Sound on**
+pauses it. The song continues across tabs. The Data sources tab credits “Let’s Live Together” by
 Kush, from *The Experience*, ℗ 2003 DKG Music, Inc. [Recording credit](https://www.youtube.com/watch?v=kL2s76KoNCo)
 
 ### Power BI Desktop on Windows

@@ -6,6 +6,8 @@ Updated: 2026-11-25. Update this file in every stage commit.
 
 **Offline HTML (2026-11-25):** `release/NaijaElectionsGap.html` is a standalone browser copy of the nine visible report pages, built from the frozen 2026-11-20 data and the saved report layout and controls. Rebuild with `uv run python -I scripts/build_offline_elections.py --data-vintage release/naija-elections-data-2026-11-20.zip`. Add `--check` to verify a byte-identical build. The calculation port matched 125,125 comparisons against the reference. Chrome and Edge opened the file offline and passed page, map, keyboard, slider, and coalition checks with zero network requests. The HTML is a local release artifact.
 
+**Public HTML download:** `downloads/NaijaElectionsGap.html` is the silent build, published as `NaijaElectionsGap.html` alongside the v1.0.0 assets. Rebuild the tracked copy with `--output downloads/NaijaElectionsGap.html` and use the same flag with `--check` to compare bytes.
+
 **Local soundtrack:** Add `--kush-soundtrack "Let's Live Together by Kush- Listen on Audiomack.m4a"` when building or checking the music edition. Sound starts off. The toggle plays and pauses the loop across report tabs, and Data sources carries the recording credit. Brave passed offline playback, loop, keyboard toggle, and simulated phone touch checks. The command without the soundtrack flag builds the silent edition.
 
 **Released:** v1.0.0 is public: https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/tag/v1.0.0
