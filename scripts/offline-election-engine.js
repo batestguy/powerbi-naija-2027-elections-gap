@@ -14,12 +14,12 @@ globalThis.ElectionEngine = (() => {
     candidate: 'APC', turnout: 0, nationalSwing: 0,
     zoneSwings: Object.freeze({NC: 0, NE: 0, NW: 0, SE: 0, SS: 0, SW: 0}),
     rule: 25, coalition: false, leadA: 'LP', partnerA: 'NNPP', followA: 100,
-    leadB: 'APC', partnerB: 'NONE', followB: 100, zone: '', state: '',
+    leadB: 'APC', partnerB: 'NONE', followB: 100, comebackA: 100, comebackB: 100, zone: '', state: '',
   });
   const swingRange = Object.freeze({min: -20, max: 20, step: 0.5});
   const ranges = Object.freeze({
     turnout: Object.freeze({min: -50, max: 50, step: 1}), nationalSwing: swingRange, zoneSwing: swingRange,
-    follow: Object.freeze({min: 0, max: 100, step: 5}), rule: Object.freeze([25, 24]),
+    follow: Object.freeze({min: 0, max: 100, step: 5}), comeback: Object.freeze({min: 0, max: 100, step: 5}), rule: Object.freeze([25, 24]),
   });
   const status = Object.freeze({secured: 'Secured', within: 'Within reach', out: 'Out of reach'});
   const scenarioMargin = 1e-12;
@@ -69,8 +69,9 @@ globalThis.ElectionEngine = (() => {
     };
   }
 
-  function coalitionMessage(lead, partner, follow, names, info) {
-    if (partner === 'NONE') return `${info.name} alone, with all of their 2023 votes.`;
+  function coalitionMessage(lead, partner, follow, names, info, comeback = 100) {
+    if (partner === 'NONE') return comeback === 100 ? `${info.name} alone, with all of their 2023 votes.`
+      : `${info.name} alone, ${comeback}% of their 2023 voters come back; the rest stay home.`;
     const description = info.real ? `A real joint ticket (${info.source}).` : 'A what-if pairing: no such joint ticket exists.';
     return `${info.name}: ${partyLabel(lead, names)} leads, ${partyLabel(partner, names)} is the partner. ${description} ${follow}% of ${names[partner]}'s 2023 voters follow.`;
   }
@@ -94,14 +95,27 @@ globalThis.ElectionEngine = (() => {
       validA: !errorA, validBoth: !errorA && !errorB, error: errorA || errorB,
       nameA: infoA?.name ?? null, nameB: errorA ? null : (infoB?.name ?? null),
       messageA: errorA || coalitionMessage(leadA, partnerA, followA, names, infoA),
-      messageB: errorB || coalitionMessage(leadB, partnerB, followB, names, infoB),
+      messageB: errorB || coalitionMessage(leadB, partnerB, followB, names, infoB, s.comebackB),
     };
   }
 
-  function entities(s, useCoalition, names, selected) {
+  // v1.1: the simulator names its rival under the candidate's party today (party_now.csv; rename only)
+  function nowLabel(code, names, now) {
+    const r = now?.find(row => row.party_2023 === code);
+    if (!r || r.party_now === code) return partyLabel(code, names);
+    return `${r.candidate} — ${r.party_now} now${r.role ? `, ${r.role}` : ''} (${code} in 2023${r.note_short ? `; ${r.note_short}` : ''})`;
+  }
+
+  function nowShort(code, now) {
+    const r = now?.find(row => row.party_2023 === code);
+    if (!r) return code;
+    return `${r.candidate.split(' ').at(-1)} (${r.party_now})`;   // card label says "party now"
+  }
+
+  function entities(s, useCoalition, names, selected, now = null) {
     const used = useCoalition ? [s.leadA, s.partnerA, s.leadB, s.partnerB] : [s.candidate];
     const rivals = parties.filter(party => !used.includes(party))
-      .map(code => ({code, label: code, name: partyLabel(code, names)}));
+      .map(code => ({code, label: code, name: now ? nowLabel(code, names, now) : partyLabel(code, names)}));
     if (useCoalition) rivals.push({
       code: s.leadB, label: s.partnerB === 'NONE' ? s.leadB : `${s.leadB}+${s.partnerB}`,
       name: selected.nameB,
@@ -109,7 +123,10 @@ globalThis.ElectionEngine = (() => {
     return rivals;
   }
 
-  function coalitionVotes(row, s, both) {
+  // comeback (v1.1, Head to head only): % of each lead party's 2023 voters who vote for that side again
+  function coalitionVotes(row, s, both, comeback = false) {
+    const ra = comeback ? s.comebackA : 100;
+    const rb = comeback ? s.comebackB : 100;
     const leadA = vote(row, s.leadA);
     const partnerA = vote(row, s.partnerA);
     const leadB = both ? vote(row, s.leadB) : 0;
@@ -117,9 +134,10 @@ globalThis.ElectionEngine = (() => {
     if ([row.baseValid, leadA, partnerA, leadB, partnerB].includes(null)) return null;
     // Integer vote hundredths preserve exact threshold and lead comparisons.
     return {
-      a: 100 * leadA + s.followA * partnerA,
-      b: 100 * leadB + s.followB * partnerB,
-      valid: 100 * row.baseValid - (100 - s.followA) * partnerA - (100 - s.followB) * partnerB,
+      a: ra * leadA + s.followA * partnerA,
+      b: rb * leadB + s.followB * partnerB,
+      valid: 100 * row.baseValid - (100 - ra) * leadA - (100 - s.followA) * partnerA
+        - (100 - rb) * leadB - (100 - s.followB) * partnerB,
     };
   }
 
@@ -283,7 +301,7 @@ globalThis.ElectionEngine = (() => {
 
   function calculate(data, settings = {}) {
     const s = {...defaults, ...settings};
-    for (const key of ['turnout', 'nationalSwing', 'rule', 'followA', 'followB']) s[key] = value(s[key]) ?? defaults[key];
+    for (const key of ['turnout', 'nationalSwing', 'rule', 'followA', 'followB', 'comebackA', 'comebackB']) s[key] = value(s[key]) ?? defaults[key];
     s.zoneSwings = Object.fromEntries(Object.keys(zones).map(code => [code, value(settings.zoneSwings?.[code]) ?? 0]));
     s.coalition = s.coalition === true || s.coalition === 'On';
     const states = normalizeStates(Array.isArray(data) ? data : data.states);
@@ -338,7 +356,7 @@ globalThis.ElectionEngine = (() => {
       return votes === null ? null : 100 * votes;
     };
     const headRows = states.map(row => {
-      const total = selected.validBoth ? coalitionVotes(row, s, true) : null;
+      const total = selected.validBoth ? coalitionVotes(row, s, true, true) : null;
       if (!(total?.valid > 0)) return emptyRow(row);
       const share = total.a / total.valid;
       const other = headRivals.filter(rival => rival.code !== s.leadB)
@@ -372,7 +390,7 @@ globalThis.ElectionEngine = (() => {
 
     const simValid = s.coalition ? selected.validBoth : validCandidate;
     const simName = s.coalition ? selected.nameA : candidateName;
-    const simRivals = s.coalition ? headRivals : entities(s, false, names, selected);
+    const simRivals = entities(s, s.coalition, names, selected, data.partyNow);
     const simulator = collect(states.map(row => simValid ? scenarioRow(row, s, simRivals) : emptyRow(row)),
       s, simValid, s.coalition ? selected.error : chooseCandidate);
     simulator.candidateName = simName;
@@ -380,6 +398,10 @@ globalThis.ElectionEngine = (() => {
       (row, code) => row.rivalVotes[code], row => row.validVotes) : '';
     simulator.assumptions = simValid ? assumptions(s) : '';
     simulator.decidingSentence = decidingSentence(simulator.tipping, simName);
+    if (simulator.national?.leadingRival) {
+      const r = simulator.national.leadingRival;
+      simulator.national.leadingRivalNow = parties.includes(r) ? nowShort(r, data.partyNow) : r;
+    }
     const followB = s.partnerB === 'NONE' ? '' : ` (${s.followB}% follow)`;
     simulator.coalitionSentence = !s.coalition ? 'Off: uses the candidate at the top. Coalitions: see Head to head.'
       : simValid ? `On: ${selected.nameA}, ${s.followA}% follow, vs ${selected.nameB}${followB}.`

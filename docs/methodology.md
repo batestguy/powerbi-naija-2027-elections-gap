@@ -211,6 +211,24 @@ picked at the top of the page is ignored while the switch is On.
 **Invalid selections** (no lead or partner chosen; lead = partner; a party used on both sides or twice; Side B's
 partner = Side B's lead) give **blank figures** and a plain-words message saying what to change — never a number.
 
+### Voters comeback on Head to head (added 2026-11-27, v1.1, user decisions)
+
+Written before the build. **Voters comeback** `R` (slider, 0–100%, step 5, default 100%): the percentage of a side's
+**lead** party's 2023 voters who vote for that side again. One per side (`R_A`, `R_B`). Voters who do not come back
+**stay home** (same rule as the follow rate). Whole-number form, so the tests stay exact:
+
+- `C = R_A v_LA + F_A v_PA`, `B = R_B v_LB + F_B v_PB` (the `F_B` term only if Side B has a partner)
+- `W = 100 V − (100 − R_A) v_LA − (100 − F_A) v_PA − (100 − R_B) v_LB − (100 − F_B) v_PB`
+
+Secured, who leads, national totals, verdict and sentence on Head to head use these `C`, `B`, `W` with the tests above,
+unchanged. At `R_A = R_B = 100` every number equals v1.0.0 exactly. The sliders are **not** used on the Merge two
+parties page (it compares the coalition with its lead alone) or in the simulator (switch On keeps `c` and `V'` as
+above; its own "Supporter turnout" slider already moves the coalition's voters).
+
+**Names (display only, v1.1):** the simulator names its leading rival under the candidate's party today, from
+`data/reference/party_now.csv`, e.g. "Atiku Abubakar — ADC now (PDP in 2023; ADC ticket under court challenge)".
+2023 votes stay attached to the 2023 party; nothing is regrouped (LP and NNPP are not merged into NDC).
+
 ### Assumptions (stated on the pages in plain words)
 
 1. The follow rate is an assumption, not a measurement. No published rate exists; the 2011→2015 APC merger only loosely
@@ -222,3 +240,4 @@ partner = Side B's lead) give **blank figures** and a plain-words message saying
 5. "NDC (Obi + Kwankwaso)" is a real ticket (NDC release 2026-05-31; ThisDay INEC list ~2026-09-13); every other pairing
    is hypothetical.
 6. Side B as one entity: when Side B is a coalition, its two parts move together under the simulator's rival rule.
+7. Voters comeback (Head to head only) is an assumption, not a measurement; voters who do not come back stay home.

@@ -16,6 +16,7 @@
     })),
     parties: tables.dim_party,
     coalitionNames: tables.coalition_names,
+    partyNow: tables.party_now,
   };
   const settings = { ...ElectionEngine.defaults, zoneSwings: { ...ElectionEngine.defaults.zoneSwings } };
   const pageKeys = {
@@ -157,6 +158,7 @@
       'Result sentence': () => result.resultSentence,
       'Has most votes': () => national?.mostVotes,
       'Leading rival': () => national?.leadingRival,
+      'Leading rival now': () => national?.leadingRivalNow,
       'Scenario national share': () => national?.share,
       'Units at a cap': () => counts?.capped,
       'Assumptions in force': () => result.assumptions,
@@ -304,6 +306,7 @@
     if (key === 'param_swing_national') return ['nationalSwing'];
     if (key.startsWith('param_swing_')) return ['zoneSwings', key.slice(-2)];
     if (key.startsWith('param_follow_')) return [`follow${key.at(-1).toUpperCase()}`];
+    if (key.startsWith('param_comeback_')) return [`comeback${key.at(-1).toUpperCase()}`];
     if (key === 'param_rule') return ['rule'];
     if (key === 'coal_switch') return ['coalition'];
     if (key === 'dim_party') return ['candidate'];
@@ -390,7 +393,7 @@
     };
     if (literal(property(visual, 'data', 'mode')) === 'Single') {
       node.dataset.setting = zone ? `${key}.${zone}` : key;
-      if (table.startsWith('param_follow_')) node.classList.add('compact-slide');
+      if (table.startsWith('param_follow_') || table.startsWith('param_comeback_')) node.classList.add('compact-slide');
       slider(node, label, parameters[table], value, change);
       return;
     }

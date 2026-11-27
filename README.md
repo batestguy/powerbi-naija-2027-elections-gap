@@ -19,7 +19,7 @@ follow rate and a 2 v 2 head to head. Music: *Darkness* by The Police.
 
 ![What-if simulator page](docs/img/simulator.png)
 
-**Status:** released as [v1.0.0](../../releases/tag/v1.0.0) (21 Nov 2026). Scripted checks pass; a screen-reader check was done by the author. Still to do: keyboard-only and non-specialist tests, and opening the `.pbix` on a clean Windows profile. Where the project stands:
+**Status:** released as [v1.1.0](../../releases/tag/v1.1.0) (27 Nov 2026): adds "Voters comeback" sliders on Head to head and names the simulator's closest rival under their party today. First release [v1.0.0](../../releases/tag/v1.0.0) (21 Nov 2026). Scripted checks pass; a screen-reader check was done by the author. Still to do: keyboard-only and non-specialist tests, and opening the `.pbix` on a clean Windows profile. Where the project stands:
 [`docs/HANDOFF.md`](docs/HANDOFF.md). Plan and exit checks: [`docs/PLAN.md`](docs/PLAN.md). One-page case study:
 [`docs/case-study.md`](docs/case-study.md).
 
@@ -92,8 +92,8 @@ for Obi alone.
 
 ### Offline HTML in a browser
 
-- **[Download the silent edition](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.0.0/NaijaElectionsGap.html)** (1.5 MB).
-- **[Download the edition with Kush’s recording](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.0.0/NaijaElectionsGap-with-music.html)** (12.4 MB).
+- **[Download the silent edition](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.1.0/NaijaElectionsGap.html)** (1.5 MB).
+- **[Download the edition with Kush’s recording](https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/download/v1.1.0/NaijaElectionsGap-with-music.html)** (12.4 MB).
 
 Open the file in Brave, Chrome, or Edge. It has all nine report tabs, maps, and working what-if and coalition controls.
 It runs offline and requires no Power BI installation or account. On a phone, landscape gives you more room. The desktop

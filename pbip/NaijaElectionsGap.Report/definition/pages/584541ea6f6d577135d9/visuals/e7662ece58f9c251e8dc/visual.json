@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "e7662ece58f9c251e8dc",
   "position": {
-    "x": 454,
+    "x": 518,
     "y": 100,
-    "z": 7,
+    "z": 8,
     "height": 38,
-    "width": 176,
-    "tabOrder": 7
+    "width": 112,
+    "tabOrder": 8
   },
   "visual": {
     "visualType": "textbox",
@@ -19,19 +19,11 @@
               {
                 "textRuns": [
                   {
-                    "value": "Partner voters who follow (%)",
+                    "value": "Partner voters follow (%)",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "9pt",
                       "color": "#1F1F1F"
-                    }
-                  },
-                  {
-                    "value": " (an assumption)",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "9pt",
-                      "color": "#505050"
                     }
                   }
                 ],

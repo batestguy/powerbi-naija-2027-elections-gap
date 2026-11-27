@@ -191,39 +191,55 @@ def dax_file(q):
 
 
 def cfg_filters(c):
-    """c = (al, ap, fa, bl, bp, fb); bp None = Side B alone. Any element None = no selection (left unfiltered)."""
-    al, ap, fa, bl, bp, fb = c
+    """c = (al, ap, fa, bl, bp, fb[, ra, rb]); bp None = Side B alone. Any element None = no selection (left
+    unfiltered). ra, rb = Voters comeback (v1.1, Head to head only), 100 when omitted."""
+    al, ap, fa, bl, bp, fb = c[:6]
+    ra, rb = (c[6], c[7]) if len(c) > 6 else (100, 100)
     f = []
     for tbl, val in (("coal_a_lead", al), ("coal_a_partner", ap), ("coal_b_lead", bl)):
         if val is not None:
             f.append(f'TREATAS({{"{val}"}}, {tbl}[party])')
     f.append(f'TREATAS({{"{bp or "NONE"}"}}, coal_b_partner[party])')
-    f += [f"TREATAS({{{fa}}}, param_follow_a[Value])", f"TREATAS({{{fb}}}, param_follow_b[Value])"]
+    f += [f"TREATAS({{{fa}}}, param_follow_a[Value])", f"TREATAS({{{fb}}}, param_follow_b[Value])",
+          f"TREATAS({{{ra}}}, param_comeback_a[Value])", f"TREATAS({{{rb}}}, param_comeback_b[Value])"]
     return f
+
+
+def rival_label(p):
+    """Simulator rival under the party now (v1.1), rebuilt from party_now.csv independently of the generator."""
+    r = {x["party_2023"]: x for x in read_ref("party_now.csv")}[p]
+    if r["party_now"] == p:
+        return f"{r['candidate']} ({p})"
+    return (f"{r['candidate']} — {r['party_now']} now" + (f", {r['role']}" if r["role"] else "")
+            + f" ({p} in 2023" + (f"; {r['note_short']}" if r["note_short"] else "") + ")")
 
 
 def side_name(lead, partner):
     return NAMES[(lead, partner)]["display_name"] if partner else f"{CAND[lead]} ({lead})"
 
 
-def coal_per_state(al, ap, fa, bl, bp, fb):
-    """Whole numbers x100 per state: C (Side A), WA (valid, merge page), B (Side B), W (valid, head to head)."""
+def coal_per_state(al, ap, fa, bl, bp, fb, ra=100, rb=100):
+    """Whole numbers x100 per state: C (Side A), WA (valid, merge page), B (Side B), W (valid, simulator switch On);
+    CH, BH, WH = the same on Head to head with Voters comeback ra, rb (v1.1; = C, B, W at 100)."""
     out = {}
     for s in VALID:
         C = 100 * VOTES[(s, al)] + fa * VOTES[(s, ap)]
         WA = 100 * VALID[s] - (100 - fa) * VOTES[(s, ap)]
         B = 100 * VOTES[(s, bl)] + (fb * VOTES[(s, bp)] if bp else 0)
         W = WA - ((100 - fb) * VOTES[(s, bp)] if bp else 0)
+        CH = C - (100 - ra) * VOTES[(s, al)]
+        BH = B - (100 - rb) * VOTES[(s, bl)]
+        WH = W - (100 - ra) * VOTES[(s, al)] - (100 - rb) * VOTES[(s, bl)]
         unused = [x for x in PARTIES if x not in (al, ap, bl, bp)]
         o = max((100 * VOTES[(s, x)] for x in unused), default=-1)
-        lead = "A" if C > B and C > o else "B" if B > C and B > o else "O" if o > C and o > B else "T"
+        lead = "A" if CH > BH and CH > o else "B" if BH > CH and BH > o else "O" if o > CH and o > BH else "T"
         if lead == "O":
             lead_txt = sorted(unused, key=lambda x: (-VOTES[(s, x)], x))[0] + " (on neither side)"
         else:
             lead_txt = {"A": "Side A", "B": "Side B", "T": "Tie"}[lead]
         status = "Secured" if 4 * C >= WA else "Within reach" if 5 * C >= WA else "Out of reach"
-        out[s] = {"C": C, "WA": WA, "B": B, "W": W, "lead": lead, "lead_txt": lead_txt, "status": status,
-                  "a25": "Yes" if 4 * C >= W else "No", "b25": "Yes" if 4 * B >= W else "No"}
+        out[s] = {"C": C, "WA": WA, "B": B, "W": W, "CH": CH, "BH": BH, "WH": WH, "lead": lead, "lead_txt": lead_txt,
+                  "status": status, "a25": "Yes" if 4 * CH >= WH else "No", "b25": "Yes" if 4 * BH >= WH else "No"}
     return out
 
 
@@ -244,24 +260,25 @@ def verdict_strings(most, a_clears, r_disp, r_clears, nm, rl, k, n):
     return v, s
 
 
-def coal_national(al, ap, fa, bl, bp, fb, n):
-    per = coal_per_state(al, ap, fa, bl, bp, fb)
-    C = sum(p["C"] for p in per.values())
+def coal_national(al, ap, fa, bl, bp, fb, n, ra=100, rb=100):
+    per = coal_per_state(al, ap, fa, bl, bp, fb, ra, rb)
+    C = sum(p["C"] for p in per.values())    # merge page (no comeback)
+    CH = sum(p["CH"] for p in per.values())  # head to head
     WA = sum(p["WA"] for p in per.values())
-    W = sum(p["W"] for p in per.values())
-    Bn = sum(p["B"] for p in per.values())
+    W = sum(p["WH"] for p in per.values())
+    Bn = sum(p["BH"] for p in per.values())
     ents = {bl: Bn, **{x: 100 * sum(VOTES[(s, x)] for s in VALID) for x in PARTIES if x not in (al, ap, bl, bp)}}
     r = sorted(ents, key=lambda x: (-ents[x], x))[0]
     rv = ents[r]
-    r_st = sum(4 * (per[s]["B"] if r == bl else 100 * VOTES[(s, r)]) >= per[s]["W"] for s in VALID)
-    most = "Yes" if C > rv else "Tied" if C == rv else "No"
+    r_st = sum(4 * (per[s]["BH"] if r == bl else 100 * VOTES[(s, r)]) >= per[s]["WH"] for s in VALID)
+    most = "Yes" if CH > rv else "Tied" if CH == rv else "No"
     a_st = sum(p["a25"] == "Yes" for p in per.values())
     r_disp = f"{r}+{bp}" if (r == bl and bp) else r
     rl = side_name(bl, bp) if r == bl else f"{CAND[r]} ({r})"
     v, s = verdict_strings(most, a_st >= n, r_disp, r_st >= n, side_name(al, ap), rl, a_st, n)
     return {"stM": sum(4 * p["C"] >= p["WA"] for p in per.values()),
             "leadSt": sum(4 * VOTES[(s, al)] >= VALID[s] for s in VALID),
-            "natA": Fr(C, 100), "shAM": Fr(C, WA), "shAh": Fr(C, W), "shBh": Fr(Bn, W), "natB": Fr(Bn, 100),
+            "natA": Fr(C, 100), "shAM": Fr(C, WA), "shAh": Fr(CH, W), "shBh": Fr(Bn, W), "natB": Fr(Bn, 100),
             "stA": a_st, "stB": sum(p["b25"] == "Yes" for p in per.values()),
             "ledA": sum(p["lead"] == "A" for p in per.values()), "ledB": sum(p["lead"] == "B" for p in per.values()),
             "rival": r_disp, "rx100": rv, "rst": r_st, "most": most, "verdict": v, "sent": s,
@@ -301,7 +318,7 @@ def coal_sim(c, st, n):
     most = "Yes" if nat_c > rv[lead] else "Tied" if nat_c == rv[lead] else "No"
     r_disp = f"{lead}+{bp}" if (lead == bl and bp) else lead
     nm = side_name(al, ap)
-    rl = side_name(bl, bp) if lead == bl else f"{CAND[lead]} ({lead})"
+    rl = side_name(bl, bp) if lead == bl else rival_label(lead)   # party now (v1.1)
     verdict, _ = verdict_strings(most, sec >= n, r_disp, r25[lead] >= n, nm, rl, sec, n)
     # Result sentence (the simulator's own wording) and deciding-state sentence
     if most == "Yes":
@@ -344,10 +361,15 @@ FOLLOW_2V2 = [(100, 100), (0, 35), (35, 0), (55, 100), (5, 95)]
 ALL_2V2 = [(al, ap, fa, bl, bp, fb) for al in PARTIES for ap in PARTIES if ap != al
            for bl in PARTIES if bl not in (al, ap) for bp in PARTIES if bp not in (al, ap, bl) for fa, fb in FOLLOW_2V2]
 PRESET = ("LP", "NNPP", 100, "APC", None, 100)
+# Voters comeback (v1.1): preset at five pairs; every 2 v 1 at follow 35 with comeback (55, 80); every 2 v 2 at follow
+# (55, 100) with comeback (35, 0). Every other pairing above runs at comeback 100 = v1.0.0's reference.
+COMEBACK = ([PRESET + rr for rr in [(100, 80), (80, 100), (0, 0), (35, 55), (5, 95)]]
+            + [c + (55, 80) for c in ALL_2V1 if c[2] == 35]
+            + [c + (35, 0) for c in ALL_2V2 if (c[2], c[5]) == (55, 100)])
 
 
 def coalition_pages_check():
-    configs = [PRESET] + ALL_2V1 + ALL_2V2
+    configs = [PRESET] + ALL_2V1 + ALL_2V2 + COMEBACK
     state_bad, nat_bad, f_bad = [], [], []
     for i in range(0, len(configs), 10):   # 10 pairings per state query (40 pushed the engine past 3 GB)
         batch = configs[i:i + 10]
@@ -355,7 +377,7 @@ def coalition_pages_check():
         parts = []
         for j, c in enumerate(batch):
             parts.append(f'CALCULATETABLE(ADDCOLUMNS(VALUES(dim_state[state_pcode]), "cfg", {i + j}, '
-                         '"A100", [Side A x100], "WA", [Valid x100 (merge)], "W", [Valid x100 (head to head)], '
+                         '"A100", [Side A x100], "AH", [Side A x100 (head to head)], "WA", [Valid x100 (merge)], "W", [Valid x100 (head to head)], '
                          '"B100", [Side B x100], "st", [Side A status (merge)], "lead", [Who leads (head to head)], '
                          '"a25", [Side A at 25% (head to head)], "b25", [Side B at 25% (head to head)], '
                          '"shA", [Side A share (merge)], "shAh", [Side A share (head to head)], '
@@ -366,10 +388,11 @@ def coalition_pages_check():
             per = coal_per_state(*c)
             for s, ref in per.items():
                 g = got.get((i + j, s))
-                ok = g is not None and (g["A100"], g["WA"], g["W"], g["B100"]) == (ref["C"], ref["WA"], ref["W"], ref["B"]) \
+                ok = g is not None and (g["A100"], g["AH"], g["WA"], g["W"], g["B100"]) == \
+                    (ref["C"], ref["CH"], ref["WA"], ref["WH"], ref["BH"]) \
                     and g["st"] == ref["status"] and g["lead"] == ref["lead_txt"] and g["a25"] == ref["a25"] \
                     and g["b25"] == ref["b25"] and close(g["shA"], Fr(ref["C"], ref["WA"]), 1e-12) \
-                    and close(g["shAh"], Fr(ref["C"], ref["W"]), 1e-12) and close(g["shB"], Fr(ref["B"], ref["W"]), 1e-12)
+                    and close(g["shAh"], Fr(ref["CH"], ref["WH"]), 1e-12) and close(g["shB"], Fr(ref["BH"], ref["WH"]), 1e-12)
                 if not ok:
                     state_bad.append({"config": c, "state": s, "model": g, "reference": {k: str(v) for k, v in ref.items()}})
                 # follow-rate end points: at 100% the coalition = lead + partner exactly; at 0 it = lead, V' = V - partner
@@ -397,7 +420,7 @@ def coalition_pages_check():
             nat_rows += dax_file("EVALUATE UNION(" + ", ".join(parts[k:k + 4]) + ")")
         for r in nat_rows:
             c = batch[r["cfg"] - i]
-            ref = coal_national(*c, r["N"])
+            ref = coal_national(*c[:6], r["N"], *c[6:])
             diff = {k: [r.get(k), str(v)] for k, v in ref.items()
                     if not (close(r.get(k), v, 1e-12) if isinstance(v, Fr) else r.get(k) == v)}
             if diff:
@@ -405,7 +428,7 @@ def coalition_pages_check():
     n_states = 37 * len(configs)
     check(f"coalition pages, per state: whole-number votes and valid totals, shares, status, who leads and 25% flags = "
           f"exact reference ({len(configs)} pairings x follow rates: preset, every 2 v 1 at 0/35/100%, every 2 v 2 at 5 "
-          f"follow-rate pairs; {n_states} state rows)", not state_bad, {"mismatches": state_bad[:5], "count": len(state_bad)})
+          f"follow-rate pairs; plus {len(COMEBACK)} with Voters comeback below 100 (v1.1); {n_states} state rows)", not state_bad, {"mismatches": state_bad[:5], "count": len(state_bad)})
     check("coalition pages, national: states at 25%+ (coalition, lead alone, both sides), votes, shares, states led, "
           "leading rival, most votes, verdict and sentence = exact reference (N = 24 and 25)", not nat_bad,
           {"mismatches": nat_bad[:5], "count": len(nat_bad), "preset_N24": {k: str(v) for k, v in coal_national(*PRESET, 24).items()}})

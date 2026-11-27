@@ -693,7 +693,7 @@ def page_sim(pid):
                       "Result of your what-if as a sentence: who wins outright, or whether it goes to a run-off.",
                       value_pt=10))
     v.append(cards(sid(pid, "who"), rx, 204, rw, 56,
-                   [("scenario", "Has most votes", "Most votes nationwide?"), ("scenario", "Leading rival", "Closest rival (party)"),
+                   [("scenario", "Has most votes", "Most votes nationwide?"), ("scenario", "Leading rival now", "Closest rival (party now)"),
                     ("scenario", "Scenario national share", "Share of the vote nationwide")],
                    None, "Whether the candidate has the most votes nationwide, the closest rival's party and the candidate's "
                          "share of the vote nationwide.", value_pt=13, label_pt=9))
@@ -740,9 +740,10 @@ PRESET = {"A": (choice("LP"), choice("NNPP")), "B": (choice("APC"), NOBODY)}
 SIDE_COLOUR = {"A": BLUE, "B": ORANGE}
 
 
-def side_controls(pid, side, x0, y0, hidden=False, heading=None):
+def side_controls(pid, side, x0, y0, hidden=False, heading=None, comeback=False):
     """Lead and partner pickers (with portraits) and the follow slider for one side, synced across the coalition pages
-    and the simulator. hidden: only the three slicers, not shown (the simulator)."""
+    and the simulator. hidden: only the three slicers, not shown (the simulator). comeback (Head to head only, v1.1):
+    the slider column is split in two, "Voters comeback" (lead party's 2023 voters, not synced) and the follow slider."""
     lo = side.lower()
     lead, partner = PRESET[side]
     tl, tp, tf = f"coal_{lo}_lead", f"coal_{lo}_partner", f"param_follow_{lo}"
@@ -757,6 +758,17 @@ def side_controls(pid, side, x0, y0, hidden=False, heading=None):
           param_slicer(sid(pid, side, "follow"), x0 + 430, y0 + 52, 180, 56, tf,
                        f"Side {side}: how many of the partner's 2023 voters follow (%)", 100, True, sync=tf,
                        hidden=hidden)]
+    if comeback:
+        # 88 px slicers rendered as a funnel icon in Desktop (too narrow, 2026-11-27): pickers narrowed to make room
+        sl[0]["position"].update({"width": 130})
+        sl[1]["position"].update({"x": x0 + 254, "width": 126})
+        sl[2]["position"].update({"x": x0 + 498, "width": 112})
+        sl.append(param_slicer(sid(pid, side, "comeback"), x0 + 384, y0 + 52, 112, 56, f"param_comeback_{lo}",
+                               f"Side {side}: voters comeback, how many of the lead party's 2023 voters vote for Side "
+                               f"{side} again (%)", 100, True))
+        # Desktop's "responsive" layout collapses a slicer this narrow to a funnel icon; keep the box and slider
+        for c in (sl[2], sl[3]):
+            c["visual"]["objects"]["general"][0]["properties"]["responsive"] = lit("false")
     if hidden:
         for c in sl:
             c["position"].update({"x": x0, "y": y0, "width": 150, "height": 76})
@@ -767,11 +779,18 @@ def side_controls(pid, side, x0, y0, hidden=False, heading=None):
             candidate_photo(sid(pid, side, "lead_photo"), x0, y0 + 24, 56, 66, f"Side {side} lead photo",
                             f"Photo of Side {side}'s lead candidate (free-licence portrait; credit on the Data sources page)."),
             sl[0],
-            candidate_photo(sid(pid, side, "partner_photo"), x0 + 216, y0 + 24, 56, 66, f"Side {side} partner photo",
+            candidate_photo(sid(pid, side, "partner_photo"), x0 + (194 if comeback else 216), y0 + 24, 56, 66, f"Side {side} partner photo",
                             f"Photo of Side {side}'s partner (free-licence portrait; credit on the Data sources page)."),
             sl[1],
-            textbox(sid(pid, side, "follow_label"), x0 + 434, y0 + 16, 176, 38,
-                    [([(q, INK, True), (" (an assumption)", MUTED, False)], 9, False, INK)], alt=f"Slider label: {q}"),
+            *([textbox(sid(pid, side, "comeback_label"), x0 + 384, y0 + 16, 112, 38,
+                       [([("Voters comeback (%)", INK, True)], 9, False, INK)],
+                       alt="Slider label: Voters comeback (%), the lead party's 2023 voters who vote for this side again"),
+               textbox(sid(pid, side, "follow_label"), x0 + 498, y0 + 16, 112, 38,
+                       [([("Partner voters follow (%)", INK, True)], 9, False, INK)],
+                       alt="Slider label: Partner voters who follow (%)"),
+               sl[3]] if comeback else
+              [textbox(sid(pid, side, "follow_label"), x0 + 434, y0 + 16, 176, 38,
+                       [([(q, INK, True), (" (an assumption)", MUTED, False)], 9, False, INK)], alt=f"Slider label: {q}")]),
             sl[2]]
 
 
@@ -840,7 +859,7 @@ def page_h2h(pid):
              ("Side A is a coalition of two parties; Side B is one party or another coalition. Each party can be used once. "
               "No swing or turnout change. Abuja counts as a state, so there are 37. 25 states needed.", 10, False, MUTED)],
              alt="Subtitle: what the two sides are.")]
-    v += side_controls(pid, "A", 20, 84) + side_controls(pid, "B", 650, 84)
+    v += side_controls(pid, "A", 20, 84, comeback=True) + side_controls(pid, "B", 650, 84, comeback=True)
     # review 2026-11-20: message boxes 70 px (two lines; 56 showed one), result 66 px, tile grid 226 px (it had spare
     # room), key 74 px (66 cut its third line), so nothing is cut
     v.append(sentence(sid(pid, "msg_a"), 20, 196, 610, 70, "Side A message", None,
@@ -885,8 +904,8 @@ def page_h2h(pid):
                     "Table of all 37 states: each side's share of the vote, who leads, and whether each side has a quarter "
                     "of the vote.", sort=("scenario", "Side A share (head to head)")))
     v.append(textbox(sid(pid, "notes"), 990, 394, 270, 318, [
-        ("Assumptions. :: How many partner voters follow is an assumption; no published figure exists. Those who do not "
-         "follow stay home.", 9, False, INK),
+        ("Assumptions. :: How many partner voters follow, and how many of the lead party's own 2023 voters come back "
+         "(Voters comeback), are assumptions; no published figure exists. Those who do not stay home.", 9, False, INK),
         ("Recombined 2023 votes, :: not a 2027 forecast. Parties on neither side keep their 2023 votes; the 14 minor "
          "candidates are never counted as a leader.", 9, False, INK),
         ("Real or what-if: :: only \"NDC (Obi + Kwankwaso)\" is a real joint ticket. To try it with 2027 swings, open "

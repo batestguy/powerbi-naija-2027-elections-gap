@@ -26,6 +26,8 @@ ref table param_swing_SW
 ref table param_rule
 ref table param_follow_a
 ref table param_follow_b
+ref table param_comeback_a
+ref table param_comeback_b
 ref table scenario
 ref table coal_a_lead
 ref table coal_a_partner

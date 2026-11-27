@@ -1,6 +1,16 @@
 # Handoff — where the project is
 
-Updated: 2026-11-25. Update this file in every stage commit.
+Updated: 2026-11-27. Update this file in every stage commit.
+
+## v1.1.0 (2026-11-27)
+
+"Voters comeback" sliders on Head to head (one per side, % of the lead party's 2023 voters who vote for that side
+again; non-returners stay home; default 100 = v1.0.0) and the simulator's closest rival named under the party now
+(`party_now.csv`, rename only). Method: `docs/methodology.md` "Voters comeback on Head to head". Release assets:
+`.pbix`, silent and music HTML, `SHA256SUMS` (local copies and notes in `release/v1.1.0/`). Checks and what was
+skipped: `registers/qa-log.md` 2026-11-27. Desktop 2.160 needed an assembly resolver in `scripts/pbi_engine.ps1`.
+Narrow slicers need `responsive` off or Desktop shows a funnel icon. Before any further release, run the full
+Phase 4 parts + Phase 6 (`PHASE6_PHASE4_PARTS` lets Phase 6 reuse only named parts; say so when used).
 
 ## START HERE (2026-11-21, after v1.0.0 was published)
 

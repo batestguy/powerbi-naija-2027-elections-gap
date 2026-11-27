@@ -1,0 +1,18 @@
+table param_comeback_b
+	lineageTag: 44aa6891-4dd6-4396-5839-9f265f702977
+
+	measure 'param_comeback_b value' = SELECTEDVALUE ( param_comeback_b[Value], 100 )
+		formatString: 0
+		lineageTag: 0d96e721-bb8c-3070-0457-f4e44b317eff
+
+	column Value
+		dataType: int64
+		formatString: 0
+		lineageTag: 3db2868b-cd85-a272-14c3-9eaea99747a0
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	partition param_comeback_b = calculated
+		mode: import
+		source = GENERATESERIES ( 0, 100, 5 )
+

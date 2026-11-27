@@ -62,6 +62,12 @@ while ($quiet -lt 3) {
 }
 
 $bin = Split-Path $desk.Path
+# Desktop 2.160 (Nov 2026): the ADOMD client needs Microsoft.Identity.Client from Desktop's bin, which PowerShell does
+# not probe on its own; resolve any missing dependency from that folder.
+$resolve = [System.ResolveEventHandler]{ param($s, $e)
+  $f = Join-Path $bin ((New-Object System.Reflection.AssemblyName $e.Name).Name + '.dll')
+  if (Test-Path $f) { [System.Reflection.Assembly]::LoadFrom($f) } else { $null } }
+[System.AppDomain]::CurrentDomain.add_AssemblyResolve($resolve)
 Add-Type -Path (Join-Path $bin 'Microsoft.PowerBI.AdomdClient.dll')
 
 $engine = Get-CimInstance Win32_Process -Filter "Name = 'msmdsrv.exe' AND ParentProcessId = $($desk.Id)"

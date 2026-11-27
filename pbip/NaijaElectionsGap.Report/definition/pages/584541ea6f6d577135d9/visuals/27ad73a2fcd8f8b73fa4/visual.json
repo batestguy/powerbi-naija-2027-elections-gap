@@ -4,10 +4,10 @@
   "position": {
     "x": 990,
     "y": 394,
-    "z": 24,
+    "z": 28,
     "height": 318,
     "width": 270,
-    "tabOrder": 24
+    "tabOrder": 28
   },
   "visual": {
     "visualType": "textbox",
@@ -27,7 +27,7 @@
                     }
                   },
                   {
-                    "value": "How many partner voters follow is an assumption; no published figure exists. Those who do not follow stay home.",
+                    "value": "How many partner voters follow, and how many of the lead party's own 2023 voters come back (Voters comeback), are assumptions; no published figure exists. Those who do not stay home.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "9pt",

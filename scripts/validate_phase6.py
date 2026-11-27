@@ -94,6 +94,18 @@ def phase4_on_current_build():
     Reuse reports/phase4_validation.json only if it passed, is complete, holds all six parts with check counts that add
     up, and its build stamp (model files, staging + reference tables, check and engine scripts, live model measures;
     scripts/build_stamp.py) equals the current one. Otherwise run the parts one by one and combine (review 2026-11-18)."""
+    import os
+    only = [p for p in os.environ.get("PHASE6_PHASE4_PARTS", "").split(",") if p]
+    if only:   # shortest route (user decision 2026-11-27, v1.1): reuse only these parts, run on the current build
+        now, got = build_stamp(), {}
+        for part in only:
+            f = REP / "phase4_parts" / f"{part}.json"
+            d = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+            got[part] = {"gate_passed": d.get("gate_passed"), "summary": d.get("summary"),
+                         "same_build": same_build(d.get("build_stamp"), now)}
+        ok = all(g["gate_passed"] and g["same_build"] for g in got.values())
+        return (0 if ok else 1), {"how": f"ONLY parts {only} (PHASE6_PHASE4_PARTS); the other parts were NOT re-run "
+                                         "on this build", "parts": got}
     res = REP / "phase4_validation.json"
     d = json.loads(res.read_text(encoding="utf-8")) if res.exists() else {}
     now = build_stamp()
@@ -220,9 +232,9 @@ def result_check():
             elif rv["most"] == "Tied":
                 ref = "Tie on votes: no outright winner."
             elif rv["lead_25"] >= n:
-                ref = f"{nm} loses: {rn} ({lead}) has the most votes and a quarter of the vote in enough states."
+                ref = f"{nm} loses: {v4.rival_label(lead)} has the most votes and a quarter of the vote in enough states."
             else:
-                ref = (f"No outright winner: {rn} ({lead}) has the most votes but not a quarter of the vote in enough "
+                ref = (f"No outright winner: {v4.rival_label(lead)} has the most votes but not a quarter of the vote in enough "
                        f"states. This would go to a run-off.")
             f = ", ".join(fl + [f'TREATAS({{"{party}"}}, dim_party[party])'])
             got = dax(f'EVALUATE CALCULATETABLE(ROW("r", [Result sentence], "s", [Assumptions in force]), {f})')[0]
@@ -589,7 +601,7 @@ def main():
     sim_visuals = {
         "tile map": 'SUMMARIZECOLUMNS(dim_state[tile_row], dim_state[tile_col], "c", [Tile code], "f", [Tile fill], '
                     '"t", [Tile text colour])',
-        "headline card": 'ROW("m", [Has most votes], "rv", [Leading rival], "ns", [Scenario national share], '
+        "headline card": 'ROW("m", [Has most votes], "rv", [Leading rival now], "ns", [Scenario national share], '
                          '"a", [Party accent colour])',
         "counts card": 'ROW("sec", [Units secured (national)], "need", [Units still needed], "cap", [Units at a cap], '
                        '"a", [Party accent colour])',

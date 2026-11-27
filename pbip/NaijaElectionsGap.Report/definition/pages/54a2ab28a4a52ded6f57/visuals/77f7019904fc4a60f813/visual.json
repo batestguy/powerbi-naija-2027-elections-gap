@@ -38,12 +38,12 @@
                       "Entity": "scenario"
                     }
                   },
-                  "Property": "Leading rival"
+                  "Property": "Leading rival now"
                 }
               },
-              "queryRef": "scenario.Leading rival",
-              "nativeQueryRef": "Leading rival",
-              "displayName": "Closest rival (party)"
+              "queryRef": "scenario.Leading rival now",
+              "nativeQueryRef": "Leading rival now",
+              "displayName": "Closest rival (party now)"
             },
             {
               "field": {
