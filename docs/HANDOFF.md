@@ -2,17 +2,47 @@
 
 Updated: 2026-11-27. Update this file in every stage commit.
 
-## v1.1.0 (2026-11-27)
+## START HERE (2026-11-27, after v1.1.0 was published)
 
-"Voters comeback" sliders on Head to head (one per side, % of the lead party's 2023 voters who vote for that side
-again; non-returners stay home; default 100 = v1.0.0) and the simulator's closest rival named under the party now
-(`party_now.csv`, rename only). Method: `docs/methodology.md` "Voters comeback on Head to head". Release assets:
-`.pbix`, silent and music HTML, `SHA256SUMS` (local copies and notes in `release/v1.1.0/`). Checks and what was
-skipped: `registers/qa-log.md` 2026-11-27. Desktop 2.160 needed an assembly resolver in `scripts/pbi_engine.ps1`.
-Narrow slicers need `responsive` off or Desktop shows a funnel icon. Before any further release, run the full
-Phase 4 parts + Phase 6 (`PHASE6_PHASE4_PARTS` lets Phase 6 reuse only named parts; say so when used).
+**Released:** v1.1.0 is public: https://github.com/batestguy/powerbi-naija-2027-elections-gap/releases/tag/v1.1.0
+(published 2026-11-27, tag on commit 0aa84bc; v1.0.0 untouched). Assets, sha256 checked after an anonymous download:
+`NaijaElectionsGap.pbix` (1,112,682 bytes, 63f33ca2...), `NaijaElectionsGap.html` (1,551,138 bytes, c0819b11...),
+`NaijaElectionsGap-with-music.html` (12,397,560 bytes, 83645227...), `SHA256SUMS`. Notes source and local copies:
+`release/v1.1.0/` (gitignored). The data ZIP stays on v1.0.0 (vintage 2026-11-20 unchanged). README download links
+point at v1.1.0; `downloads/NaijaElectionsGap.html` is the v1.1 silent build.
 
-## START HERE (2026-11-21, after v1.0.0 was published)
+**What v1.1 changed:** "Voters comeback" sliders on Head to head (one per side: % of the lead party's 2023 voters who
+vote for that side again; non-returners stay home; default 100 = v1.0.0). Not used on Merge two parties or in the
+simulator. The simulator names its closest rival under the party now from `party_now.csv` (card "Abubakar (ADC)";
+result sentence "Atiku Abubakar — ADC now (PDP in 2023; ADC ticket under court challenge)"); rename only. Side B's
+message states the comeback when below 100. Method: `docs/methodology.md` "Voters comeback on Head to head";
+decision log 2026-11-27.
+
+**Checks run (shortest route, user decision):** Phase 3 10/10; Phase 4 `invalid` 1/1 and `pages` 3/3 (246 pairings,
+53 with comeback < 100); hand recount NDC vs APC at Side B comeback 80 (exact: 19 vs 22 states, run-off); offline
+engine vs `validate_phase4.py` reference 18,754 comparisons, 0 mismatches (the comparison script was throwaway, in the
+session scratchpad, not in git); defaults = v1.0.0 on screen; saved `.pbix` opens on Tinubu, 29 states.
+**Not run:** Phase 4 `core`, `switch_off`, `boundary`, `simulator`, `--combine`; Phase 6; reviewer subagent. The
+`pages` part ran on the build just before the last display-only change ("Leading rival now" card text), so its
+build stamp does not match the release build. **Run the full Phase 4 parts + Phase 6 before any next release.**
+`PHASE6_PHASE4_PARTS=invalid,pages` makes Phase 6 reuse only named parts (it reports which were not re-run).
+
+**Learned this round:**
+- Power BI Desktop auto-updated to 2.160; `scripts/pbi_engine.ps1` now resolves its ADOMD dependency
+  (Microsoft.Identity.Client) from Desktop's bin folder.
+- Slicers narrower than ~180 px collapse to a funnel icon (Desktop "responsive" layout): set
+  `general.responsive = false` (done for the four Head to head sliders in `scripts/pbip_pages.py`).
+- `.pbix` Save As by script: bring Desktop forward once (an Alt tap each run cancels open menus), then in ONE run
+  click File, Save as, Browse this device; pick the type with the keyboard (Up, Up, Enter), type the full path, Save.
+  Make the PowerShell process DPI-aware so click coordinates match the screen.
+- Offline HTML builds: silent `--output downloads/NaijaElectionsGap.html`; music edition add
+  `--kush-soundtrack "Let's Live Together by Kush- Listen on Audiomack.m4a"` (the M4A stays untracked in the repo
+  root). Both need `--data-vintage release/naija-elections-data-2026-11-20.zip`.
+
+**Open (person tasks, unchanged):** keyboard-only test, non-specialist test, opening the `.pbix` on a clean Windows
+profile. A fix ships as v1.1.1. Re-check `party_now.csv` before any release (ADC court challenge, open).
+
+## Earlier: v1.0.0 handoff (2026-11-21)
 
 **Offline HTML (2026-11-25):** `release/NaijaElectionsGap.html` is a standalone browser copy of the nine visible report pages, built from the frozen 2026-11-20 data and the saved report layout and controls. Rebuild with `uv run python -I scripts/build_offline_elections.py --data-vintage release/naija-elections-data-2026-11-20.zip`. Add `--check` to verify a byte-identical build. The calculation port matched 125,125 comparisons against the reference. Chrome and Edge opened the file offline and passed page, map, keyboard, slider, and coalition checks with zero network requests. The HTML is a local release artifact.
 
